@@ -16,6 +16,15 @@
 		562E36982AD80EFB008D99B2 /* CatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36972AD80EFB008D99B2 /* CatcherTests.swift */; };
 		562E36A22AD80EFB008D99B2 /* CatcherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36A12AD80EFB008D99B2 /* CatcherUITests.swift */; };
 		562E36A42AD80EFB008D99B2 /* CatcherUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36A32AD80EFB008D99B2 /* CatcherUITestsLaunchTests.swift */; };
+		562E36B12AD8D0EE008D99B2 /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36B02AD8D0EE008D99B2 /* BaseTabBarController.swift */; };
+		562E36B32AD8D845008D99B2 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36B22AD8D845008D99B2 /* IntroViewController.swift */; };
+		562E36B52AD8DB57008D99B2 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36B42AD8DB57008D99B2 /* DataManager.swift */; };
+		562E36B72AD8DCAA008D99B2 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36B62AD8DCAA008D99B2 /* BaseViewController.swift */; };
+		562E36B92AD8DCC5008D99B2 /* BaseHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36B82AD8DCC5008D99B2 /* BaseHeaderViewController.swift */; };
+		562E36BB2AD8DD03008D99B2 /* CommonUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36BA2AD8DD03008D99B2 /* CommonUtil.swift */; };
+		562E36BD2AD9061D008D99B2 /* CommonHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36BC2AD9061D008D99B2 /* CommonHeaderView.swift */; };
+		562E36BF2AD9172B008D99B2 /* CommonHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 562E36BE2AD9172B008D99B2 /* CommonHeaderView.xib */; };
+		562E36C12AD91901008D99B2 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36C02AD91901008D99B2 /* Common.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +58,15 @@
 		562E369D2AD80EFB008D99B2 /* CatcherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatcherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		562E36A12AD80EFB008D99B2 /* CatcherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatcherUITests.swift; sourceTree = "<group>"; };
 		562E36A32AD80EFB008D99B2 /* CatcherUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatcherUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		562E36B02AD8D0EE008D99B2 /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
+		562E36B22AD8D845008D99B2 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		562E36B42AD8DB57008D99B2 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		562E36B62AD8DCAA008D99B2 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		562E36B82AD8DCC5008D99B2 /* BaseHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHeaderViewController.swift; sourceTree = "<group>"; };
+		562E36BA2AD8DD03008D99B2 /* CommonUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUtil.swift; sourceTree = "<group>"; };
+		562E36BC2AD9061D008D99B2 /* CommonHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonHeaderView.swift; sourceTree = "<group>"; };
+		562E36BE2AD9172B008D99B2 /* CommonHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommonHeaderView.xib; sourceTree = "<group>"; };
+		562E36C02AD91901008D99B2 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +121,15 @@
 				562E36822AD80EF9008D99B2 /* SceneDelegate.swift */,
 				562E36842AD80EF9008D99B2 /* ViewController.swift */,
 				562E36862AD80EF9008D99B2 /* Main.storyboard */,
+				562E36BA2AD8DD03008D99B2 /* CommonUtil.swift */,
+				562E36C02AD91901008D99B2 /* Common.swift */,
+				562E36B82AD8DCC5008D99B2 /* BaseHeaderViewController.swift */,
+				562E36B02AD8D0EE008D99B2 /* BaseTabBarController.swift */,
+				562E36B62AD8DCAA008D99B2 /* BaseViewController.swift */,
+				562E36B22AD8D845008D99B2 /* IntroViewController.swift */,
+				562E36BC2AD9061D008D99B2 /* CommonHeaderView.swift */,
+				562E36BE2AD9172B008D99B2 /* CommonHeaderView.xib */,
+				562E36B42AD8DB57008D99B2 /* DataManager.swift */,
 				562E36892AD80EFA008D99B2 /* Assets.xcassets */,
 				562E368B2AD80EFA008D99B2 /* LaunchScreen.storyboard */,
 				562E368E2AD80EFA008D99B2 /* Info.plist */,
@@ -233,6 +260,7 @@
 			files = (
 				562E368D2AD80EFA008D99B2 /* LaunchScreen.storyboard in Resources */,
 				562E368A2AD80EFA008D99B2 /* Assets.xcassets in Resources */,
+				562E36BF2AD9172B008D99B2 /* CommonHeaderView.xib in Resources */,
 				562E36882AD80EF9008D99B2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -258,9 +286,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				562E36B32AD8D845008D99B2 /* IntroViewController.swift in Sources */,
+				562E36B52AD8DB57008D99B2 /* DataManager.swift in Sources */,
 				562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */,
 				562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */,
+				562E36C12AD91901008D99B2 /* Common.swift in Sources */,
+				562E36B92AD8DCC5008D99B2 /* BaseHeaderViewController.swift in Sources */,
+				562E36BB2AD8DD03008D99B2 /* CommonUtil.swift in Sources */,
 				562E36832AD80EF9008D99B2 /* SceneDelegate.swift in Sources */,
+				562E36B72AD8DCAA008D99B2 /* BaseViewController.swift in Sources */,
+				562E36BD2AD9061D008D99B2 /* CommonHeaderView.swift in Sources */,
+				562E36B12AD8D0EE008D99B2 /* BaseTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
