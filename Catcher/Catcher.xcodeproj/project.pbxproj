@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33C58E7B2AD84F2C008EB6C2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 33C58E7A2AD84F2C008EB6C2 /* SnapKit */; };
+		33C58E7F2AD85024008EB6C2 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E7E2AD85024008EB6C2 /* UIViewController+.swift */; };
+		33C58E822AD850D3008EB6C2 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E812AD850D3008EB6C2 /* MainPageViewController.swift */; };
+		33C58E852AD8554A008EB6C2 /* MainPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E842AD8554A008EB6C2 /* MainPageView.swift */; };
+		33C58E872AD85DDA008EB6C2 /* HomeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E862AD85DDA008EB6C2 /* HomeItem.swift */; };
+		33C58E892AD8B28D008EB6C2 /* ThemeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E882AD8B28D008EB6C2 /* ThemeColor.swift */; };
+		33C58E8C2AD8B2B5008EB6C2 /* ThemeFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E8B2AD8B2B5008EB6C2 /* ThemeFont.swift */; };
+		33C58E8E2AD8B2F6008EB6C2 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E8D2AD8B2F6008EB6C2 /* UIColor+.swift */; };
+		33C58E902AD8C0CF008EB6C2 /* defaultSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E8F2AD8C0CF008EB6C2 /* defaultSectionCell.swift */; };
+		33C58E942AD91391008EB6C2 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E932AD91391008EB6C2 /* SectionHeader.swift */; };
+		33C58E962ADBC0FC008EB6C2 /* RankSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E952ADBC0FC008EB6C2 /* RankSectionCell.swift */; };
+		33C58E9A2ADBF85F008EB6C2 /* MainPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E992ADBF85F008EB6C2 /* MainPageViewModel.swift */; };
 		562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36802AD80EF9008D99B2 /* AppDelegate.swift */; };
 		562E36832AD80EF9008D99B2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36822AD80EF9008D99B2 /* SceneDelegate.swift */; };
 		562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36842AD80EF9008D99B2 /* ViewController.swift */; };
@@ -36,6 +48,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		33C58E7E2AD85024008EB6C2 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		33C58E812AD850D3008EB6C2 /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
+		33C58E842AD8554A008EB6C2 /* MainPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageView.swift; sourceTree = "<group>"; };
+		33C58E862AD85DDA008EB6C2 /* HomeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeItem.swift; sourceTree = "<group>"; };
+		33C58E882AD8B28D008EB6C2 /* ThemeColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColor.swift; sourceTree = "<group>"; };
+		33C58E8B2AD8B2B5008EB6C2 /* ThemeFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeFont.swift; sourceTree = "<group>"; };
+		33C58E8D2AD8B2F6008EB6C2 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		33C58E8F2AD8C0CF008EB6C2 /* defaultSectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultSectionCell.swift; sourceTree = "<group>"; };
+		33C58E932AD91391008EB6C2 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		33C58E952ADBC0FC008EB6C2 /* RankSectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankSectionCell.swift; sourceTree = "<group>"; };
+		33C58E992ADBF85F008EB6C2 /* MainPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewModel.swift; sourceTree = "<group>"; };
 		562E367D2AD80EF9008D99B2 /* Catcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Catcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		562E36802AD80EF9008D99B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		562E36822AD80EF9008D99B2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33C58E7B2AD84F2C008EB6C2 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +100,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		33C58E802AD85028008EB6C2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				33C58E8D2AD8B2F6008EB6C2 /* UIColor+.swift */,
+				33C58E7E2AD85024008EB6C2 /* UIViewController+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		33C58E832AD850F2008EB6C2 /* MainPage */ = {
+			isa = PBXGroup;
+			children = (
+				33C58E862AD85DDA008EB6C2 /* HomeItem.swift */,
+				33C58E8F2AD8C0CF008EB6C2 /* defaultSectionCell.swift */,
+				33C58E952ADBC0FC008EB6C2 /* RankSectionCell.swift */,
+				33C58E842AD8554A008EB6C2 /* MainPageView.swift */,
+				33C58E932AD91391008EB6C2 /* SectionHeader.swift */,
+				33C58E992ADBF85F008EB6C2 /* MainPageViewModel.swift */,
+				33C58E812AD850D3008EB6C2 /* MainPageViewController.swift */,
+			);
+			path = MainPage;
+			sourceTree = "<group>";
+		};
+		33C58E8A2AD8B292008EB6C2 /* Configure */ = {
+			isa = PBXGroup;
+			children = (
+				33C58E882AD8B28D008EB6C2 /* ThemeColor.swift */,
+				33C58E8B2AD8B2B5008EB6C2 /* ThemeFont.swift */,
+			);
+			path = Configure;
+			sourceTree = "<group>";
+		};
 		562E36742AD80EF9008D99B2 = {
 			isa = PBXGroup;
 			children = (
@@ -102,7 +158,10 @@
 				562E36802AD80EF9008D99B2 /* AppDelegate.swift */,
 				562E36822AD80EF9008D99B2 /* SceneDelegate.swift */,
 				562E36842AD80EF9008D99B2 /* ViewController.swift */,
+				33C58E802AD85028008EB6C2 /* Extensions */,
 				562E36862AD80EF9008D99B2 /* Main.storyboard */,
+				33C58E8A2AD8B292008EB6C2 /* Configure */,
+				33C58E832AD850F2008EB6C2 /* MainPage */,
 				562E36892AD80EFA008D99B2 /* Assets.xcassets */,
 				562E368B2AD80EFA008D99B2 /* LaunchScreen.storyboard */,
 				562E368E2AD80EFA008D99B2 /* Info.plist */,
@@ -143,6 +202,9 @@
 			dependencies = (
 			);
 			name = Catcher;
+			packageProductDependencies = (
+				33C58E7A2AD84F2C008EB6C2 /* SnapKit */,
+			);
 			productName = Catcher;
 			productReference = 562E367D2AD80EF9008D99B2 /* Catcher.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +277,9 @@
 				Base,
 			);
 			mainGroup = 562E36742AD80EF9008D99B2;
+			packageReferences = (
+				33C58E792AD84F2C008EB6C2 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 562E367E2AD80EF9008D99B2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -258,9 +323,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33C58E822AD850D3008EB6C2 /* MainPageViewController.swift in Sources */,
 				562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */,
+				33C58E852AD8554A008EB6C2 /* MainPageView.swift in Sources */,
+				33C58E8C2AD8B2B5008EB6C2 /* ThemeFont.swift in Sources */,
 				562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */,
+				33C58E7F2AD85024008EB6C2 /* UIViewController+.swift in Sources */,
+				33C58E892AD8B28D008EB6C2 /* ThemeColor.swift in Sources */,
+				33C58E872AD85DDA008EB6C2 /* HomeItem.swift in Sources */,
+				33C58E962ADBC0FC008EB6C2 /* RankSectionCell.swift in Sources */,
+				33C58E902AD8C0CF008EB6C2 /* defaultSectionCell.swift in Sources */,
+				33C58E9A2ADBF85F008EB6C2 /* MainPageViewModel.swift in Sources */,
 				562E36832AD80EF9008D99B2 /* SceneDelegate.swift in Sources */,
+				33C58E942AD91391008EB6C2 /* SectionHeader.swift in Sources */,
+				33C58E8E2AD8B2F6008EB6C2 /* UIColor+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,7 +442,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -420,7 +496,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -602,6 +678,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		33C58E792AD84F2C008EB6C2 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		33C58E7A2AD84F2C008EB6C2 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33C58E792AD84F2C008EB6C2 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 562E36752AD80EF9008D99B2 /* Project object */;
 }
