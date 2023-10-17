@@ -34,6 +34,8 @@
 		562E36982AD80EFB008D99B2 /* CatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36972AD80EFB008D99B2 /* CatcherTests.swift */; };
 		562E36A22AD80EFB008D99B2 /* CatcherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36A12AD80EFB008D99B2 /* CatcherUITests.swift */; };
 		562E36A42AD80EFB008D99B2 /* CatcherUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36A32AD80EFB008D99B2 /* CatcherUITestsLaunchTests.swift */; };
+		686F30862ADE1322001A3E4C /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F30852ADE1322001A3E4C /* MyPageViewController.swift */; };
+		686F30882ADE13E2001A3E4C /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F30872ADE13E2001A3E4C /* MenuTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +86,8 @@
 		562E369D2AD80EFB008D99B2 /* CatcherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatcherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		562E36A12AD80EFB008D99B2 /* CatcherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatcherUITests.swift; sourceTree = "<group>"; };
 		562E36A32AD80EFB008D99B2 /* CatcherUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatcherUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		686F30852ADE1322001A3E4C /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		686F30872ADE13E2001A3E4C /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +199,7 @@
 				33C58E8A2AD8B292008EB6C2 /* Configure */,
 				33B358082ADE18B200A91C95 /* Factory */,
 				33C58E832AD850F2008EB6C2 /* MainPage */,
+				686F30842ADE12EA001A3E4C /* MyPage */,
 				33C58E9D2ADC2540008EB6C2 /* InfoPage */,
 				562E36892AD80EFA008D99B2 /* Assets.xcassets */,
 				562E368B2AD80EFA008D99B2 /* LaunchScreen.storyboard */,
@@ -218,6 +223,15 @@
 				562E36A32AD80EFB008D99B2 /* CatcherUITestsLaunchTests.swift */,
 			);
 			path = CatcherUITests;
+			sourceTree = "<group>";
+		};
+		686F30842ADE12EA001A3E4C /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				686F30852ADE1322001A3E4C /* MyPageViewController.swift */,
+				686F30872ADE13E2001A3E4C /* MenuTableViewCell.swift */,
+			);
+			path = MyPage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -373,6 +387,8 @@
 				33B3580A2ADE18D600A91C95 /* LabelFactory.swift in Sources */,
 				33C58EA12ADC5392008EB6C2 /* AppConstraint.swift in Sources */,
 				33C58E902AD8C0CF008EB6C2 /* defaultSectionCell.swift in Sources */,
+				686F30882ADE13E2001A3E4C /* MenuTableViewCell.swift in Sources */,
+				686F30862ADE1322001A3E4C /* MyPageViewController.swift in Sources */,
 				33C58E9A2ADBF85F008EB6C2 /* MainPageViewModel.swift in Sources */,
 				562E36832AD80EF9008D99B2 /* SceneDelegate.swift in Sources */,
 				33C58E942AD91391008EB6C2 /* SectionHeader.swift in Sources */,
