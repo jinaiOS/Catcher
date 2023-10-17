@@ -36,9 +36,10 @@
 		562E36982AD80EFB008D99B2 /* CatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36972AD80EFB008D99B2 /* CatcherTests.swift */; };
 		562E36A22AD80EFB008D99B2 /* CatcherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36A12AD80EFB008D99B2 /* CatcherUITests.swift */; };
 		562E36A42AD80EFB008D99B2 /* CatcherUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36A32AD80EFB008D99B2 /* CatcherUITestsLaunchTests.swift */; };
-		686F308F2ADE4993001A3E4C /* AskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F308E2ADE4993001A3E4C /* AskViewController.swift */; };
 		686F30862ADE1322001A3E4C /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F30852ADE1322001A3E4C /* MyPageViewController.swift */; };
 		686F30882ADE13E2001A3E4C /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F30872ADE13E2001A3E4C /* MenuTableViewCell.swift */; };
+		686F308F2ADE4993001A3E4C /* AskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F308E2ADE4993001A3E4C /* AskViewController.swift */; };
+		686F30942ADE7BEA001A3E4C /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F30932ADE7BEA001A3E4C /* ReportViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,9 +92,10 @@
 		562E369D2AD80EFB008D99B2 /* CatcherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatcherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		562E36A12AD80EFB008D99B2 /* CatcherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatcherUITests.swift; sourceTree = "<group>"; };
 		562E36A32AD80EFB008D99B2 /* CatcherUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatcherUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		686F308E2ADE4993001A3E4C /* AskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskViewController.swift; sourceTree = "<group>"; };
 		686F30852ADE1322001A3E4C /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		686F30872ADE13E2001A3E4C /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
+		686F308E2ADE4993001A3E4C /* AskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskViewController.swift; sourceTree = "<group>"; };
+		686F30932ADE7BEA001A3E4C /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +218,7 @@
 				33B358082ADE18B200A91C95 /* Factory */,
 				33C58E832AD850F2008EB6C2 /* MainPage */,
 				686F308D2ADE4960001A3E4C /* AskPage */,
+				686F30922ADE7BAC001A3E4C /* ReportPage */,
 				686F30842ADE12EA001A3E4C /* MyPage */,
 				33C58E9D2ADC2540008EB6C2 /* InfoPage */,
 				562E36892AD80EFA008D99B2 /* Assets.xcassets */,
@@ -242,13 +245,6 @@
 			path = CatcherUITests;
 			sourceTree = "<group>";
 		};
-		686F308D2ADE4960001A3E4C /* AskPage */ = {
-			isa = PBXGroup;
-			children = (
-				686F308E2ADE4993001A3E4C /* AskViewController.swift */,
-			);
-			path = AskPage;
-		};
 		686F30842ADE12EA001A3E4C /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,6 +252,22 @@
 				686F30872ADE13E2001A3E4C /* MenuTableViewCell.swift */,
 			);
 			path = MyPage;
+			sourceTree = "<group>";
+		};
+		686F308D2ADE4960001A3E4C /* AskPage */ = {
+			isa = PBXGroup;
+			children = (
+				686F308E2ADE4993001A3E4C /* AskViewController.swift */,
+			);
+			path = AskPage;
+			sourceTree = "<unknown>";
+		};
+		686F30922ADE7BAC001A3E4C /* ReportPage */ = {
+			isa = PBXGroup;
+			children = (
+				686F30932ADE7BEA001A3E4C /* ReportViewController.swift */,
+			);
+			path = ReportPage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -409,6 +421,7 @@
 				3B2BE3032ADE4EEF00BD54CC /* LoginViewController.swift in Sources */,
 				33C58E892AD8B28D008EB6C2 /* ThemeColor.swift in Sources */,
 				33C58E872AD85DDA008EB6C2 /* HomeItem.swift in Sources */,
+				686F30942ADE7BEA001A3E4C /* ReportViewController.swift in Sources */,
 				33C58E962ADBC0FC008EB6C2 /* RankSectionCell.swift in Sources */,
 				33B3580A2ADE18D600A91C95 /* LabelFactory.swift in Sources */,
 				33C58EA12ADC5392008EB6C2 /* AppConstraint.swift in Sources */,
