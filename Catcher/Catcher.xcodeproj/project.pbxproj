@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33B358072ADE189E00A91C95 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B358062ADE189E00A91C95 /* ButtonFactory.swift */; };
+		33B3580A2ADE18D600A91C95 /* LabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B358092ADE18D600A91C95 /* LabelFactory.swift */; };
 		33C58E7B2AD84F2C008EB6C2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 33C58E7A2AD84F2C008EB6C2 /* SnapKit */; };
 		33C58E7F2AD85024008EB6C2 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E7E2AD85024008EB6C2 /* UIViewController+.swift */; };
 		33C58E822AD850D3008EB6C2 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E812AD850D3008EB6C2 /* MainPageViewController.swift */; };
@@ -19,6 +21,10 @@
 		33C58E942AD91391008EB6C2 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E932AD91391008EB6C2 /* SectionHeader.swift */; };
 		33C58E962ADBC0FC008EB6C2 /* RankSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E952ADBC0FC008EB6C2 /* RankSectionCell.swift */; };
 		33C58E9A2ADBF85F008EB6C2 /* MainPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E992ADBF85F008EB6C2 /* MainPageViewModel.swift */; };
+		33C58E9C2ADC2536008EB6C2 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E9B2ADC2536008EB6C2 /* InfoViewController.swift */; };
+		33C58E9F2ADC2581008EB6C2 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E9E2ADC2581008EB6C2 /* InfoView.swift */; };
+		33C58EA12ADC5392008EB6C2 /* AppConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58EA02ADC5392008EB6C2 /* AppConstraint.swift */; };
+		33C58EA32ADC73C9008EB6C2 /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */; };
 		562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36802AD80EF9008D99B2 /* AppDelegate.swift */; };
 		562E36832AD80EF9008D99B2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36822AD80EF9008D99B2 /* SceneDelegate.swift */; };
 		562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36842AD80EF9008D99B2 /* ViewController.swift */; };
@@ -50,6 +56,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		33B358062ADE189E00A91C95 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
+		33B358092ADE18D600A91C95 /* LabelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelFactory.swift; sourceTree = "<group>"; };
 		33C58E7E2AD85024008EB6C2 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		33C58E812AD850D3008EB6C2 /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
 		33C58E842AD8554A008EB6C2 /* MainPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageView.swift; sourceTree = "<group>"; };
@@ -61,6 +69,10 @@
 		33C58E932AD91391008EB6C2 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		33C58E952ADBC0FC008EB6C2 /* RankSectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankSectionCell.swift; sourceTree = "<group>"; };
 		33C58E992ADBF85F008EB6C2 /* MainPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewModel.swift; sourceTree = "<group>"; };
+		33C58E9B2ADC2536008EB6C2 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		33C58E9E2ADC2581008EB6C2 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		33C58EA02ADC5392008EB6C2 /* AppConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstraint.swift; sourceTree = "<group>"; };
+		33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+.swift"; sourceTree = "<group>"; };
 		562E367D2AD80EF9008D99B2 /* Catcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Catcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		562E36802AD80EF9008D99B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		562E36822AD80EF9008D99B2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,11 +116,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		33B358082ADE18B200A91C95 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				33B358062ADE189E00A91C95 /* ButtonFactory.swift */,
+				33B358092ADE18D600A91C95 /* LabelFactory.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
 		33C58E802AD85028008EB6C2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				33C58E8D2AD8B2F6008EB6C2 /* UIColor+.swift */,
 				33C58E7E2AD85024008EB6C2 /* UIViewController+.swift */,
+				33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -130,10 +152,20 @@
 		33C58E8A2AD8B292008EB6C2 /* Configure */ = {
 			isa = PBXGroup;
 			children = (
+				33C58EA02ADC5392008EB6C2 /* AppConstraint.swift */,
 				33C58E882AD8B28D008EB6C2 /* ThemeColor.swift */,
 				33C58E8B2AD8B2B5008EB6C2 /* ThemeFont.swift */,
 			);
 			path = Configure;
+			sourceTree = "<group>";
+		};
+		33C58E9D2ADC2540008EB6C2 /* InfoPage */ = {
+			isa = PBXGroup;
+			children = (
+				33C58E9E2ADC2581008EB6C2 /* InfoView.swift */,
+				33C58E9B2ADC2536008EB6C2 /* InfoViewController.swift */,
+			);
+			path = InfoPage;
 			sourceTree = "<group>";
 		};
 		562E36742AD80EF9008D99B2 = {
@@ -165,8 +197,10 @@
 				33C58E802AD85028008EB6C2 /* Extensions */,
 				562E36862AD80EF9008D99B2 /* Main.storyboard */,
 				33C58E8A2AD8B292008EB6C2 /* Configure */,
+				33B358082ADE18B200A91C95 /* Factory */,
 				33C58E832AD850F2008EB6C2 /* MainPage */,
 				686F30842ADE12EA001A3E4C /* MyPage */,
+				33C58E9D2ADC2540008EB6C2 /* InfoPage */,
 				562E36892AD80EFA008D99B2 /* Assets.xcassets */,
 				562E368B2AD80EFA008D99B2 /* LaunchScreen.storyboard */,
 				562E368E2AD80EFA008D99B2 /* Info.plist */,
@@ -337,15 +371,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33C58E9F2ADC2581008EB6C2 /* InfoView.swift in Sources */,
 				33C58E822AD850D3008EB6C2 /* MainPageViewController.swift in Sources */,
 				562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */,
 				33C58E852AD8554A008EB6C2 /* MainPageView.swift in Sources */,
 				33C58E8C2AD8B2B5008EB6C2 /* ThemeFont.swift in Sources */,
+				33C58E9C2ADC2536008EB6C2 /* InfoViewController.swift in Sources */,
+				33B358072ADE189E00A91C95 /* ButtonFactory.swift in Sources */,
 				562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */,
+				33C58EA32ADC73C9008EB6C2 /* NSAttributedString+.swift in Sources */,
 				33C58E7F2AD85024008EB6C2 /* UIViewController+.swift in Sources */,
 				33C58E892AD8B28D008EB6C2 /* ThemeColor.swift in Sources */,
 				33C58E872AD85DDA008EB6C2 /* HomeItem.swift in Sources */,
 				33C58E962ADBC0FC008EB6C2 /* RankSectionCell.swift in Sources */,
+				33B3580A2ADE18D600A91C95 /* LabelFactory.swift in Sources */,
+				33C58EA12ADC5392008EB6C2 /* AppConstraint.swift in Sources */,
 				33C58E902AD8C0CF008EB6C2 /* defaultSectionCell.swift in Sources */,
 				686F30882ADE13E2001A3E4C /* MenuTableViewCell.swift in Sources */,
 				686F30862ADE1322001A3E4C /* MyPageViewController.swift in Sources */,
