@@ -51,6 +51,8 @@
 		56C08B742ADF809300FB8608 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B732ADF809300FB8608 /* InfoView.swift */; };
 		56C08B752ADF809300FB8608 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B722ADF809300FB8608 /* InfoViewController.swift */; };
 		56C08B772ADF809900FB8608 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B762ADF809900FB8608 /* ReportViewController.swift */; };
+		68C8C19C2ADFA1AB006423F3 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 68C8C19B2ADFA1AB006423F3 /* FirebaseAuth */; };
+		68C8C19E2ADFA373006423F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68C8C19D2ADFA373006423F3 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +120,7 @@
 		56C08B722ADF809300FB8608 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		56C08B732ADF809300FB8608 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		56C08B762ADF809900FB8608 /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		68C8C19D2ADFA373006423F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33C58E7B2AD84F2C008EB6C2 /* SnapKit in Frameworks */,
+				68C8C19C2ADFA1AB006423F3 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +224,7 @@
 				562E36892AD80EFA008D99B2 /* Assets.xcassets */,
 				562E368B2AD80EFA008D99B2 /* LaunchScreen.storyboard */,
 				562E368E2AD80EFA008D99B2 /* Info.plist */,
+				68C8C19D2ADFA373006423F3 /* GoogleService-Info.plist */,
 			);
 			path = Catcher;
 			sourceTree = "<group>";
@@ -362,6 +367,7 @@
 			name = Catcher;
 			packageProductDependencies = (
 				33C58E7A2AD84F2C008EB6C2 /* SnapKit */,
+				68C8C19B2ADFA1AB006423F3 /* FirebaseAuth */,
 			);
 			productName = Catcher;
 			productReference = 562E367D2AD80EF9008D99B2 /* Catcher.app */;
@@ -437,6 +443,7 @@
 			mainGroup = 562E36742AD80EF9008D99B2;
 			packageReferences = (
 				33C58E792AD84F2C008EB6C2 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				68C8C19A2ADFA1AB006423F3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 562E367E2AD80EF9008D99B2 /* Products */;
 			projectDirPath = "";
@@ -456,6 +463,7 @@
 			files = (
 				562E368D2AD80EFA008D99B2 /* LaunchScreen.storyboard in Resources */,
 				562E368A2AD80EFA008D99B2 /* Assets.xcassets in Resources */,
+				68C8C19E2ADFA373006423F3 /* GoogleService-Info.plist in Resources */,
 				562E36BF2AD9172B008D99B2 /* CommonHeaderView.xib in Resources */,
 				562E36882AD80EF9008D99B2 /* Main.storyboard in Resources */,
 			);
@@ -870,6 +878,14 @@
 				minimumVersion = 5.6.0;
 			};
 		};
+		68C8C19A2ADFA1AB006423F3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -877,6 +893,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 33C58E792AD84F2C008EB6C2 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		68C8C19B2ADFA1AB006423F3 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 68C8C19A2ADFA1AB006423F3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
