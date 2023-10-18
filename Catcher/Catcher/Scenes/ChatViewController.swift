@@ -1,13 +1,13 @@
 //
-//  IntroViewController.swift
+//  ChatViewController.swift
 //  Catcher
 //
-//  Created by 김지은 on 2023/10/13.
+//  Created by 김지은 on 2023/10/18.
 //
 
 import UIKit
 
-class IntroViewController: UIViewController {
+class ChatViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

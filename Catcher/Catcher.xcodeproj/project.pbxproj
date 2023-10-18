@@ -46,9 +46,10 @@
 		562E36BF2AD9172B008D99B2 /* CommonHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 562E36BE2AD9172B008D99B2 /* CommonHeaderView.xib */; };
 		562E36C12AD91901008D99B2 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36C02AD91901008D99B2 /* Common.swift */; };
 		56C08B472ADF6B7E00FB8608 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B462ADF6B7E00FB8608 /* ChatViewController.swift */; };
+		56C08B492ADF72E900FB8608 /* AskPage in Resources */ = {isa = PBXBuildFile; fileRef = 56C08B482ADF72E900FB8608 /* AskPage */; };
+		56C08B502ADF754B00FB8608 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B4F2ADF754B00FB8608 /* UIView+.swift */; };
 		686F30862ADE1322001A3E4C /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F30852ADE1322001A3E4C /* MyPageViewController.swift */; };
 		686F30882ADE13E2001A3E4C /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F30872ADE13E2001A3E4C /* MenuTableViewCell.swift */; };
-		686F308F2ADE4993001A3E4C /* AskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F308E2ADE4993001A3E4C /* AskViewController.swift */; };
 		686F30942ADE7BEA001A3E4C /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F30932ADE7BEA001A3E4C /* ReportViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -112,9 +113,10 @@
 		562E36BE2AD9172B008D99B2 /* CommonHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommonHeaderView.xib; sourceTree = "<group>"; };
 		562E36C02AD91901008D99B2 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		56C08B462ADF6B7E00FB8608 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		56C08B482ADF72E900FB8608 /* AskPage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AskPage; sourceTree = "<group>"; };
+		56C08B4F2ADF754B00FB8608 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		686F30852ADE1322001A3E4C /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		686F30872ADE13E2001A3E4C /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
-		686F308E2ADE4993001A3E4C /* AskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskViewController.swift; sourceTree = "<group>"; };
 		686F30932ADE7BEA001A3E4C /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -159,6 +161,7 @@
 				33C58E8D2AD8B2F6008EB6C2 /* UIColor+.swift */,
 				33C58E7E2AD85024008EB6C2 /* UIViewController+.swift */,
 				33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */,
+				56C08B4F2ADF754B00FB8608 /* UIView+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -208,7 +211,6 @@
 		562E36742AD80EF9008D99B2 = {
 			isa = PBXGroup;
 			children = (
-				3B2BE3042ADE4F3900BD54CC /* LoginPage */,
 				562E367F2AD80EF9008D99B2 /* Catcher */,
 				562E36962AD80EFB008D99B2 /* CatcherTests */,
 				562E36A02AD80EFB008D99B2 /* CatcherUITests */,
@@ -232,25 +234,11 @@
 				562E36802AD80EF9008D99B2 /* AppDelegate.swift */,
 				562E36822AD80EF9008D99B2 /* SceneDelegate.swift */,
 				562E36842AD80EF9008D99B2 /* ViewController.swift */,
-				33C58E802AD85028008EB6C2 /* Extensions */,
 				562E36862AD80EF9008D99B2 /* Main.storyboard */,
-				562E36BA2AD8DD03008D99B2 /* CommonUtil.swift */,
-				562E36C02AD91901008D99B2 /* Common.swift */,
-				562E36B82AD8DCC5008D99B2 /* BaseHeaderViewController.swift */,
-				562E36B02AD8D0EE008D99B2 /* BaseTabBarController.swift */,
-				562E36B62AD8DCAA008D99B2 /* BaseViewController.swift */,
-				562E36B22AD8D845008D99B2 /* IntroViewController.swift */,
-				562E36BC2AD9061D008D99B2 /* CommonHeaderView.swift */,
-				562E36BE2AD9172B008D99B2 /* CommonHeaderView.xib */,
-				562E36B42AD8DB57008D99B2 /* DataManager.swift */,
-				56C08B462ADF6B7E00FB8608 /* ChatViewController.swift */,
+				56C08B4E2ADF74FE00FB8608 /* Util */,
 				33C58E8A2AD8B292008EB6C2 /* Configure */,
 				33B358082ADE18B200A91C95 /* Factory */,
-				33C58E832AD850F2008EB6C2 /* MainPage */,
-				686F308D2ADE4960001A3E4C /* AskPage */,
-				686F30922ADE7BAC001A3E4C /* ReportPage */,
-				686F30842ADE12EA001A3E4C /* MyPage */,
-				33C58E9D2ADC2540008EB6C2 /* InfoPage */,
+				56C08B4A2ADF738200FB8608 /* Scenes */,
 				562E36892AD80EFA008D99B2 /* Assets.xcassets */,
 				562E368B2AD80EFA008D99B2 /* LaunchScreen.storyboard */,
 				562E368E2AD80EFA008D99B2 /* Info.plist */,
@@ -275,22 +263,69 @@
 			path = CatcherUITests;
 			sourceTree = "<group>";
 		};
+		56C08B4A2ADF738200FB8608 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				56C08B4B2ADF73C300FB8608 /* Base */,
+				562E36B22AD8D845008D99B2 /* IntroViewController.swift */,
+				3B2BE3042ADE4F3900BD54CC /* LoginPage */,
+				56C08B4C2ADF73D100FB8608 /* TabBar */,
+				56C08B462ADF6B7E00FB8608 /* ChatViewController.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		56C08B4B2ADF73C300FB8608 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				56C08B4D2ADF747800FB8608 /* CommonHeaderView */,
+				562E36B82AD8DCC5008D99B2 /* BaseHeaderViewController.swift */,
+				562E36B02AD8D0EE008D99B2 /* BaseTabBarController.swift */,
+				562E36B62AD8DCAA008D99B2 /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		56C08B4C2ADF73D100FB8608 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				33C58E832AD850F2008EB6C2 /* MainPage */,
+				686F30842ADE12EA001A3E4C /* MyPage */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		56C08B4D2ADF747800FB8608 /* CommonHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				562E36BC2AD9061D008D99B2 /* CommonHeaderView.swift */,
+				562E36BE2AD9172B008D99B2 /* CommonHeaderView.xib */,
+			);
+			path = CommonHeaderView;
+			sourceTree = "<group>";
+		};
+		56C08B4E2ADF74FE00FB8608 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				562E36BA2AD8DD03008D99B2 /* CommonUtil.swift */,
+				562E36C02AD91901008D99B2 /* Common.swift */,
+				562E36B42AD8DB57008D99B2 /* DataManager.swift */,
+				33C58E802AD85028008EB6C2 /* Extensions */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		686F30842ADE12EA001A3E4C /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				56C08B482ADF72E900FB8608 /* AskPage */,
+				686F30922ADE7BAC001A3E4C /* ReportPage */,
+				33C58E9D2ADC2540008EB6C2 /* InfoPage */,
 				686F30852ADE1322001A3E4C /* MyPageViewController.swift */,
 				686F30872ADE13E2001A3E4C /* MenuTableViewCell.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
-		};
-		686F308D2ADE4960001A3E4C /* AskPage */ = {
-			isa = PBXGroup;
-			children = (
-				686F308E2ADE4993001A3E4C /* AskViewController.swift */,
-			);
-			path = AskPage;
-			sourceTree = "<unknown>";
 		};
 		686F30922ADE7BAC001A3E4C /* ReportPage */ = {
 			isa = PBXGroup;
@@ -413,6 +448,7 @@
 				562E368D2AD80EFA008D99B2 /* LaunchScreen.storyboard in Resources */,
 				562E368A2AD80EFA008D99B2 /* Assets.xcassets in Resources */,
 				562E36BF2AD9172B008D99B2 /* CommonHeaderView.xib in Resources */,
+				56C08B492ADF72E900FB8608 /* AskPage in Resources */,
 				562E36882AD80EF9008D99B2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -446,7 +482,6 @@
 				33C58E852AD8554A008EB6C2 /* MainPageView.swift in Sources */,
 				33C58E8C2AD8B2B5008EB6C2 /* ThemeFont.swift in Sources */,
 				33C58E9C2ADC2536008EB6C2 /* InfoViewController.swift in Sources */,
-				686F308F2ADE4993001A3E4C /* AskViewController.swift in Sources */,
 				33B358072ADE189E00A91C95 /* ButtonFactory.swift in Sources */,
 				562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */,
 				562E36C12AD91901008D99B2 /* Common.swift in Sources */,
@@ -463,6 +498,7 @@
 				33C58E872AD85DDA008EB6C2 /* HomeItem.swift in Sources */,
 				686F30942ADE7BEA001A3E4C /* ReportViewController.swift in Sources */,
 				33C58E962ADBC0FC008EB6C2 /* RankSectionCell.swift in Sources */,
+				56C08B502ADF754B00FB8608 /* UIView+.swift in Sources */,
 				33B3580A2ADE18D600A91C95 /* LabelFactory.swift in Sources */,
 				33C58EA12ADC5392008EB6C2 /* AppConstraint.swift in Sources */,
 				3B2BE3012ADE4EAE00BD54CC /* LoginView.swift in Sources */,

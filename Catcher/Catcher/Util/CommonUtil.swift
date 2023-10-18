@@ -40,7 +40,7 @@ struct CommonUtil {
             
             if CommonUtil.logTypeIsOSLog {
                 DispatchQueue.main.async {
-                    let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "Petmily")
+                    let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "Catcher")
                     if #available(iOS 12.0, *) {
                         if let output = output as? CVarArg {
                             os_log(.default, log: log,"%@ ----- %i Line ----- %@ %@", filename,line,function,output)
