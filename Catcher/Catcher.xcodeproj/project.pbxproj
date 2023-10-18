@@ -51,6 +51,7 @@
 		686F30862ADE1322001A3E4C /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F30852ADE1322001A3E4C /* MyPageViewController.swift */; };
 		686F30882ADE13E2001A3E4C /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F30872ADE13E2001A3E4C /* MenuTableViewCell.swift */; };
 		686F30942ADE7BEA001A3E4C /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F30932ADE7BEA001A3E4C /* ReportViewController.swift */; };
+		68C8C1972ADF68D3006423F3 /* AskPage in Resources */ = {isa = PBXBuildFile; fileRef = 68C8C1962ADF68D3006423F3 /* AskPage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,7 @@
 		686F30852ADE1322001A3E4C /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		686F30872ADE13E2001A3E4C /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		686F30932ADE7BEA001A3E4C /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		68C8C1962ADF68D3006423F3 /* AskPage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AskPage; path = Catcher/AskPage; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +241,14 @@
 				33C58E8A2AD8B292008EB6C2 /* Configure */,
 				33B358082ADE18B200A91C95 /* Factory */,
 				56C08B4A2ADF738200FB8608 /* Scenes */,
+				3B2BE3042ADE4F3900BD54CC /* LoginPage */,
+				33C58E8A2AD8B292008EB6C2 /* Configure */,
+				33B358082ADE18B200A91C95 /* Factory */,
+				33C58E832AD850F2008EB6C2 /* MainPage */,
+				68C8C1962ADF68D3006423F3 /* AskPage */,
+				686F30922ADE7BAC001A3E4C /* ReportPage */,
+				686F30842ADE12EA001A3E4C /* MyPage */,
+				33C58E9D2ADC2540008EB6C2 /* InfoPage */,
 				562E36892AD80EFA008D99B2 /* Assets.xcassets */,
 				562E368B2AD80EFA008D99B2 /* LaunchScreen.storyboard */,
 				562E368E2AD80EFA008D99B2 /* Info.plist */,
@@ -450,6 +460,7 @@
 				562E36BF2AD9172B008D99B2 /* CommonHeaderView.xib in Resources */,
 				56C08B492ADF72E900FB8608 /* AskPage in Resources */,
 				562E36882AD80EF9008D99B2 /* Main.storyboard in Resources */,
+				68C8C1972ADF68D3006423F3 /* AskPage in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
