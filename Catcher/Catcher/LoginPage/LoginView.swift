@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SnapKit
+
 
 final class LoginView: UIView {
     lazy var emailTextField: UITextField = {
