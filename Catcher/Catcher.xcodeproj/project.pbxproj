@@ -18,6 +18,8 @@
 		33C58EA32ADC73C9008EB6C2 /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */; };
 		3B2BE3012ADE4EAE00BD54CC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */; };
 		3B2BE3032ADE4EEF00BD54CC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2BE3022ADE4EEF00BD54CC /* LoginViewController.swift */; };
+		3B3E35D52ADFA2F1006841D8 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E35D42ADFA2F1006841D8 /* RegisterViewController.swift */; };
+		3B3E35D72AE125A3006841D8 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E35D62AE125A3006841D8 /* RegisterView.swift */; };
 		562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36802AD80EF9008D99B2 /* AppDelegate.swift */; };
 		562E36832AD80EF9008D99B2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36822AD80EF9008D99B2 /* SceneDelegate.swift */; };
 		562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36842AD80EF9008D99B2 /* ViewController.swift */; };
@@ -83,6 +85,8 @@
 		33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+.swift"; sourceTree = "<group>"; };
 		3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3B2BE3022ADE4EEF00BD54CC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3B3E35D42ADFA2F1006841D8 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		3B3E35D62AE125A3006841D8 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		562E367D2AD80EF9008D99B2 /* Catcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Catcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		562E36802AD80EF9008D99B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		562E36822AD80EF9008D99B2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -185,6 +189,8 @@
 			children = (
 				3B2BE3022ADE4EEF00BD54CC /* LoginViewController.swift */,
 				3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */,
+				3B3E35D42ADFA2F1006841D8 /* RegisterViewController.swift */,
+				3B3E35D62AE125A3006841D8 /* RegisterView.swift */,
 			);
 			name = LoginPage;
 			path = ../LoginPage;
@@ -491,6 +497,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				562E36B32AD8D845008D99B2 /* IntroViewController.swift in Sources */,
+				3B3E35D52ADFA2F1006841D8 /* RegisterViewController.swift in Sources */,
 				56C08B692ADF805800FB8608 /* HomeItem.swift in Sources */,
 				562E36B52AD8DB57008D99B2 /* DataManager.swift in Sources */,
 				562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */,
@@ -504,6 +511,7 @@
 				56C08B6E2ADF808400FB8608 /* MenuTableViewCell.swift in Sources */,
 				56C08B672ADF805800FB8608 /* RankSectionCell.swift in Sources */,
 				56C08B742ADF809300FB8608 /* InfoView.swift in Sources */,
+				3B3E35D72AE125A3006841D8 /* RegisterView.swift in Sources */,
 				562E36BB2AD8DD03008D99B2 /* CommonUtil.swift in Sources */,
 				562E36832AD80EF9008D99B2 /* SceneDelegate.swift in Sources */,
 				562E36B72AD8DCAA008D99B2 /* BaseViewController.swift in Sources */,
