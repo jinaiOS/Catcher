@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		230509582AE2469000F58092 /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230509572AE2469000F58092 /* ContactViewController.swift */; };
+		2305095A2AE2470B00F58092 /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230509592AE2470B00F58092 /* UnderlineSegmentedControl.swift */; };
+		2305095D2AE2475E00F58092 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2305095B2AE2475E00F58092 /* ContactTableViewCell.swift */; };
+		2305095E2AE2475E00F58092 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2305095C2AE2475E00F58092 /* ContactTableViewCell.xib */; };
 		33532B6A2AE179E7008B47EB /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 33532B692AE179E7008B47EB /* FirebaseAnalytics */; };
 		33532B6C2AE179E7008B47EB /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 33532B6B2AE179E7008B47EB /* FirebaseAuth */; };
 		33532B6E2AE179E7008B47EB /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 33532B6D2AE179E7008B47EB /* FirebaseDatabase */; };
 		33532B702AE179E7008B47EB /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 33532B6F2AE179E7008B47EB /* FirebaseFirestore */; };
 		33532B722AE179E7008B47EB /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 33532B712AE179E7008B47EB /* FirebaseRemoteConfig */; };
 		33532B742AE179E7008B47EB /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 33532B732AE179E7008B47EB /* FirebaseStorage */; };
-		33532B762AE17A22008B47EB /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B752AE17A22008B47EB /* Const.swift */; };
 		33532B782AE17A31008B47EB /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B772AE17A31008B47EB /* UserInfo.swift */; };
 		33532B7A2AE17A3E008B47EB /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B792AE17A3E008B47EB /* DBManager.swift */; };
 		33532B7C2AE17A53008B47EB /* FirebaseErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B7B2AE17A53008B47EB /* FirebaseErrors.swift */; };
@@ -21,6 +24,7 @@
 		33532B802AE17A75008B47EB /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B7F2AE17A75008B47EB /* UserDefaultsManager.swift */; };
 		33532B832AE299E1008B47EB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33532B822AE299E1008B47EB /* GoogleService-Info.plist */; };
 		33532B872AE3CC84008B47EB /* DBProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B862AE3CC84008B47EB /* DBProtocol.swift */; };
+		33ABF3512AE3D7EF002DCCF4 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3502AE3D7EF002DCCF4 /* Const.swift */; };
 		33B358072ADE189E00A91C95 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B358062ADE189E00A91C95 /* ButtonFactory.swift */; };
 		33B3580A2ADE18D600A91C95 /* LabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B358092ADE18D600A91C95 /* LabelFactory.swift */; };
 		33C58E7B2AD84F2C008EB6C2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 33C58E7A2AD84F2C008EB6C2 /* SnapKit */; };
@@ -87,7 +91,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		33532B752AE17A22008B47EB /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
+		230509572AE2469000F58092 /* ContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewController.swift; sourceTree = "<group>"; };
+		230509592AE2470B00F58092 /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
+		2305095B2AE2475E00F58092 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
+		2305095C2AE2475E00F58092 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
 		33532B772AE17A31008B47EB /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		33532B792AE17A3E008B47EB /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		33532B7B2AE17A53008B47EB /* FirebaseErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseErrors.swift; sourceTree = "<group>"; };
@@ -95,6 +102,7 @@
 		33532B7F2AE17A75008B47EB /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		33532B822AE299E1008B47EB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		33532B862AE3CC84008B47EB /* DBProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBProtocol.swift; sourceTree = "<group>"; };
+		33ABF3502AE3D7EF002DCCF4 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		33B358062ADE189E00A91C95 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
 		33B358092ADE18D600A91C95 /* LabelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelFactory.swift; sourceTree = "<group>"; };
 		33C58E7E2AD85024008EB6C2 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
@@ -181,7 +189,7 @@
 		33532B812AE17A8E008B47EB /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				33532B752AE17A22008B47EB /* Const.swift */,
+				33ABF3502AE3D7EF002DCCF4 /* Const.swift */,
 				33532B772AE17A31008B47EB /* UserInfo.swift */,
 				33532B792AE17A3E008B47EB /* DBManager.swift */,
 				33532B862AE3CC84008B47EB /* DBProtocol.swift */,
@@ -362,6 +370,10 @@
 			children = (
 				56C08B6C2ADF808400FB8608 /* MenuTableViewCell.swift */,
 				56C08B6D2ADF808400FB8608 /* MyPageViewController.swift */,
+				230509572AE2469000F58092 /* ContactViewController.swift */,
+				230509592AE2470B00F58092 /* UnderlineSegmentedControl.swift */,
+				2305095B2AE2475E00F58092 /* ContactTableViewCell.swift */,
+				2305095C2AE2475E00F58092 /* ContactTableViewCell.xib */,
 				56C08B792ADF80BD00FB8608 /* AskPage */,
 				56C08B7A2ADF80C400FB8608 /* InfoPage */,
 				56C08B7B2ADF80CC00FB8608 /* ReportPage */,
@@ -511,6 +523,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2305095E2AE2475E00F58092 /* ContactTableViewCell.xib in Resources */,
 				562E368D2AD80EFA008D99B2 /* LaunchScreen.storyboard in Resources */,
 				562E368A2AD80EFA008D99B2 /* Assets.xcassets in Resources */,
 				33532B832AE299E1008B47EB /* GoogleService-Info.plist in Resources */,
@@ -550,6 +563,7 @@
 				33C58E8C2AD8B2B5008EB6C2 /* ThemeFont.swift in Sources */,
 				33B358072ADE189E00A91C95 /* ButtonFactory.swift in Sources */,
 				56C08B662ADF805800FB8608 /* SectionHeader.swift in Sources */,
+				230509582AE2469000F58092 /* ContactViewController.swift in Sources */,
 				562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */,
 				562E36C12AD91901008D99B2 /* Common.swift in Sources */,
 				562E36B92AD8DCC5008D99B2 /* BaseHeaderViewController.swift in Sources */,
@@ -559,6 +573,8 @@
 				56C08B742ADF809300FB8608 /* InfoView.swift in Sources */,
 				3B3E35D72AE125A3006841D8 /* RegisterView.swift in Sources */,
 				562E36BB2AD8DD03008D99B2 /* CommonUtil.swift in Sources */,
+				33ABF3512AE3D7EF002DCCF4 /* Const.swift in Sources */,
+				2305095D2AE2475E00F58092 /* ContactTableViewCell.swift in Sources */,
 				562E36832AD80EF9008D99B2 /* SceneDelegate.swift in Sources */,
 				562E36B72AD8DCAA008D99B2 /* BaseViewController.swift in Sources */,
 				562E36BD2AD9061D008D99B2 /* CommonHeaderView.swift in Sources */,
@@ -572,8 +588,8 @@
 				56C08B502ADF754B00FB8608 /* UIView+.swift in Sources */,
 				33B3580A2ADE18D600A91C95 /* LabelFactory.swift in Sources */,
 				33532B872AE3CC84008B47EB /* DBProtocol.swift in Sources */,
-				33532B762AE17A22008B47EB /* Const.swift in Sources */,
 				56C08B6A2ADF805800FB8608 /* MainPageViewModel.swift in Sources */,
+				2305095A2AE2470B00F58092 /* UnderlineSegmentedControl.swift in Sources */,
 				33C58EA12ADC5392008EB6C2 /* AppConstraint.swift in Sources */,
 				33532B7C2AE17A53008B47EB /* FirebaseErrors.swift in Sources */,
 				56C08B652ADF805800FB8608 /* MainPageViewController.swift in Sources */,
