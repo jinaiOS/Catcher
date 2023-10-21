@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAB2_5n-QxvaqnsS-mTF9PZgjc-6Lcn9KA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>189743219938</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.utopia.Catcher</string>
+	<key>PROJECT_ID</key>
+	<string>catcher-dcac0</string>
+	<key>STORAGE_BUCKET</key>
+	<string>catcher-dcac0.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:189743219938:ios:b4881b91091380cd608abb</string>
+	<key>DATABASE_URL</key>
+	<string>https://catcher-dcac0-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+</dict>
+</plist>
