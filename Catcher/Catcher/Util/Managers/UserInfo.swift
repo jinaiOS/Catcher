@@ -9,13 +9,15 @@ import Foundation
 
 struct UserInfo {
     let uid: String
-    let nickName: String
-    let profileUrl: String
-    let location: String
-    let height: Int
-    let body: String
-    let education: String
-    let drinking: String
-    let smoking: Bool
-    var pick: [UserInfo]? = []
+    let sex: String
+    var nickName: String
+    var location: String
+    var height: Int
+    var body: String
+    var education: String
+    var drinking: String
+    var smoking: Bool
+    var register: Date = Date()
+    var score: Int
+    var pick: [String]? = []
 }
