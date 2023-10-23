@@ -113,7 +113,7 @@ class ChatViewController: UIViewController {
             if let targetConversation = currentConversations.first(where: {
                 $0.otherUserEmail == DatabaseManager.safeEmail(emailAddress: result.email)
             }) {
-                let vc = ChattingDeatilViewController(with: targetConversation.otherUserEmail, id: targetConversation.id)
+                let vc = ChattingDetailViewController(with: targetConversation.otherUserEmail, id: targetConversation.id)
                 vc.isNewConversation = false
                 vc.title = targetConversation.name
                 vc.navigationItem.largeTitleDisplayMode = .never
@@ -139,13 +139,13 @@ class ChatViewController: UIViewController {
             }
             switch result {
             case .success(let conversationId):
-                let vc = ChattingDeatilViewController(with: email, id: conversationId)
+                let vc = ChattingDetailViewController(with: email, id: conversationId)
                 vc.isNewConversation = false
                 vc.title = name
                 vc.navigationItem.largeTitleDisplayMode = .never
                 strongSelf.navigationController?.pushViewController(vc, animated: true)
             case .failure(_):
-                let vc = ChattingDeatilViewController(with: email, id: nil)
+                let vc = ChattingDetailViewController(with: email, id: nil)
                 vc.isNewConversation = true
                 vc.title = name
                 vc.navigationItem.largeTitleDisplayMode = .never
@@ -206,7 +206,7 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func openConversation(_ model: Conversation) {
-        let vc = ChattingDeatilViewController(with: model.otherUserEmail, id: model.id)
+        let vc = ChattingDetailViewController(with: model.otherUserEmail, id: model.id)
         vc.title = model.name
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)

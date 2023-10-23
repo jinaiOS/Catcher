@@ -207,7 +207,7 @@ extension DatabaseManager {
             }
 
             let messageDate = firstMessage.sentDate
-            let dateString = ChattingDeatilViewController.dateFormatter.string(from: messageDate)
+            let dateString = ChattingDetailViewController.dateFormatter.string(from: messageDate)
 
             var message = ""
 
@@ -320,7 +320,7 @@ extension DatabaseManager {
 //        }
 
         let messageDate = firstMessage.sentDate
-        let dateString = ChattingDeatilViewController.dateFormatter.string(from: messageDate)
+        let dateString = ChattingDetailViewController.dateFormatter.string(from: messageDate)
 
         var message = ""
         switch firstMessage.kind {
@@ -412,7 +412,7 @@ extension DatabaseManager {
                     let senderEmail = dictionary["sender_email"] as? String,
                     let type = dictionary["type"] as? String,
                     let dateString = dictionary["date"] as? String,
-                    let date = ChattingDeatilViewController.dateFormatter.date(from: dateString) else {
+                    let date = ChattingDetailViewController.dateFormatter.date(from: dateString) else {
                         return nil
                 }
                 var kind: MessageKind?
@@ -498,7 +498,7 @@ extension DatabaseManager {
             }
 
             let messageDate = newMessage.sentDate
-            let dateString = ChattingDeatilViewController.dateFormatter.string(from: messageDate)
+            let dateString = ChattingDetailViewController.dateFormatter.string(from: messageDate)
 
             var message = ""
             switch newMessage.kind {
