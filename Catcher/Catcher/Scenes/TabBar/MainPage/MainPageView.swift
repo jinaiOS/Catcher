@@ -11,13 +11,13 @@ import SnapKit
 final class MainPageView: UIView {
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        view.register(defaultSectionCell.self,
-                      forCellWithReuseIdentifier: defaultSectionCell.identifier)
+        view.register(DefaultSectionCell.self,
+                      forCellWithReuseIdentifier: DefaultSectionCell.identifier)
         view.register(RankSectionCell.self,
                       forCellWithReuseIdentifier: RankSectionCell.identifier)
-        view.register(SectionHeader.self,
+        view.register(SectionHeaderView.self,
                       forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                      withReuseIdentifier: SectionHeader.identifier)
+                      withReuseIdentifier: SectionHeaderView.identifier)
         view.setCollectionViewLayout(collectionViewLayout(), animated: true)
         return view
     }()

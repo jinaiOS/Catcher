@@ -1,5 +1,5 @@
 //
-//  SectionHeader.swift
+//  SectionHeaderView.swift
 //  Catcher
 //
 //  Copyright (c) 2023 z-wook. All right reserved.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class SectionHeader: UICollectionReusableView {
+final class SectionHeaderView: UICollectionReusableView {
     static let identifier = "SectionHeader"
     
     private lazy var sectionNameLabel: UILabel = {
@@ -33,7 +33,7 @@ final class SectionHeader: UICollectionReusableView {
     }
 }
 
-private extension SectionHeader {
+private extension SectionHeaderView {
     func setLayout() {
         addSubview(sectionNameLabel)
         

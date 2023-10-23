@@ -1,5 +1,5 @@
 //
-//  defaultCell.swift
+//  DefaultSectionCell.swift
 //  Catcher
 //
 //  Copyright (c) 2023 z-wook. All right reserved.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class defaultSectionCell: UICollectionViewCell {
+final class DefaultSectionCell: UICollectionViewCell {
     static let identifier = "defaultSectionCell"
     
     private lazy var imageView: UIImageView = {
@@ -27,14 +27,18 @@ final class defaultSectionCell: UICollectionViewCell {
     }
 }
 
-extension defaultSectionCell {
+extension DefaultSectionCell {
     func configure(data: HomeItem) {
-//        imageView.image = data.imageUrl
-        imageView.image = UIImage(named: "sample1")
+        ImageCacheManager.shared.loadImage(uid: data.info.uid) { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
+        }
     }
 }
 
-private extension defaultSectionCell {
+private extension DefaultSectionCell {
     func setLayout() {
         self.addSubview(imageView)
         

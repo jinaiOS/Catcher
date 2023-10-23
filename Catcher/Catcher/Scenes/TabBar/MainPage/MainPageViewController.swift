@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 import SnapKit
 import SwiftUI
 
@@ -13,6 +14,7 @@ final class MainPageViewController: UIViewController {
     private let mainPageView = MainPageView()
     private let viewModel = MainPageViewModel()
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
+    private var cancellables = Set<AnyCancellable>()
     
     override func loadView() {
         super.loadView()
@@ -23,13 +25,30 @@ final class MainPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configure()
         setDataSource()
         setHeader()
-        applyItems()
+        bind()
+        viewModel.fetchMainPageData()
     }
 }
 
-extension MainPageViewController {
+private extension MainPageViewController {
+    func configure() {
+        mainPageView.collectionView.delegate = self
+    }
+    
+    func bind() {
+        viewModel.mainSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] data in
+                guard let self = self else { return }
+                applyItems(data: data)
+            }.store(in: &cancellables)
+    }
+}
+
+private extension MainPageViewController {
     func setDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section, Item>(
             collectionView: mainPageView.collectionView,
@@ -37,8 +56,8 @@ extension MainPageViewController {
                 switch itemIdentifier {
                 case .random(let item), .near(let item), .new(let item), .pick(let item):
                     guard let cell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: defaultSectionCell.identifier,
-                        for: indexPath) as? defaultSectionCell else { return UICollectionViewCell() }
+                        withReuseIdentifier: DefaultSectionCell.identifier,
+                        for: indexPath) as? DefaultSectionCell else { return UICollectionViewCell() }
                     cell.configure(data: item)
                     return cell
                     
@@ -46,7 +65,7 @@ extension MainPageViewController {
                     guard let cell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: RankSectionCell.identifier,
                         for: indexPath) as? RankSectionCell else { return UICollectionViewCell() }
-                    cell.configure(data: item)
+                    cell.configure(data: item, index: indexPath.item)
                     return cell
                 }
             })
@@ -57,9 +76,9 @@ extension MainPageViewController {
         dataSource.supplementaryViewProvider = { [weak self] (collectionView, kind, indexPath) in
             guard let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: SectionHeader.identifier,
-                for: indexPath) as? SectionHeader else {
-                return SectionHeader()
+                withReuseIdentifier: SectionHeaderView.identifier,
+                for: indexPath) as? SectionHeaderView else {
+                return SectionHeaderView()
             }
             let title = self?.viewModel.getSectionTitle(section: indexPath.section)
             header.configure(sectionTitle: title)
@@ -67,25 +86,55 @@ extension MainPageViewController {
         }
     }
     
-    func applyItems() {
+    func applyItems(data: MainItems) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        let randomSection = Section(id: "Random")
-        let rankSection = Section(id: "Rank")
-        let nearSection = Section(id: "Near")
-        let newSection = Section(id: "New")
-        let pickSection = Section(id: "Pick")
+        
+        let randomSection = Section(id: SectionName.random.sectionID)
+        let rankSection = Section(id: SectionName.rank.sectionID)
+        let nearSection = Section(id: SectionName.near.sectionID)
+        let newSection = Section(id: SectionName.new.sectionID)
+        let pickSection = Section(id: SectionName.pick.sectionID)
         
         [randomSection, rankSection, nearSection, newSection, pickSection].forEach {
             snapshot.appendSections([$0])
         }
         
-        snapshot.appendItems(viewModel.randomItems, toSection: randomSection)
-        snapshot.appendItems(viewModel.rankItems, toSection: rankSection)
-        snapshot.appendItems(viewModel.nearItems, toSection: nearSection)
-        snapshot.appendItems(viewModel.newItems, toSection: newSection)
-        snapshot.appendItems(viewModel.pickItems, toSection: pickSection)
-        
+        snapshot.appendItems(data.random, toSection: randomSection)
+        snapshot.appendItems(data.rank, toSection: rankSection)
+        snapshot.appendItems(data.near, toSection: nearSection)
+        snapshot.appendItems(data.new, toSection: newSection)
+        snapshot.appendItems(data.pick, toSection: pickSection)
         dataSource?.apply(snapshot)
+    }
+}
+
+extension MainPageViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let index = indexPath.item
+        switch indexPath.section {
+        case 0:
+            let items = viewModel.mainSubject.value.random
+            print(items[index])
+            
+        case 1:
+            let items = viewModel.mainSubject.value.rank
+            print(items[index])
+            
+        case 2:
+            let items = viewModel.mainSubject.value.near
+            print(items[index])
+            
+        case 3:
+            let items = viewModel.mainSubject.value.new
+            print(items[index])
+            
+        case 4:
+            let items = viewModel.mainSubject.value.pick
+            print(items[index])
+            
+        default:
+            break
+        }
     }
 }
 

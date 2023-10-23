@@ -13,7 +13,7 @@ final class RankSectionCell: UICollectionViewCell {
     
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleToFill
+        view.contentMode = .scaleAspectFit
         return view
     }()
     
@@ -35,9 +35,14 @@ final class RankSectionCell: UICollectionViewCell {
 }
 
 extension RankSectionCell {
-    func configure(data: HomeItem) {
-        imageView.image = UIImage(named: "sample2")
-        rankLabel.text = data.rank
+    func configure(data: HomeItem, index: Int) {
+        rankLabel.text = "\(index + 1)"
+        ImageCacheManager.shared.loadImage(uid: data.info.uid) { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
+        }
     }
 }
 
