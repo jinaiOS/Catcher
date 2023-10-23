@@ -2,7 +2,7 @@
 //  IntroViewController.swift
 //  Catcher
 //
-//  Created by 김지은 on 2023/10/13.
+//  Created by 김지은 on 2023/10/23.
 //
 
 import UIKit
@@ -12,11 +12,10 @@ class IntroViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
-            AppDelegate.applicationDelegate().changeInitViewController(type: .Main)
+            AppDelegate.applicationDelegate().changeInitViewController(type: .Login)
         }
-        // Do any additional setup after loading the view.
     }
-    
+
 
     /*
     // MARK: - Navigation
