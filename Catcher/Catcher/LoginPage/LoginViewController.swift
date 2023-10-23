@@ -23,6 +23,8 @@ final class LoginViewController: UIViewController {
         Auth.auth().signIn(withEmail: email, password: pw) { authResult, error in
             if authResult != nil {
                 print("로그인 성공")
+                UserDefaults.standard.set(email, forKey: "email")
+                AppDelegate.applicationDelegate().changeInitViewController(type: .Main)
             } else {
                 print("로그인 실패")
                 print(error.debugDescription)
