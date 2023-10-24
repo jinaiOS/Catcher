@@ -13,12 +13,14 @@ enum FireStoreError: Error {
     case missingUID
     case deleteFail
     case noUIDList
+    case noNearPath
 }
 
 final class FireStoreManager {
     static let shared = FireStoreManager()
     private let db = Firestore.firestore()
     private let userInfoPath = "userInfo"
+    private let nearUserPath = "location"
     private let uid: String?
     private let itemCount: Int = 15
     
@@ -118,6 +120,23 @@ extension FireStoreManager {
         do {
             let querySnapshot = try await db.collection(userInfoPath)
                 .whereField(Data.register.key, isGreaterThanOrEqualTo: date)
+                .getDocuments()
+            let userInfoList = querySnapshot.documents.compactMap { snapshot in
+                decodingValue(data: snapshot.data())
+            }
+            return (userInfoList, nil)
+        } catch {
+            return (nil, error)
+        }
+    }
+    
+    func fetchNearUser() async -> ([UserInfo]?, Error?) {
+        guard let isReturnUser: String = UserDefaultsManager().getValue(forKey: nearUserPath) else {
+            return(nil, FireStoreError.noNearPath)
+        }
+        do {
+            let querySnapshot = try await db.collection(userInfoPath)
+                .whereField(nearUserPath, isEqualTo: isReturnUser)
                 .getDocuments()
             let userInfoList = querySnapshot.documents.compactMap { snapshot in
                 decodingValue(data: snapshot.data())

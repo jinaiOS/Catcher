@@ -14,6 +14,7 @@ final class RankSectionCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
+        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return view
     }()
     
@@ -40,6 +41,7 @@ extension RankSectionCell {
         ImageCacheManager.shared.loadImage(uid: data.info.uid) { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async {
+                self.imageView.backgroundColor = .clear
                 self.imageView.image = image
             }
         }

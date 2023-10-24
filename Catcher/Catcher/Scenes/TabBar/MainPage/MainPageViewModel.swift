@@ -19,9 +19,9 @@ extension MainPageViewModel {
         case 0:
             return nil
         case 1:
-            return "이번 주 랭킹"
+            return "평점 높은 유저"
         case 2:
-            return "내 근처 유저"
+            return "나의 동네 유저"
         case 3:
             return "신규 유저"
         case 4:
@@ -36,29 +36,34 @@ extension MainPageViewModel {
         Task {
             async let random = storeManager.fetchRandomUser()
             async let rank = storeManager.fetchRanking()
+            async let near = storeManager.fetchNearUser()
             async let pick = storeManager.fetchPickUsers()
             async let new = storeManager.fetchNewestUser(date: date)
             
             let randomResult = await random
             let rankResult = await rank
+            let nearResult = await near
             let pickResult = await pick
             let newResult = await new
             
             if let randomError = randomResult.1,
                let rankError = rankResult.1,
+               let nearError = nearResult.1,
                let pickError = pickResult.1,
                let newError = newResult.1 {
                 print(randomError.localizedDescription)
                 print(rankError.localizedDescription)
+                print(nearError.localizedDescription)
                 print(pickError.localizedDescription)
                 print(newError.localizedDescription)
                 return
             }
             guard let randomUser = randomResult.0,
                   let rankUser = rankResult.0,
+                  let nearUser = nearResult.0,
                   let pickUser = pickResult.0,
                   let newUser = newResult.0 else { return }
-            sendItems(data: (randomUser, rankUser, pickUser, newUser))
+            sendItems(data: (randomUser, rankUser, nearUser, pickUser, newUser))
         }
     }
 }
@@ -72,25 +77,28 @@ private extension MainPageViewModel {
         return nil
     }
     
-    func sendItems(data: ([UserInfo], [UserInfo], [UserInfo], [UserInfo])) {
-        let items = makeItems(data: (data.0, data.1, data.2, data.3))
-        let data = MainItems(data: (items.0, items.1, [], items.2, items.3))
+    func sendItems(data: ([UserInfo], [UserInfo], [UserInfo], [UserInfo], [UserInfo])) {
+        let items = makeItems(data: (data.0, data.1, data.2, data.3, data.4))
+        let data = MainItems(data: (items.0, items.1, items.2, items.3, items.4))
         mainSubject.send(data)
     }
     
-    func makeItems(data: ([UserInfo], [UserInfo], [UserInfo], [UserInfo])) -> ([Item], [Item], [Item], [Item]) {
+    func makeItems(data: ([UserInfo], [UserInfo], [UserInfo], [UserInfo], [UserInfo])) -> ([Item], [Item], [Item], [Item], [Item]) {
         let randomItem = data.0.map {
             Item.random(HomeItem(info: $0))
         }
         let rankItem = data.1.map {
             Item.rank(HomeItem(info: $0))
         }
-        let pickItem = data.2.map {
+        let nearItem = data.2.map {
             Item.pick(HomeItem(info: $0))
         }
-        let newItem = data.3.map {
+        let pickItem = data.3.map {
+            Item.pick(HomeItem(info: $0))
+        }
+        let newItem = data.4.map {
             Item.new(HomeItem(info: $0))
         }
-        return (randomItem, rankItem, pickItem, newItem)
+        return (randomItem, rankItem, nearItem, pickItem, newItem)
     }
 }
