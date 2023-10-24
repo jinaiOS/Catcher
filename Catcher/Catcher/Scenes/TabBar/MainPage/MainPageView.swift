@@ -24,6 +24,7 @@ final class MainPageView: UIView {
     
     init() {
         super.init(frame: .zero)
+        backgroundColor = .secondarySystemBackground
         setLayout()
     }
     

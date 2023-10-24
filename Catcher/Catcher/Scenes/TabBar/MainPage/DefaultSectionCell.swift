@@ -29,8 +29,8 @@ final class DefaultSectionCell: UICollectionViewCell {
 }
 
 extension DefaultSectionCell {
-    func configure(data: HomeItem) {
-        ImageCacheManager.shared.loadImage(uid: data.info.uid) { [weak self] image in
+    func configure(data: UserInfo) {
+        ImageCacheManager.shared.loadImage(uid: data.uid) { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.imageView.backgroundColor = .clear

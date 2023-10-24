@@ -36,9 +36,9 @@ final class RankSectionCell: UICollectionViewCell {
 }
 
 extension RankSectionCell {
-    func configure(data: HomeItem, index: Int) {
+    func configure(data: UserInfo, index: Int) {
         rankLabel.text = "\(index + 1)"
-        ImageCacheManager.shared.loadImage(uid: data.info.uid) { [weak self] image in
+        ImageCacheManager.shared.loadImage(uid: data.uid) { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.imageView.backgroundColor = .clear
@@ -73,4 +73,3 @@ private extension RankSectionCell {
         return (label.frame.width, label.frame.height)
     }
 }
-

@@ -66,6 +66,21 @@ extension MainPageViewModel {
             sendItems(data: (randomUser, rankUser, nearUser, pickUser, newUser))
         }
     }
+    
+    func userInfoFromItem(item: Item) -> UserInfo {
+        switch item {
+        case .random(let info):
+            return info
+        case .rank(let info):
+            return info
+        case .near(let info):
+            return info
+        case .new(let info):
+            return info
+        case .pick(let info):
+            return info
+        }
+    }
 }
 
 private extension MainPageViewModel {
@@ -85,19 +100,19 @@ private extension MainPageViewModel {
     
     func makeItems(data: ([UserInfo], [UserInfo], [UserInfo], [UserInfo], [UserInfo])) -> ([Item], [Item], [Item], [Item], [Item]) {
         let randomItem = data.0.map {
-            Item.random(HomeItem(info: $0))
+            Item.random($0)
         }
         let rankItem = data.1.map {
-            Item.rank(HomeItem(info: $0))
+            Item.rank($0)
         }
         let nearItem = data.2.map {
-            Item.pick(HomeItem(info: $0))
+            Item.near($0)
         }
         let pickItem = data.3.map {
-            Item.pick(HomeItem(info: $0))
+            Item.pick($0)
         }
         let newItem = data.4.map {
-            Item.new(HomeItem(info: $0))
+            Item.new($0)
         }
         return (randomItem, rankItem, nearItem, pickItem, newItem)
     }
