@@ -10,16 +10,16 @@ import SnapKit
 import SwiftUI
 
 final class ProfilesettingViewController: UIViewController{
-    let profilesetingView = ProfilesetingView()
+    let profilesettingView = ProfilesettingView()
     override func loadView() {
         super.loadView()
-        view = profilesetingView
+        view = profilesettingView
     }
     override func viewDidLoad() {
         view.backgroundColor = .systemBackground
     }
 }
-struct ProfilesetingViewControllerprview: PreviewProvider {
+struct ProfilesettingViewControllerprview: PreviewProvider {
     static var previews: some View {
         ProfilesettingViewController().toPreview().edgesIgnoringSafeArea(.all)
     }

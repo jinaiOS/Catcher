@@ -19,7 +19,6 @@
 		33532B802AE17A75008B47EB /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B7F2AE17A75008B47EB /* UserDefaultsManager.swift */; };
 		33532B832AE299E1008B47EB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33532B822AE299E1008B47EB /* GoogleService-Info.plist */; };
 		33532B872AE3CC84008B47EB /* DBProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B862AE3CC84008B47EB /* DBProtocol.swift */; };
-		33ABF3512AE3D7EF002DCCF4 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3502AE3D7EF002DCCF4 /* Const.swift */; };
 		33ABF3552AE46F2F002DCCF4 /* FireStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3542AE46F2F002DCCF4 /* FireStorageManager.swift */; };
 		33ABF3592AE4889D002DCCF4 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */; };
 		33B358072ADE189E00A91C95 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B358062ADE189E00A91C95 /* ButtonFactory.swift */; };
@@ -32,6 +31,9 @@
 		33C58EA32ADC73C9008EB6C2 /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */; };
 		3B2BE3012ADE4EAE00BD54CC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */; };
 		3B2BE3032ADE4EEF00BD54CC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2BE3022ADE4EEF00BD54CC /* LoginViewController.swift */; };
+		3B36291F2AE69E4C00240CC6 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36291E2AE69E4C00240CC6 /* Const.swift */; };
+		3B3629212AE69EFA00240CC6 /* ProfilesettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3629202AE69EFA00240CC6 /* ProfilesettingView.swift */; };
+		3B3629242AE6A3D300240CC6 /* ProfilesettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3629232AE6A3D300240CC6 /* ProfilesettingViewController.swift */; };
 		3B3E35D52ADFA2F1006841D8 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E35D42ADFA2F1006841D8 /* RegisterViewController.swift */; };
 		3B3E35D72AE125A3006841D8 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E35D62AE125A3006841D8 /* RegisterView.swift */; };
 		562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36802AD80EF9008D99B2 /* AppDelegate.swift */; };
@@ -120,7 +122,6 @@
 		33532B7F2AE17A75008B47EB /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		33532B822AE299E1008B47EB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		33532B862AE3CC84008B47EB /* DBProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBProtocol.swift; sourceTree = "<group>"; };
-		33ABF3502AE3D7EF002DCCF4 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		33ABF3542AE46F2F002DCCF4 /* FireStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStorageManager.swift; sourceTree = "<group>"; };
 		33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		33B358062ADE189E00A91C95 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
@@ -133,6 +134,9 @@
 		33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+.swift"; sourceTree = "<group>"; };
 		3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3B2BE3022ADE4EEF00BD54CC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3B36291E2AE69E4C00240CC6 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
+		3B3629202AE69EFA00240CC6 /* ProfilesettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesettingView.swift; sourceTree = "<group>"; };
+		3B3629232AE6A3D300240CC6 /* ProfilesettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesettingViewController.swift; sourceTree = "<group>"; };
 		3B3E35D42ADFA2F1006841D8 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		3B3E35D62AE125A3006841D8 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		562E367D2AD80EF9008D99B2 /* Catcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Catcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -223,7 +227,7 @@
 		33532B812AE17A8E008B47EB /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				33ABF3502AE3D7EF002DCCF4 /* Const.swift */,
+				3B36291E2AE69E4C00240CC6 /* Const.swift */,
 				33532B772AE17A31008B47EB /* UserInfo.swift */,
 				335241932AE5AEBB009EB771 /* FireStoreManager.swift */,
 				33532B862AE3CC84008B47EB /* DBProtocol.swift */,
@@ -277,6 +281,15 @@
 			);
 			name = LoginPage;
 			path = ../LoginPage;
+			sourceTree = "<group>";
+		};
+		3B3629222AE69F0F00240CC6 /* Profileseting */ = {
+			isa = PBXGroup;
+			children = (
+				3B3629202AE69EFA00240CC6 /* ProfilesettingView.swift */,
+				3B3629232AE6A3D300240CC6 /* ProfilesettingViewController.swift */,
+			);
+			path = Profileseting;
 			sourceTree = "<group>";
 		};
 		562E36742AD80EF9008D99B2 = {
@@ -355,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				56BBF7E92AE6009700A2BADD /* IntroViewController.swift */,
+				3B3629222AE69F0F00240CC6 /* Profileseting */,
 				56BBF7EA2AE6009700A2BADD /* IntroViewController.xib */,
 				3B2BE3042ADE4F3900BD54CC /* LoginPage */,
 				56C08B4B2ADF73C300FB8608 /* Base */,
@@ -637,6 +651,7 @@
 				562E36B52AD8DB57008D99B2 /* DataManager.swift in Sources */,
 				33532B7E2AE17A67008B47EB /* FirebaseManager.swift in Sources */,
 				562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */,
+				3B3629242AE6A3D300240CC6 /* ProfilesettingViewController.swift in Sources */,
 				56C08B712ADF808B00FB8608 /* AskViewController.swift in Sources */,
 				33C58E8C2AD8B2B5008EB6C2 /* ThemeFont.swift in Sources */,
 				33B358072ADE189E00A91C95 /* ButtonFactory.swift in Sources */,
@@ -658,11 +673,11 @@
 				56C08B742ADF809300FB8608 /* InfoView.swift in Sources */,
 				3B3E35D72AE125A3006841D8 /* RegisterView.swift in Sources */,
 				562E36BB2AD8DD03008D99B2 /* CommonUtil.swift in Sources */,
-				33ABF3512AE3D7EF002DCCF4 /* Const.swift in Sources */,
 				2305095D2AE2475E00F58092 /* ContactTableViewCell.swift in Sources */,
 				562E36B72AD8DCAA008D99B2 /* BaseViewController.swift in Sources */,
 				562E36BD2AD9061D008D99B2 /* CommonHeaderView.swift in Sources */,
 				562E36B12AD8D0EE008D99B2 /* BaseTabBarController.swift in Sources */,
+				3B36291F2AE69E4C00240CC6 /* Const.swift in Sources */,
 				56C08BA62AE10ECE00FB8608 /* NewConversationCell.swift in Sources */,
 				56C08B772ADF809900FB8608 /* ReportViewController.swift in Sources */,
 				33C58EA32ADC73C9008EB6C2 /* NSAttributedString+.swift in Sources */,
@@ -687,6 +702,7 @@
 				33532B802AE17A75008B47EB /* UserDefaultsManager.swift in Sources */,
 				33ABF3592AE4889D002DCCF4 /* LocalFileManager.swift in Sources */,
 				56C08B642ADF805800FB8608 /* MainPageView.swift in Sources */,
+				3B3629212AE69EFA00240CC6 /* ProfilesettingView.swift in Sources */,
 				56C08BA22AE10E8300FB8608 /* NewConversationViewController.swift in Sources */,
 				56C08B862AE0FEB300FB8608 /* ConversationTableViewCell.swift in Sources */,
 				56C08B912AE10A5A00FB8608 /* DatabaseManager.swift in Sources */,

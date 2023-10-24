@@ -8,20 +8,23 @@
 import UIKit
 import SnapKit
 
-final class ProfilesetingView: UIView{
+final class ProfilesettingView: UIView{
     lazy var  profileselectview: UIImageView = {
       let view = UIImageView()
         view.contentMode = .scaleAspectFit
         view.layer.cornerRadius = 15
-        view.backgroundColor = .lightGray
+        view.image = UIImage(named: "Default")
+        view.clipsToBounds = true
+
         return view
     }()
     lazy var  convertImageView: UIImageView = {
       let view = UIImageView()
         view.contentMode = .scaleAspectFit
-        view.backgroundColor = .lightGray
         view.layer.cornerRadius = 15
-        view.image = UIImage(systemName: "person.fill")
+        view.image = UIImage(named: "Default")
+        view.clipsToBounds = true
+
         return view
     }()
     lazy var convertbutton: UIButton = {
@@ -41,18 +44,20 @@ final class ProfilesetingView: UIView{
     }
 }
 
-extension ProfilesetingView {
+extension ProfilesettingView {
     func setlayout(){
         addSubview(profileselectview)
         addSubview(convertbutton)
         addSubview(convertImageView)
         profileselectview.snp.makeConstraints { make in
-            make.width.height.equalTo(200)
+            make.width.equalTo(profileselectview.snp.height)
+            make.leading.equalTo(self.safeAreaLayoutGuide).inset(100)
             make.centerX.equalToSuperview()
-            make.top.equalTo(self.safeAreaLayoutGuide).offset(100)
+            make.top.equalTo(self.safeAreaLayoutGuide).offset(50)
         }
         convertImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(200)
+            make.width.equalTo(convertImageView.snp.height)
+            make.leading.equalTo(self.safeAreaLayoutGuide).inset(100)
             make.centerX.equalToSuperview()
             make.top.equalTo(profileselectview.snp.bottom).offset(100)
         }
