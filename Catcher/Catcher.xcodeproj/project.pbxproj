@@ -89,6 +89,7 @@
 		56C08BA22AE10E8300FB8608 /* NewConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08BA12AE10E8300FB8608 /* NewConversationViewController.swift */; };
 		56C08BA42AE10EB400FB8608 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08BA32AE10EB400FB8608 /* SearchResult.swift */; };
 		56C08BA62AE10ECE00FB8608 /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08BA52AE10ECE00FB8608 /* NewConversationCell.swift */; };
+		68708AB72AE745C200B4C7B9 /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68708AB62AE745C200B4C7B9 /* SurveyViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,6 +186,7 @@
 		56C08BA12AE10E8300FB8608 /* NewConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationViewController.swift; sourceTree = "<group>"; };
 		56C08BA32AE10EB400FB8608 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		56C08BA52AE10ECE00FB8608 /* NewConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
+		68708AB62AE745C200B4C7B9 /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -382,6 +384,7 @@
 				56C08B6B2ADF806900FB8608 /* MainPage */,
 				56C08B7F2AE0FE2100FB8608 /* ChatPage */,
 				56C08B782ADF80AC00FB8608 /* MyPage */,
+				68708AB62AE745C200B4C7B9 /* SurveyViewController.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -636,6 +639,7 @@
 			files = (
 				3B3E35D52ADFA2F1006841D8 /* RegisterViewController.swift in Sources */,
 				335241942AE5AEBB009EB771 /* FireStoreManager.swift in Sources */,
+				68708AB72AE745C200B4C7B9 /* SurveyViewController.swift in Sources */,
 				56C08B692ADF805800FB8608 /* HomeItem.swift in Sources */,
 				562E36B52AD8DB57008D99B2 /* DataManager.swift in Sources */,
 				33532B7E2AE17A67008B47EB /* FirebaseManager.swift in Sources */,
