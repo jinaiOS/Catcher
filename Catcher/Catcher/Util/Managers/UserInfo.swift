@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct UserInfo {
+struct UserInfo: Hashable {
+    let ID = UUID()
+    
     let uid: String
     let sex: String
     var nickName: String
@@ -18,6 +20,6 @@ struct UserInfo {
     var drinking: String
     var smoking: Bool
     var register: Date = Date()
-    var score: Int
+    var score: Int = 0
     var pick: [String]? = []
 }

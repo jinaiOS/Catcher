@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Combine
 
 final class MainPageViewModel {
-    
+    private let storeManager = FireStoreManager.shared
+    let mainSubject = CurrentValueSubject<MainItems, Never>(.init(data: ([], [], [], [], [])))
+}
+
+extension MainPageViewModel {
     func getSectionTitle(section: Int) -> String? {
         switch section {
         case 0:
@@ -26,88 +31,66 @@ final class MainPageViewModel {
         }
     }
     
-    let randomItems = [
-        Item.random(HomeItem(imageUrl: "",
-                             name: "랜덤 생성",
-                             rank: "1")),
-        Item.random(HomeItem(imageUrl: "",
-                             name: "랜덤 생성",
-                             rank: "2")),
-        Item.random(HomeItem(imageUrl: "",
-                             name: "랜덤 생성",
-                             rank: "3")),
-    ]
+    func fetchMainPageData() {
+        guard let date = oneMonthAgo else { return }
+        Task {
+            async let random = storeManager.fetchRandomUser()
+            async let rank = storeManager.fetchRanking()
+            async let pick = storeManager.fetchPickUsers()
+            async let new = storeManager.fetchNewestUser(date: date)
+            
+            let randomResult = await random
+            let rankResult = await rank
+            let pickResult = await pick
+            let newResult = await new
+            
+            if let randomError = randomResult.1,
+               let rankError = rankResult.1,
+               let pickError = pickResult.1,
+               let newError = newResult.1 {
+                print(randomError.localizedDescription)
+                print(rankError.localizedDescription)
+                print(pickError.localizedDescription)
+                print(newError.localizedDescription)
+                return
+            }
+            guard let randomUser = randomResult.0,
+                  let rankUser = rankResult.0,
+                  let pickUser = pickResult.0,
+                  let newUser = newResult.0 else { return }
+            sendItems(data: (randomUser, rankUser, pickUser, newUser))
+        }
+    }
+}
+
+private extension MainPageViewModel {
+    var oneMonthAgo: Date? {
+        let calendar = Calendar.current
+        if let oneMonthAgo = calendar.date(byAdding: .month, value: -1, to: Date()) {
+            return oneMonthAgo
+        }
+        return nil
+    }
     
-    let rankItems = [
-        Item.rank(HomeItem(imageUrl: "",
-                             name: "샘플1",
-                             rank: "1")),
-        Item.rank(HomeItem(imageUrl: "",
-                             name: "샘플2",
-                             rank: "2")),
-        Item.rank(HomeItem(imageUrl: "",
-                             name: "샘플3",
-                             rank: "3")),
-        Item.rank(HomeItem(imageUrl: "",
-                             name: "샘플4",
-                             rank: "4")),
-        Item.rank(HomeItem(imageUrl: "",
-                             name: "샘플5",
-                             rank: "5"))
-    ]
+    func sendItems(data: ([UserInfo], [UserInfo], [UserInfo], [UserInfo])) {
+        let items = makeItems(data: (data.0, data.1, data.2, data.3))
+        let data = MainItems(data: (items.0, items.1, [], items.2, items.3))
+        mainSubject.send(data)
+    }
     
-    let nearItems = [
-        Item.near(HomeItem(imageUrl: "",
-                             name: "샘플1",
-                             rank: "1")),
-        Item.near(HomeItem(imageUrl: "",
-                             name: "샘플2",
-                             rank: "2")),
-        Item.near(HomeItem(imageUrl: "",
-                             name: "샘플3",
-                             rank: "3")),
-        Item.near(HomeItem(imageUrl: "",
-                             name: "샘플4",
-                             rank: "4")),
-        Item.near(HomeItem(imageUrl: "",
-                             name: "샘플5",
-                             rank: "5"))
-    ]
-    
-    let newItems = [
-        Item.new(HomeItem(imageUrl: "",
-                             name: "샘플1",
-                             rank: "1")),
-        Item.new(HomeItem(imageUrl: "",
-                             name: "샘플2",
-                             rank: "2")),
-        Item.new(HomeItem(imageUrl: "",
-                             name: "샘플3",
-                             rank: "3")),
-        Item.new(HomeItem(imageUrl: "",
-                             name: "샘플4",
-                             rank: "4")),
-        Item.new(HomeItem(imageUrl: "",
-                             name: "샘플5",
-                             rank: "5"))
-    ]
-    
-    let pickItems = [
-        Item.pick(HomeItem(imageUrl: "",
-                             name: "샘플1",
-                             rank: "1")),
-        Item.pick(HomeItem(imageUrl: "",
-                             name: "샘플2",
-                             rank: "2")),
-        Item.pick(HomeItem(imageUrl: "",
-                             name: "샘플3",
-                             rank: "3")),
-        Item.pick(HomeItem(imageUrl: "",
-                             name: "샘플4",
-                             rank: "4")),
-        Item.pick(HomeItem(imageUrl: "",
-                             name: "샘플5",
-                             rank: "5"))
-    ]
-    
+    func makeItems(data: ([UserInfo], [UserInfo], [UserInfo], [UserInfo])) -> ([Item], [Item], [Item], [Item]) {
+        let randomItem = data.0.map {
+            Item.random(HomeItem(info: $0))
+        }
+        let rankItem = data.1.map {
+            Item.rank(HomeItem(info: $0))
+        }
+        let pickItem = data.2.map {
+            Item.pick(HomeItem(info: $0))
+        }
+        let newItem = data.3.map {
+            Item.new(HomeItem(info: $0))
+        }
+        return (randomItem, rankItem, pickItem, newItem)
+    }
 }

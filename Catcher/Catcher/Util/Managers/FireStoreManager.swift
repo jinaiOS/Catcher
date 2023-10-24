@@ -12,14 +12,15 @@ enum FireStoreError: Error {
     case canNotConvert
     case missingUID
     case deleteFail
+    case noUIDList
 }
 
 final class FireStoreManager {
     static let shared = FireStoreManager()
     private let db = Firestore.firestore()
     private let userInfoPath = "userInfo"
-    private let randomPath = "random"
     private let uid: String?
+    private let itemCount: Int = 15
     
     private init(uid: String? = FirebaseManager().getUID) {
         self.uid = uid
@@ -63,8 +64,8 @@ extension FireStoreManager {
         do {
             let document = try await docRef.getDocuments()
             let userInfo = document.documents.map { $0.data()}
-                .randomElements(count: 2)
-                .map {
+                .randomElements(count: itemCount)
+                .compactMap {
                     decodingValue(data: $0)
                 }
             return (userInfo, nil)
@@ -73,16 +74,16 @@ extension FireStoreManager {
         }
     }
     
-    func fetchMyPickUser() async -> ([String]?, Error?) {
-        guard let uid = uid else { return (nil, FireStoreError.missingUID) }
-        let docRef = db.collection(userInfoPath).document(uid)
-        do {
-            let document = try await docRef.getDocument()
-            let pickUsers = document.data()?[Data.pick.key] as? [String]
-            return (pickUsers, nil)
-        } catch {
+    func fetchPickUsers() async -> ([UserInfo]?, Error?) {
+        let result = await fetchMyPickUsersUID()
+        if let error = result.1 {
             return (nil, error)
         }
+        guard let uidList = result.0 else {
+            return (nil, FireStoreError.noUIDList)
+        }
+        let userList = await groupTaskForFetchUsers(uidList: uidList)
+        return (userList, nil)
     }
     
     func fetchUserInfo(uuid: String) async -> (UserInfo?, Error?) {
@@ -99,12 +100,12 @@ extension FireStoreManager {
     func fetchRanking() async -> ([UserInfo]?, Error?) {
         let docRef = db.collection(userInfoPath)
             .order(by: Data.score.key, descending: true)
-            .limit(to: 15)
+            .limit(to: itemCount)
         do {
             let document = try await docRef.getDocuments()
             let userInfoList = document.documents.map {
                 $0.data()
-            }.map {
+            }.compactMap {
                 decodingValue(data: $0)
             }
             return (userInfoList, nil)
@@ -118,7 +119,7 @@ extension FireStoreManager {
             let querySnapshot = try await db.collection(userInfoPath)
                 .whereField(Data.register.key, isGreaterThanOrEqualTo: date)
                 .getDocuments()
-            let userInfoList = querySnapshot.documents.map { snapshot in
+            let userInfoList = querySnapshot.documents.compactMap { snapshot in
                 decodingValue(data: snapshot.data())
             }
             return (userInfoList, nil)
@@ -170,6 +171,41 @@ extension FireStoreManager {
 }
 
 private extension FireStoreManager {
+    func fetchMyPickUsersUID() async -> ([String]?, Error?) {
+        guard let uid = uid else { return (nil, FireStoreError.missingUID) }
+        let docRef = db.collection(userInfoPath).document(uid)
+        do {
+            let document = try await docRef.getDocument()
+            let pickUsers = document.data()?[Data.pick.key] as? [String]
+            return (pickUsers, nil)
+        } catch {
+            return (nil, error)
+        }
+    }
+    
+    func groupTaskForFetchUsers(uidList: [String]) async -> [UserInfo] {
+        let datas = await withTaskGroup(of: UserInfo?.self) { group in
+            for uid in uidList {
+                group.addTask {
+                    let data = await self.fetchUserInfo(uuid: uid)
+                    if let error = data.1 {
+                        print("error: \(error.localizedDescription)")
+                        return nil
+                    }
+                    return data.0
+                }
+            }
+            var dataList: [UserInfo?] = []
+            for await userInfo in group {
+                dataList.append(userInfo)
+            }
+            return dataList.compactMap { $0 }
+        }
+        return datas
+    }
+}
+
+private extension FireStoreManager {
     enum Data: String {
         case uid
         case sex
@@ -205,20 +241,23 @@ private extension FireStoreManager {
         ]
     }
     
-    func decodingValue(data: [String: Any]?) -> UserInfo {
-        UserInfo(
-            uid: data?[Data.uid.key] as? String ?? "",
-            sex: data?[Data.sex.key] as? String ?? "남성",
-            nickName: data?[Data.nickName.key] as? String ?? "",
-            location: data?[Data.location.key] as? String ?? "",
-            height: data?[Data.height.key] as? Int ?? -1,
-            body: data?[Data.body.key] as? String ?? "",
-            education: data?[Data.education.key] as? String ?? "",
-            drinking: data?[Data.drinking.key] as? String ?? "",
-            smoking: data?[Data.smoking.key] as? Bool ?? false,
-            register: data?[Data.register.key] as? Date ?? Date(),
-            score: data?[Data.score.key] as? Int ?? 0,
-            pick: data?[Data.pick.key] as? [String] ?? []
+    func decodingValue(data: [String: Any]?) -> UserInfo? {
+        guard let data = data else {
+            return nil
+        }
+        return UserInfo(
+            uid: data[Data.uid.key] as? String ?? "",
+            sex: data[Data.sex.key] as? String ?? "",
+            nickName: data[Data.nickName.key] as? String ?? "",
+            location: data[Data.location.key] as? String ?? "",
+            height: data[Data.height.key] as? Int ?? -1,
+            body: data[Data.body.key] as? String ?? "",
+            education: data[Data.education.key] as? String ?? "",
+            drinking: data[Data.drinking.key] as? String ?? "",
+            smoking: data[Data.smoking.key] as? Bool ?? false,
+            register: data[Data.register.key] as? Date ?? Date(),
+            score: data[Data.score.key] as? Int ?? 0,
+            pick: data[Data.pick.key] as? [String] ?? []
         )
     }
 }

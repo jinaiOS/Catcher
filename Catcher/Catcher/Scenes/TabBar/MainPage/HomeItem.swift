@@ -7,6 +7,16 @@
 
 import Foundation
 
+enum SectionName: String {
+    case random
+    case rank
+    case near
+    case new
+    case pick
+    
+    var sectionID: String { rawValue }
+}
+
 struct Section: Hashable {
     let id: String
 }
@@ -20,13 +30,13 @@ enum Item: Hashable {
 }
 
 struct HomeItem: Hashable {
-    let imageUrl: String
-    let name: String
-    let rank: String
+    let info: UserInfo
     
-    init(imageUrl: String, name: String, rank: String) {
-        self.imageUrl = imageUrl
-        self.name = name
-        self.rank = rank
+    init(info: UserInfo) {
+        self.info = info
+    }
+    
+    static func == (lhs: HomeItem, rhs: HomeItem) -> Bool {
+        return lhs.info.ID == rhs.info.ID && lhs.info.ID == rhs.info.ID
     }
 }

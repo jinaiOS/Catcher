@@ -11,6 +11,7 @@ import FirebaseStorage
 enum FireStorageError: Error {
     case noMetaData
     case noResult
+    case missingUID
 }
 
 enum ImageError: Error {
@@ -69,18 +70,26 @@ extension FireStorageManager {
 
 extension FireStorageManager {
     func setProfileData(image: UIImage, completion: @escaping (Error?) -> Void) {
+        guard let uid = uid else {
+            completion(FireStorageError.missingUID)
+            return
+        }
         let data = makeImageData(image: image, completion: completion)
-        let spaceRef = makeProfileRef
+        let spaceRef = makeProfileRef(uid: uid)
         putData(spaceRef: spaceRef, imageData: data, completion: completion)
     }
     
-    func fetchProfileData(completion: @escaping (Data?, Error?) -> Void) {
-        let spaceRef = makeProfileRef
+    func fetchProfileData(uid: String, completion: @escaping (Data?, Error?) -> Void) {
+        let spaceRef = makeProfileRef(uid: uid)
         fetchData(spaceRef: spaceRef, completion: completion)
     }
     
     func deleteProfileData(completion: @escaping (Error?) -> Void) {
-        let spaceRef = makeProfileRef
+        guard let uid = uid else {
+            completion(FireStorageError.missingUID)
+            return
+        }
+        let spaceRef = makeProfileRef(uid: uid)
         deleteData(spaceRef: spaceRef, completion: completion)
     }
 }
@@ -95,8 +104,7 @@ private extension FireStorageManager {
         return imageRef
     }
     
-    var makeProfileRef: StorageReference? {
-        guard let uid = uid else { return nil }
+    func makeProfileRef(uid: String) -> StorageReference? {
         let storageRef = storage.reference()
         let pathRef = storageRef.child(profileImagePath)
         let spaceRef = pathRef.child(uid)
@@ -126,7 +134,7 @@ private extension FireStorageManager {
                 completion(FireStorageError.noMetaData)
                 return
             }
-            print("metaData: \(metadata)")
+            print("metaData: \(metadata.description)")
             completion(nil)
         }
     }
