@@ -251,9 +251,9 @@
 			isa = PBXGroup;
 			children = (
 				335241952AE5DB4A009EB771 /* Array+.swift */,
+				33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */,
 				33C58E8D2AD8B2F6008EB6C2 /* UIColor+.swift */,
 				33C58E7E2AD85024008EB6C2 /* UIViewController+.swift */,
-				33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */,
 				56C08B4F2ADF754B00FB8608 /* UIView+.swift */,
 			);
 			path = Extensions;
@@ -419,8 +419,8 @@
 				56C08B612ADF805800FB8608 /* RankSectionCell.swift */,
 				56C08B622ADF805800FB8608 /* MainPageView.swift */,
 				56C08B5D2ADF805700FB8608 /* SectionHeaderView.swift */,
-				56C08B5F2ADF805800FB8608 /* MainPageViewController.swift */,
 				56C08B5E2ADF805800FB8608 /* MainPageViewModel.swift */,
+				56C08B5F2ADF805800FB8608 /* MainPageViewController.swift */,
 			);
 			path = MainPage;
 			sourceTree = "<group>";

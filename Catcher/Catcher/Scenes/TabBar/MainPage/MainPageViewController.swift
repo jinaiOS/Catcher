@@ -95,7 +95,7 @@ private extension MainPageViewController {
         let newSection = Section(id: SectionName.new.sectionID)
         let pickSection = Section(id: SectionName.pick.sectionID)
         
-        [randomSection, rankSection, nearSection, newSection, pickSection].forEach {
+        [randomSection, rankSection, nearSection, newSection].forEach {
             snapshot.appendSections([$0])
         }
         
@@ -103,7 +103,12 @@ private extension MainPageViewController {
         snapshot.appendItems(data.rank, toSection: rankSection)
         snapshot.appendItems(data.near, toSection: nearSection)
         snapshot.appendItems(data.new, toSection: newSection)
-        snapshot.appendItems(data.pick, toSection: pickSection)
+        
+        if data.pick.isEmpty == false {
+            snapshot.appendSections([pickSection])
+            snapshot.appendItems(data.pick, toSection: pickSection)
+        }
+        
         dataSource?.apply(snapshot)
     }
 }
