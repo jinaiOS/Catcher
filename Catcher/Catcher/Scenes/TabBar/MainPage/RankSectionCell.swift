@@ -13,7 +13,7 @@ final class RankSectionCell: UICollectionViewCell {
     
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFit
+        view.contentMode = .scaleAspectFill
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return view
     }()
@@ -55,15 +55,22 @@ private extension RankSectionCell {
         }
         
         imageView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-//            $0.top.trailing.bottom.equalToSuperview()
-//            $0.width.equalToSuperview().multipliedBy(0.8)
+            $0.top.trailing.bottom.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.8)
         }
         
         rankLabel.snp.makeConstraints {
             $0.leading.equalToSuperview()
             $0.bottom.equalToSuperview().offset(22)
         }
+    }
+    
+    func getTextSize(text: String, font: UIFont) -> (CGFloat, CGFloat) {
+        let label = UILabel()
+        label.font = font
+        label.text = text
+        label.sizeToFit()
+        return (label.frame.width, label.frame.height)
     }
 }
 

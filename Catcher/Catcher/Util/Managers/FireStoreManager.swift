@@ -22,7 +22,7 @@ final class FireStoreManager {
     private let userInfoPath = "userInfo"
     private let nearUserPath = "location"
     private let uid: String?
-    private let itemCount: Int = 15
+    private let itemCount: Int = 9
     
     private init(uid: String? = FirebaseManager().getUID) {
         self.uid = uid
