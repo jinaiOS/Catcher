@@ -95,7 +95,7 @@ private extension MainPageViewController {
         let newSection = Section(id: SectionName.new.sectionID)
         let pickSection = Section(id: SectionName.pick.sectionID)
         
-        [randomSection, rankSection, nearSection, newSection, pickSection].forEach {
+        [randomSection, rankSection, nearSection, newSection].forEach {
             snapshot.appendSections([$0])
         }
         
@@ -103,37 +103,42 @@ private extension MainPageViewController {
         snapshot.appendItems(data.rank, toSection: rankSection)
         snapshot.appendItems(data.near, toSection: nearSection)
         snapshot.appendItems(data.new, toSection: newSection)
-        snapshot.appendItems(data.pick, toSection: pickSection)
+        
+        if data.pick.isEmpty == false {
+            snapshot.appendSections([pickSection])
+            snapshot.appendItems(data.pick, toSection: pickSection)
+        }
+        
         dataSource?.apply(snapshot)
     }
 }
 
 extension MainPageViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let items: [Item]
         let index = indexPath.item
+        
         switch indexPath.section {
         case 0:
-            let items = viewModel.mainSubject.value.random
-            print(items[index])
-            
+            items = viewModel.mainSubject.value.random
         case 1:
-            let items = viewModel.mainSubject.value.rank
-            print(items[index])
-            
+            items = viewModel.mainSubject.value.rank
         case 2:
-            let items = viewModel.mainSubject.value.near
-            print(items[index])
-            
+            items = viewModel.mainSubject.value.near
         case 3:
-            let items = viewModel.mainSubject.value.new
-            print(items[index])
-            
+            items = viewModel.mainSubject.value.new
         case 4:
-            let items = viewModel.mainSubject.value.pick
-            print(items[index])
-            
+            items = viewModel.mainSubject.value.pick
         default:
-            break
+            return
+        }
+        if items.isEmpty == false {
+            let item = items[index]
+            let userInfo = viewModel.userInfoFromItem(item: item)
+            let userInfoVC = UserInfoViewController(info: userInfo)
+            userInfoVC.modalTransitionStyle = .crossDissolve
+            userInfoVC.modalPresentationStyle = .custom
+            present(userInfoVC, animated: true)
         }
     }
 }

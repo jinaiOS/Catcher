@@ -22,21 +22,9 @@ struct Section: Hashable {
 }
 
 enum Item: Hashable {
-    case random(HomeItem)
-    case rank(HomeItem)
-    case near(HomeItem)
-    case new(HomeItem)
-    case pick(HomeItem)
-}
-
-struct HomeItem: Hashable {
-    let info: UserInfo
-    
-    init(info: UserInfo) {
-        self.info = info
-    }
-    
-    static func == (lhs: HomeItem, rhs: HomeItem) -> Bool {
-        return lhs.info.ID == rhs.info.ID && lhs.info.ID == rhs.info.ID
-    }
+    case random(UserInfo)
+    case rank(UserInfo)
+    case near(UserInfo)
+    case new(UserInfo)
+    case pick(UserInfo)
 }
