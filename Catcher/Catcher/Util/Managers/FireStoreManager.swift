@@ -116,10 +116,11 @@ extension FireStoreManager {
         }
     }
     
-    func fetchNewestUser(date: Date) async -> ([UserInfo]?, Error?) {
+    func fetchNewestUser() async -> ([UserInfo]?, Error?) {
         do {
             let querySnapshot = try await db.collection(userInfoPath)
-                .whereField(Data.register.key, isGreaterThanOrEqualTo: date)
+                .whereField(Data.register.key, isLessThan: Date())
+                .limit(to: itemCount)
                 .getDocuments()
             let userInfoList = querySnapshot.documents.compactMap { snapshot in
                 decodingValue(data: snapshot.data())

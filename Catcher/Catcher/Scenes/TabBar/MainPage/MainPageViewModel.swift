@@ -10,7 +10,7 @@ import Combine
 
 final class MainPageViewModel {
     private let storeManager = FireStoreManager.shared
-    let mainSubject = CurrentValueSubject<MainItems, Never>(.init(data: ([], [], [], [], [])))
+    let mainSubject = CurrentValueSubject<MainItems, Never>(.init(data: DummyData))
 }
 
 extension MainPageViewModel {
@@ -32,13 +32,12 @@ extension MainPageViewModel {
     }
     
     func fetchMainPageData() {
-        guard let date = oneMonthAgo else { return }
         Task {
             async let random = storeManager.fetchRandomUser()
             async let rank = storeManager.fetchRanking()
             async let near = storeManager.fetchNearUser()
             async let pick = storeManager.fetchPickUsers()
-            async let new = storeManager.fetchNewestUser(date: date)
+            async let new = storeManager.fetchNewestUser()
             
             let randomResult = await random
             let rankResult = await rank
