@@ -64,7 +64,7 @@ private extension MainPageView {
             widthDimension: .fractionalWidth(1),
             heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: 10, leading: 5, bottom: 0, trailing: 5)
+        item.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -73,7 +73,7 @@ private extension MainPageView {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
-        section.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
+        section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
         return section
     }
     
@@ -91,7 +91,7 @@ private extension MainPageView {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
         
         let sectionHeader = headerSection()
         section.boundarySupplementaryItems = [sectionHeader]
@@ -112,7 +112,7 @@ private extension MainPageView {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
         
         let sectionHeader = headerSection()
         section.boundarySupplementaryItems = [sectionHeader]

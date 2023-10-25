@@ -14,6 +14,8 @@ final class RankSectionCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
+        view.layer.cornerRadius = AppConstraint.mainCellCornerRadius
+        view.clipsToBounds = true
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return view
     }()
@@ -55,12 +57,11 @@ private extension RankSectionCell {
         }
         
         imageView.snp.makeConstraints {
-            $0.top.trailing.bottom.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(0.8)
+            $0.edges.equalToSuperview()
         }
         
         rankLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(-10)
             $0.bottom.equalToSuperview().offset(22)
         }
     }
