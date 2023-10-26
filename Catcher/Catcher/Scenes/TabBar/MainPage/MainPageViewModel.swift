@@ -21,9 +21,9 @@ extension MainPageViewModel {
         case 1:
             return "평점 높은 유저"
         case 2:
-            return "나의 동네 유저"
-        case 3:
             return "신규 유저"
+        case 3:
+            return "나의 동네 유저"
         case 4:
             return "찜한 유저"
         default:
@@ -35,35 +35,43 @@ extension MainPageViewModel {
         Task {
             async let random = storeManager.fetchRandomUser()
             async let rank = storeManager.fetchRanking()
+            async let new = storeManager.fetchNewestUser()
             async let near = storeManager.fetchNearUser()
             async let pick = storeManager.fetchPickUsers()
-            async let new = storeManager.fetchNewestUser()
             
             let randomResult = await random
             let rankResult = await rank
+            let newResult = await new
             let nearResult = await near
             let pickResult = await pick
-            let newResult = await new
             
-            if let randomError = randomResult.1,
-               let rankError = rankResult.1,
-               let nearError = nearResult.1,
-               let pickError = pickResult.1,
-               let newError = newResult.1 {
+            if let randomError = randomResult.error,
+               let rankError = rankResult.error,
+               let newError = newResult.error,
+               let nearError = nearResult.error,
+               let pickError = pickResult.error {
                 print(randomError.localizedDescription)
                 print(rankError.localizedDescription)
+                print(newError.localizedDescription)
                 print(nearError.localizedDescription)
                 print(pickError.localizedDescription)
-                print(newError.localizedDescription)
                 return
             }
-            guard let randomUser = randomResult.0,
-                  let rankUser = rankResult.0,
-                  let nearUser = nearResult.0,
-                  let pickUser = pickResult.0,
-                  let newUser = newResult.0 else { return }
-            sendItems(data: (randomUser, rankUser, nearUser, pickUser, newUser))
+            guard let randomUser = randomResult.result,
+                  let rankUser = rankResult.result,
+                  let newUser = newResult.result,
+                  let nearUser = nearResult.result,
+                  let pickUser = pickResult.result else { return }
+            sendItems(data: (randomUser, rankUser, newUser, nearUser, pickUser))
         }
+    }
+    
+    func fetchPickedUser() -> [UserInfo] {
+        let item = mainSubject.value.pick
+        let pickedUsers = item.map {
+            userInfoFromItem(item: $0)
+        }
+        return pickedUsers
     }
     
     func userInfoFromItem(item: Item) -> UserInfo {
@@ -72,9 +80,9 @@ extension MainPageViewModel {
             return info
         case .rank(let info):
             return info
-        case .near(let info):
-            return info
         case .new(let info):
+            return info
+        case .near(let info):
             return info
         case .pick(let info):
             return info
@@ -91,28 +99,30 @@ private extension MainPageViewModel {
         return nil
     }
     
-    func sendItems(data: ([UserInfo], [UserInfo], [UserInfo], [UserInfo], [UserInfo])) {
-        let items = makeItems(data: (data.0, data.1, data.2, data.3, data.4))
-        let data = MainItems(data: (items.0, items.1, items.2, items.3, items.4))
+    func sendItems(data: (random: [UserInfo], rank: [UserInfo], new: [UserInfo], near: [UserInfo], pick: [UserInfo])) {
+        let items = makeItems(data: (data.random, data.rank, data.new, data.near, data.pick))
+        let data = MainItems(data: (items.random, items.rank, items.new, items.near, items.pick))
         mainSubject.send(data)
     }
     
-    func makeItems(data: ([UserInfo], [UserInfo], [UserInfo], [UserInfo], [UserInfo])) -> ([Item], [Item], [Item], [Item], [Item]) {
-        let randomItem = data.0.map {
+    func makeItems(data: (random: [UserInfo], rank: [UserInfo],
+                          new: [UserInfo], near: [UserInfo], pick: [UserInfo])
+    ) -> (random: [Item], rank: [Item], new: [Item], near: [Item], pick: [Item]) {
+        let randomItem = data.random.map {
             Item.random($0)
         }
-        let rankItem = data.1.map {
+        let rankItem = data.rank.map {
             Item.rank($0)
         }
-        let nearItem = data.2.map {
-            Item.near($0)
-        }
-        let pickItem = data.3.map {
-            Item.pick($0)
-        }
-        let newItem = data.4.map {
+        let newItem = data.new.map {
             Item.new($0)
         }
-        return (randomItem, rankItem, nearItem, pickItem, newItem)
+        let nearItem = data.near.map {
+            Item.near($0)
+        }
+        let pickItem = data.pick.map {
+            Item.pick($0)
+        }
+        return (randomItem, rankItem, newItem, nearItem, pickItem)
     }
 }

@@ -11,10 +11,10 @@ import SnapKit
 final class MainPageView: UIView {
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        view.register(DefaultSectionCell.self,
-                      forCellWithReuseIdentifier: DefaultSectionCell.identifier)
         view.register(RankSectionCell.self,
                       forCellWithReuseIdentifier: RankSectionCell.identifier)
+        view.register(DefaultSectionCell.self,
+                      forCellWithReuseIdentifier: DefaultSectionCell.identifier)
         view.register(SectionHeaderView.self,
                       forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                       withReuseIdentifier: SectionHeaderView.identifier)
@@ -49,7 +49,7 @@ private extension MainPageView {
                 return self.randomSection()
             case 1:
                 return self.rankSection()
-            case 3:
+            case 2:
                 return self.newSection()
             default:
                 return self.defaultSection()
