@@ -23,6 +23,15 @@ final class UserInfoView: UIView {
         return view
     }()
     
+    lazy var pickButton: UIButton = {
+        ButtonFactory.makeButton(
+            image: UIImage(systemName: "suit.heart"),
+            tintColor: ThemeColor.sectionLabel,
+            backgroundColor: .systemGray,
+            cornerRadius: AppConstraint.defaultCornerRadius
+        )
+    }()
+    
     lazy var textView: UITextView = {
         let view = UITextView()
         view.isEditable = false
@@ -74,7 +83,7 @@ extension UserInfoView {
 
 private extension UserInfoView {
     func setLayout() {
-        [profileImageView, textView, chatButton].forEach {
+        [profileImageView, pickButton, textView, chatButton].forEach {
             scrollView.addSubview($0)
         }
         
@@ -86,6 +95,12 @@ private extension UserInfoView {
             $0.leading.top.trailing.equalToSuperview()
             $0.width.equalTo(UIScreen.main.bounds.width)
             $0.height.equalTo(500)
+        }
+        
+        pickButton.snp.makeConstraints {
+            $0.width.height.equalTo(50)
+            $0.trailing.equalTo(profileImageView.snp.trailing).inset(16)
+            $0.bottom.equalTo(profileImageView.snp.bottom).inset(20)
         }
         
         textView.snp.makeConstraints {

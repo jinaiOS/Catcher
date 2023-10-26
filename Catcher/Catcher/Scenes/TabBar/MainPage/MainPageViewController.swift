@@ -54,7 +54,9 @@ private extension MainPageViewController {
             collectionView: mainPageView.collectionView,
             cellProvider: { collectionView, indexPath, itemIdentifier in
                 switch itemIdentifier {
-                case .random(let item), .near(let item), .new(let item), .pick(let item):
+                    
+                    
+                case .random(let item), .near(let item), .pick(let item), .new(let item):
                     guard let cell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: DefaultSectionCell.identifier,
                         for: indexPath) as? DefaultSectionCell else { return UICollectionViewCell() }
@@ -91,24 +93,26 @@ private extension MainPageViewController {
         
         let randomSection = Section(id: SectionName.random.sectionID)
         let rankSection = Section(id: SectionName.rank.sectionID)
-        let nearSection = Section(id: SectionName.near.sectionID)
         let newSection = Section(id: SectionName.new.sectionID)
+        let nearSection = Section(id: SectionName.near.sectionID)
         let pickSection = Section(id: SectionName.pick.sectionID)
         
-        [randomSection, rankSection, nearSection, newSection].forEach {
+        [randomSection, rankSection, newSection].forEach {
             snapshot.appendSections([$0])
         }
         
         snapshot.appendItems(data.random, toSection: randomSection)
         snapshot.appendItems(data.rank, toSection: rankSection)
-        snapshot.appendItems(data.near, toSection: nearSection)
         snapshot.appendItems(data.new, toSection: newSection)
         
+        if data.near.isEmpty == false {
+            snapshot.appendSections([nearSection])
+            snapshot.appendItems(data.near, toSection: nearSection)
+        }
         if data.pick.isEmpty == false {
             snapshot.appendSections([pickSection])
             snapshot.appendItems(data.pick, toSection: pickSection)
         }
-        
         dataSource?.apply(snapshot)
     }
 }
@@ -124,14 +128,15 @@ extension MainPageViewController: UICollectionViewDelegate {
         case 1:
             items = viewModel.mainSubject.value.rank
         case 2:
-            items = viewModel.mainSubject.value.near
-        case 3:
             items = viewModel.mainSubject.value.new
+        case 3:
+            items = viewModel.mainSubject.value.near
         case 4:
             items = viewModel.mainSubject.value.pick
         default:
             return
         }
+        
         if items.isEmpty == false {
             let item = items[index]
             let userInfo = viewModel.userInfoFromItem(item: item)
