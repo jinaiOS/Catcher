@@ -108,4 +108,9 @@ iOSInjectionProject/
 
 Const.swift
 
+### CoreML Model
+animegan2face_paint_512_v2.mlmodel
+GenderClassifier.mlmodel
+YOLOv3Int8LUT.mlmodel
+
 # End of https://www.toptal.com/developers/gitignore/api/swift,cocoapods,xcode

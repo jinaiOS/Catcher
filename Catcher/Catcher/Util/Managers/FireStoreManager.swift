@@ -61,22 +61,25 @@ extension FireStoreManager {
 }
 
 extension FireStoreManager {
-    func fetchRandomUser() async -> ([UserInfo]?, Error?) {
+    func fetchRandomUser() async -> (result: [UserInfo]?, error: Error?) {
         let docRef = db.collection(userInfoPath)
         do {
             let document = try await docRef.getDocuments()
-            let userInfo = document.documents.map { $0.data()}
+            let userInfo = document.documents.map { $0.data() }
+            
+            let shuffledArray = userInfo
                 .randomElements(count: itemCount)
+                .shuffleArray(userInfo)
                 .compactMap {
                     decodingValue(data: $0)
                 }
-            return (userInfo, nil)
+            return (shuffledArray, nil)
         } catch {
             return (nil, error)
         }
     }
     
-    func fetchPickUsers() async -> ([UserInfo]?, Error?) {
+    func fetchPickUsers() async -> (result: [UserInfo]?, error: Error?) {
         let result = await fetchMyPickUsersUID()
         if let error = result.1 {
             return (nil, error)
@@ -88,7 +91,7 @@ extension FireStoreManager {
         return (userList, nil)
     }
     
-    func fetchUserInfo(uuid: String) async -> (UserInfo?, Error?) {
+    func fetchUserInfo(uuid: String) async -> (result: UserInfo?, error: Error?) {
         let docRef = db.collection(userInfoPath).document(uuid)
         do {
             let document = try await docRef.getDocument()
@@ -99,7 +102,7 @@ extension FireStoreManager {
         }
     }
     
-    func fetchRanking() async -> ([UserInfo]?, Error?) {
+    func fetchRanking() async -> (result: [UserInfo]?, error: Error?) {
         let docRef = db.collection(userInfoPath)
             .order(by: Data.score.key, descending: true)
             .limit(to: itemCount)
@@ -116,10 +119,11 @@ extension FireStoreManager {
         }
     }
     
-    func fetchNewestUser(date: Date) async -> ([UserInfo]?, Error?) {
+    func fetchNewestUser() async -> (result: [UserInfo]?, error: Error?) {
         do {
             let querySnapshot = try await db.collection(userInfoPath)
-                .whereField(Data.register.key, isGreaterThanOrEqualTo: date)
+                .whereField(Data.register.key, isLessThan: Date())
+                .limit(to: itemCount)
                 .getDocuments()
             let userInfoList = querySnapshot.documents.compactMap { snapshot in
                 decodingValue(data: snapshot.data())
@@ -130,13 +134,13 @@ extension FireStoreManager {
         }
     }
     
-    func fetchNearUser() async -> ([UserInfo]?, Error?) {
-        guard let isReturnUser: String = UserDefaultsManager().getValue(forKey: nearUserPath) else {
-            return(nil, FireStoreError.noNearPath)
-        }
+    func fetchNearUser() async -> (result: [UserInfo]?, error: Error?) {
+        // 현재 저장된 나의 위치 데이터가 유실되었을 때 메인에 정보를 보이게 하기 위해 의도적으로 사용
+        let location: String = UserDefaults.standard.string(forKey: nearUserPath) ?? ""
+        
         do {
             let querySnapshot = try await db.collection(userInfoPath)
-                .whereField(nearUserPath, isEqualTo: isReturnUser)
+                .whereField(nearUserPath, isEqualTo: location)
                 .getDocuments()
             let userInfoList = querySnapshot.documents.compactMap { snapshot in
                 decodingValue(data: snapshot.data())
