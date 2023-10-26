@@ -65,12 +65,15 @@ extension FireStoreManager {
         let docRef = db.collection(userInfoPath)
         do {
             let document = try await docRef.getDocuments()
-            let userInfo = document.documents.map { $0.data()}
+            let userInfo = document.documents.map { $0.data() }
+            
+            let shuffledArray = userInfo
                 .randomElements(count: itemCount)
+                .shuffleArray(userInfo)
                 .compactMap {
                     decodingValue(data: $0)
                 }
-            return (userInfo, nil)
+            return (shuffledArray, nil)
         } catch {
             return (nil, error)
         }
