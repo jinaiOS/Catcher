@@ -36,14 +36,9 @@
 		33C58E8E2AD8B2F6008EB6C2 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E8D2AD8B2F6008EB6C2 /* UIColor+.swift */; };
 		33C58EA12ADC5392008EB6C2 /* AppConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58EA02ADC5392008EB6C2 /* AppConstraint.swift */; };
 		33C58EA32ADC73C9008EB6C2 /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */; };
-		33D46F2D2AE9997E007B4E25 /* GenerateProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D46F2C2AE9997E007B4E25 /* GenerateProfile.swift */; };
-		33D46F302AE99C18007B4E25 /* DistinguishGender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D46F2F2AE99C18007B4E25 /* DistinguishGender.swift */; };
-		33D46F322AE99EB7007B4E25 /* DetectObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D46F312AE99EB7007B4E25 /* DetectObject.swift */; };
-		33D46F342AE9A283007B4E25 /* TempVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D46F332AE9A283007B4E25 /* TempVM.swift */; };
 		33FCCB3C2AE8A713004FF322 /* animegan2face_paint_512_v2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33FCCB3B2AE8A713004FF322 /* animegan2face_paint_512_v2.mlmodel */; };
 		33FCCB3E2AE8A7DD004FF322 /* GenderClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33FCCB3D2AE8A7DC004FF322 /* GenderClassifier.mlmodel */; };
 		33FCCB432AE8AF81004FF322 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FCCB422AE8AF81004FF322 /* UIImage+.swift */; };
-		33FCCB452AE8B6D5004FF322 /* TempVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FCCB442AE8B6D5004FF322 /* TempVC.swift */; };
 		3B2BE3012ADE4EAE00BD54CC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */; };
 		3B2BE3032ADE4EEF00BD54CC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2BE3022ADE4EEF00BD54CC /* LoginViewController.swift */; };
 		3B3E35D52ADFA2F1006841D8 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E35D42ADFA2F1006841D8 /* RegisterViewController.swift */; };
@@ -152,14 +147,9 @@
 		33C58E8D2AD8B2F6008EB6C2 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		33C58EA02ADC5392008EB6C2 /* AppConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstraint.swift; sourceTree = "<group>"; };
 		33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+.swift"; sourceTree = "<group>"; };
-		33D46F2C2AE9997E007B4E25 /* GenerateProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateProfile.swift; sourceTree = "<group>"; };
-		33D46F2F2AE99C18007B4E25 /* DistinguishGender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistinguishGender.swift; sourceTree = "<group>"; };
-		33D46F312AE99EB7007B4E25 /* DetectObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectObject.swift; sourceTree = "<group>"; };
-		33D46F332AE9A283007B4E25 /* TempVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempVM.swift; sourceTree = "<group>"; };
 		33FCCB3B2AE8A713004FF322 /* animegan2face_paint_512_v2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = animegan2face_paint_512_v2.mlmodel; sourceTree = "<group>"; };
 		33FCCB3D2AE8A7DC004FF322 /* GenderClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GenderClassifier.mlmodel; sourceTree = "<group>"; };
 		33FCCB422AE8AF81004FF322 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
-		33FCCB442AE8B6D5004FF322 /* TempVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempVC.swift; sourceTree = "<group>"; };
 		3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3B2BE3022ADE4EEF00BD54CC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3B3E35D42ADFA2F1006841D8 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -301,16 +291,6 @@
 			path = Configure;
 			sourceTree = "<group>";
 		};
-		33D46F2E2AE99998007B4E25 /* CoreML */ = {
-			isa = PBXGroup;
-			children = (
-				33D46F312AE99EB7007B4E25 /* DetectObject.swift */,
-				33D46F2F2AE99C18007B4E25 /* DistinguishGender.swift */,
-				33D46F2C2AE9997E007B4E25 /* GenerateProfile.swift */,
-			);
-			path = CoreML;
-			sourceTree = "<group>";
-		};
 		33FCCB3F2AE8A7FB004FF322 /* CoreMLModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,7 +341,6 @@
 				562E36802AD80EF9008D99B2 /* AppDelegate.swift */,
 				562E36842AD80EF9008D99B2 /* ViewController.swift */,
 				562E36862AD80EF9008D99B2 /* Main.storyboard */,
-				33D46F2E2AE99998007B4E25 /* CoreML */,
 				56C08B4E2ADF74FE00FB8608 /* Util */,
 				56C08B4A2ADF738200FB8608 /* Scenes */,
 				33C58E8A2AD8B292008EB6C2 /* Configure */,
@@ -468,8 +447,6 @@
 			children = (
 				33192D762AE9D00200069582 /* Dummy.swift */,
 				56C08B602ADF805800FB8608 /* HomeItem.swift */,
-				33FCCB442AE8B6D5004FF322 /* TempVC.swift */,
-				33D46F332AE9A283007B4E25 /* TempVM.swift */,
 				335B78B92AE70237004D2956 /* MainItems.swift */,
 				56C08B632ADF805800FB8608 /* DefaultSectionCell.swift */,
 				56C08B612ADF805800FB8608 /* RankSectionCell.swift */,
@@ -706,7 +683,6 @@
 				56C08B662ADF805800FB8608 /* SectionHeaderView.swift in Sources */,
 				56C08B9C2AE10CDE00FB8608 /* ChatModels.swift in Sources */,
 				56C08B8B2AE1010D00FB8608 /* StorageManager.swift in Sources */,
-				33D46F342AE9A283007B4E25 /* TempVM.swift in Sources */,
 				56C08B662ADF805800FB8608 /* SectionHeaderView.swift in Sources */,
 				230509582AE2469000F58092 /* ContactViewController.swift in Sources */,
 				33FCCB3C2AE8A713004FF322 /* animegan2face_paint_512_v2.mlmodel in Sources */,
@@ -730,16 +706,12 @@
 				2305095D2AE2475E00F58092 /* ContactTableViewCell.swift in Sources */,
 				562E36B72AD8DCAA008D99B2 /* BaseViewController.swift in Sources */,
 				562E36BD2AD9061D008D99B2 /* CommonHeaderView.swift in Sources */,
-				33D46F302AE99C18007B4E25 /* DistinguishGender.swift in Sources */,
-				33FCCB452AE8B6D5004FF322 /* TempVC.swift in Sources */,
 				562E36B12AD8D0EE008D99B2 /* BaseTabBarController.swift in Sources */,
 				56C08BA62AE10ECE00FB8608 /* NewConversationCell.swift in Sources */,
 				56C08B772ADF809900FB8608 /* ReportViewController.swift in Sources */,
-				33D46F322AE99EB7007B4E25 /* DetectObject.swift in Sources */,
 				33C58EA32ADC73C9008EB6C2 /* NSAttributedString+.swift in Sources */,
 				33C58E7F2AD85024008EB6C2 /* UIViewController+.swift in Sources */,
 				335241962AE5DB4A009EB771 /* Array+.swift in Sources */,
-				33D46F2D2AE9997E007B4E25 /* GenerateProfile.swift in Sources */,
 				3B2BE3032ADE4EEF00BD54CC /* LoginViewController.swift in Sources */,
 				335B78BC2AE70844004D2956 /* ImageCacheManager.swift in Sources */,
 				56C08B9E2AE10D2D00FB8608 /* LocationPickerViewController.swift in Sources */,

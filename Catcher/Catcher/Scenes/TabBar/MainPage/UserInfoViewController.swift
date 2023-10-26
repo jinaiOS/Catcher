@@ -24,8 +24,14 @@ final class UserInfoViewController: UIViewController {
                 self.userInfoView.profileImageView.image = image
             }
         }
+        
         userInfoView.textView.text = makeInfo(info: info)
         userInfoView.remakeLayout()
+    }
+    
+    func setPickButtonImage(state: Bool) {
+        let image = state ? UIImage(systemName: "heart.fill") : UIImage(systemName: "suit.heart")
+        userInfoView.pickButton.setImage(image, for: .normal)
     }
     
     init(info: UserInfo) {
