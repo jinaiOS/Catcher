@@ -5,9 +5,8 @@
 //  Created by t2023-m0070 on 10/17/23.
 //
 
-import UIKit
 import SnapKit
-
+import UIKit
 
 final class LoginView: UIView {
     lazy var emailTextField: UITextField = {
@@ -17,6 +16,7 @@ final class LoginView: UIView {
         textField.textColor = .label
         textField.font = .systemFont(ofSize: 15, weight: .regular)
         textField.keyboardType = .emailAddress
+        textField.autocapitalizationType = .none
         return textField
     }()
     
@@ -31,41 +31,32 @@ final class LoginView: UIView {
         return textField
     }()
     
-    lazy var loginBtn: UIButton = {
-        ButtonFactory.makeButton(
-            title: "로그인",
-            titleLabelFont: .systemFont(ofSize: 25, weight: .bold),
-            titleColor: .white,
-            backgroundColor: ThemeColor.primary,
-            cornerRadius: 15)
-    }()
+    lazy var loginBtn: UIButton = ButtonFactory.makeButton(
+        title: "로그인",
+        titleLabelFont: .systemFont(ofSize: 25, weight: .bold),
+        titleColor: .white,
+        backgroundColor: ThemeColor.primary,
+        cornerRadius: 15)
     
-    lazy var findIDBtn: UIButton = {
-        ButtonFactory.makeButton(
-            title: "아이디 찾기",
-            titleColor: .darkGray,
-            cornerRadius: 15)
-    }()
+    lazy var findIDBtn: UIButton = ButtonFactory.makeButton(
+        title: "아이디 찾기",
+        titleColor: .darkGray,
+        cornerRadius: 15)
     
-    lazy var resetPasswordBtn: UIButton = {
-        ButtonFactory.makeButton(
-            title: "회원가입",
-            titleColor: .darkGray,
-            cornerRadius: 15)
-    }()
+    lazy var resetPasswordBtn: UIButton = ButtonFactory.makeButton(
+        title: "회원가입",
+        titleColor: .darkGray,
+        cornerRadius: 15)
     
-    lazy var signUpBtn: UIButton = {
-        ButtonFactory.makeButton(
-            title: "회원가입",
-            titleColor: .darkGray,
-            cornerRadius: 15)
-    }()
-    lazy var appleLoginBtn: UIButton = {
-        ButtonFactory.makeButton(
-            type: .custom,
-            image: UIImage(named: "appleid_button"),
-            cornerRadius: 15)
-    }()
+    lazy var signUpBtn: UIButton = ButtonFactory.makeButton(
+        title: "회원가입",
+        titleColor: .darkGray,
+        cornerRadius: 15)
+
+    lazy var appleLoginBtn: UIButton = ButtonFactory.makeButton(
+        type: .custom,
+        image: UIImage(named: "appleid_button"),
+        cornerRadius: 15)
     
     private lazy var vStack: UIStackView = {
         let view = UIStackView()
@@ -99,9 +90,28 @@ final class LoginView: UIView {
         setLayout()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    lazy var eyeButton: UIButton = {
+        var btn = UIButton(type: .custom)
+        btn = UIButton(primaryAction: UIAction(handler: { [self] _ in
+            passwordTextField.isSecureTextEntry.toggle()
+            self.eyeButton.isSelected.toggle()
+        }))
+        var buttonConfiguration = UIButton.Configuration.plain()
+        buttonConfiguration.imagePadding = 10
+        buttonConfiguration.baseBackgroundColor = .clear
+        btn.tintColor = ThemeColor.primary
+        
+        btn.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        btn.setImage(UIImage(systemName: "eye"), for: .selected)
+        btn.configuration = buttonConfiguration
+        
+        return btn
+    }()
 }
 
 private extension LoginView {
@@ -114,7 +124,7 @@ private extension LoginView {
         }
         return view
     }
-    
+
     func makeLabel(text: String) -> UILabel {
         LabelFactory.makeLabel(
             text: text,
@@ -123,7 +133,7 @@ private extension LoginView {
     }
     
     func setLayout() {
-        [vStack, loginBtn, appleLoginBtn, hStack].forEach {
+        [vStack, loginBtn, appleLoginBtn, eyeButton, hStack].forEach {
             addSubview($0)
         }
         
@@ -146,6 +156,11 @@ private extension LoginView {
         hStack.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(50)
             $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-30)
+        }
+        eyeButton.snp.makeConstraints { make in
+            make.centerX.centerY.equalTo(self.passwordTextField)
+            make.trailing.equalTo(-20)
+            make.width.height.equalTo(40)
         }
     }
 }
