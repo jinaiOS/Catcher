@@ -11,6 +11,9 @@
 		2305095A2AE2470B00F58092 /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230509592AE2470B00F58092 /* UnderlineSegmentedControl.swift */; };
 		2305095D2AE2475E00F58092 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2305095B2AE2475E00F58092 /* ContactTableViewCell.swift */; };
 		2305095E2AE2475E00F58092 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2305095C2AE2475E00F58092 /* ContactTableViewCell.xib */; };
+		23E7DAB82AEB919400CDBC53 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E7DAB72AEB919400CDBC53 /* Const.swift */; };
+		23E7DABB2AEB978600CDBC53 /* ProfileSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E7DAB92AEB978600CDBC53 /* ProfileSettingViewController.swift */; };
+		23E7DABC2AEB978600CDBC53 /* ProfileSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23E7DABA2AEB978600CDBC53 /* ProfileSettingViewController.xib */; };
 		33192D772AE9D00200069582 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33192D762AE9D00200069582 /* Dummy.swift */; };
 		335241942AE5AEBB009EB771 /* FireStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335241932AE5AEBB009EB771 /* FireStoreManager.swift */; };
 		335241962AE5DB4A009EB771 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335241952AE5DB4A009EB771 /* Array+.swift */; };
@@ -120,6 +123,9 @@
 		230509592AE2470B00F58092 /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 		2305095B2AE2475E00F58092 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		2305095C2AE2475E00F58092 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
+		23E7DAB72AEB919400CDBC53 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
+		23E7DAB92AEB978600CDBC53 /* ProfileSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewController.swift; sourceTree = "<group>"; };
+		23E7DABA2AEB978600CDBC53 /* ProfileSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileSettingViewController.xib; sourceTree = "<group>"; };
 		33192D762AE9D00200069582 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
 		335241932AE5AEBB009EB771 /* FireStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreManager.swift; sourceTree = "<group>"; };
 		335241952AE5DB4A009EB771 /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
@@ -239,7 +245,7 @@
 		33532B812AE17A8E008B47EB /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				33ABF3502AE3D7EF002DCCF4 /* Const.swift */,
+				23E7DAB72AEB919400CDBC53 /* Const.swift */,
 				33532B772AE17A31008B47EB /* UserInfo.swift */,
 				335241932AE5AEBB009EB771 /* FireStoreManager.swift */,
 				33532B7B2AE17A53008B47EB /* FirebaseErrors.swift */,
@@ -401,6 +407,8 @@
 				56C08B7F2AE0FE2100FB8608 /* ChatPage */,
 				56C08B782ADF80AC00FB8608 /* MyPage */,
 				68708AB62AE745C200B4C7B9 /* SurveyViewController.swift */,
+				23E7DAB92AEB978600CDBC53 /* ProfileSettingViewController.swift */,
+				23E7DABA2AEB978600CDBC53 /* ProfileSettingViewController.xib */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -625,6 +633,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2305095E2AE2475E00F58092 /* ContactTableViewCell.xib in Resources */,
+				23E7DABC2AEB978600CDBC53 /* ProfileSettingViewController.xib in Resources */,
 				562E368D2AD80EFA008D99B2 /* LaunchScreen.storyboard in Resources */,
 				562E368A2AD80EFA008D99B2 /* Assets.xcassets in Resources */,
 				33532B832AE299E1008B47EB /* GoogleService-Info.plist in Resources */,
@@ -686,7 +695,6 @@
 				335AC1F72AE86B8500F2CF51 /* String+.swift in Sources */,
 				3B3E35D72AE125A3006841D8 /* RegisterView.swift in Sources */,
 				562E36BB2AD8DD03008D99B2 /* CommonUtil.swift in Sources */,
-				33ABF3512AE3D7EF002DCCF4 /* Const.swift in Sources */,
 				2305095D2AE2475E00F58092 /* ContactTableViewCell.swift in Sources */,
 				562E36B72AD8DCAA008D99B2 /* BaseViewController.swift in Sources */,
 				562E36BD2AD9061D008D99B2 /* CommonHeaderView.swift in Sources */,
@@ -718,6 +726,7 @@
 				56C08B6F2ADF808400FB8608 /* MyPageViewController.swift in Sources */,
 				33532B802AE17A75008B47EB /* UserDefaultsManager.swift in Sources */,
 				33ABF3592AE4889D002DCCF4 /* LocalFileManager.swift in Sources */,
+				23E7DABB2AEB978600CDBC53 /* ProfileSettingViewController.swift in Sources */,
 				56C08B642ADF805800FB8608 /* MainPageView.swift in Sources */,
 				56C08BA22AE10E8300FB8608 /* NewConversationViewController.swift in Sources */,
 				56C08B862AE0FEB300FB8608 /* ConversationTableViewCell.swift in Sources */,
@@ -725,6 +734,7 @@
 				335AC1F32AE7E89B00F2CF51 /* UserInfoViewController.swift in Sources */,
 				56C08B472ADF6B7E00FB8608 /* ChatViewController.swift in Sources */,
 				33C58E8E2AD8B2F6008EB6C2 /* UIColor+.swift in Sources */,
+				23E7DAB82AEB919400CDBC53 /* Const.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

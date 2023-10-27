@@ -107,6 +107,7 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 Const.swift
+.DS_Store
 
 ### CoreML Model
 
