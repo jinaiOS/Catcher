@@ -32,8 +32,14 @@ final class LoginViewController: UIViewController {
         }
     }
 
+    @objc func signUpPressed() {
+        let vc = RegisterViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         loginView.loginBtn.addTarget(self, action: #selector(loginPressed), for: .touchUpInside)
+        loginView.signUpBtn.addTarget(self, action: #selector(signUpPressed), for: .touchUpInside)
     }
 }
