@@ -24,12 +24,14 @@ final class UserInfoView: UIView {
     }()
     
     lazy var pickButton: UIButton = {
-        ButtonFactory.makeButton(
-            image: UIImage(systemName: "suit.heart"),
-            tintColor: ThemeColor.sectionLabel,
-            backgroundColor: .systemGray,
-            cornerRadius: AppConstraint.defaultCornerRadius
-        )
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "suit.heart"), for: .normal)
+        button.setImage(UIImage(systemName: "heart.fill"), for: .selected)
+        button.tintColor = ThemeColor.sectionLabel
+        button.backgroundColor = .lightGray
+        button.cornerRadius = AppConstraint.defaultCornerRadius
+        button.imageView?.contentMode = .scaleAspectFit
+        return button
     }()
     
     lazy var textView: UITextView = {
@@ -41,12 +43,13 @@ final class UserInfoView: UIView {
     }()
     
     lazy var chatButton: UIButton = {
-        ButtonFactory.makeButton(
+        let button = ButtonFactory.makeButton(
             title: "채팅하기",
             titleColor: .white,
             backgroundColor: ThemeColor.primary,
-            cornerRadius: AppConstraint.defaultCornerRadius
-        )
+            cornerRadius: AppConstraint.defaultCornerRadius)
+        button.imageView?.contentMode = .scaleAspectFit
+        return button
     }()
     
     lazy var closeButton: UIButton = {
@@ -101,6 +104,10 @@ private extension UserInfoView {
             $0.width.height.equalTo(50)
             $0.trailing.equalTo(profileImageView.snp.trailing).inset(16)
             $0.bottom.equalTo(profileImageView.snp.bottom).inset(20)
+        }
+        
+        pickButton.imageView?.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(5)
         }
         
         textView.snp.makeConstraints {

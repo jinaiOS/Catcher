@@ -8,8 +8,15 @@
 import UIKit
 import SnapKit
 
+protocol UpdatePickUserInfo: AnyObject {
+    func updatePickUser(info: [UserInfo])
+}
+
 final class UserInfoViewController: UIViewController {
     private let userInfoView = UserInfoView()
+    private let viewModel: UserInfoViewModel
+    
+    weak var delegate: UpdatePickUserInfo?
     
     override func loadView() {
         super.loadView()
@@ -17,26 +24,10 @@ final class UserInfoViewController: UIViewController {
         view = userInfoView
     }
     
-    func configure(info: UserInfo) {
-        ImageCacheManager.shared.loadImage(uid: info.uid) { [weak self] image in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.userInfoView.profileImageView.image = image
-            }
-        }
-        
-        userInfoView.textView.text = makeInfo(info: info)
-        userInfoView.remakeLayout()
-    }
-    
-    func setPickButtonImage(state: Bool) {
-        let image = state ? UIImage(systemName: "heart.fill") : UIImage(systemName: "suit.heart")
-        userInfoView.pickButton.setImage(image, for: .normal)
-    }
-    
-    init(info: UserInfo) {
+    init(info: UserInfo, isPicked: Bool) {
+        viewModel = UserInfoViewModel(userInfo: info)
         super.init(nibName: nil, bundle: nil)
-        configure(info: info)
+        configure(info: info, isPicked: isPicked)
     }
     
     required init?(coder: NSCoder) {
@@ -45,6 +36,7 @@ final class UserInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setTarget()
     }
     
@@ -54,27 +46,65 @@ final class UserInfoViewController: UIViewController {
 }
 
 private extension UserInfoViewController {
-    func setTarget() {
-        userInfoView.closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+    func configure(info: UserInfo, isPicked: Bool) {
+        ImageCacheManager.shared.loadImage(uid: info.uid) { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.userInfoView.profileImageView.image = image
+            }
+        }
+        if isPicked {
+            userInfoView.pickButton.isSelected = true
+        }
+        userInfoView.textView.text = viewModel.makeInfo(info: info)
+        userInfoView.remakeLayout()
     }
     
-    @objc func closeView() {
+    func setTarget() {
+        userInfoView.closeButton.addTarget(self, action: #selector(didTappedCloseBtn), for: .touchUpInside)
+        userInfoView.pickButton.addTarget(self, action: #selector(didTappedPickBtn), for: .touchUpInside)
+    }
+    
+    @objc func didTappedCloseBtn() {
         dismiss(animated: true)
     }
     
-    func makeInfo(info: UserInfo) -> String {
-        let smoking = info.smoking ? "흡연" : "비흡연"
+    @objc func didTappedPickBtn(sender: UIButton) {
+        sender.isSelected.toggle()
         
-        let text = """
-        닉네임: \(info.nickName)
-        키: \(info.height)
-        체형: \(info.body)
-        음주: \(info.drinking)
-        흡연: \(smoking)
-        학력: \(info.education)
-        지역: \(info.location)
-        점수: \(info.score)
-        """
-        return text
+        if sender.isSelected {
+            viewModel.processPickUser(isUpdate: true) { [weak self] result, error in
+                guard let self = self else { return }
+                resultHandling(result: result, error: error)
+                return
+            }
+        }
+        viewModel.processPickUser(isUpdate: false) { [weak self] result, error in
+            guard let self = self else { return }
+            resultHandling(result: result, error: error)
+        }
+    }
+}
+
+private extension UserInfoViewController {
+    func resultHandling(result: [UserInfo]?, error: Error?) {
+        if let error = error {
+            print(error.localizedDescription)
+            showAlert()
+            return
+        }
+        guard let result = result else {
+            showAlert()
+            return
+        }
+        delegate?.updatePickUser(info: result)
+        return
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: "네트워크 오류", message: "잠시 후 다시 시도해 주세요", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
 }

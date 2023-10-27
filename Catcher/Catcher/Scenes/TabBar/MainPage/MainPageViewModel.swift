@@ -66,12 +66,12 @@ extension MainPageViewModel {
         }
     }
     
-    func fetchPickedUser() -> [UserInfo] {
-        let item = mainSubject.value.pick
-        let pickedUsers = item.map {
-            userInfoFromItem(item: $0)
+    func isPickedUser(info: UserInfo) -> Bool {
+        let uids = fetchPickedUser.map { $0.uid }
+        if uids.contains(info.uid) {
+            return true
         }
-        return pickedUsers
+        return false
     }
     
     func userInfoFromItem(item: Item) -> UserInfo {
@@ -88,15 +88,24 @@ extension MainPageViewModel {
             return info
         }
     }
+    
+    func updatePickUser(info: [UserInfo]) {
+        let items = info.map {
+            Item.pick($0)
+        }
+        var currentValue = mainSubject.value
+        currentValue.pick = items
+        mainSubject.send(currentValue)
+    }
 }
 
 private extension MainPageViewModel {
-    var oneMonthAgo: Date? {
-        let calendar = Calendar.current
-        if let oneMonthAgo = calendar.date(byAdding: .month, value: -1, to: Date()) {
-            return oneMonthAgo
+    var fetchPickedUser: [UserInfo] {
+        let item = mainSubject.value.pick
+        let pickedUsers = item.map {
+            userInfoFromItem(item: $0)
         }
-        return nil
+        return pickedUsers
     }
     
     func sendItems(data: (random: [UserInfo], rank: [UserInfo], new: [UserInfo], near: [UserInfo], pick: [UserInfo])) {

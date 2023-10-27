@@ -81,10 +81,10 @@ extension FireStoreManager {
     
     func fetchPickUsers() async -> (result: [UserInfo]?, error: Error?) {
         let result = await fetchMyPickUsersUID()
-        if let error = result.1 {
+        if let error = result.error {
             return (nil, error)
         }
-        guard let uidList = result.0 else {
+        guard let uidList = result.result else {
             return (nil, FireStoreError.noUIDList)
         }
         let userList = await groupTaskForFetchUsers(uidList: uidList)
@@ -194,7 +194,7 @@ extension FireStoreManager {
 }
 
 private extension FireStoreManager {
-    func fetchMyPickUsersUID() async -> ([String]?, Error?) {
+    func fetchMyPickUsersUID() async -> (result: [String]?, error: Error?) {
         guard let uid = uid else { return (nil, FireStoreError.missingUID) }
         let docRef = db.collection(userInfoPath).document(uid)
         do {
@@ -211,11 +211,11 @@ private extension FireStoreManager {
             for uid in uidList {
                 group.addTask {
                     let data = await self.fetchUserInfo(uuid: uid)
-                    if let error = data.1 {
+                    if let error = data.error {
                         print("error: \(error.localizedDescription)")
                         return nil
                     }
-                    return data.0
+                    return data.result
                 }
             }
             var dataList: [UserInfo?] = []

@@ -27,6 +27,7 @@
 		335AC1F72AE86B8500F2CF51 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC1F62AE86B8500F2CF51 /* String+.swift */; };
 		335B78BA2AE70237004D2956 /* MainItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335B78B92AE70237004D2956 /* MainItems.swift */; };
 		335B78BC2AE70844004D2956 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335B78BB2AE70844004D2956 /* ImageCacheManager.swift */; };
+		33ABF3512AE3D7EF002DCCF4 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3502AE3D7EF002DCCF4 /* Const.swift */; };
 		33ABF3552AE46F2F002DCCF4 /* FireStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3542AE46F2F002DCCF4 /* FireStorageManager.swift */; };
 		33ABF3592AE4889D002DCCF4 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */; };
 		33B358072ADE189E00A91C95 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B358062ADE189E00A91C95 /* ButtonFactory.swift */; };
@@ -37,6 +38,7 @@
 		33C58E8E2AD8B2F6008EB6C2 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E8D2AD8B2F6008EB6C2 /* UIColor+.swift */; };
 		33C58EA12ADC5392008EB6C2 /* AppConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58EA02ADC5392008EB6C2 /* AppConstraint.swift */; };
 		33C58EA32ADC73C9008EB6C2 /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */; };
+		33EF35A92AEAD62500B4863B /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EF35A82AEAD62500B4863B /* UserInfoViewModel.swift */; };
 		33FCCB432AE8AF81004FF322 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FCCB422AE8AF81004FF322 /* UIImage+.swift */; };
 		3B2BE3012ADE4EAE00BD54CC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */; };
 		3B2BE3032ADE4EEF00BD54CC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2BE3022ADE4EEF00BD54CC /* LoginViewController.swift */; };
@@ -137,6 +139,7 @@
 		335AC1F62AE86B8500F2CF51 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		335B78B92AE70237004D2956 /* MainItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainItems.swift; sourceTree = "<group>"; };
 		335B78BB2AE70844004D2956 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		33ABF3502AE3D7EF002DCCF4 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		33ABF3542AE46F2F002DCCF4 /* FireStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStorageManager.swift; sourceTree = "<group>"; };
 		33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		33B358062ADE189E00A91C95 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
@@ -147,6 +150,7 @@
 		33C58E8D2AD8B2F6008EB6C2 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		33C58EA02ADC5392008EB6C2 /* AppConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstraint.swift; sourceTree = "<group>"; };
 		33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+.swift"; sourceTree = "<group>"; };
+		33EF35A82AEAD62500B4863B /* UserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
 		33FCCB422AE8AF81004FF322 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3B2BE3022ADE4EEF00BD54CC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -444,6 +448,7 @@
 				56C08B5E2ADF805800FB8608 /* MainPageViewModel.swift */,
 				56C08B5F2ADF805800FB8608 /* MainPageViewController.swift */,
 				335AC1F42AE7E8D100F2CF51 /* UserInfoView.swift */,
+				33EF35A82AEAD62500B4863B /* UserInfoViewModel.swift */,
 				335AC1F22AE7E89B00F2CF51 /* UserInfoViewController.swift */,
 			);
 			path = MainPage;
@@ -702,6 +707,7 @@
 				3B2BE3032ADE4EEF00BD54CC /* LoginViewController.swift in Sources */,
 				335B78BC2AE70844004D2956 /* ImageCacheManager.swift in Sources */,
 				56C08B9E2AE10D2D00FB8608 /* LocationPickerViewController.swift in Sources */,
+				33EF35A92AEAD62500B4863B /* UserInfoViewModel.swift in Sources */,
 				56C08B752ADF809300FB8608 /* InfoViewController.swift in Sources */,
 				33C58E892AD8B28D008EB6C2 /* ThemeColor.swift in Sources */,
 				56C08B502ADF754B00FB8608 /* UIView+.swift in Sources */,
