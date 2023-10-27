@@ -8,7 +8,6 @@
 import UIKit
 import Combine
 import SnapKit
-import SwiftUI
 
 final class MainPageViewController: UIViewController {
     private let mainPageView = MainPageView()
@@ -54,9 +53,7 @@ private extension MainPageViewController {
             collectionView: mainPageView.collectionView,
             cellProvider: { collectionView, indexPath, itemIdentifier in
                 switch itemIdentifier {
-                    
-                    
-                case .random(let item), .near(let item), .pick(let item), .new(let item):
+                case .random(let item), .new(let item), .near(let item), .pick(let item):
                     guard let cell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: DefaultSectionCell.identifier,
                         for: indexPath) as? DefaultSectionCell else { return UICollectionViewCell() }
@@ -140,7 +137,9 @@ extension MainPageViewController: UICollectionViewDelegate {
         if items.isEmpty == false {
             let item = items[index]
             let userInfo = viewModel.userInfoFromItem(item: item)
-            let userInfoVC = UserInfoViewController(info: userInfo)
+            let isPicked = viewModel.isPickedUser(info: userInfo)
+            let userInfoVC = UserInfoViewController(info: userInfo, isPicked: isPicked)
+            userInfoVC.delegate = self
             userInfoVC.modalTransitionStyle = .crossDissolve
             userInfoVC.modalPresentationStyle = .custom
             present(userInfoVC, animated: true)
@@ -148,8 +147,8 @@ extension MainPageViewController: UICollectionViewDelegate {
     }
 }
 
-struct MainPageViewControllerPreView: PreviewProvider {
-    static var previews: some View {
-        MainPageViewController().toPreview().edgesIgnoringSafeArea(.all)
+extension MainPageViewController: UpdatePickUserInfo {
+    func updatePickUser(info: [UserInfo]) {
+        viewModel.updatePickUser(info: info)
     }
 }

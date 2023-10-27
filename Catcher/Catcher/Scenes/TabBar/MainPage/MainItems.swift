@@ -12,7 +12,7 @@ struct MainItems {
     let rank: [Item]
     let new: [Item]
     let near: [Item]
-    let pick: [Item]
+    var pick: [Item]
     
     init(data: (random: [Item], rank: [Item], new: [Item], near: [Item], pick: [Item])) {
         self.random = data.random

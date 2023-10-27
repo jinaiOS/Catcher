@@ -8,7 +8,8 @@
 import UIKit
 
 final class UserInfoViewModel {
-    let userInfo: UserInfo
+    private let fireStoreManager = FireStoreManager.shared
+    private let userInfo: UserInfo
     
     init(userInfo: UserInfo) {
         self.userInfo = userInfo
@@ -16,14 +17,29 @@ final class UserInfoViewModel {
 }
 
 extension UserInfoViewModel {
-    func setPickButtonImage(state: Bool) -> UIImage {
-        let image = state ? UIImage(systemName: "heart.fill") : UIImage(systemName: "suit.heart")
-        return image ?? UIImage()
-    }
-    
-    func togglePickBtnImage(image: UIImage) -> UIImage {
-        let buttonImage = image == UIImage(systemName: "heart.fill") ? UIImage(systemName: "suit.heart") : UIImage(systemName: "heart.fill")
-        return buttonImage ?? UIImage()
+    func processPickUser(isUpdate: Bool,
+                         completion: @escaping (_ result: [UserInfo]?, _ error: Error?) -> Void) {
+        Task {
+            var result: [UserInfo]?
+            var error: Error?
+            
+            if isUpdate {
+                error = await fireStoreManager.updatePickUser(uuid: userInfo.uid)
+            } else {
+                error = await fireStoreManager.deletePickUser(uuid: userInfo.uid)
+            }
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+            
+            (result, error) = await fireStoreManager.fetchPickUsers()
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+            completion(result, nil)
+        }
     }
     
     func makeInfo(info: UserInfo) -> String {
