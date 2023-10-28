@@ -15,23 +15,6 @@ final class MainPageViewModel {
 }
 
 extension MainPageViewModel {
-    func getSectionTitle(section: Int) -> String? {
-        switch section {
-        case 0:
-            return nil
-        case 1:
-            return "평점 높은 유저"
-        case 2:
-            return "신규 유저"
-        case 3:
-            return "나의 동네 유저"
-        case 4:
-            return "찜한 유저"
-        default:
-            return nil
-        }
-    }
-    
     /// 모든 데이터 최신화
     func fetchMainPageData() {
         Task {
@@ -67,7 +50,55 @@ extension MainPageViewModel {
             sendItems(data: (randomUser, rankUser, newUser, nearUser, pickUser))
         }
     }
+}
+
+extension MainPageViewModel {
+    func getSectionTitle(section: Int) -> String? {
+        switch section {
+        case 0:
+            return nil
+        case 1:
+            return "평점 높은 유저"
+        case 2:
+            return "신규 유저"
+        case 3:
+            if mainSubject.value.near.isEmpty {
+                return "찜한 유저"
+            }
+            return "나의 동네 유저"
+        case 4:
+            return "찜한 유저"
+        default:
+            return nil
+        }
+    }
     
+    func getSectionItems(section: Int) -> [Item]? {
+        let items: [Item]
+        let value = mainSubject.value
+        
+        switch section {
+        case 0:
+            items = mainSubject.value.random
+        case 1:
+            items = mainSubject.value.rank
+        case 2:
+            items = mainSubject.value.new
+        case 3:
+            if value.near.isEmpty {
+                items = mainSubject.value.pick
+                return items
+            }
+            items = mainSubject.value.near
+            return items
+        case 4:
+            items = mainSubject.value.pick
+        default:
+            return nil
+        }
+        return items
+    }
+
     func isPickedUser(info: UserInfo) -> Bool {
         let uids = fetchPickedUser.map { $0.uid }
         if uids.contains(info.uid) {

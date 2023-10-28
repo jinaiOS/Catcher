@@ -9,6 +9,12 @@ import UIKit
 import SnapKit
 
 final class MainPageView: UIView {
+    lazy var refreshControl: UIRefreshControl = {
+        let refresh = UIRefreshControl()
+        refresh.attributedTitle = NSAttributedString("당겨서 새로고침")
+        return refresh
+    }()
+    
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
         view.register(RankSectionCell.self,
@@ -19,6 +25,7 @@ final class MainPageView: UIView {
                       forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                       withReuseIdentifier: SectionHeaderView.identifier)
         view.setCollectionViewLayout(collectionViewLayout(), animated: true)
+        view.refreshControl = refreshControl
         return view
     }()
     
