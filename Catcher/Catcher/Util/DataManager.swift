@@ -20,7 +20,7 @@ class DataManager {
      */
     static let sharedInstance = DataManager()
     
-//    var userInfo: UserModel?
+    var userInfo: UserInfo?
     
     /** @brief modal로 이동한 Viewcontroller리스트 */
     var modalViewControllerList : NSMutableArray?
