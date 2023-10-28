@@ -10,6 +10,7 @@ import Combine
 
 final class MainPageViewModel {
     private let storeManager = FireStoreManager.shared
+    private let uid = FirebaseManager().getUID
     let mainSubject = CurrentValueSubject<MainItems, Never>(.init(data: DummyData))
 }
 
@@ -31,6 +32,7 @@ extension MainPageViewModel {
         }
     }
     
+    /// 모든 데이터 최신화
     func fetchMainPageData() {
         Task {
             async let random = storeManager.fetchRandomUser()
@@ -117,21 +119,22 @@ private extension MainPageViewModel {
     func makeItems(data: (random: [UserInfo], rank: [UserInfo],
                           new: [UserInfo], near: [UserInfo], pick: [UserInfo])
     ) -> (random: [Item], rank: [Item], new: [Item], near: [Item], pick: [Item]) {
-        let randomItem = data.random.map {
-            Item.random($0)
-        }
-        let rankItem = data.rank.map {
-            Item.rank($0)
-        }
-        let newItem = data.new.map {
-            Item.new($0)
-        }
-        let nearItem = data.near.map {
-            Item.near($0)
-        }
-        let pickItem = data.pick.map {
-            Item.pick($0)
-        }
+        let randomItem = data.random
+            .filter { $0.uid != uid }
+            .map { Item.random($0) }
+        let rankItem = data.rank
+            .filter { $0.uid != uid }
+            .map { Item.rank($0) }
+        let newItem = data.new
+            .filter { $0.uid != uid }
+            .map { Item.new($0) }
+        let nearItem = data.near
+            .filter { $0.uid != uid }
+            .map { Item.near($0) }
+        let pickItem = data.pick
+            .filter { $0.uid != uid }
+            .map { Item.pick($0) }
+        
         return (randomItem, rankItem, newItem, nearItem, pickItem)
     }
 }
