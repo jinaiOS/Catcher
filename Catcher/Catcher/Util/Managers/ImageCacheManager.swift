@@ -13,21 +13,22 @@ final class ImageCacheManager {
     
     private let storeManager = FireStorageManager.shared
     private let cache = NSCache<NSString, UIImage>()
+    private let defaultImage = UIImage(named: "default")
     
     func loadImage(uid: String, completion: @escaping (UIImage?) -> Void) {
-        var profileImage: UIImage?
         if let image = cachedImage(uid: uid) {
             completion(image)
             return
         }
         storeManager.fetchProfileData(uid: uid) { [weak self] data, error in
             guard let self = self else { return }
-            if let error = error {
-                print(error.localizedDescription)
-                return
+            var profileImage: UIImage?
+            if let data = data {
+                profileImage = UIImage(data: data)
+            } else {
+                print(error?.localizedDescription ?? "Unknown error")
+                profileImage = defaultImage
             }
-            guard let data = data else { return }
-            profileImage = UIImage(data: data)
             cachingImage(uid: uid, image: profileImage)
             completion(profileImage)
         }

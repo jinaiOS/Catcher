@@ -10,7 +10,7 @@ import Combine
 
 final class MainPageViewModel {
     private let storeManager = FireStoreManager.shared
-    let mainSubject = CurrentValueSubject<MainItems, Never>(.init(data: ([], [], [], [], [])))
+    let mainSubject = CurrentValueSubject<MainItems, Never>(.init(data: DummyData))
 }
 
 extension MainPageViewModel {
@@ -19,11 +19,11 @@ extension MainPageViewModel {
         case 0:
             return nil
         case 1:
-            return "이번 주 랭킹"
+            return "평점 높은 유저"
         case 2:
-            return "내 근처 유저"
-        case 3:
             return "신규 유저"
+        case 3:
+            return "나의 동네 유저"
         case 4:
             return "찜한 유저"
         default:
@@ -32,65 +32,106 @@ extension MainPageViewModel {
     }
     
     func fetchMainPageData() {
-        guard let date = oneMonthAgo else { return }
         Task {
             async let random = storeManager.fetchRandomUser()
             async let rank = storeManager.fetchRanking()
+            async let new = storeManager.fetchNewestUser()
+            async let near = storeManager.fetchNearUser()
             async let pick = storeManager.fetchPickUsers()
-            async let new = storeManager.fetchNewestUser(date: date)
             
             let randomResult = await random
             let rankResult = await rank
-            let pickResult = await pick
             let newResult = await new
+            let nearResult = await near
+            let pickResult = await pick
             
-            if let randomError = randomResult.1,
-               let rankError = rankResult.1,
-               let pickError = pickResult.1,
-               let newError = newResult.1 {
+            if let randomError = randomResult.error,
+               let rankError = rankResult.error,
+               let newError = newResult.error,
+               let nearError = nearResult.error,
+               let pickError = pickResult.error {
                 print(randomError.localizedDescription)
                 print(rankError.localizedDescription)
-                print(pickError.localizedDescription)
                 print(newError.localizedDescription)
+                print(nearError.localizedDescription)
+                print(pickError.localizedDescription)
                 return
             }
-            guard let randomUser = randomResult.0,
-                  let rankUser = rankResult.0,
-                  let pickUser = pickResult.0,
-                  let newUser = newResult.0 else { return }
-            sendItems(data: (randomUser, rankUser, pickUser, newUser))
+            guard let randomUser = randomResult.result,
+                  let rankUser = rankResult.result,
+                  let newUser = newResult.result,
+                  let nearUser = nearResult.result,
+                  let pickUser = pickResult.result else { return }
+            sendItems(data: (randomUser, rankUser, newUser, nearUser, pickUser))
         }
+    }
+    
+    func isPickedUser(info: UserInfo) -> Bool {
+        let uids = fetchPickedUser.map { $0.uid }
+        if uids.contains(info.uid) {
+            return true
+        }
+        return false
+    }
+    
+    func userInfoFromItem(item: Item) -> UserInfo {
+        switch item {
+        case .random(let info):
+            return info
+        case .rank(let info):
+            return info
+        case .new(let info):
+            return info
+        case .near(let info):
+            return info
+        case .pick(let info):
+            return info
+        }
+    }
+    
+    func updatePickUser(info: [UserInfo]) {
+        let items = info.map {
+            Item.pick($0)
+        }
+        var currentValue = mainSubject.value
+        currentValue.pick = items
+        mainSubject.send(currentValue)
     }
 }
 
 private extension MainPageViewModel {
-    var oneMonthAgo: Date? {
-        let calendar = Calendar.current
-        if let oneMonthAgo = calendar.date(byAdding: .month, value: -1, to: Date()) {
-            return oneMonthAgo
+    var fetchPickedUser: [UserInfo] {
+        let item = mainSubject.value.pick
+        let pickedUsers = item.map {
+            userInfoFromItem(item: $0)
         }
-        return nil
+        return pickedUsers
     }
     
-    func sendItems(data: ([UserInfo], [UserInfo], [UserInfo], [UserInfo])) {
-        let items = makeItems(data: (data.0, data.1, data.2, data.3))
-        let data = MainItems(data: (items.0, items.1, [], items.2, items.3))
+    func sendItems(data: (random: [UserInfo], rank: [UserInfo], new: [UserInfo], near: [UserInfo], pick: [UserInfo])) {
+        let items = makeItems(data: (data.random, data.rank, data.new, data.near, data.pick))
+        let data = MainItems(data: (items.random, items.rank, items.new, items.near, items.pick))
         mainSubject.send(data)
     }
     
-    func makeItems(data: ([UserInfo], [UserInfo], [UserInfo], [UserInfo])) -> ([Item], [Item], [Item], [Item]) {
-        let randomItem = data.0.map {
-            Item.random(HomeItem(info: $0))
+    func makeItems(data: (random: [UserInfo], rank: [UserInfo],
+                          new: [UserInfo], near: [UserInfo], pick: [UserInfo])
+    ) -> (random: [Item], rank: [Item], new: [Item], near: [Item], pick: [Item]) {
+        let randomItem = data.random.map {
+            Item.random($0)
         }
-        let rankItem = data.1.map {
-            Item.rank(HomeItem(info: $0))
+        let rankItem = data.rank.map {
+            Item.rank($0)
         }
-        let pickItem = data.2.map {
-            Item.pick(HomeItem(info: $0))
+        let newItem = data.new.map {
+            Item.new($0)
         }
-        let newItem = data.3.map {
-            Item.new(HomeItem(info: $0))
+        let nearItem = data.near.map {
+            Item.near($0)
         }
-        return (randomItem, rankItem, pickItem, newItem)
+        let pickItem = data.pick.map {
+            Item.pick($0)
+        }
+        return (randomItem, rankItem, newItem, nearItem, pickItem)
     }
 }

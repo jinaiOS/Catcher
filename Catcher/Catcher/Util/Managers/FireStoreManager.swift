@@ -13,14 +13,16 @@ enum FireStoreError: Error {
     case missingUID
     case deleteFail
     case noUIDList
+    case noNearPath
 }
 
 final class FireStoreManager {
     static let shared = FireStoreManager()
     private let db = Firestore.firestore()
     private let userInfoPath = "userInfo"
+    private let nearUserPath = "location"
     private let uid: String?
-    private let itemCount: Int = 15
+    private let itemCount: Int = 9
     
     private init(uid: String? = FirebaseManager().getUID) {
         self.uid = uid
@@ -73,34 +75,37 @@ extension FireStoreManager {
 }
 
 extension FireStoreManager {
-    func fetchRandomUser() async -> ([UserInfo]?, Error?) {
+    func fetchRandomUser() async -> (result: [UserInfo]?, error: Error?) {
         let docRef = db.collection(userInfoPath)
         do {
             let document = try await docRef.getDocuments()
-            let userInfo = document.documents.map { $0.data()}
+            let userInfo = document.documents.map { $0.data() }
+            
+            let shuffledArray = userInfo
                 .randomElements(count: itemCount)
+                .shuffleArray(userInfo)
                 .compactMap {
                     decodingValue(data: $0)
                 }
-            return (userInfo, nil)
+            return (shuffledArray, nil)
         } catch {
             return (nil, error)
         }
     }
     
-    func fetchPickUsers() async -> ([UserInfo]?, Error?) {
+    func fetchPickUsers() async -> (result: [UserInfo]?, error: Error?) {
         let result = await fetchMyPickUsersUID()
-        if let error = result.1 {
+        if let error = result.error {
             return (nil, error)
         }
-        guard let uidList = result.0 else {
+        guard let uidList = result.result else {
             return (nil, FireStoreError.noUIDList)
         }
         let userList = await groupTaskForFetchUsers(uidList: uidList)
         return (userList, nil)
     }
     
-    func fetchUserInfo(uuid: String) async -> (UserInfo?, Error?) {
+    func fetchUserInfo(uuid: String) async -> (result: UserInfo?, error: Error?) {
         let docRef = db.collection(userInfoPath).document(uuid)
         do {
             let document = try await docRef.getDocument()
@@ -111,7 +116,7 @@ extension FireStoreManager {
         }
     }
     
-    func fetchRanking() async -> ([UserInfo]?, Error?) {
+    func fetchRanking() async -> (result: [UserInfo]?, error: Error?) {
         let docRef = db.collection(userInfoPath)
             .order(by: Data.score.key, descending: true)
             .limit(to: itemCount)
@@ -128,10 +133,28 @@ extension FireStoreManager {
         }
     }
     
-    func fetchNewestUser(date: Date) async -> ([UserInfo]?, Error?) {
+    func fetchNewestUser() async -> (result: [UserInfo]?, error: Error?) {
         do {
             let querySnapshot = try await db.collection(userInfoPath)
-                .whereField(Data.register.key, isGreaterThanOrEqualTo: date)
+                .whereField(Data.register.key, isLessThan: Date())
+                .limit(to: itemCount)
+                .getDocuments()
+            let userInfoList = querySnapshot.documents.compactMap { snapshot in
+                decodingValue(data: snapshot.data())
+            }
+            return (userInfoList, nil)
+        } catch {
+            return (nil, error)
+        }
+    }
+    
+    func fetchNearUser() async -> (result: [UserInfo]?, error: Error?) {
+        // 현재 저장된 나의 위치 데이터가 유실되었을 때 메인에 정보를 보이게 하기 위해 의도적으로 사용
+        let location: String = UserDefaults.standard.string(forKey: nearUserPath) ?? ""
+        
+        do {
+            let querySnapshot = try await db.collection(userInfoPath)
+                .whereField(nearUserPath, isEqualTo: location)
                 .getDocuments()
             let userInfoList = querySnapshot.documents.compactMap { snapshot in
                 decodingValue(data: snapshot.data())
@@ -185,7 +208,7 @@ extension FireStoreManager {
 }
 
 private extension FireStoreManager {
-    func fetchMyPickUsersUID() async -> ([String]?, Error?) {
+    func fetchMyPickUsersUID() async -> (result: [String]?, error: Error?) {
         guard let uid = uid else { return (nil, FireStoreError.missingUID) }
         let docRef = db.collection(userInfoPath).document(uid)
         do {
@@ -202,11 +225,11 @@ private extension FireStoreManager {
             for uid in uidList {
                 group.addTask {
                     let data = await self.fetchUserInfo(uuid: uid)
-                    if let error = data.1 {
+                    if let error = data.error {
                         print("error: \(error.localizedDescription)")
                         return nil
                     }
-                    return data.0
+                    return data.result
                 }
             }
             var dataList: [UserInfo?] = []

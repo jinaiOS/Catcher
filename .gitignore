@@ -107,5 +107,8 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 Const.swift
+.DS_Store
+
+### CoreML Model
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,cocoapods,xcode
