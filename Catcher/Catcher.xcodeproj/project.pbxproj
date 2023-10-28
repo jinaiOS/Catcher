@@ -17,6 +17,7 @@
 		33192D772AE9D00200069582 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33192D762AE9D00200069582 /* Dummy.swift */; };
 		335241942AE5AEBB009EB771 /* FireStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335241932AE5AEBB009EB771 /* FireStoreManager.swift */; };
 		335241962AE5DB4A009EB771 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335241952AE5DB4A009EB771 /* Array+.swift */; };
+		3352C5792AEDB98000521F04 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3352C5782AEDB98000521F04 /* StorageManager.swift */; };
 		33532B782AE17A31008B47EB /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B772AE17A31008B47EB /* UserInfo.swift */; };
 		33532B7C2AE17A53008B47EB /* FirebaseErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B7B2AE17A53008B47EB /* FirebaseErrors.swift */; };
 		33532B7E2AE17A67008B47EB /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B7D2AE17A67008B47EB /* FirebaseManager.swift */; };
@@ -72,7 +73,6 @@
 		56BBF7E62AE53D5600A2BADD /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 56BBF7E52AE53D5600A2BADD /* SnapKit */; };
 		56BBF7EB2AE6009700A2BADD /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BBF7E92AE6009700A2BADD /* IntroViewController.swift */; };
 		56BBF7EC2AE6009700A2BADD /* IntroViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56BBF7EA2AE6009700A2BADD /* IntroViewController.xib */; };
-		56BBF82D2AEB1E9600A2BADD /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BBF82C2AEB1E9600A2BADD /* StorageManager.swift */; };
 		56BBF82F2AEB1EBB00A2BADD /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BBF82E2AEB1EBB00A2BADD /* DatabaseManager.swift */; };
 		56C08B472ADF6B7E00FB8608 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B462ADF6B7E00FB8608 /* ChatViewController.swift */; };
 		56C08B502ADF754B00FB8608 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B4F2ADF754B00FB8608 /* UIView+.swift */; };
@@ -127,6 +127,7 @@
 		33192D762AE9D00200069582 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
 		335241932AE5AEBB009EB771 /* FireStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreManager.swift; sourceTree = "<group>"; };
 		335241952AE5DB4A009EB771 /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
+		3352C5782AEDB98000521F04 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		33532B772AE17A31008B47EB /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		33532B7B2AE17A53008B47EB /* FirebaseErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseErrors.swift; sourceTree = "<group>"; };
 		33532B7D2AE17A67008B47EB /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
@@ -176,7 +177,6 @@
 		569207FE2AEC448C007E2EF6 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		56BBF7E92AE6009700A2BADD /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		56BBF7EA2AE6009700A2BADD /* IntroViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntroViewController.xib; sourceTree = "<group>"; };
-		56BBF82C2AEB1E9600A2BADD /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageManager.swift; path = ../../../../../../../Downloads/StorageManager.swift; sourceTree = "<group>"; };
 		56BBF82E2AEB1EBB00A2BADD /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		56C08B462ADF6B7E00FB8608 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		56C08B4F2ADF754B00FB8608 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -250,7 +250,7 @@
 				335B78BB2AE70844004D2956 /* ImageCacheManager.swift */,
 				33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */,
 				33532B7F2AE17A75008B47EB /* UserDefaultsManager.swift */,
-				56BBF82C2AEB1E9600A2BADD /* StorageManager.swift */,
+				3352C5782AEDB98000521F04 /* StorageManager.swift */,
 				56BBF82E2AEB1EBB00A2BADD /* DatabaseManager.swift */,
 			);
 			path = Managers;
@@ -682,7 +682,7 @@
 				562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */,
 				562E36C12AD91901008D99B2 /* Common.swift in Sources */,
 				33ABF3552AE46F2F002DCCF4 /* FireStorageManager.swift in Sources */,
-				56BBF82D2AEB1E9600A2BADD /* StorageManager.swift in Sources */,
+				3352C5792AEDB98000521F04 /* StorageManager.swift in Sources */,
 				562E36B92AD8DCC5008D99B2 /* BaseHeaderViewController.swift in Sources */,
 				56C08B6E2ADF808400FB8608 /* MenuTableViewCell.swift in Sources */,
 				56BBF7EB2AE6009700A2BADD /* IntroViewController.swift in Sources */,
