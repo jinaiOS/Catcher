@@ -46,7 +46,7 @@ final class LoginViewController: UIViewController {
                 return
             }
             
-            let (userInfo, error) = await FireStoreManager.shared.fetchUserInfo(uuid: "cLFv5MrhSRQSOuBMU95LZQmEKuI3")
+            let (userInfo, error) = await FireStoreManager.shared.fetchUserInfo(uuid: uid)
             
             if let userInfo = userInfo {
                 // 성공적으로 정보를 가져온 경우
