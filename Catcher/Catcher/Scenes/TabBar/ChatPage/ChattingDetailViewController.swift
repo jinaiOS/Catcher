@@ -538,48 +538,52 @@ extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelega
                 avatarView.sd_setImage(with: currentUserImageURL, completed: nil)
             }
             else {
-                guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
-                    return
+
+//                let path = "images/\("safeEmail")_profile_picture.png"
+                ImageCacheManager.shared.loadImage(uid: DataManager.sharedInstance.userInfo?.uid ?? "") { [weak self] image in
+                    guard let self = self else { return }
+                    DispatchQueue.main.async {
+                        avatarView.image = image
+                    }
                 }
-
-                let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
-                let path = "images/\(safeEmail)_profile_picture.png"
-
-                StorageManager.shared.downloadURL(for: path, completion: { [weak self] result in
-                    switch result {
-                    case .success(let url):
-                        self?.senderPhotoURL = url
-                        DispatchQueue.main.async {
-                            avatarView.sd_setImage(with: url, completed: nil)
-                        }
-                    case .failure(let error):
-                        print("\(error)")
-                    }
-                })
+//                StorageManager.shared.downloadURL(for: path, completion: { [weak self] result in
+//                    switch result {
+//                    case .success(let url):
+//                        self?.senderPhotoURL = url
+//                        DispatchQueue.main.async {
+//                            avatarView.sd_setImage(with: url, completed: nil)
+//                        }
+//                    case .failure(let error):
+//                        print("\(error)")
+//                    }
+//                })
             }
-        }
-        else {
-            // other user image
-            if let otherUsrePHotoURL = self.otherUserPhotoURL {
-                avatarView.sd_setImage(with: otherUsrePHotoURL, completed: nil)
-            }
-            else {
-                let email = self.otherUserEmail
-
-                let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
-                let path = "images/\(safeEmail)_profile_picture.png"
-
-                StorageManager.shared.downloadURL(for: path, completion: { [weak self] result in
-                    switch result {
-                    case .success(let url):
-                        self?.otherUserPhotoURL = url
-                        DispatchQueue.main.async {
-                            avatarView.sd_setImage(with: url, completed: nil)
-                        }
-                    case .failure(let error):
-                        print("\(error)")
-                    }
-                })
+        } else {
+//            // other user image
+//            if let otherUsrePHotoURL = self.otherUserPhotoURL {
+//                avatarView.sd_setImage(with: otherUsrePHotoURL, completed: nil)
+//            }
+//            else {
+//                let path = "images/\(otherUserUid)_profile_picture.png"
+//
+//                StorageManager.shared.downloadURL(for: path, completion: { [weak self] result in
+//                    switch result {
+//                    case .success(let url):
+//                        self?.otherUserPhotoURL = url
+//                        DispatchQueue.main.async {
+//                            avatarView.sd_setImage(with: url, completed: nil)
+//                        }
+//                    case .failure(let error):
+//                        print("\(error)")
+//                    }
+//                })
+//            }
+//
+            ImageCacheManager.shared.loadImage(uid: otherUserUid) { [weak self] image in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    avatarView.image = image
+                }
             }
         }
 
