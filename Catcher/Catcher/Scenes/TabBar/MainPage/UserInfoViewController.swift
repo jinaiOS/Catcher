@@ -71,15 +71,13 @@ private extension UserInfoViewController {
     
     @objc func didTappedPickBtn(sender: UIButton) {
         sender.isSelected.toggle()
+        var upDate: Bool = false
         
         if sender.isSelected {
-            viewModel.processPickUser(isUpdate: true) { [weak self] result, error in
-                guard let self = self else { return }
-                resultHandling(result: result, error: error)
-                return
-            }
+            upDate = true
         }
-        viewModel.processPickUser(isUpdate: false) { [weak self] result, error in
+        
+        viewModel.processPickUser(isUpdate: upDate) { [weak self] result, error in
             guard let self = self else { return }
             resultHandling(result: result, error: error)
         }
