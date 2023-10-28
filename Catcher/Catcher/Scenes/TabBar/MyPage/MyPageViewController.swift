@@ -237,7 +237,7 @@ extension MyPageViewController {
             make.height.equalTo(tableViewHeight)
         }
         logOutButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.snp.bottom).inset(20)
+            make.bottom.equalTo(view.snp.bottom).inset(100)
             make.leading.trailing.equalTo(self.view).inset(14)
             make.height.equalTo(53)
         }
