@@ -12,6 +12,7 @@ struct UserInfo: Hashable {
     
     let uid: String
     let sex: String
+    let birth: Date
     var nickName: String
     var location: String
     var height: Int
