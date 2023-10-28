@@ -22,6 +22,7 @@ final class DefaultSectionCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setUI()
         setLayout()
     }
     
@@ -43,6 +44,14 @@ extension DefaultSectionCell {
 }
 
 private extension DefaultSectionCell {
+    func setUI() {
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 4)
+        layer.shadowRadius = 6
+        layer.shadowOpacity = 0.5
+        layer.masksToBounds = false
+    }
+    
     func setLayout() {
         self.addSubview(imageView)
         

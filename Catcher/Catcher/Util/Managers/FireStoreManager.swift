@@ -232,6 +232,7 @@ private extension FireStoreManager {
     enum Data: String {
         case uid
         case sex
+        case birth
         case nickName
         case location
         case height
@@ -251,6 +252,7 @@ private extension FireStoreManager {
     func encodingValue(data: UserInfo) -> [String: Any] {
         [
             Data.uid.key: data.uid,
+            Data.birth.key: data.birth,
             Data.nickName.key: data.nickName,
             Data.location.key: data.location,
             Data.height.key: data.height,
@@ -271,6 +273,7 @@ private extension FireStoreManager {
         return UserInfo(
             uid: data[Data.uid.key] as? String ?? "",
             sex: data[Data.sex.key] as? String ?? "",
+            birth: (data[Data.birth.key] as? Timestamp)?.dateValue() ?? Date(),
             nickName: data[Data.nickName.key] as? String ?? "",
             location: data[Data.location.key] as? String ?? "",
             height: data[Data.height.key] as? Int ?? -1,
