@@ -36,6 +36,7 @@ final class RegisterView: UIView {
         textfield.placeholder = "닉네임을 입력해주세요"
         textfield.keyboardType = .emailAddress
         textfield.font = ThemeFont.regular(size: 17)
+        textfield.autocapitalizationType = .none
         return textfield
     }()
 
@@ -44,6 +45,7 @@ final class RegisterView: UIView {
         textfield.placeholder = "이메일을 입력해주세요"
         textfield.keyboardType = .emailAddress
         textfield.font = ThemeFont.regular(size: 17)
+        textfield.autocapitalizationType = .none
         return textfield
     }()
 
@@ -52,6 +54,7 @@ final class RegisterView: UIView {
         textfield.placeholder = "비밀번호를 입력해주세요"
         textfield.keyboardType = .asciiCapable
         textfield.font = ThemeFont.regular(size: 17)
+        textfield.autocapitalizationType = .none
         return textfield
     }()
 
@@ -60,6 +63,7 @@ final class RegisterView: UIView {
         textfield.placeholder = "비밀번호 확인을 해주세요"
         textfield.keyboardType = .asciiCapable
         textfield.font = ThemeFont.regular(size: 17)
+        textfield.autocapitalizationType = .none
         return textfield
     }()
 

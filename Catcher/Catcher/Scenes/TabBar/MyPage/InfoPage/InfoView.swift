@@ -27,6 +27,7 @@ final class InfoView: UIView {
     lazy var heightTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "키를 입력해 주세요"
+        textField.keyboardType = .numberPad
         return textField
     }()
     

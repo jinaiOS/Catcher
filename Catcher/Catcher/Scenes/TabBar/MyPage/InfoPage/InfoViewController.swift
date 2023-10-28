@@ -13,7 +13,6 @@ final class InfoViewController: UIViewController {
     var newUserEmail: String?
     var newUserPassword: String?
     var newUserNickName: String?
-    var user: UserInfo?
     private let infoView = InfoView()
     let picker = UIPickerView()
     var region = [
@@ -63,60 +62,30 @@ final class InfoViewController: UIViewController {
         guard let height = infoView.heightTextField.text else { return }
         guard let location = infoView.regionTextField.text else { return }
         guard let nickName = newUserNickName else { return }
+        guard let newUserEmail = newUserEmail, let newUserPassword = newUserPassword else { return }
         var smokeCheck = false
         if smoking == "흡연" {
             smokeCheck = true
         } else {
             smokeCheck = false
         }
-        print(body)
-        print(drinking)
-        print(education)
-        print(height)
-        print(location)
-        print(nickName)
-        guard let newUserEmail = newUserEmail, let newUserPassword = newUserPassword else { return }
-        let firebaseManager = FirebaseManager()
-
-        firebaseManager.createUsers(email: newUserEmail, password: newUserPassword) { error in
-            if let error = error {
-                print("Error creating user: \(error)")
-            } else {
-                guard let uid = firebaseManager.getUID else {
-                    print("Error: No UID available")
-                    return
-                }
-                let userInfo = UserInfo(
-                    uid: uid,
-                    sex: "",
-                    nickName: nickName,
-                    location: location,
-                    height: Int(height) ?? 0,
-                    body: body,
-                    education: education,
-                    drinking: drinking,
-                    smoking: smokeCheck,
-                    register: Date(),
-                    score: 0,
-                    pick: []
-                )
-                FireStoreManager.shared.saveUserInfoToFirestore(userInfo: userInfo) { error in
-                    if let error = error {
-                        print("Error saving user info: \(error.localizedDescription)")
-                    } else {
-                        print("User info saved to Firestore successfully.")
-                    }
-                }
-                //setUserInfo 사용
-//                FireStoreManager.shared.setUserInfo(data: userInfo) { error in
-//                    if let error = error {
-//                        print("Error saving user info: \(error.localizedDescription)")
-//                    } else {
-//                        print("User info saved to Firestore successfully.")
-//                    }
-//                }
-            }
-        }
+        let profileSettingViewController = ProfileSettingViewController(nibName: "ProfileSettingViewController", bundle: nil)
+        profileSettingViewController.user = UserInfo(
+            uid: "", sex: "", // 필요한 경"우 성별을 여기에 추가
+            nickName: nickName,
+            location: location,
+            height: Int(height) ?? 0,
+            body: body,
+            education: education,
+            drinking: drinking,
+            smoking: smokeCheck,
+            register: Date(),
+            score: 0,
+            pick: []
+        )
+        profileSettingViewController.newUserEmail = newUserEmail
+        profileSettingViewController.newUserPassword = newUserPassword
+        navigationController?.pushViewController(profileSettingViewController, animated: true)
     }
 
     @objc func pickerDoneButtonTapped() {
