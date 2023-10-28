@@ -34,27 +34,21 @@ class BaseTabBarController: UITabBarController {
         let controllers = [mainVC, chatVC, myVC]
         self.viewControllers = controllers
         
+        self.tabBar.backgroundColor = .white
         self.tabBar.borderWidth = 1
         self.tabBar.borderColor = #colorLiteral(red: 0.9176470588, green: 0.9176470588, blue: 0.9176470588, alpha: 1)
         
         // main
         self.tabBar.items![0].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
-        self.tabBar.items![0].image = UIImage(systemName: "sun.max")?.withRenderingMode(.alwaysOriginal).withTintColor(.black)
-        self.tabBar.items![0].selectedImage = UIImage(systemName: "sun.max.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.black)
+        self.tabBar.items![0].image = UIImage(systemName: "heart")?.withRenderingMode(.alwaysOriginal).withTintColor(.black)
+        self.tabBar.items![0].selectedImage = UIImage(systemName: "heart.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.black)
         self.tabBar.items![0].title = "Main"
-
-        /*.
-             self.tabBar.items![0].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
-             self.tabBar.items![0].image = UIImage(systemName: "sun.max")?.withTintColor(.red) // 아이콘 색상 변경
-             self.tabBar.items![0].selectedImage = UIImage(systemName: "sun.max.fill")?.withTintColor(.brown) // 선택된 아이콘 색상 변경
-             self.tabBar.items![0].title = "데일리"
-         */
         
         
         // Chat
         self.tabBar.items![1].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
-        self.tabBar.items![1].image = UIImage(systemName: "person.2")?.withRenderingMode(.alwaysOriginal)
-        self.tabBar.items![1].selectedImage = UIImage(systemName: "person.2.fill")?.withRenderingMode(.alwaysOriginal)
+        self.tabBar.items![1].image = UIImage(systemName: "bubble.left")?.withRenderingMode(.alwaysOriginal)
+        self.tabBar.items![1].selectedImage = UIImage(systemName: "bubble.left.fill")?.withRenderingMode(.alwaysOriginal)
         self.tabBar.items![1].title = "Chat"
         
         // my
