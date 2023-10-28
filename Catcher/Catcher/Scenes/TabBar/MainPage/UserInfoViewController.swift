@@ -56,8 +56,8 @@ private extension UserInfoViewController {
         if isPicked {
             userInfoView.pickButton.isSelected = true
         }
-        userInfoView.textView.text = viewModel.makeInfo(info: info)
-        userInfoView.remakeLayout()
+        let age = viewModel.calculateAge(birthDate: info.birth)
+        userInfoView.configure(nickName: info.nickName, age: age, location: info.location)
     }
     
     func setTarget() {

@@ -135,8 +135,9 @@ extension MainPageViewController: UICollectionViewDelegate {
         
         let userInfoVC = UserInfoViewController(info: userInfo, isPicked: isPicked)
         userInfoVC.delegate = self
-        userInfoVC.modalTransitionStyle = .crossDissolve
+        
         userInfoVC.modalPresentationStyle = .custom
+        userInfoVC.modalTransitionStyle = .crossDissolve
         present(userInfoVC, animated: true)
     }
 }

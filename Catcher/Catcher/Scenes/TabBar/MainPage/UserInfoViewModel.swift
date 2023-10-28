@@ -42,36 +42,13 @@ extension UserInfoViewModel {
         }
     }
     
-    func makeInfo(info: UserInfo) -> String {
-        let smoking = info.smoking ? "흡연" : "비흡연"
-        let age = calculateAge(birthDate: info.birth)
-        
-        print(info.birth)
-        
-        
-        let text = """
-        닉네임: \(info.nickName)
-        나이: 만 \(age)세
-        키: \(info.height)
-        체형: \(info.body)
-        음주: \(info.drinking)
-        흡연: \(smoking)
-        학력: \(info.education)
-        지역: \(info.location)
-        점수: \(info.score)
-        """
-        return text
-    }
-}
-
-private extension UserInfoViewModel {
     func calculateAge(birthDate: Date) -> Int {
         let calendar = Calendar.current
         let now = Date()
         
         let ageComponents = calendar.dateComponents([.year], from: birthDate, to: now)
         let age = ageComponents.year ?? 0
-   
+        
         return age
     }
 }
