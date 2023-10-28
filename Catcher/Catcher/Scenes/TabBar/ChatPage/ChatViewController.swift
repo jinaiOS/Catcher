@@ -10,6 +10,14 @@ import FirebaseAuth
 
 class ChatViewController: UIViewController {
     
+    public static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle  = .medium
+        formatter.timeStyle = .long
+        formatter.locale = .current
+        return formatter
+    }()
+    
     /// 데이터
     private var conversations = [Conversation]()
 
@@ -40,43 +48,23 @@ class ChatViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         // 내비게이션 바 설정
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose,
-                                                            target: self,
-                                                            action: #selector(didTapComposeButton))
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose,
+//                                                            target: self,
+//                                                            action: #selector(didTapComposeButton))
         view.addSubview(tbvConversation)
         view.addSubview(noConversationsLabel)
         setupTableView()
         
         // 뷰가 로드될 때 대화를 듣기 시작
         startListeningForCOnversations()
-
-        // 사용자 로그인 알림을 위한 옵저버
-        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
-            guard let strongSelf = self else {
-                return
-            }
-            
-            strongSelf.startListeningForCOnversations()
-        })
     }
 
     // 대화를 가져와서 표시하기
     private func startListeningForCOnversations() {
-        guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
-            return
-        }
-
-        // 기존의 옵저버가 있다면 제거
-        if let observer = loginObserver {
-            NotificationCenter.default.removeObserver(observer)
-        }
-
         print("starting conversation fetch...")
 
-        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
-
         // 데이터베이스에서 대화 가져오기
-        DatabaseManager.shared.getAllConversations(for: safeEmail, completion: { [weak self] result in
+        DatabaseManager.shared.getAllConversations(completion: { [weak self] result in
             switch result {
             case .success(let conversations):
                 print("successfully got conversation models")
@@ -100,58 +88,58 @@ class ChatViewController: UIViewController {
         })
     }
 
-    // 쓰기 버튼이 눌렸을 때의 액션
-    @objc private func didTapComposeButton() {
-        let vc = NewConversationViewController()
-        vc.completion = { [weak self] result in
-            guard let strongSelf = self else {
-                return
-            }
-
-            let currentConversations = strongSelf.conversations
-
-            if let targetConversation = currentConversations.first(where: {
-                $0.otherUserEmail == DatabaseManager.safeEmail(emailAddress: result.email)
-            }) {
-                let vc = ChattingDetailViewController(with: targetConversation.otherUserEmail, id: targetConversation.id)
-                vc.isNewConversation = false
-                vc.title = targetConversation.name
-                vc.navigationItem.largeTitleDisplayMode = .never
-                strongSelf.navigationController?.pushViewController(vc, animated: true)
-            }
-            else {
-                strongSelf.createNewConversation(result: result)
-            }
-        }
-        let navVC = UINavigationController(rootViewController: vc)
-        present(navVC, animated: true)
-    }
+//    // 쓰기 버튼이 눌렸을 때의 액션
+//    @objc private func didTapComposeButton() {
+//        let vc = NewConversationViewController()
+//        vc.completion = { [weak self] result in
+//            guard let strongSelf = self else {
+//                return
+//            }
+//
+//            let currentConversations = strongSelf.conversations
+//
+//            if let targetConversation = currentConversations.first(where: {
+//                $0.otherUserEmail == DatabaseManager.safeEmail(emailAddress: result.email)
+//            }) {
+//                let vc = ChattingDetailViewController(otherUid: targetConversation.id)
+//                vc.isNewConversation = false
+//                vc.headerTitle = targetConversation.name
+//                vc.navigationItem.largeTitleDisplayMode = .never
+//                strongSelf.navigationController?.pushViewController(vc, animated: true)
+//            }
+//            else {
+//                strongSelf.createNewConversation(result: result)
+//            }
+//        }
+//        let navVC = UINavigationController(rootViewController: vc)
+//        present(navVC, animated: true)
+//    }
 
     private func createNewConversation(result: SearchResult) {
         let name = result.name
-        let email = DatabaseManager.safeEmail(emailAddress: result.email)
+        let uid = result.uid
 
-        // 이 두 사용자 간의 대화가 이미 있는지 확인
-        // 있다면 대화 ID 재사용, 아니면 새 코드 사용
-        DatabaseManager.shared.conversationExists(iwth: email, completion: { [weak self] result in
-            guard let strongSelf = self else {
-                return
-            }
-            switch result {
-            case .success(let conversationId):
-                let vc = ChattingDetailViewController(with: email, id: conversationId)
-                vc.isNewConversation = false
-                vc.title = name
-                vc.navigationItem.largeTitleDisplayMode = .never
-                strongSelf.navigationController?.pushViewController(vc, animated: true)
-            case .failure(_):
-                let vc = ChattingDetailViewController(with: email, id: nil)
-                vc.isNewConversation = true
-                vc.title = name
-                vc.navigationItem.largeTitleDisplayMode = .never
-                strongSelf.navigationController?.pushViewController(vc, animated: true)
-            }
-        })
+//        // 이 두 사용자 간의 대화가 이미 있는지 확인
+//        // 있다면 대화 ID 재사용, 아니면 새 코드 사용
+//        DatabaseManager.shared.conversationExists(iwth: uid, completion: { [weak self] result in
+//            guard let strongSelf = self else {
+//                return
+//            }
+//            switch result {
+//            case .success(let conversationId):
+//                let vc = ChattingDetailViewController(otherUid: conversationId)
+//                vc.isNewConversation = false
+//                vc.title = name
+//                vc.navigationItem.largeTitleDisplayMode = .never
+//                strongSelf.navigationController?.pushViewController(vc, animated: true)
+//            case .failure(_):
+//                let vc = ChattingDetailViewController(otherUid: uid)
+//                vc.isNewConversation = true
+//                vc.title = name
+//                vc.navigationItem.largeTitleDisplayMode = .never
+//                strongSelf.navigationController?.pushViewController(vc, animated: true)
+//            }
+//        })
     }
 
     override func viewDidLayoutSubviews() {
@@ -161,21 +149,6 @@ class ChatViewController: UIViewController {
                                             y: (view.height-100)/2,
                                             width: view.width-20,
                                             height: 100)
-    }
-    
-    // 뷰가 나타날 때 인증 유효성 검사
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        validateAuth()
-    }
-
-    private func validateAuth() {
-//        if FirebaseAuth.Auth.auth().currentUser == nil {
-//            let vc = LoginViewController()
-//            let nav = UINavigationController(rootViewController: vc)
-//            nav.modalPresentationStyle = .fullScreen
-//            present(nav, animated: false)
-//        }
     }
 
     private func setupTableView() {
@@ -206,7 +179,7 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func openConversation(_ model: Conversation) {
-        let vc = ChattingDetailViewController(with: model.otherUserEmail, id: model.id)
+        let vc = ChattingDetailViewController(otherUid: model.otherUserUid)
         vc.title = model.name
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
@@ -223,17 +196,17 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // begin delete
-            let conversationId = conversations[indexPath.row].id
+            let conversationId = conversations[indexPath.row].senderUid
             tableView.beginUpdates()
             self.conversations.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .left)
 
-            DatabaseManager.shared.deleteConversation(conversationId: conversationId, completion: { success in
-                if !success {
-                    // add model and row back and show error alert
-
-                }
-            })
+//            DatabaseManager.shared.deleteConversation(conversationId: conversationId, completion: { success in
+//                if !success {
+//                    // add model and row back and show error alert
+//
+//                }
+//            })
 
             tableView.endUpdates()
         }
