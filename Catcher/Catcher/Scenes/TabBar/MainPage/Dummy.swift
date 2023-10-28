@@ -8,7 +8,7 @@
 import Foundation
 
 fileprivate var dummyUser: UserInfo {
-    UserInfo(uid: UUID().uuidString, sex: "", nickName: "", location: "",
+    UserInfo(uid: UUID().uuidString, sex: "", birth: Date(), nickName: "", location: "",
              height: 0, body: "", education: "", drinking: "", smoking: false)
 }
 

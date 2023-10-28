@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class SectionHeaderView: UICollectionReusableView {
-    static let identifier = "SectionHeader"
+    static let identifier = "SectionHeaderView"
     
     private lazy var sectionNameLabel: UILabel = {
         let label = UILabel()
