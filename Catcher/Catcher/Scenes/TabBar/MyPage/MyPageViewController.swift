@@ -194,6 +194,7 @@ class MyPageViewController: BaseViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1)
         configure()
+        logOutButton.addTarget(self, action: #selector(pressLogOutButton), for: .touchUpInside)
     }
 }
 
@@ -232,6 +233,19 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             break
         default:
             break
+        }
+    }
+}
+
+extension MyPageViewController {
+    @objc func pressLogOutButton() {
+        if let errorMessage = FirebaseManager().logOut {
+            // 로그아웃 실패
+            CommonUtil.print(output:"로그아웃 실패: \(errorMessage)")
+        } else {
+            // 로그아웃 성공
+            CommonUtil.print(output:"로그아웃 성공")
+            AppDelegate.applicationDelegate().changeInitViewController(type: .Login)
         }
     }
 }

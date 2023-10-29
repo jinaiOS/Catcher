@@ -23,14 +23,14 @@ class LoginViewController: BaseViewController {
         // Firebase Auth Login
         Auth.auth().signIn(withEmail: email, password: pw) { authResult, error in
             if authResult != nil {
-                print("로그인 성공")
+                CommonUtil.print(output:"로그인 성공")
                 Task {
                     await self.storeUserInfo()
                 }
                 AppDelegate.applicationDelegate().changeInitViewController(type: .Main)
             } else {
-                print("로그인 실패")
-                print(error.debugDescription)
+                CommonUtil.print(output:"로그인 실패")
+                CommonUtil.print(output:error.debugDescription)
             }
         }
     }
@@ -49,7 +49,7 @@ class LoginViewController: BaseViewController {
     func storeUserInfo() async {
         do {
             guard let uid = FireStoreManager.shared.uid else {
-                print("Error: UID is nil")
+                CommonUtil.print(output:"Error: UID is nil")
                 return
             }
             
@@ -57,11 +57,11 @@ class LoginViewController: BaseViewController {
             
             if let userInfo = userInfo {
                 // 성공적으로 정보를 가져온 경우
-                print(userInfo)
+                CommonUtil.print(output:userInfo)
                 DataManager.sharedInstance.userInfo = userInfo
             } else if let error = error {
                 // 오류가 발생한 경우
-                print("Error: \(error)")
+                CommonUtil.print(output:"Error: \(error)")
             }
         }
     }

@@ -24,15 +24,15 @@ class ProfileSettingViewController: BaseHeaderViewController, UIImagePickerContr
     @IBAction func completeBtn(_ sender: UIButton) {
         guard let user = user else { return }
         guard let newUserEmail = newUserEmail, let newUserPassword = newUserPassword else { return }
-        print(user)
+        CommonUtil.print(output:user)
         let firebaseManager = FirebaseManager()
 
         firebaseManager.createUsers(email: newUserEmail, password: newUserPassword) { error in
             if let error = error {
-                print("Error creating user: \(error)")
+                CommonUtil.print(output:"Error creating user: \(error)")
             } else {
                 guard let uid = firebaseManager.getUID else {
-                    print("Error: No UID available")
+                    CommonUtil.print(output:"Error: No UID available")
                     return
                 }
                 let userInfo = UserInfo(
@@ -52,9 +52,9 @@ class ProfileSettingViewController: BaseHeaderViewController, UIImagePickerContr
                 )
                 FireStoreManager.shared.saveUserInfoToFirestore(userInfo: userInfo) { error in
                     if let error = error {
-                        print("Error saving user info: \(error.localizedDescription)")
+                        CommonUtil.print(output:"Error saving user info: \(error.localizedDescription)")
                     } else {
-                        print("User info saved to Firestore successfully.")
+                        CommonUtil.print(output:"User info saved to Firestore successfully.")
                     }
                 }
             }

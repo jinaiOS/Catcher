@@ -57,9 +57,9 @@ extension LocalFileManager {
         if FileManager.default.fileExists(atPath: imageURL.path) {
             do {
                 try FileManager.default.removeItem(at: imageURL)
-                print("프로필 이미지 삭제 완료")
+                CommonUtil.print(output:"프로필 이미지 삭제 완료")
             } catch {
-                print("error: \(error.localizedDescription)")
+                CommonUtil.print(output:"error: \(error.localizedDescription)")
             }
         }
     }

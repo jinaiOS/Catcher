@@ -26,7 +26,7 @@ final class ImageCacheManager {
             if let data = data {
                 profileImage = UIImage(data: data)
             } else {
-                print(error?.localizedDescription ?? "Unknown error")
+                CommonUtil.print(output:error?.localizedDescription ?? "Unknown error")
                 profileImage = defaultImage
             }
             cachingImage(uid: uid, image: profileImage)

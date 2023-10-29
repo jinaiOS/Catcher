@@ -44,7 +44,7 @@ extension DatabaseManager {
         ref.observeSingleEvent(of: .value, with: {[weak self] snapshot in
             if let userNode = snapshot.value as? [String: Any] {
                 completion(false)
-                print("user not found")
+                CommonUtil.print(output:"user not found")
                 let messageDate = firstMessage.sentDate
                 let dateString = Date.stringFromDate(date: messageDate)
                 
@@ -315,7 +315,7 @@ extension DatabaseManager {
                               let latitude = Double(locationComponents[1]) else {
                             return nil
                         }
-                        print("Rendering location; long=\(longitude) | lat=\(latitude)")
+                        CommonUtil.print(output:"Rendering location; long=\(longitude) | lat=\(latitude)")
                         let location = Location(location: CLLocation(latitude: latitude, longitude: longitude),
                                                 size: CGSize(width: 300, height: 300))
                         kind = .location(location)

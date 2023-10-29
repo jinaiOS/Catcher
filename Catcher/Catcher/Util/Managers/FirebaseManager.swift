@@ -31,7 +31,7 @@ class FirebaseManager {
             try await auth.sendPasswordReset(withEmail: email)
             return true
         } catch {
-            print("error: \(error.localizedDescription)")
+            CommonUtil.print(output:"error: \(error.localizedDescription)")
             return false
         }
     }
@@ -47,7 +47,7 @@ class FirebaseManager {
             try auth.signOut()
             return nil
         } catch {
-            print("error: \(error.localizedDescription)")
+            CommonUtil.print(output:"error: \(error.localizedDescription)")
             return error.localizedDescription
         }
     }
@@ -72,7 +72,7 @@ extension FirebaseManager {
             try await user.reauthenticate(with: credential)
             return true
         } catch {
-            print("error: \(error.localizedDescription)")
+            CommonUtil.print(output:"error: \(error.localizedDescription)")
             return false
         }
     }
@@ -83,7 +83,7 @@ extension FirebaseManager {
             try await user.delete()
             return true
         } catch {
-            print("error: \(error.localizedDescription)")
+            CommonUtil.print(output:"error: \(error.localizedDescription)")
             return false
         }
     }
@@ -107,7 +107,7 @@ private extension FirebaseManager {
                 case 17026:
                     completion(.FIRAuthErrorCodeLeastPasswordLength)
                 default:
-                    print("error: \(error.localizedDescription)")
+                    CommonUtil.print(output:"error: \(error.localizedDescription)")
                     completion(.unknown)
                     return
                 }
