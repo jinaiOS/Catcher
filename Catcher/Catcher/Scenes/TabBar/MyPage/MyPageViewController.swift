@@ -32,6 +32,8 @@ class MyPageViewController: UIViewController {
         vw.backgroundColor = .white
         vw.layer.cornerRadius = 16
         vw.addSubview(myMainStack)
+        vw.borderColor = ThemeColor.primary
+        vw.borderWidth = 1
         view.addSubview(vw)
         return vw
     }()
@@ -137,6 +139,8 @@ class MyPageViewController: UIViewController {
         vw.layer.cornerRadius = 16
         vw.addSubview(menuLabel)
         vw.addSubview(myTable)
+        vw.borderColor = ThemeColor.primary
+        vw.borderWidth = 1
         view.addSubview(vw)
         return vw
     }()
@@ -164,7 +168,7 @@ class MyPageViewController: UIViewController {
         btn.setTitle("로그아웃", for: .normal)
         btn.layer.cornerRadius = 15
         btn.setTitleColor(.white, for: .normal)
-        btn.backgroundColor = UIColor(red: 0.749, green: 0.58, blue: 0.847, alpha: 1)
+        btn.backgroundColor = ThemeColor.primary
         view.addSubview(btn)
         return btn
     }()
