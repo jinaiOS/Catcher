@@ -11,8 +11,6 @@ import FirebaseAuth
 class FirebaseManager {
     private let auth = Auth.auth()
     
-    static let shared = FirebaseManager()
-    
     typealias AuthCompletion = (FirebaseErrors?) -> Void
     
     func createUsers(email: String, password: String, completion: @escaping AuthCompletion) {

@@ -72,7 +72,6 @@
 		56BBF7E62AE53D5600A2BADD /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 56BBF7E52AE53D5600A2BADD /* SnapKit */; };
 		56BBF7EB2AE6009700A2BADD /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BBF7E92AE6009700A2BADD /* IntroViewController.swift */; };
 		56BBF7EC2AE6009700A2BADD /* IntroViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56BBF7EA2AE6009700A2BADD /* IntroViewController.xib */; };
-		56BBF82D2AEB1E9600A2BADD /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BBF82C2AEB1E9600A2BADD /* StorageManager.swift */; };
 		56BBF82F2AEB1EBB00A2BADD /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BBF82E2AEB1EBB00A2BADD /* DatabaseManager.swift */; };
 		56C08B472ADF6B7E00FB8608 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B462ADF6B7E00FB8608 /* ChatViewController.swift */; };
 		56C08B502ADF754B00FB8608 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B4F2ADF754B00FB8608 /* UIView+.swift */; };
@@ -97,6 +96,7 @@
 		56C08BA02AE10D4C00FB8608 /* PhotoViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B9F2AE10D4C00FB8608 /* PhotoViewerViewController.swift */; };
 		56C08BA42AE10EB400FB8608 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08BA32AE10EB400FB8608 /* SearchResult.swift */; };
 		68708AB72AE745C200B4C7B9 /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68708AB62AE745C200B4C7B9 /* SurveyViewController.swift */; };
+		68708AB92AEE32CC00B4C7B9 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68708AB82AEE32CC00B4C7B9 /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,7 +176,6 @@
 		569207FE2AEC448C007E2EF6 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		56BBF7E92AE6009700A2BADD /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		56BBF7EA2AE6009700A2BADD /* IntroViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntroViewController.xib; sourceTree = "<group>"; };
-		56BBF82C2AEB1E9600A2BADD /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageManager.swift; path = ../../../../../../../Downloads/StorageManager.swift; sourceTree = "<group>"; };
 		56BBF82E2AEB1EBB00A2BADD /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		56C08B462ADF6B7E00FB8608 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		56C08B4F2ADF754B00FB8608 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -201,6 +200,7 @@
 		56C08B9F2AE10D4C00FB8608 /* PhotoViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerViewController.swift; sourceTree = "<group>"; };
 		56C08BA32AE10EB400FB8608 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		68708AB62AE745C200B4C7B9 /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
+		68708AB82AEE32CC00B4C7B9 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,7 +250,7 @@
 				335B78BB2AE70844004D2956 /* ImageCacheManager.swift */,
 				33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */,
 				33532B7F2AE17A75008B47EB /* UserDefaultsManager.swift */,
-				56BBF82C2AEB1E9600A2BADD /* StorageManager.swift */,
+				68708AB82AEE32CC00B4C7B9 /* StorageManager.swift */,
 				56BBF82E2AEB1EBB00A2BADD /* DatabaseManager.swift */,
 			);
 			path = Managers;
@@ -676,13 +676,13 @@
 				56C08B662ADF805800FB8608 /* SectionHeaderView.swift in Sources */,
 				230509582AE2469000F58092 /* ContactViewController.swift in Sources */,
 				56C08B9A2AE10CAA00FB8608 /* ChattingDetailViewController.swift in Sources */,
+				68708AB92AEE32CC00B4C7B9 /* StorageManager.swift in Sources */,
 				56C08B842AE0FE8300FB8608 /* ConversationsModels.swift in Sources */,
 				56BBF82F2AEB1EBB00A2BADD /* DatabaseManager.swift in Sources */,
 				56C08BA42AE10EB400FB8608 /* SearchResult.swift in Sources */,
 				562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */,
 				562E36C12AD91901008D99B2 /* Common.swift in Sources */,
 				33ABF3552AE46F2F002DCCF4 /* FireStorageManager.swift in Sources */,
-				56BBF82D2AEB1E9600A2BADD /* StorageManager.swift in Sources */,
 				562E36B92AD8DCC5008D99B2 /* BaseHeaderViewController.swift in Sources */,
 				56C08B6E2ADF808400FB8608 /* MenuTableViewCell.swift in Sources */,
 				56BBF7EB2AE6009700A2BADD /* IntroViewController.swift in Sources */,

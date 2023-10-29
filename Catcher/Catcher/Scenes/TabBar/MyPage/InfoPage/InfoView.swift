@@ -30,6 +30,12 @@ final class InfoView: UIView {
         textField.keyboardType = .numberPad
         return textField
     }()
+
+    lazy var birthTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "생일을 입력해 주세요"
+        return textField
+    }()
     
     lazy var thinBodyBtn: UIButton = bodyButton(title: "마름")
     
@@ -139,6 +145,7 @@ final class InfoView: UIView {
         view.spacing = AppConstraint.stackViewSpacing
         
         [makeLabel(text: "지역"), regionTextField, separateView,
+         makeLabel(text: "생일"), birthTextField, separateView,
          makeLabel(text: "학력"), educationTextField, separateView,
          makeLabel(text: "키"), heightTextField, separateView,
          makeLabel(text: "체형"), bodyHstack, separateView,
