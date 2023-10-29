@@ -75,8 +75,9 @@ extension UserInfoViewModel {
             alignment: .left,
             range: (0, 2))
         
+        let smoking = info.smoking ? "O" : "X"
         let smokingLabel = NSAttributedString.makeUserInfoText(
-            text: "흡연: \(info.smoking)",
+            text: "흡연: \(smoking)",
             alignment: .left,
             range: (0, 2))
         
