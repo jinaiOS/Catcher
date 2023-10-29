@@ -15,20 +15,20 @@ class ConversationTableViewCell: UITableViewCell {
     private let userImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 50
+        imageView.layer.cornerRadius = 25
         imageView.layer.masksToBounds = true
         return imageView
     }()
 
     private let userNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 21, weight: .semibold)
+        label.font = .systemFont(ofSize: 15, weight: .semibold)
         return label
     }()
 
     private let userMessageLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 19, weight: .regular)
+        label.font = .systemFont(ofSize: 13, weight: .regular)
         label.numberOfLines = 0
         return label
     }()
@@ -49,8 +49,8 @@ class ConversationTableViewCell: UITableViewCell {
 
         userImageView.frame = CGRect(x: 10,
                                      y: 10,
-                                     width: 100,
-                                     height: 100)
+                                     width: 50,
+                                     height: 50)
 
         userNameLabel.frame = CGRect(x: userImageView.right + 10,
                                      y: 10,
@@ -58,7 +58,7 @@ class ConversationTableViewCell: UITableViewCell {
                                      height: (contentView.height-20)/2)
 
         userMessageLabel.frame = CGRect(x: userImageView.right + 10,
-                                        y: userNameLabel.bottom + 10,
+                                        y: userNameLabel.bottom,
                                         width: contentView.width - 20 - userImageView.width,
                                         height: (contentView.height-20)/2)
 
