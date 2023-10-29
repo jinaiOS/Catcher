@@ -14,16 +14,17 @@ final class RankSectionCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
-        view.layer.cornerRadius = AppConstraint.mainCellCornerRadius
+        view.layer.cornerRadius = 5
         view.clipsToBounds = true
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return view
     }()
     
     private lazy var rankLabel: UILabel = {
-        let label = UILabel()
+        let label = StrokeLabel()
+        label.strokeSize = 5.0
+        label.strokeColor = ThemeColor.primary
         label.font = ThemeFont.bold(size: 60)
-        label.textColor = ThemeColor.sectionLabel
         return label
     }()
     

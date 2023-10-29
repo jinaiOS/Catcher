@@ -86,19 +86,21 @@ private extension MainPageView {
     
     func rankSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1/3),
+            widthDimension: .fractionalWidth(0.5),
             heightDimension: .fractionalHeight(0.75))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: 10, leading: 5, bottom: 0, trailing: 5)
         
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.9),
+            widthDimension: .fractionalWidth(0.7),
             heightDimension: .estimated(200))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+//        group.interItemSpacing = .fixed(20)
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
+        section.interGroupSpacing = 20
         
         let sectionHeader = headerSection()
         section.boundarySupplementaryItems = [sectionHeader]

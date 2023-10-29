@@ -28,6 +28,7 @@
 		335AC1F72AE86B8500F2CF51 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC1F62AE86B8500F2CF51 /* String+.swift */; };
 		335B78BA2AE70237004D2956 /* MainItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335B78B92AE70237004D2956 /* MainItems.swift */; };
 		335B78BC2AE70844004D2956 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335B78BB2AE70844004D2956 /* ImageCacheManager.swift */; };
+		33894A682AEEAB7C00582345 /* StrokeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33894A672AEEAB7C00582345 /* StrokeLabel.swift */; };
 		33ABF3552AE46F2F002DCCF4 /* FireStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3542AE46F2F002DCCF4 /* FireStorageManager.swift */; };
 		33ABF3592AE4889D002DCCF4 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */; };
 		33B358072ADE189E00A91C95 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B358062ADE189E00A91C95 /* ButtonFactory.swift */; };
@@ -138,6 +139,7 @@
 		335AC1F62AE86B8500F2CF51 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		335B78B92AE70237004D2956 /* MainItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainItems.swift; sourceTree = "<group>"; };
 		335B78BB2AE70844004D2956 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		33894A672AEEAB7C00582345 /* StrokeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeLabel.swift; sourceTree = "<group>"; };
 		33ABF3542AE46F2F002DCCF4 /* FireStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStorageManager.swift; sourceTree = "<group>"; };
 		33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		33B358062ADE189E00A91C95 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
@@ -425,6 +427,7 @@
 				562E36BA2AD8DD03008D99B2 /* CommonUtil.swift */,
 				562E36C02AD91901008D99B2 /* Common.swift */,
 				562E36B42AD8DB57008D99B2 /* DataManager.swift */,
+				33894A672AEEAB7C00582345 /* StrokeLabel.swift */,
 				33532B812AE17A8E008B47EB /* Managers */,
 				56BBF7ED2AE6687B00A2BADD /* Models */,
 				33C58E802AD85028008EB6C2 /* Extensions */,
@@ -706,6 +709,7 @@
 				33EF35A92AEAD62500B4863B /* UserInfoViewModel.swift in Sources */,
 				56C08B752ADF809300FB8608 /* InfoViewController.swift in Sources */,
 				33C58E892AD8B28D008EB6C2 /* ThemeColor.swift in Sources */,
+				33894A682AEEAB7C00582345 /* StrokeLabel.swift in Sources */,
 				56C08B502ADF754B00FB8608 /* UIView+.swift in Sources */,
 				33B3580A2ADE18D600A91C95 /* LabelFactory.swift in Sources */,
 				56C08B6A2ADF805800FB8608 /* MainPageViewModel.swift in Sources */,
@@ -905,7 +909,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YRZW7MZ3P5;
+				DEVELOPMENT_TEAM = HJ943JVKX7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Catcher/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -934,7 +938,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YRZW7MZ3P5;
+				DEVELOPMENT_TEAM = HJ943JVKX7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Catcher/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
