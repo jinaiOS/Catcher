@@ -9,7 +9,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import SnapKit
 import UIKit
-final class RegisterViewController: BaseHeaderViewController {
+final class RegisterViewController: BaseViewController {
     private let registerView = RegisterView()
     private let fireManager = FirebaseManager()
 
@@ -37,6 +37,16 @@ final class RegisterViewController: BaseHeaderViewController {
         vcInfo.newUserNickName = nickName
         navigationController?.pushViewController(vcInfo, animated: true)
     }
+    
+    /**
+     @brief backButton을 눌렀을때 들어오는 이벤트
+     
+     @param sender 버튼 객체
+     */
+    @objc func backButtonTouched(sender : UIButton)
+    {
+        navigationPopViewController(animated: true) { () -> (Void) in }
+    }
 
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(
@@ -62,5 +72,7 @@ final class RegisterViewController: BaseHeaderViewController {
 
     override func viewDidLoad() {
         registerView.nextButton.addTarget(self, action: #selector(nextPressed), for: .touchUpInside)
+        //header backButton selector setting
+        registerView.headerView.btnBack.addTarget(self, action: #selector(backButtonTouched(sender:)), for: .touchUpInside)
     }
 }

@@ -7,7 +7,8 @@
 
 import FirebaseAuth
 import UIKit
-final class LoginViewController: UIViewController {
+
+class LoginViewController: BaseViewController {
     private let loginView = LoginView()
     override func loadView() {
         super.loadView()
@@ -36,7 +37,7 @@ final class LoginViewController: UIViewController {
   
     @objc func signUpPressed() {
         let vc = RegisterViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        self.navigationPushController(viewController: vc, animated: true)
     }
 
     override func viewDidLoad() {
