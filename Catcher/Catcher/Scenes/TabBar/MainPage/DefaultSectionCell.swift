@@ -14,10 +14,23 @@ final class DefaultSectionCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
-        view.layer.cornerRadius = AppConstraint.mainCellCornerRadius
+        view.layer.cornerRadius = 5
         view.clipsToBounds = true
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return view
+    }()
+    
+    private lazy var nickNameLabel: UILabel = {
+        let label = LabelFactory.makeLabel(
+            text: nil,
+            font: ThemeFont.bold(size: 30),
+            textColor: .white,
+            textAlignment: .left)
+        label.layer.shadowColor = UIColor.black.cgColor
+        label.layer.shadowOffset = CGSize(width: 2, height: 2)
+        label.layer.shadowRadius = 5
+        label.layer.shadowOpacity = 0.5
+        return label
     }()
     
     override init(frame: CGRect) {
@@ -32,13 +45,16 @@ final class DefaultSectionCell: UICollectionViewCell {
 }
 
 extension DefaultSectionCell {
-    func configure(data: UserInfo) {
+    func configure(data: UserInfo, nickNameOn: Bool) {
         ImageCacheManager.shared.loadImage(uid: data.uid) { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.imageView.backgroundColor = .clear
                 self.imageView.image = image
             }
+        }
+        if nickNameOn {
+            nickNameLabel.text = data.nickName
         }
     }
 }
@@ -53,10 +69,16 @@ private extension DefaultSectionCell {
     }
     
     func setLayout() {
-        self.addSubview(imageView)
+        [imageView, nickNameLabel].forEach {
+            self.addSubview($0)
+        }
         
         imageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        nickNameLabel.snp.makeConstraints {
+            $0.leading.bottom.equalToSuperview().inset(AppConstraint.defaultSpacing)
         }
     }
 }

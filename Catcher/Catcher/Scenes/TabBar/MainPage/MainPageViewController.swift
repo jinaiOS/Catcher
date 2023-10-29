@@ -63,11 +63,18 @@ private extension MainPageViewController {
             collectionView: mainPageView.collectionView,
             cellProvider: { collectionView, indexPath, itemIdentifier in
                 switch itemIdentifier {
-                case .random(let item), .new(let item), .near(let item), .pick(let item):
+                case .random(let item):
                     guard let cell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: DefaultSectionCell.identifier,
                         for: indexPath) as? DefaultSectionCell else { return UICollectionViewCell() }
-                    cell.configure(data: item)
+                    cell.configure(data: item, nickNameOn: true)
+                    return cell
+                    
+                case .new(let item), .near(let item), .pick(let item):
+                    guard let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: DefaultSectionCell.identifier,
+                        for: indexPath) as? DefaultSectionCell else { return UICollectionViewCell() }
+                    cell.configure(data: item, nickNameOn: false)
                     return cell
                     
                 case .rank(let item):
@@ -135,8 +142,9 @@ extension MainPageViewController: UICollectionViewDelegate {
         
         let userInfoVC = UserInfoViewController(info: userInfo, isPicked: isPicked)
         userInfoVC.delegate = self
-        userInfoVC.modalTransitionStyle = .crossDissolve
+        
         userInfoVC.modalPresentationStyle = .custom
+        userInfoVC.modalTransitionStyle = .crossDissolve
         present(userInfoVC, animated: true)
     }
 }
