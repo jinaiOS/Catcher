@@ -16,6 +16,12 @@ final class InfoViewController: UIViewController {
     private let infoView = InfoView()
     let pickerRegion = UIPickerView()
     let pickerEducation = UIPickerView()
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy / MM / dd"
+        return formatter
+    }()
+
     var education = ["박사", "학사", "대졸", "고졸", "중졸"]
     var region = [
         "서울특별시",
@@ -65,6 +71,10 @@ final class InfoViewController: UIViewController {
         guard let location = infoView.regionTextField.text else { return }
         guard let nickName = newUserNickName else { return }
         guard let newUserEmail = newUserEmail, let newUserPassword = newUserPassword else { return }
+        guard let birthText = infoView.birthTextField.text, let birthDate = dateFormatter.date(from: birthText) else {
+            return
+        }
+
         var smokeCheck = false
         if smoking == "흡연" {
             smokeCheck = true
@@ -73,7 +83,7 @@ final class InfoViewController: UIViewController {
         }
         let profileSettingViewController = ProfileSettingViewController(nibName: "ProfileSettingViewController", bundle: nil)
         profileSettingViewController.user = UserInfo(
-            uid: "", sex: "", birth: Date(), // 필요한 경"우 성별을 여기에 추가
+            uid: "", sex: "", birth: birthDate, // 필요한 경"우 성별을 여기에 추가
             nickName: nickName,
             location: location,
             height: Int(height) ?? 0,
@@ -96,6 +106,15 @@ final class InfoViewController: UIViewController {
 
     @objc func educationPickerDoneButtonTapped() {
         infoView.educationTextField.resignFirstResponder()
+    }
+
+    @objc func birthPickerDoneButtonTapped() {
+        infoView.birthTextField.resignFirstResponder()
+    }
+
+    @objc func dateChange(_ sender: UIDatePicker) {
+        // 값이 변하면 UIDatePicker에서 날자를 받아와 형식을 변형해서 textField에 넣어줍니다.
+        infoView.birthTextField.text = dateFormat(date: sender.date)
     }
 }
 
@@ -139,8 +158,35 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         let educationSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         educationToolbar.setItems([educationSpace, educationDoneButton], animated: false)
 
+        let birthToolbar = UIToolbar()
+        birthToolbar.sizeToFit()
+        birthToolbar.backgroundColor = .clear
+        let birthDoneButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(birthPickerDoneButtonTapped))
+        let birthSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        birthToolbar.setItems([birthSpace, birthDoneButton], animated: false)
+
+        let datePicker = UIDatePicker()
+        // datePickerModed에는 time, date, dateAndTime, countDownTimer가 존재합니다.
+        datePicker.datePickerMode = .date
+        // datePicker 스타일을 설정합니다. wheels, inline, compact, automatic이 존재합니다.
+        datePicker.preferredDatePickerStyle = .wheels
+        // 원하는 언어로 지역 설정도 가능합니다.
+        datePicker.locale = Locale(identifier: "ko-KR")
+        // 값이 변할 때마다 동작을 설정해 줌
+        datePicker.addTarget(self, action: #selector(dateChange), for: .valueChanged)
+        // textField의 inputView가 nil이라면 기본 할당은 키보드입니다.
         infoView.regionTextField.inputAccessoryView = toolbar
         infoView.educationTextField.inputAccessoryView = educationToolbar
+        infoView.birthTextField.inputAccessoryView = birthToolbar
+        infoView.birthTextField.inputView = datePicker
+        // textField에 오늘 날짜로 표시되게 설정
+        infoView.birthTextField.text = dateFormat(date: Date())
+    }
+
+    private func dateFormat(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy / MM / dd"
+        return formatter.string(from: date)
     }
 
     // pickerview는 하나만
