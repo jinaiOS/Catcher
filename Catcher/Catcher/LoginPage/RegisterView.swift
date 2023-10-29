@@ -92,7 +92,7 @@ final class RegisterView: UIView {
 
     init() {
         super.init(frame: .zero)
-//        backgroundColor = .secondarySystemBackground
+        backgroundColor = .white
         setlayout()
     }
 
