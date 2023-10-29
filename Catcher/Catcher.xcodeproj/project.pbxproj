@@ -56,9 +56,9 @@
 		562E36B72AD8DCAA008D99B2 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36B62AD8DCAA008D99B2 /* BaseViewController.swift */; };
 		562E36B92AD8DCC5008D99B2 /* BaseHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36B82AD8DCC5008D99B2 /* BaseHeaderViewController.swift */; };
 		562E36BB2AD8DD03008D99B2 /* CommonUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36BA2AD8DD03008D99B2 /* CommonUtil.swift */; };
-		562E36BD2AD9061D008D99B2 /* CommonHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36BC2AD9061D008D99B2 /* CommonHeaderView.swift */; };
 		562E36BF2AD9172B008D99B2 /* CommonHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 562E36BE2AD9172B008D99B2 /* CommonHeaderView.xib */; };
 		562E36C12AD91901008D99B2 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36C02AD91901008D99B2 /* Common.swift */; };
+		5675E1712AEE94AE001EAF95 /* CommonHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5675E1702AEE94AE001EAF95 /* CommonHeaderView.swift */; };
 		569207FF2AEC448C007E2EF6 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569207FE2AEC448C007E2EF6 /* Date+.swift */; };
 		56BBF7B02AE16FE300A2BADD /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 56BBF7AF2AE16FE300A2BADD /* SDWebImage */; };
 		56BBF7B32AE16FF400A2BADD /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 56BBF7B22AE16FF400A2BADD /* MessageKit */; };
@@ -170,9 +170,9 @@
 		562E36B62AD8DCAA008D99B2 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		562E36B82AD8DCC5008D99B2 /* BaseHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHeaderViewController.swift; sourceTree = "<group>"; };
 		562E36BA2AD8DD03008D99B2 /* CommonUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUtil.swift; sourceTree = "<group>"; };
-		562E36BC2AD9061D008D99B2 /* CommonHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonHeaderView.swift; sourceTree = "<group>"; };
 		562E36BE2AD9172B008D99B2 /* CommonHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommonHeaderView.xib; sourceTree = "<group>"; };
 		562E36C02AD91901008D99B2 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		5675E1702AEE94AE001EAF95 /* CommonHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonHeaderView.swift; sourceTree = "<group>"; };
 		569207FE2AEC448C007E2EF6 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		56BBF7E92AE6009700A2BADD /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		56BBF7EA2AE6009700A2BADD /* IntroViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntroViewController.xib; sourceTree = "<group>"; };
@@ -413,8 +413,8 @@
 		56C08B4D2ADF747800FB8608 /* CommonHeaderView */ = {
 			isa = PBXGroup;
 			children = (
-				562E36BC2AD9061D008D99B2 /* CommonHeaderView.swift */,
 				562E36BE2AD9172B008D99B2 /* CommonHeaderView.xib */,
+				5675E1702AEE94AE001EAF95 /* CommonHeaderView.swift */,
 			);
 			path = CommonHeaderView;
 			sourceTree = "<group>";
@@ -687,6 +687,7 @@
 				56C08B6E2ADF808400FB8608 /* MenuTableViewCell.swift in Sources */,
 				56BBF7EB2AE6009700A2BADD /* IntroViewController.swift in Sources */,
 				56C08B672ADF805800FB8608 /* RankSectionCell.swift in Sources */,
+				5675E1712AEE94AE001EAF95 /* CommonHeaderView.swift in Sources */,
 				56C08BA02AE10D4C00FB8608 /* PhotoViewerViewController.swift in Sources */,
 				56C08B742ADF809300FB8608 /* InfoView.swift in Sources */,
 				335AC1F72AE86B8500F2CF51 /* String+.swift in Sources */,
@@ -694,7 +695,6 @@
 				562E36BB2AD8DD03008D99B2 /* CommonUtil.swift in Sources */,
 				2305095D2AE2475E00F58092 /* ContactTableViewCell.swift in Sources */,
 				562E36B72AD8DCAA008D99B2 /* BaseViewController.swift in Sources */,
-				562E36BD2AD9061D008D99B2 /* CommonHeaderView.swift in Sources */,
 				562E36B12AD8D0EE008D99B2 /* BaseTabBarController.swift in Sources */,
 				56C08B772ADF809900FB8608 /* ReportViewController.swift in Sources */,
 				33C58EA32ADC73C9008EB6C2 /* NSAttributedString+.swift in Sources */,

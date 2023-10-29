@@ -9,6 +9,7 @@ import Firebase
 import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
     var window: UIWindow?
     /**
      @brief  navigationBarController 객체
@@ -38,14 +39,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-        let introVC = IntroViewController(nibName: "IntroViewController", bundle: nil)
-        navigationController = UINavigationController(rootViewController: introVC)
+        let introVC = IntroViewController(nibName: "IntroViewController", bundle: nil);
+        navigationController = UINavigationController(rootViewController: introVC);
         // 네비게이션바 히든
-        navigationController?.isNavigationBarHidden = true
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
+        navigationController?.isNavigationBarHidden = true;
+        window = UIWindow.init(frame: UIScreen.main.bounds);
+        window?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1);
+        window?.rootViewController = navigationController;
+        window?.makeKeyAndVisible();
         return true
     }
 
@@ -85,39 +86,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      @brief storyBoard를 변경한다.
      */
     func changeInitViewController(type: StartType) {
+        DataManager.sharedInstance.modalViewControllerList = nil
+        tabBarController = nil
         if type == .Login {
             navigationController = UINavigationController(rootViewController: LoginViewController())
-            window?.rootViewController = navigationController
-            window?.makeKeyAndVisible()
         } else {
-            DataManager.sharedInstance.modalViewControllerList = nil
-            tabBarController = nil
             let storyBoard = UIStoryboard(name: type.rawValue, bundle: nil)
             self.navigationController = nil
-            tabBarController = nil
-            let navigationController: UINavigationController?
-            navigationController = storyBoard.instantiateInitialViewController() as? UINavigationController
-            if navigationController?.topViewController is UITabBarController {
+            self.tabBarController = nil
+            let navigationController : UINavigationController?
+            navigationController =  storyBoard.instantiateInitialViewController() as? UINavigationController
+            if  navigationController?.topViewController is UITabBarController {
                 tabBarController = navigationController!.topViewController as? BaseTabBarController
             }
             self.navigationController = navigationController
-            
-            // 네비게이션바 히든
-            navigationController?.isNavigationBarHidden = true
-            UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
-                AppDelegate.applicationDelegate().window?.rootViewController?.view.alpha = 0
-            }) { [weak self] _ in
-                guard let strongSelf = self else {
-                    return
-                }
-                DispatchQueue.main.async {
-                    strongSelf.window?.rootViewController = strongSelf.navigationController
-                    strongSelf.window?.rootViewController?.view.alpha = 0
-                    UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
-                        AppDelegate.applicationDelegate().window?.rootViewController?.view.alpha = 1
-                    }, completion: { _ in
-                    })
-                }
+        }
+        
+        //네비게이션바 히든
+        navigationController?.isNavigationBarHidden = true;
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
+            AppDelegate.applicationDelegate().window?.rootViewController?.view.alpha = 0
+        }) {[weak self] (finished) in
+            guard let strongSelf = self else {
+                return
+            }
+            DispatchQueue.main.async {
+                strongSelf.window?.rootViewController = strongSelf.navigationController
+                strongSelf.window?.rootViewController?.view.alpha = 0
+                UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
+                    AppDelegate.applicationDelegate().window?.rootViewController?.view.alpha = 1
+                }, completion: { (finished) in
+                })
             }
         }
     }

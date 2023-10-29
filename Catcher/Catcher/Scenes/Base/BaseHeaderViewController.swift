@@ -4,6 +4,7 @@
 //
 //  Created by 김지은 on 2023/10/13.
 //
+
 import UIKit
 /**
  @class BaseHeaderViewController.swift
@@ -24,7 +25,7 @@ class BaseHeaderViewController: BaseViewController {
         headerView = CommonHeaderView.init(frame: CGRect.init(x: 0, y: Common.kStatusbarHeight, width: Common.SCREEN_WIDTH(), height: 50))
         
         //header backButton selector setting
-        headerView.backButton.addTarget(self, action: #selector(backButtonTouched(sender:)), for: .touchUpInside)
+        headerView.btnBack.addTarget(self, action: #selector(backButtonTouched(sender:)), for: .touchUpInside)
         
         self.view.addSubview(headerView)
         // Do any additional setup after loading the view.
@@ -36,7 +37,7 @@ class BaseHeaderViewController: BaseViewController {
      @param title
      */
     func backButtonHidden() {
-        headerView.backButton.isHidden = true
+        headerView.btnBack.isHidden = true
     }
     
     /**
@@ -45,7 +46,7 @@ class BaseHeaderViewController: BaseViewController {
      @param title
      */
     func setHeaderTitleName(title : String) {
-        headerView.titleLabel.text = title
+        headerView.lblTitle.text = title
     }
     
     /**
