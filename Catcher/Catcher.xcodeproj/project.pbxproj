@@ -17,7 +17,6 @@
 		33192D772AE9D00200069582 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33192D762AE9D00200069582 /* Dummy.swift */; };
 		335241942AE5AEBB009EB771 /* FireStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335241932AE5AEBB009EB771 /* FireStoreManager.swift */; };
 		335241962AE5DB4A009EB771 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335241952AE5DB4A009EB771 /* Array+.swift */; };
-		3352C5792AEDB98000521F04 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3352C5782AEDB98000521F04 /* StorageManager.swift */; };
 		33532B782AE17A31008B47EB /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B772AE17A31008B47EB /* UserInfo.swift */; };
 		33532B7C2AE17A53008B47EB /* FirebaseErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B7B2AE17A53008B47EB /* FirebaseErrors.swift */; };
 		33532B7E2AE17A67008B47EB /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B7D2AE17A67008B47EB /* FirebaseManager.swift */; };
@@ -129,7 +128,6 @@
 		33192D762AE9D00200069582 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
 		335241932AE5AEBB009EB771 /* FireStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreManager.swift; sourceTree = "<group>"; };
 		335241952AE5DB4A009EB771 /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
-		3352C5782AEDB98000521F04 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		33532B772AE17A31008B47EB /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		33532B7B2AE17A53008B47EB /* FirebaseErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseErrors.swift; sourceTree = "<group>"; };
 		33532B7D2AE17A67008B47EB /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
@@ -688,7 +686,6 @@
 				562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */,
 				562E36C12AD91901008D99B2 /* Common.swift in Sources */,
 				33ABF3552AE46F2F002DCCF4 /* FireStorageManager.swift in Sources */,
-				3352C5792AEDB98000521F04 /* StorageManager.swift in Sources */,
 				562E36B92AD8DCC5008D99B2 /* BaseHeaderViewController.swift in Sources */,
 				56C08B6E2ADF808400FB8608 /* MenuTableViewCell.swift in Sources */,
 				56BBF7EB2AE6009700A2BADD /* IntroViewController.swift in Sources */,
