@@ -134,7 +134,7 @@ private extension FireStorageManager {
                 completion(FireStorageError.noMetaData)
                 return
             }
-            print("metaData: \(metadata.description)")
+            CommonUtil.print(output:"metaData: \(metadata.description)")
             completion(nil)
         }
     }

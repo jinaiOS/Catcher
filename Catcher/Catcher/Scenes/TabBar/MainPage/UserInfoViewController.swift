@@ -41,7 +41,7 @@ final class UserInfoViewController: UIViewController {
     }
     
     deinit {
-        print("deinit - UserInfoVC")
+        CommonUtil.print(output:"deinit - UserInfoVC")
     }
 }
 
@@ -88,7 +88,7 @@ private extension UserInfoViewController {
 private extension UserInfoViewController {
     func resultHandling(result: [UserInfo]?, error: Error?) {
         if let error = error {
-            print(error.localizedDescription)
+            CommonUtil.print(output:error.localizedDescription)
             showAlert()
             return
         }

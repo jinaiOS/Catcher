@@ -35,11 +35,11 @@ extension MainPageViewModel {
                let newError = newResult.error,
                let nearError = nearResult.error,
                let pickError = pickResult.error {
-                print(randomError.localizedDescription)
-                print(rankError.localizedDescription)
-                print(newError.localizedDescription)
-                print(nearError.localizedDescription)
-                print(pickError.localizedDescription)
+                CommonUtil.print(output:randomError.localizedDescription)
+                CommonUtil.print(output:rankError.localizedDescription)
+                CommonUtil.print(output:newError.localizedDescription)
+                CommonUtil.print(output:nearError.localizedDescription)
+                CommonUtil.print(output:pickError.localizedDescription)
                 return
             }
             guard let randomUser = randomResult.result,

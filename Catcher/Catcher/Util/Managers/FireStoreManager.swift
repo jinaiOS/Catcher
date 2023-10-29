@@ -226,7 +226,7 @@ private extension FireStoreManager {
                 group.addTask {
                     let data = await self.fetchUserInfo(uuid: uid)
                     if let error = data.error {
-                        print("error: \(error.localizedDescription)")
+                        CommonUtil.print(output:"error: \(error.localizedDescription)")
                         return nil
                     }
                     return data.result

@@ -125,12 +125,12 @@ extension BaseTabBarController: UITabBarControllerDelegate {
         if tabBarIndex == 0 {
             // do your stuff
         }
-        print("tabBarIndex : \(tabBarIndex)")
+        CommonUtil.print(output:"tabBarIndex : \(tabBarIndex)")
     }
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         let currentIndex = tabBarController.selectedIndex
-        print("currentIndex : \(currentIndex)")
+        CommonUtil.print(output:"currentIndex : \(currentIndex)")
         guard let fromView = selectedViewController?.view, let toView = viewController.view else {
             return false // Make sure you want this as false
         }
