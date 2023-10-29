@@ -110,6 +110,7 @@ private extension UserInfoViewController {
     @objc func pressChattingButton() {
         let vc = ChattingDetailViewController(otherUid: userInfo?.uid ?? "")
         vc.isNewConversation = true
+        vc.modalChecking = true
         vc.headerTitle = userInfo?.nickName
         self.present(vc, animated: true)
     }
