@@ -58,16 +58,16 @@ extension MainPageViewModel {
         case 0:
             return nil
         case 1:
-            return "평점 높은 유저"
+            return "인기스타 9인을 소개해요"
         case 2:
-            return "신규 유저"
+            return "뉴~ 진스가 아닌 뉴~ 피플"
         case 3:
             if mainSubject.value.near.isEmpty {
-                return "찜한 유저"
+                return "당신이 찜꿍~한 유저"
             }
-            return "나의 동네 유저"
+            return "당신의 동네에 이런 사람이?!"
         case 4:
-            return "찜한 유저"
+            return "당신이 찜꿍~한 유저"
         default:
             return nil
         }
