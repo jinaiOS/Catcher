@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -10,9 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CommonHeaderView" customModule="Catcher" customModuleProvider="target">
             <connections>
-                <outlet property="backButton" destination="ZCq-7r-f5o" id="i5T-xD-tMa"/>
-                <outlet property="containerView" destination="XcA-Ba-ypx" id="veV-B3-crE"/>
-                <outlet property="titleLabel" destination="XI2-6D-P7U" id="tFK-L7-sxe"/>
+                <outlet property="btnBack" destination="ZCq-7r-f5o" id="DYF-Dp-BcO"/>
+                <outlet property="lblTitle" destination="XI2-6D-P7U" id="zcY-ZQ-FSG"/>
+                <outlet property="vContainer" destination="iN0-l3-epB" id="BvS-eV-CNE"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
