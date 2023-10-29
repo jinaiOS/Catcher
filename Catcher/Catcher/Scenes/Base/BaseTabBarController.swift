@@ -39,22 +39,22 @@ class BaseTabBarController: UITabBarController {
         self.tabBar.borderColor = #colorLiteral(red: 0.9176470588, green: 0.9176470588, blue: 0.9176470588, alpha: 1)
         
         // main
-        self.tabBar.items![0].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
+        self.tabBar.items![0].imageInsets = UIEdgeInsets(top: 10, left: 0, bottom: -4, right: 0)
         self.tabBar.items![0].image = UIImage(systemName: "heart")?.withRenderingMode(.alwaysOriginal).withTintColor(.black)
-        self.tabBar.items![0].selectedImage = UIImage(systemName: "heart.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.black)
+        self.tabBar.items![0].selectedImage = UIImage(systemName: "heart.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(ThemeColor.primary)
         self.tabBar.items![0].title = "Main"
         
         
         // Chat
-        self.tabBar.items![1].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
+        self.tabBar.items![1].imageInsets = UIEdgeInsets(top: 10, left: 0, bottom: -4, right: 0)
         self.tabBar.items![1].image = UIImage(systemName: "bubble.left")?.withRenderingMode(.alwaysOriginal)
-        self.tabBar.items![1].selectedImage = UIImage(systemName: "bubble.left.fill")?.withRenderingMode(.alwaysOriginal)
+        self.tabBar.items![1].selectedImage = UIImage(systemName: "bubble.left.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(ThemeColor.primary)
         self.tabBar.items![1].title = "Chat"
         
         // my
-        self.tabBar.items![2].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
+        self.tabBar.items![2].imageInsets = UIEdgeInsets(top: 10, left: 0, bottom: -4, right: 0)
         self.tabBar.items![2].image = UIImage(systemName: "person.2")?.withRenderingMode(.alwaysOriginal)
-        self.tabBar.items![2].selectedImage = UIImage(systemName: "person.2.fill")?.withRenderingMode(.alwaysOriginal)
+        self.tabBar.items![2].selectedImage = UIImage(systemName: "person.2.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(ThemeColor.primary)
         self.tabBar.items![2].title = "My"
         
         // iOS13이상에서 탭바의 타이틀 컬러가 적용안되는 이슈 해결 modify by subway 20191024

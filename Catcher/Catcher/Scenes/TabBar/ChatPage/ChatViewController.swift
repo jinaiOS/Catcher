@@ -47,10 +47,6 @@ class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        // 내비게이션 바 설정
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose,
-//                                                            target: self,
-//                                                            action: #selector(didTapComposeButton))
         view.addSubview(tbvConversation)
         view.addSubview(noConversationsLabel)
         setupTableView()
@@ -87,61 +83,7 @@ class ChatViewController: UIViewController {
             }
         })
     }
-
-//    // 쓰기 버튼이 눌렸을 때의 액션
-//    @objc private func didTapComposeButton() {
-//        let vc = NewConversationViewController()
-//        vc.completion = { [weak self] result in
-//            guard let strongSelf = self else {
-//                return
-//            }
-//
-//            let currentConversations = strongSelf.conversations
-//
-//            if let targetConversation = currentConversations.first(where: {
-//                $0.otherUserEmail == DatabaseManager.safeEmail(emailAddress: result.email)
-//            }) {
-//                let vc = ChattingDetailViewController(otherUid: targetConversation.id)
-//                vc.isNewConversation = false
-//                vc.headerTitle = targetConversation.name
-//                vc.navigationItem.largeTitleDisplayMode = .never
-//                strongSelf.navigationController?.pushViewController(vc, animated: true)
-//            }
-//            else {
-//                strongSelf.createNewConversation(result: result)
-//            }
-//        }
-//        let navVC = UINavigationController(rootViewController: vc)
-//        present(navVC, animated: true)
-//    }
-
-    private func createNewConversation(result: SearchResult) {
-        let name = result.name
-        let uid = result.uid
-
-//        // 이 두 사용자 간의 대화가 이미 있는지 확인
-//        // 있다면 대화 ID 재사용, 아니면 새 코드 사용
-//        DatabaseManager.shared.conversationExists(iwth: uid, completion: { [weak self] result in
-//            guard let strongSelf = self else {
-//                return
-//            }
-//            switch result {
-//            case .success(let conversationId):
-//                let vc = ChattingDetailViewController(otherUid: conversationId)
-//                vc.isNewConversation = false
-//                vc.title = name
-//                vc.navigationItem.largeTitleDisplayMode = .never
-//                strongSelf.navigationController?.pushViewController(vc, animated: true)
-//            case .failure(_):
-//                let vc = ChattingDetailViewController(otherUid: uid)
-//                vc.isNewConversation = true
-//                vc.title = name
-//                vc.navigationItem.largeTitleDisplayMode = .never
-//                strongSelf.navigationController?.pushViewController(vc, animated: true)
-//            }
-//        })
-    }
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tbvConversation.frame = view.bounds
@@ -200,13 +142,6 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.beginUpdates()
             self.conversations.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .left)
-
-//            DatabaseManager.shared.deleteConversation(conversationId: conversationId, completion: { success in
-//                if !success {
-//                    // add model and row back and show error alert
-//
-//                }
-//            })
 
             tableView.endUpdates()
         }
