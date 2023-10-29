@@ -62,9 +62,9 @@ final class ChattingDetailViewController: MessagesViewController {
         
         //iphone x의 경우 헤더 위치를 재설정한다.
         headerView = CommonHeaderView.init(frame: CGRect.init(x: 0, y: Common.kStatusbarHeight, width: Common.SCREEN_WIDTH(), height: 50))
-        headerView.titleLabel.text = headerTitle
+        headerView.lblTitle.text = headerTitle
         //header backButton selector setting
-        headerView.backButton.addTarget(self, action: #selector(backButtonTouched(sender:)), for: .touchUpInside)
+        headerView.btnBack.addTarget(self, action: #selector(backButtonTouched(sender:)), for: .touchUpInside)
         
         self.view.addSubview(headerView)
         view.backgroundColor = .red
