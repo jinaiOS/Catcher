@@ -44,7 +44,7 @@ final class LoginView: UIView {
         cornerRadius: 15)
     
     lazy var resetPasswordBtn: UIButton = ButtonFactory.makeButton(
-        title: "회원가입",
+        title: "비밀번호 재설정",
         titleColor: .darkGray,
         cornerRadius: 15)
     
@@ -78,7 +78,7 @@ final class LoginView: UIView {
         view.alignment = .fill
         view.distribution = .equalSpacing
         
-        [findIDBtn, resetPasswordBtn, signUpBtn].forEach {
+        [resetPasswordBtn, signUpBtn].forEach {
             view.addArrangedSubview($0)
         }
         return view

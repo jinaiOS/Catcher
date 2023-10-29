@@ -135,7 +135,7 @@ private extension RegisterView {
         }
         nextButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
-            make.bottom.equalTo(self.safeAreaLayoutGuide).offset(-100)
+            make.bottom.equalTo(self.safeAreaInsets).inset(50)
             make.height.equalTo(50)
         }
     }
