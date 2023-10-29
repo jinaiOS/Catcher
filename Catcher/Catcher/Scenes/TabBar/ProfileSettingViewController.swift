@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileSettingViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ProfileSettingViewController: BaseHeaderViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var user: UserInfo?
     var newUserEmail: String?
     var newUserPassword: String?
@@ -37,7 +37,8 @@ class ProfileSettingViewController: UIViewController, UIImagePickerControllerDel
                 }
                 let userInfo = UserInfo(
                     uid: uid,
-                    sex: "", birth: user.birth,
+                    sex: "",
+                    birth: user.birth,
                     nickName: user.nickName,
                     location: user.location,
                     height: Int(user.height),

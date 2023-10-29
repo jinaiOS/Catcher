@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-class ReportViewController: UIViewController {
+class ReportViewController: BaseHeaderViewController {
     var button1: UIButton!
     var button2: UIButton!
     var button3: UIButton!
@@ -147,6 +147,8 @@ class ReportViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setHeaderTitleName(title: "사용자 신고")
+        view.backgroundColor = .white
         configure()
     }
 
@@ -214,7 +216,7 @@ extension ReportViewController {
 
         reportView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self.view).inset(20)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(22)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(80)
             make.bottom.equalTo(label4.snp.bottom).inset(-10)
         }
 

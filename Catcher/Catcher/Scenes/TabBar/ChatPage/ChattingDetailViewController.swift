@@ -19,6 +19,8 @@ final class ChattingDetailViewController: MessagesViewController {
     var senderPhotoURL: URL?
     /// 프로필 이미지 - 상대
     var otherUserPhotoURL: URL?
+    
+    var modalChecking = false
 
     public static let dateFormatter: DateFormatter = {
         let formattre = DateFormatter()
@@ -59,10 +61,19 @@ final class ChattingDetailViewController: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
-        //iphone x의 경우 헤더 위치를 재설정한다.
-        headerView = CommonHeaderView.init(frame: CGRect.init(x: 0, y: Common.kStatusbarHeight, width: Common.SCREEN_WIDTH(), height: 50))
-        headerView.lblTitle.text = headerTitle
+        if modalChecking {
+            headerView = CommonHeaderView.init(frame: CGRect.init(x: 0, y: 0, width: Common.SCREEN_WIDTH(), height: 50))
+            headerView.lblTitle.text = headerTitle
+            headerView.btnBack.isHidden = true
+        } else {
+            //iphone x의 경우 헤더 위치를 재설정한다.
+            headerView = CommonHeaderView.init(frame: CGRect.init(x: 0, y: Common.kStatusbarHeight, width: Common.SCREEN_WIDTH(), height: 50))
+            headerView.lblTitle.text = title
+        }
+        
         //header backButton selector setting
         headerView.btnBack.addTarget(self, action: #selector(backButtonTouched(sender:)), for: .touchUpInside)
         
@@ -73,12 +84,8 @@ final class ChattingDetailViewController: MessagesViewController {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
-        
-        messagesCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(50)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(100)
-        }
+
+        self.messagesCollectionView.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 70, right: 0)
         
         messageInputBar.delegate = self
         setupInputButton()

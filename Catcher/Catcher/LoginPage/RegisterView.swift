@@ -9,7 +9,6 @@ import SnapKit
 import UIKit
 
 final class RegisterView: UIView {
-    var headerView: CommonHeaderView!
     
     private lazy var nicknameLabel: UILabel = LabelFactory.makeLabel(text: "닉네임", font: ThemeFont.regular(size: 22), textAlignment: .left)
 
@@ -92,7 +91,7 @@ final class RegisterView: UIView {
 
     init() {
         super.init(frame: .zero)
-//        backgroundColor = .secondarySystemBackground
+        backgroundColor = .white
         setlayout()
     }
 
@@ -114,12 +113,6 @@ private extension RegisterView {
     }
 
     func setlayout() {
-        headerView = CommonHeaderView.init(frame: CGRect.init(x: 0, y: Common.kStatusbarHeight, width: Common.SCREEN_WIDTH(), height: 50))
-        
-        addSubview(headerView)
-        
-        headerView.lblTitle.text = "회원가입"
-        
         addSubview(vstack)
         addSubview(provisionButton)
         addSubview(ageButton)
