@@ -71,17 +71,14 @@ extension DatabaseManager {
                     break
                 }
                 
-                let newConversationData: [String: [[String: Any]]] = [
-                    otherUserUid:
-                        [
-                            [
-                                "sender_uid": self?.userInfo?.uid ?? "",
-                                "date": dateString,
-                                "message": message,
-                                "is_read": false,
-                                "type": firstMessage.kind.messageKindString
-                            ]
-                        ]
+                let newConversationData: [[String: Any]] = [
+                    [
+                        "sender_uid": self?.userInfo?.uid ?? "",
+                        "date": dateString,
+                        "message": message,
+                        "is_read": false,
+                        "type": firstMessage.kind.messageKindString
+                    ]
                 ]
                 
                 let otherUserNewConversationData: [String: [String: Any]] = [
@@ -97,14 +94,14 @@ extension DatabaseManager {
                 
                 // Update recipient conversation entry
                 
-                self?.database.child(self?.userInfo?.uid ?? "").child(otherUserUid).observeSingleEvent(of: .value, with: {[weak self] snapshot in
+                self?.database.child(self?.userInfo?.uid ?? "").observeSingleEvent(of: .value, with: {[weak self] snapshot in
                     if var conversations = snapshot.value as? [[String: Any]] {
                         //append
-                        conversations.append(newConversationData)
-                        self?.database.child(self?.userInfo?.uid ?? "").setValue(conversations)
+                        //                        conversations.append(newConversationData)
+                        //                        self?.database.child(self?.userInfo?.uid ?? "").setValue(conversations)
                     } else {
                         // create
-                        self?.database.child(self?.userInfo?.uid ?? "").setValue(newConversationData)
+                        self?.database.child(self?.userInfo?.uid ?? "").child(otherUserUid).setValue(newConversationData)
                     }
                 })
             } else {
@@ -222,29 +219,48 @@ extension DatabaseManager {
                 return
             }
             Task {
-                let lastDictionaries: [[String: Any]] = value.compactMap { (_, lastArray) in
-                    lastArray.last
+                var conversationStore: [String] = []
+                var conversationsHave : [Conversation] = []
+                let lastDictionaries: [[String: Any]] = value.compactMap { (a, lastArray) in
+                    conversationStore.append(a)
+                    if conversationStore == [] {
+                        conversationStore.remove(at: 0)
+                    }
+                    return lastArray.last
                 }
-                for (key, dictionary) in value {
+                let conversations: [Conversation] = lastDictionaries.compactMap { dictionary in
+                    guard let senderUid = dictionary["sender_uid"] as? String,
+                          let message = dictionary["message"] as? String,
+                          let date = dictionary["date"] as? String,
+                          let isRead = dictionary["is_read"] as? Bool else {
+                        return nil
+                    }
+                    return Conversation(name: "", senderUid: senderUid, message: message, date: date, isRead: isRead, otherUserUid: "")
+                }
+                conversationsHave = conversations
+                var nickNames: [String] = []
+                for key in conversationStore {
                     async let otherUserInfo = self.storeManager.fetchUserInfo(uuid: key)
                     let otherUserInfoResult = await otherUserInfo
-                    let conversations: [Conversation] = lastDictionaries.compactMap { dictionary in
-                        guard let name = otherUserInfoResult.0?.nickName,
-                              let senderUid = dictionary["sender_uid"] as? String,
-                              let message = dictionary["message"] as? String,
-                              let date = dictionary["date"] as? String,
-                              let isRead = dictionary["is_read"] as? Bool,
-                              let otherUserUid = otherUserInfoResult.0?.uid else {
-                            return nil
-                        }
-                        return Conversation(name: name, senderUid: senderUid, message: message, date: date, isRead: isRead, otherUserUid: otherUserUid)
+                    nickNames.append(otherUserInfoResult.result?.nickName ?? "")
+                    if nickNames == [] {
+                        nickNames.remove(at: 0)
                     }
-                    DispatchQueue.main.async {
-                        completion(.success(conversations))
-                    }
+                }
+                for i in 0..<conversationsHave.count {
+                    conversationsHave[i].otherUserUid = conversationStore[i]
+                    conversationsHave[i].name = nickNames[i]
+                }
+                let conversationsComplete = self.storeConversations(conversations: conversationsHave)
+                DispatchQueue.main.async {
+                    completion(.success(conversationsComplete))
                 }
             }
         })
+    }
+    
+    func storeConversations(conversations: [Conversation]) -> [Conversation] {
+        return conversations
     }
     
     /// Gets all mmessages for a given conversatino
