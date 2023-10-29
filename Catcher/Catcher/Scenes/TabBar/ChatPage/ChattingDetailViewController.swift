@@ -438,7 +438,7 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
                     print("message sent")
                     self?.isNewConversation = false
                     self?.listenForMessages(id: self?.otherUserUid ?? "", shouldScrollToBottom: true)
-                    self?.messageInputBar.inputTextView.text = nil
+                    self?.messageInputBar.inputTextView.text = ""
                 } else {
                     print("failed ot send")
                 }
@@ -451,7 +451,7 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
             // append to existing conversation data
             DatabaseManager.shared.sendMessage(otherUserUid: otherUserUid, name: name, newMessage: message, completion: { [weak self] success in
                 if success {
-                    self?.messageInputBar.inputTextView.text = nil
+                    self?.messageInputBar.inputTextView.text = ""
                     print("message sent")
                 }
                 else {
