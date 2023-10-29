@@ -71,7 +71,9 @@ final class InfoViewController: UIViewController {
         }
         let profileSettingViewController = ProfileSettingViewController(nibName: "ProfileSettingViewController", bundle: nil)
         profileSettingViewController.user = UserInfo(
-            uid: "", sex: "", // 필요한 경"우 성별을 여기에 추가
+            uid: "",
+            sex: "", // 필요한 경"우 성별을 여기에 추가
+            birth: Date(),
             nickName: nickName,
             location: location,
             height: Int(height) ?? 0,

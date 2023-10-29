@@ -38,6 +38,7 @@ class ProfileSettingViewController: UIViewController, UIImagePickerControllerDel
                 let userInfo = UserInfo(
                     uid: uid,
                     sex: "",
+                    birth: user.birth,
                     nickName: user.nickName,
                     location: user.location,
                     height: Int(user.height),
