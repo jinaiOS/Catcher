@@ -44,7 +44,21 @@ extension FireStoreManager {
         }
     }
 }
-
+//저장을 위해 추가해봄
+extension FireStoreManager {
+    func saveUserInfoToFirestore(userInfo: UserInfo, completion: @escaping (Error?) -> Void) {
+        do {
+            // userInfo 객체를 파이어스토어에 저장
+            try db.collection(userInfoPath).document(userInfo.uid).setData(
+                encodingValue(data: userInfo)
+            ) { error in
+                completion(error)
+            }
+        } catch {
+            completion(error)
+        }
+    }
+}
 extension FireStoreManager {
     func setUserInfo(data: UserInfo) async -> Error? {
         guard let uid = uid else { return FireStoreError.missingUID }

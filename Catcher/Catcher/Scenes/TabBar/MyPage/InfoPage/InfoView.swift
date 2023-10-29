@@ -5,10 +5,13 @@
 //  Copyright (c) 2023 z-wook. All right reserved.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 final class InfoView: UIView {
+    var selectedBodyButton: UIButton?
+    var selectedDrinkButton: UIButton?
+    var selectedSmokeButton: UIButton?
     lazy var regionTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "지역을 입력해 주세요"
@@ -24,48 +27,71 @@ final class InfoView: UIView {
     lazy var heightTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "키를 입력해 주세요"
+        textField.keyboardType = .numberPad
         return textField
     }()
     
-    lazy var thinBodyBtn: UIButton = {
-        makeButton(text: "마름")
-    }()
+    lazy var thinBodyBtn: UIButton = bodyButton(title: "마름")
     
-    lazy var nomalBodyBtn: UIButton = {
-        makeButton(text: "평범함")
-    }()
+    lazy var nomalBodyBtn: UIButton = bodyButton(title: "평범함")
     
-    lazy var chubbyBodyBtn: UIButton = {
-        makeButton(text: "통통함")
-    }()
+    lazy var chubbyBodyBtn: UIButton = bodyButton(title: "통통함")
     
-    lazy var fatBodyBtn: UIButton = {
-        makeButton(text: "뚱뚱함")
-    }()
+    lazy var fatBodyBtn: UIButton = bodyButton(title: "뚱뚱함")
     
-    lazy var drinkingNoBtn: UIButton = {
-        makeButton(text: "안 마심")
-    }()
+    lazy var drinkingNoBtn: UIButton = drinkButton(title: "안 마심")
     
-    lazy var drinkingTwiceBtn: UIButton = {
-        makeButton(text: "주 1~2회")
-    }()
+    lazy var drinkingTwiceBtn: UIButton = drinkButton(title: "주 1~2회")
     
-    lazy var drinkingOftenBtn: UIButton = {
-        makeButton(text: "주 3~5")
-    }()
+    lazy var drinkingOftenBtn: UIButton = drinkButton(title: "주 3~5")
     
-    lazy var drinkingDailyBtn: UIButton = {
-        makeButton(text: "그 이상")
-    }()
+    lazy var drinkingDailyBtn: UIButton = drinkButton(title: "그 이상")
     
-    lazy var smokingBtn: UIButton = {
-        makeButton(text: "흡연")
-    }()
+    lazy var smokingBtn: UIButton = smokeButton(title: "흡연")
     
-    lazy var noSmokingBtn: UIButton = {
-        makeButton(text: "비흡연")
-    }()
+    lazy var noSmokingBtn: UIButton = smokeButton(title: "비흡연")
+    
+    @objc func bodyButtonTapped(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        if let selectedBodyButton = selectedBodyButton {
+            selectedBodyButton.isSelected = false
+            selectedBodyButton.backgroundColor = .systemGray4
+            selectedBodyButton.setTitleColor(.darkGray, for: .normal)
+        }
+        sender.isSelected = true
+        sender.setTitleColor(.white, for: .normal)
+        sender.backgroundColor = ThemeColor.primary
+
+        selectedBodyButton = sender // 선택된 버튼 업데이트
+    }
+
+    @objc func drinkButtonTapped(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        if let selectedDrinkButton = selectedDrinkButton {
+            selectedDrinkButton.isSelected = false
+            selectedDrinkButton.backgroundColor = .systemGray4
+            selectedDrinkButton.setTitleColor(.darkGray, for: .normal)
+        }
+        sender.isSelected = true
+        sender.setTitleColor(.white, for: .normal)
+        sender.backgroundColor = ThemeColor.primary
+
+        selectedDrinkButton = sender // 선택된 버튼 업데이트
+    }
+    
+    @objc func smokeButtonTapped(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        if let selectedSmokeButton = selectedSmokeButton {
+            selectedSmokeButton.isSelected = false
+            selectedSmokeButton.backgroundColor = .systemGray4
+            selectedSmokeButton.setTitleColor(.darkGray, for: .normal)
+        }
+        sender.isSelected = true
+        sender.setTitleColor(.white, for: .normal)
+        sender.backgroundColor = ThemeColor.primary
+
+        selectedSmokeButton = sender // 선택된 버튼 업데이트
+    }
     
     private lazy var bodyHstack: UIStackView = {
         let view = UIStackView()
@@ -100,7 +126,7 @@ final class InfoView: UIView {
         view.distribution = .fillEqually
         view.spacing = AppConstraint.stackViewSpacing
         
-        [makeButton(text: "흡연"), makeButton(text: "비흡연")].forEach {
+        [smokingBtn, noSmokingBtn].forEach {
             view.addArrangedSubview($0)
         }
         return view
@@ -139,12 +165,49 @@ final class InfoView: UIView {
         setLayout()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
-private extension InfoView {
+extension InfoView {
+    func bodyButton(title: String) -> UIButton {
+        let button = UIButton(type: .custom)
+        button.setTitle(title, for: .normal)
+        button.titleLabel?.font = ThemeFont.regular(size: 15)
+        button.setTitleColor(.darkGray, for: .normal)
+        button.setTitleColor(.white, for: .selected)
+        button.backgroundColor = .systemGray4
+        button.layer.cornerRadius = 15
+        button.addTarget(self, action: #selector(bodyButtonTapped(_:)), for: .touchUpInside)
+        return button
+    }
+
+    func drinkButton(title: String) -> UIButton {
+        let button = UIButton(type: .custom)
+        button.setTitle(title, for: .normal)
+        button.titleLabel?.font = ThemeFont.regular(size: 15)
+        button.setTitleColor(.darkGray, for: .normal)
+        button.setTitleColor(.white, for: .selected)
+        button.backgroundColor = .systemGray4
+        button.layer.cornerRadius = 15
+        button.addTarget(self, action: #selector(drinkButtonTapped(_:)), for: .touchUpInside)
+        return button
+    }
+
+    func smokeButton(title: String) -> UIButton {
+        let button = UIButton(type: .custom)
+        button.setTitle(title, for: .normal)
+        button.titleLabel?.font = ThemeFont.regular(size: 15)
+        button.setTitleColor(.darkGray, for: .normal)
+        button.setTitleColor(.white, for: .selected)
+        button.backgroundColor = .systemGray4
+        button.layer.cornerRadius = 15
+        button.addTarget(self, action: #selector(smokeButtonTapped(_:)), for: .touchUpInside)
+        return button
+    }
+    
     func makeLabel(text: String) -> UILabel {
         return LabelFactory.makeLabel(
             text: text,
