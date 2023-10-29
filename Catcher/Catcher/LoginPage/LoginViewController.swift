@@ -39,11 +39,17 @@ class LoginViewController: BaseViewController {
         let vc = RegisterViewController()
         self.navigationPushController(viewController: vc, animated: true)
     }
+    
+    @objc func resetPasswordButton() {
+        let vc = ResetPWViewController()
+        self.navigationPushController(viewController: vc, animated: true)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         loginView.loginBtn.addTarget(self, action: #selector(loginPressed), for: .touchUpInside)
         loginView.signUpBtn.addTarget(self, action: #selector(signUpPressed), for: .touchUpInside)
+        loginView.resetPasswordBtn.addTarget(self, action: #selector(resetPasswordButton), for: .touchUpInside)
     }
     
     func storeUserInfo() async {

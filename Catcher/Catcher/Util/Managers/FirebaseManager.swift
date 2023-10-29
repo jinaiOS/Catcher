@@ -25,8 +25,7 @@ class FirebaseManager {
         }
     }
     
-    func sendEmailForChangePW() async -> Bool {
-        guard let email = auth.currentUser?.email else { return false }
+    func sendEmailForChangePW(email: String) async -> Bool {
         do {
             try await auth.sendPasswordReset(withEmail: email)
             return true

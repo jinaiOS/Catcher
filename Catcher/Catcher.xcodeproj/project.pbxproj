@@ -44,6 +44,7 @@
 		3B2BE3032ADE4EEF00BD54CC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2BE3022ADE4EEF00BD54CC /* LoginViewController.swift */; };
 		3B3E35D52ADFA2F1006841D8 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E35D42ADFA2F1006841D8 /* RegisterViewController.swift */; };
 		3B3E35D72AE125A3006841D8 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E35D62AE125A3006841D8 /* RegisterView.swift */; };
+		5622C0702AEF0BE000455649 /* ResetPWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622C06F2AEF0BE000455649 /* ResetPWViewController.swift */; };
 		562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36802AD80EF9008D99B2 /* AppDelegate.swift */; };
 		562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36842AD80EF9008D99B2 /* ViewController.swift */; };
 		562E36882AD80EF9008D99B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 562E36862AD80EF9008D99B2 /* Main.storyboard */; };
@@ -155,6 +156,7 @@
 		3B2BE3022ADE4EEF00BD54CC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3B3E35D42ADFA2F1006841D8 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		3B3E35D62AE125A3006841D8 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		5622C06F2AEF0BE000455649 /* ResetPWViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPWViewController.swift; sourceTree = "<group>"; };
 		562E367D2AD80EF9008D99B2 /* Catcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Catcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		562E36802AD80EF9008D99B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		562E36842AD80EF9008D99B2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */,
 				3B3E35D42ADFA2F1006841D8 /* RegisterViewController.swift */,
 				3B3E35D62AE125A3006841D8 /* RegisterView.swift */,
+				5622C06F2AEF0BE000455649 /* ResetPWViewController.swift */,
 			);
 			name = LoginPage;
 			path = ../LoginPage;
@@ -685,6 +688,7 @@
 				56C08BA42AE10EB400FB8608 /* SearchResult.swift in Sources */,
 				562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */,
 				562E36C12AD91901008D99B2 /* Common.swift in Sources */,
+				5622C0702AEF0BE000455649 /* ResetPWViewController.swift in Sources */,
 				33ABF3552AE46F2F002DCCF4 /* FireStorageManager.swift in Sources */,
 				562E36B92AD8DCC5008D99B2 /* BaseHeaderViewController.swift in Sources */,
 				56C08B6E2ADF808400FB8608 /* MenuTableViewCell.swift in Sources */,
