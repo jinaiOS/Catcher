@@ -41,7 +41,7 @@ final class UserInfoViewController: UIViewController {
     }
     
     deinit {
-        print("deinit - UserInfoVC")
+        CommonUtil.print(output:"deinit - UserInfoVC")
     }
 }
 
@@ -88,7 +88,7 @@ private extension UserInfoViewController {
 private extension UserInfoViewController {
     func resultHandling(result: [UserInfo]?, error: Error?) {
         if let error = error {
-            print(error.localizedDescription)
+            CommonUtil.print(output:error.localizedDescription)
             showAlert()
             return
         }
@@ -110,6 +110,7 @@ private extension UserInfoViewController {
     @objc func pressChattingButton() {
         let vc = ChattingDetailViewController(otherUid: userInfo?.uid ?? "")
         vc.isNewConversation = true
+        vc.modalChecking = true
         vc.headerTitle = userInfo?.nickName
         self.present(vc, animated: true)
     }

@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-class ReportViewController: UIViewController {
+class ReportViewController: BaseHeaderViewController {
     var button1: UIButton!
     var button2: UIButton!
     var button3: UIButton!
@@ -102,7 +102,7 @@ class ReportViewController: UIViewController {
         let vw = UIView()
         vw.layer.cornerRadius = 10
         vw.layer.borderWidth = 2
-        vw.layer.borderColor = UIColor(red: 0.804, green: 0.706, blue: 0.859, alpha: 1).cgColor
+        vw.layer.borderColor = ThemeColor.primary.cgColor
         vw.backgroundColor = .white
         [stack1, stack2, stack3, stack4].forEach { vw.addSubview($0) }
         view.addSubview(vw)
@@ -128,7 +128,7 @@ class ReportViewController: UIViewController {
         let vw = UIView()
         vw.layer.cornerRadius = 10
         vw.layer.borderWidth = 2
-        vw.layer.borderColor = UIColor(red: 0.804, green: 0.706, blue: 0.859, alpha: 1).cgColor
+        vw.layer.borderColor = ThemeColor.primary.cgColor
         vw.backgroundColor = .white
         vw.addSubview(reportDetailTextView)
         view.addSubview(vw)
@@ -140,13 +140,15 @@ class ReportViewController: UIViewController {
         btn.setTitle("신고하기", for: .normal)
         btn.layer.cornerRadius = 15
         btn.setTitleColor(.white, for: .normal)
-        btn.backgroundColor = UIColor(red: 0.749, green: 0.58, blue: 0.847, alpha: 1)
+        btn.backgroundColor = ThemeColor.primary
         view.addSubview(btn)
         return btn
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setHeaderTitleName(title: "사용자 신고")
+        view.backgroundColor = .white
         configure()
     }
 
@@ -214,7 +216,7 @@ extension ReportViewController {
 
         reportView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self.view).inset(20)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(22)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(80)
             make.bottom.equalTo(label4.snp.bottom).inset(-10)
         }
 

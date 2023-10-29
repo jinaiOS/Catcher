@@ -19,6 +19,8 @@ final class ChattingDetailViewController: MessagesViewController {
     var senderPhotoURL: URL?
     /// 프로필 이미지 - 상대
     var otherUserPhotoURL: URL?
+    
+    var modalChecking = false
 
     public static let dateFormatter: DateFormatter = {
         let formattre = DateFormatter()
@@ -59,10 +61,19 @@ final class ChattingDetailViewController: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
-        //iphone x의 경우 헤더 위치를 재설정한다.
-        headerView = CommonHeaderView.init(frame: CGRect.init(x: 0, y: Common.kStatusbarHeight, width: Common.SCREEN_WIDTH(), height: 50))
-        headerView.lblTitle.text = headerTitle
+        if modalChecking {
+            headerView = CommonHeaderView.init(frame: CGRect.init(x: 0, y: 0, width: Common.SCREEN_WIDTH(), height: 50))
+            headerView.lblTitle.text = headerTitle
+            headerView.btnBack.isHidden = true
+        } else {
+            //iphone x의 경우 헤더 위치를 재설정한다.
+            headerView = CommonHeaderView.init(frame: CGRect.init(x: 0, y: Common.kStatusbarHeight, width: Common.SCREEN_WIDTH(), height: 50))
+            headerView.lblTitle.text = title
+        }
+        
         //header backButton selector setting
         headerView.btnBack.addTarget(self, action: #selector(backButtonTouched(sender:)), for: .touchUpInside)
         
@@ -73,12 +84,8 @@ final class ChattingDetailViewController: MessagesViewController {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
-        
-        messagesCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(50)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(100)
-        }
+
+        self.messagesCollectionView.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 70, right: 0)
         
         messageInputBar.delegate = self
         setupInputButton()
@@ -184,7 +191,7 @@ final class ChattingDetailViewController: MessagesViewController {
             let longitude: Double = selectedCoorindates.longitude
             let latitude: Double = selectedCoorindates.latitude
 
-            print("long=\(longitude) | lat= \(latitude)")
+            CommonUtil.print(output:"long=\(longitude) | lat= \(latitude)")
 
 
             let location = Location(location: CLLocation(latitude: latitude, longitude: longitude),
@@ -197,10 +204,10 @@ final class ChattingDetailViewController: MessagesViewController {
 
             DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
                 if success {
-                    print("sent location message")
+                    CommonUtil.print(output:"sent location message")
                 }
                 else {
-                    print("failed to send location message")
+                    CommonUtil.print(output:"failed to send location message")
                 }
             })
         }
@@ -269,9 +276,9 @@ final class ChattingDetailViewController: MessagesViewController {
         DatabaseManager.shared.getAllMessagesForConversation(with: otherUserUid, completion: { [weak self] result in
             switch result {
             case .success(let messages):
-                print("success in getting messages: \(messages)")
+                CommonUtil.print(output:"success in getting messages: \(messages)")
                 guard !messages.isEmpty else {
-                    print("messages are empty")
+                    CommonUtil.print(output:"messages are empty")
                     return
                 }
                 self?.messages = messages
@@ -284,7 +291,7 @@ final class ChattingDetailViewController: MessagesViewController {
 //                    }
                 }
             case .failure(let error):
-                print("failed to get messages: \(error)")
+                CommonUtil.print(output:"failed to get messages: \(error)")
             }
         })
     }
@@ -325,7 +332,7 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                 switch result {
                 case .success(let urlString):
                     // 메시지 전송 준비
-                    print("Uploaded Message Photo: \(urlString)")
+                    CommonUtil.print(output:"Uploaded Message Photo: \(urlString)")
 
                     guard let url = URL(string: urlString),
                         let placeholder = UIImage(systemName: "plus") else {
@@ -345,16 +352,16 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                     DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
 
                         if success {
-                            print("sent photo message")
+                            CommonUtil.print(output:"sent photo message")
                         }
                         else {
-                            print("failed to send photo message")
+                            CommonUtil.print(output:"failed to send photo message")
                         }
 
                     })
 
                 case .failure(let error):
-                    print("message photo upload error: \(error)")
+                    CommonUtil.print(output:"message photo upload error: \(error)")
                 }
             })
         }
@@ -370,7 +377,7 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                 switch result {
                 case .success(let urlString):
                     // 메시지 전송 준비
-                    print("Uploaded Message Video: \(urlString)")
+                    CommonUtil.print(output:"Uploaded Message Video: \(urlString)")
 
                     guard let url = URL(string: urlString),
                         let placeholder = UIImage(systemName: "plus") else {
@@ -390,16 +397,16 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                     DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
 
                         if success {
-                            print("sent photo message")
+                            CommonUtil.print(output:"sent photo message")
                         }
                         else {
-                            print("failed to send photo message")
+                            CommonUtil.print(output:"failed to send photo message")
                         }
 
                     })
 
                 case .failure(let error):
-                    print("message photo upload error: \(error)")
+                    CommonUtil.print(output:"message photo upload error: \(error)")
                 }
             })
         }
@@ -416,7 +423,7 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
                 return
         }
 
-        print("Sending: \(text)")
+        CommonUtil.print(output:"Sending: \(text)")
 
         let message = Message(sender: selfSender,
                                messageId: messageId,
@@ -428,12 +435,12 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
             // create convo in database
             DatabaseManager.shared.createNewConversation(otherUserUid: otherUserUid, firstMessage: message, completion: { [weak self] success in
                 if success {
-                    print("message sent")
+                    CommonUtil.print(output:"message sent")
                     self?.isNewConversation = false
                     self?.listenForMessages(id: self?.otherUserUid ?? "", shouldScrollToBottom: true)
-                    self?.messageInputBar.inputTextView.text = nil
+                    self?.messageInputBar.inputTextView.text = ""
                 } else {
-                    print("failed ot send")
+                    CommonUtil.print(output:"failed ot send")
                 }
             })
         } else {
@@ -444,18 +451,18 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
             // append to existing conversation data
             DatabaseManager.shared.sendMessage(otherUserUid: otherUserUid, name: name, newMessage: message, completion: { [weak self] success in
                 if success {
-                    self?.messageInputBar.inputTextView.text = nil
-                    print("message sent")
+                    self?.messageInputBar.inputTextView.text = ""
+                    CommonUtil.print(output:"message sent")
                 }
                 else {
-                    print("failed to send")
+                    CommonUtil.print(output:"failed to send")
                 }
             })
         }
     }
 
     private func createMessageId() -> String? {
-        print("created message id: \(otherUserUid)")
+        CommonUtil.print(output:"created message id: \(otherUserUid)")
 
         return otherUserUid
     }
@@ -538,7 +545,7 @@ extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelega
 //                            avatarView.sd_setImage(with: url, completed: nil)
 //                        }
 //                    case .failure(let error):
-//                        print("\(error)")
+//                        CommonUtil.print(output:"\(error)")
 //                    }
 //                })
             }
@@ -558,7 +565,7 @@ extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelega
 //                            avatarView.sd_setImage(with: url, completed: nil)
 //                        }
 //                    case .failure(let error):
-//                        print("\(error)")
+//                        CommonUtil.print(output:"\(error)")
 //                    }
 //                })
 //            }

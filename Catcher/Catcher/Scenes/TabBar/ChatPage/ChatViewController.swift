@@ -57,13 +57,13 @@ class ChatViewController: UIViewController {
 
     // 대화를 가져와서 표시하기
     private func startListeningForCOnversations() {
-        print("starting conversation fetch...")
+        CommonUtil.print(output:"starting conversation fetch...")
 
         // 데이터베이스에서 대화 가져오기
         DatabaseManager.shared.getAllConversations(completion: { [weak self] result in
             switch result {
             case .success(let conversations):
-                print("successfully got conversation models")
+                CommonUtil.print(output:"successfully got conversation models")
                 guard !conversations.isEmpty else {
                     self?.tbvConversation.isHidden = true
                     self?.noConversationsLabel.isHidden = false
@@ -79,7 +79,7 @@ class ChatViewController: UIViewController {
             case .failure(let error):
                 self?.tbvConversation.isHidden = true
                 self?.noConversationsLabel.isHidden = false
-                print("failed to get convos: \(error)")
+                CommonUtil.print(output:"failed to get convos: \(error)")
             }
         })
     }
@@ -128,7 +128,7 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 70
     }
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {

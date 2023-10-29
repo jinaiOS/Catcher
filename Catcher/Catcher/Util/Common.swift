@@ -116,7 +116,7 @@ struct Common {
         guard #available(iOS 11.0, *) else {
             return false
         }
-        print(UIApplication.shared.windows[0].safeAreaInsets)
+        CommonUtil.print(output:UIApplication.shared.windows[0].safeAreaInsets)
         return UIApplication.shared.windows[0].safeAreaInsets.top > 20
 //        return (IS_IPHONE() && SCREEN_HEIGHT() >= 812.0)
     }

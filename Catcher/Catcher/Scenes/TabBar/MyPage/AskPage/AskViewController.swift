@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class AskViewController: UIViewController {
+class AskViewController: BaseHeaderViewController {
     private lazy var askTitleLabel: UILabel = {
         let lb = UILabel()
         lb.text = "제목"
@@ -29,7 +29,7 @@ class AskViewController: UIViewController {
         let vw = UIView()
         vw.layer.cornerRadius = 10
         vw.layer.borderWidth = 2
-        vw.layer.borderColor = UIColor(red: 0.804, green: 0.706, blue: 0.859, alpha: 1).cgColor
+        vw.layer.borderColor = ThemeColor.primary.cgColor
         vw.backgroundColor = .white
         vw.addSubview(askTextField)
         view.addSubview(vw)
@@ -56,7 +56,7 @@ class AskViewController: UIViewController {
         let vw = UIView()
         vw.layer.cornerRadius = 10
         vw.layer.borderWidth = 2
-        vw.layer.borderColor = UIColor(red: 0.804, green: 0.706, blue: 0.859, alpha: 1).cgColor
+        vw.layer.borderColor = ThemeColor.primary.cgColor
         vw.backgroundColor = .white
         vw.addSubview(askDetailTextView)
         view.addSubview(vw)
@@ -68,14 +68,15 @@ class AskViewController: UIViewController {
         btn.setTitle("문의하기", for: .normal)
         btn.layer.cornerRadius = 15
         btn.setTitleColor(.white, for: .normal)
-        btn.backgroundColor = UIColor(red: 0.749, green: 0.58, blue: 0.847, alpha: 1)
+        btn.backgroundColor = ThemeColor.primary
         view.addSubview(btn)
         return btn
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1)
+        view.backgroundColor = .white
+        setHeaderTitleName(title: "1:1 문의")
         configure()
     }
 }
@@ -83,7 +84,7 @@ class AskViewController: UIViewController {
 extension AskViewController {
     func configure() {
         askTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(80)
             make.leading.equalTo(self.view).inset(36)
             make.height.equalTo(18)
         }

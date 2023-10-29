@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileSettingViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ProfileSettingViewController: BaseHeaderViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var user: UserInfo?
     var newUserEmail: String?
     var newUserPassword: String?
@@ -24,20 +24,21 @@ class ProfileSettingViewController: UIViewController, UIImagePickerControllerDel
     @IBAction func completeBtn(_ sender: UIButton) {
         guard let user = user else { return }
         guard let newUserEmail = newUserEmail, let newUserPassword = newUserPassword else { return }
-        print(user)
+        CommonUtil.print(output:user)
         let firebaseManager = FirebaseManager()
 
         firebaseManager.createUsers(email: newUserEmail, password: newUserPassword) { error in
             if let error = error {
-                print("Error creating user: \(error)")
+                CommonUtil.print(output:"Error creating user: \(error)")
             } else {
                 guard let uid = firebaseManager.getUID else {
-                    print("Error: No UID available")
+                    CommonUtil.print(output:"Error: No UID available")
                     return
                 }
                 let userInfo = UserInfo(
                     uid: uid,
-                    sex: "", birth: user.birth,
+                    sex: "",
+                    birth: user.birth,
                     nickName: user.nickName,
                     location: user.location,
                     height: Int(user.height),
@@ -51,9 +52,9 @@ class ProfileSettingViewController: UIViewController, UIImagePickerControllerDel
                 )
                 FireStoreManager.shared.saveUserInfoToFirestore(userInfo: userInfo) { error in
                     if let error = error {
-                        print("Error saving user info: \(error.localizedDescription)")
+                        CommonUtil.print(output:"Error saving user info: \(error.localizedDescription)")
                     } else {
-                        print("User info saved to Firestore successfully.")
+                        CommonUtil.print(output:"User info saved to Firestore successfully.")
                     }
                 }
             }

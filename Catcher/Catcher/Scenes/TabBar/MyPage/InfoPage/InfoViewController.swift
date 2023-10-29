@@ -9,7 +9,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import SwiftUI
 import UIKit
-final class InfoViewController: UIViewController {
+final class InfoViewController: BaseHeaderViewController {
     var newUserEmail: String?
     var newUserPassword: String?
     var newUserNickName: String?
@@ -40,26 +40,27 @@ final class InfoViewController: UIViewController {
         "부산광역시",
         "제주특별자치도"
     ]
-    init(title: String) {
-        super.init(nibName: nil, bundle: nil)
-        configure(title: title)
-    }
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     override func loadView() {
         super.loadView()
-
-        view = infoView
+        view.addSubview(infoView)
+        
+        infoView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaInsets).offset(80)
+            $0.leading.bottom.trailing.equalToSuperview()
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configPickerView()
         infoView.saveButton.addTarget(self, action: #selector(completeBtn), for: .touchUpInside)
+        let tapGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        //gesture의 이벤트가 끝나도 뒤에 이벤트를 View로 전달
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+        
+        setHeaderTitleName(title: "기본 프로필 설정")
     }
 
     @objc func completeBtn() {
@@ -118,19 +119,11 @@ final class InfoViewController: UIViewController {
     }
 }
 
-private extension InfoViewController {
-    func configure(title: String) {
-        let titleLabel = UILabel()
-        titleLabel.attributedText = NSAttributedString.makeNavigationTitle(title: title)
-        navigationItem.titleView = titleLabel
-    }
-}
-
-struct InfoViewControllerPreView: PreviewProvider {
-    static var previews: some View {
-        InfoViewController(title: "기본 프로필").toPreview().edgesIgnoringSafeArea(.all)
-    }
-}
+//struct InfoViewControllerPreView: PreviewProvider {
+//    static var previews: some View {
+//        InfoViewController.toPreview().edgesIgnoringSafeArea(.all)
+//    }
+//}
 
 extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     // delegate, datasource 연결 및 picker를 textfied의 inputview로 설정한다

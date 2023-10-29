@@ -7,10 +7,21 @@
 
 import SnapKit
 import UIKit
-class MyPageViewController: UIViewController {
+
+enum MenuItems: String, CaseIterable {
+    case setProfile = "기본 프로필 설정"
+    case inquiry = "1:1 문의"
+    case report = "사용자 신고"
+    case terms = "개인 정보 및 처리 방침"
+    case opensource = "오픈소스 라이선스"
+    case version = "앱 버전 v1.0"
+    case withdraw = "회원 탈퇴"
+}
+
+class MyPageViewController: BaseViewController {
     private lazy var nickName: UILabel = {
         let lb = UILabel()
-        lb.text = "닉네임"
+        lb.text = DataManager.sharedInstance.userInfo?.nickName ?? ""
         lb.font = .systemFont(ofSize: 20, weight: .light)
         lb.textAlignment = .center
         view.addSubview(lb)
@@ -19,7 +30,13 @@ class MyPageViewController: UIViewController {
 
     private lazy var profilePhoto: UIImageView = {
         let im = UIImageView()
-        im.image = UIImage(named: "sample1")
+        ImageCacheManager.shared.loadImage(uid: DataManager.sharedInstance.userInfo?.uid ?? "") { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                im.image = image
+            }
+        }
+//        im.image = UIImage(named: "sample1")
         im.contentMode = .scaleToFill
         im.layer.cornerRadius = CGFloat(photoSize / 2) // 반지름을 이미지 크기의 절반으로 설정하여 원 모양으로 클리핑
         im.clipsToBounds = true // 이미지를 원 모양으로 클리핑
@@ -130,7 +147,7 @@ class MyPageViewController: UIViewController {
     let spacingStackHorizontal: CGFloat = 70
     let labelFontSize: CGFloat = 13
     let photoSize = 44
-    let menuItems = ["연락처 차단", "개인 정보 및 처리 방침", "자주 묻는 질문", "1:1 문의", "회원 탈퇴", "앱 버전 v1.0"]
+    var menuItems = MenuItems.setProfile
     var tableViewHeight: CGFloat = 0
 
     private lazy var myTableView: UIView = {
@@ -177,12 +194,13 @@ class MyPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1)
         configure()
+        logOutButton.addTarget(self, action: #selector(pressLogOutButton), for: .touchUpInside)
     }
 }
 
 extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return menuItems.count
+        return MenuItems.allCases.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -191,16 +209,51 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         }
         // 셀 선택시 색상 변경 x
         menuTableViewCell.selectionStyle = .none
-        let menu = menuItems[indexPath.row]
-        menuTableViewCell.menuLabel.text = menu
+        let menu = MenuItems.allCases[indexPath.row]
+        menuTableViewCell.menuLabel.text = MenuItems.allCases[indexPath.row].rawValue
         return menuTableViewCell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            let vc = InfoViewController()
+            self.navigationPushController(viewController: vc, animated: true)
+        case 1:
+            let vc = AskViewController()
+            self.navigationPushController(viewController: vc, animated: true)
+        case 2:
+            let vc = ReportViewController()
+            self.navigationPushController(viewController: vc, animated: true)
+        case 3:
+            break
+        case 4:
+            break
+        case 5:
+            break
+        default:
+            break
+        }
+    }
+}
+
+extension MyPageViewController {
+    @objc func pressLogOutButton() {
+        if let errorMessage = FirebaseManager().logOut {
+            // 로그아웃 실패
+            CommonUtil.print(output:"로그아웃 실패: \(errorMessage)")
+        } else {
+            // 로그아웃 성공
+            CommonUtil.print(output:"로그아웃 성공")
+            AppDelegate.applicationDelegate().changeInitViewController(type: .Login)
+        }
     }
 }
 
 extension MyPageViewController {
     func configure() {
         // 메뉴 아이템의 갯수에 따라 view의 높이를 변경
-        tableViewHeight = CGFloat(menuItems.count) * 44 + 70
+        tableViewHeight = CGFloat(MenuItems.allCases.count) * 44 + 70
         myTable.dataSource = self
         myTable.delegate = self
         nickName.snp.makeConstraints { make in

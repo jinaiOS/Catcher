@@ -23,14 +23,14 @@ class LoginViewController: BaseViewController {
         // Firebase Auth Login
         Auth.auth().signIn(withEmail: email, password: pw) { authResult, error in
             if authResult != nil {
-                print("로그인 성공")
+                CommonUtil.print(output:"로그인 성공")
                 Task {
                     await self.storeUserInfo()
                 }
                 AppDelegate.applicationDelegate().changeInitViewController(type: .Main)
             } else {
-                print("로그인 실패")
-                print(error.debugDescription)
+                CommonUtil.print(output:"로그인 실패")
+                CommonUtil.print(output:error.debugDescription)
             }
         }
     }
@@ -39,17 +39,23 @@ class LoginViewController: BaseViewController {
         let vc = RegisterViewController()
         self.navigationPushController(viewController: vc, animated: true)
     }
+    
+    @objc func resetPasswordButton() {
+        let vc = ResetPWViewController()
+        self.navigationPushController(viewController: vc, animated: true)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         loginView.loginBtn.addTarget(self, action: #selector(loginPressed), for: .touchUpInside)
         loginView.signUpBtn.addTarget(self, action: #selector(signUpPressed), for: .touchUpInside)
+        loginView.resetPasswordBtn.addTarget(self, action: #selector(resetPasswordButton), for: .touchUpInside)
     }
     
     func storeUserInfo() async {
         do {
             guard let uid = FireStoreManager.shared.uid else {
-                print("Error: UID is nil")
+                CommonUtil.print(output:"Error: UID is nil")
                 return
             }
             
@@ -57,11 +63,11 @@ class LoginViewController: BaseViewController {
             
             if let userInfo = userInfo {
                 // 성공적으로 정보를 가져온 경우
-                print(userInfo)
+                CommonUtil.print(output:userInfo)
                 DataManager.sharedInstance.userInfo = userInfo
             } else if let error = error {
                 // 오류가 발생한 경우
-                print("Error: \(error)")
+                CommonUtil.print(output:"Error: \(error)")
             }
         }
     }
