@@ -68,7 +68,7 @@ class ConversationTableViewCell: UITableViewCell {
         userMessageLabel.text = model.message
         userNameLabel.text = model.name
         
-        ImageCacheManager.shared.loadImage(uid: model.senderUid) { [weak self] image in
+        ImageCacheManager.shared.loadImage(uid: model.otherUserUid) { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.userImageView.backgroundColor = .clear
