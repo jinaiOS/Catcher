@@ -65,22 +65,16 @@ class ConversationTableViewCell: UITableViewCell {
     }
 
     public func configure(with model: Conversation) {
-        userMessageLabel.text = model.latestMessage.text
+        userMessageLabel.text = model.message
         userNameLabel.text = model.name
-
-        let path = "images/\(model.otherUserEmail)_profile_picture.png"
-        StorageManager.shared.downloadURL(for: path, completion: { [weak self] result in
-            switch result {
-            case .success(let url):
-
-                DispatchQueue.main.async {
-                    self?.userImageView.sd_setImage(with: url, completed: nil)
-                }
-
-            case .failure(let error):
-                print("failed to get image url: \(error)")
+        
+        ImageCacheManager.shared.loadImage(uid: model.senderUid) { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.userImageView.backgroundColor = .clear
+                self.userImageView.image = image
             }
-        })
+        }
     }
 
 }

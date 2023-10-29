@@ -29,6 +29,7 @@ final class RankSectionCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setUI()
         setLayout()
     }
     
@@ -51,6 +52,14 @@ extension RankSectionCell {
 }
 
 private extension RankSectionCell {
+    func setUI() {
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 4)
+        layer.shadowRadius = 6
+        layer.shadowOpacity = 0.5
+        layer.masksToBounds = false
+    }
+    
     func setLayout() {
         [imageView, rankLabel].forEach {
             self.addSubview($0)

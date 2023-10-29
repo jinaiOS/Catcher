@@ -17,27 +17,27 @@ final class UserInfoViewController: UIViewController {
     private let viewModel: UserInfoViewModel
     
     weak var delegate: UpdatePickUserInfo?
+    var userInfo: UserInfo?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setTarget()
+    }
     
     override func loadView() {
         super.loadView()
-        
         view = userInfoView
     }
     
     init(info: UserInfo, isPicked: Bool) {
         viewModel = UserInfoViewModel(userInfo: info)
+        userInfo = info
         super.init(nibName: nil, bundle: nil)
         configure(info: info, isPicked: isPicked)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setTarget()
     }
     
     deinit {
@@ -63,6 +63,7 @@ private extension UserInfoViewController {
     func setTarget() {
         userInfoView.closeButton.addTarget(self, action: #selector(didTappedCloseBtn), for: .touchUpInside)
         userInfoView.pickButton.addTarget(self, action: #selector(didTappedPickBtn), for: .touchUpInside)
+        userInfoView.chatButton.addTarget(self, action: #selector(pressChattingButton), for: .touchUpInside)
     }
     
     @objc func didTappedCloseBtn() {
@@ -71,15 +72,13 @@ private extension UserInfoViewController {
     
     @objc func didTappedPickBtn(sender: UIButton) {
         sender.isSelected.toggle()
+        var upDate: Bool = false
         
         if sender.isSelected {
-            viewModel.processPickUser(isUpdate: true) { [weak self] result, error in
-                guard let self = self else { return }
-                resultHandling(result: result, error: error)
-                return
-            }
+            upDate = true
         }
-        viewModel.processPickUser(isUpdate: false) { [weak self] result, error in
+        
+        viewModel.processPickUser(isUpdate: upDate) { [weak self] result, error in
             guard let self = self else { return }
             resultHandling(result: result, error: error)
         }
@@ -106,5 +105,12 @@ private extension UserInfoViewController {
         let okAction = UIAlertAction(title: "확인", style: .default)
         alert.addAction(okAction)
         present(alert, animated: true)
+    }
+    
+    @objc func pressChattingButton() {
+        let vc = ChattingDetailViewController(otherUid: userInfo?.uid ?? "")
+        vc.isNewConversation = true
+        vc.headerTitle = userInfo?.nickName
+        self.present(vc, animated: true)
     }
 }

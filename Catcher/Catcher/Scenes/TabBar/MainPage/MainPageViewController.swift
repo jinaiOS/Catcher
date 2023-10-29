@@ -25,6 +25,7 @@ final class MainPageViewController: UIViewController {
         super.viewDidLoad()
         
         configure()
+        setTarget()
         setDataSource()
         setHeader()
         bind()
@@ -37,13 +38,22 @@ private extension MainPageViewController {
         mainPageView.collectionView.delegate = self
     }
     
+    func setTarget() {
+        mainPageView.refreshControl.addTarget(self, action: #selector(refreshCollectionView), for: .valueChanged)
+    }
+    
     func bind() {
         viewModel.mainSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] data in
                 guard let self = self else { return }
+                mainPageView.refreshControl.endRefreshing()
                 applyItems(data: data)
             }.store(in: &cancellables)
+    }
+    
+    @objc func refreshCollectionView() {
+        viewModel.fetchMainPageData()
     }
 }
 
@@ -73,13 +83,14 @@ private extension MainPageViewController {
     func setHeader() {
         guard let dataSource = dataSource else { return }
         dataSource.supplementaryViewProvider = { [weak self] (collectionView, kind, indexPath) in
-            guard let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: SectionHeaderView.identifier,
-                for: indexPath) as? SectionHeaderView else {
+            guard let self = self,
+                  let header = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: UICollectionView.elementKindSectionHeader,
+                    withReuseIdentifier: SectionHeaderView.identifier,
+                    for: indexPath) as? SectionHeaderView else {
                 return SectionHeaderView()
             }
-            let title = self?.viewModel.getSectionTitle(section: indexPath.section)
+            let title = self.viewModel.getSectionTitle(section: indexPath.section)
             header.configure(sectionTitle: title)
             return header
         }
@@ -116,34 +127,17 @@ private extension MainPageViewController {
 
 extension MainPageViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let items: [Item]
-        let index = indexPath.item
+        let items = viewModel.getSectionItems(section: indexPath.section)
+        guard let items = items else { return }
+        let item = items[indexPath.item]
+        let userInfo = viewModel.userInfoFromItem(item: item)
+        let isPicked = viewModel.isPickedUser(info: userInfo)
         
-        switch indexPath.section {
-        case 0:
-            items = viewModel.mainSubject.value.random
-        case 1:
-            items = viewModel.mainSubject.value.rank
-        case 2:
-            items = viewModel.mainSubject.value.new
-        case 3:
-            items = viewModel.mainSubject.value.near
-        case 4:
-            items = viewModel.mainSubject.value.pick
-        default:
-            return
-        }
-        
-        if items.isEmpty == false {
-            let item = items[index]
-            let userInfo = viewModel.userInfoFromItem(item: item)
-            let isPicked = viewModel.isPickedUser(info: userInfo)
-            let userInfoVC = UserInfoViewController(info: userInfo, isPicked: isPicked)
-            userInfoVC.delegate = self
-            userInfoVC.modalTransitionStyle = .crossDissolve
-            userInfoVC.modalPresentationStyle = .custom
-            present(userInfoVC, animated: true)
-        }
+        let userInfoVC = UserInfoViewController(info: userInfo, isPicked: isPicked)
+        userInfoVC.delegate = self
+        userInfoVC.modalTransitionStyle = .crossDissolve
+        userInfoVC.modalPresentationStyle = .custom
+        present(userInfoVC, animated: true)
     }
 }
 
