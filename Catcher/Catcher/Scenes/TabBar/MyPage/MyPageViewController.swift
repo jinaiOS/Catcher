@@ -21,7 +21,7 @@ enum MenuItems: String, CaseIterable {
 class MyPageViewController: BaseViewController {
     private lazy var nickName: UILabel = {
         let lb = UILabel()
-        lb.text = "닉네임"
+        lb.text = DataManager.sharedInstance.userInfo?.nickName ?? ""
         lb.font = .systemFont(ofSize: 20, weight: .light)
         lb.textAlignment = .center
         view.addSubview(lb)
@@ -30,7 +30,13 @@ class MyPageViewController: BaseViewController {
 
     private lazy var profilePhoto: UIImageView = {
         let im = UIImageView()
-        im.image = UIImage(named: "sample1")
+        ImageCacheManager.shared.loadImage(uid: DataManager.sharedInstance.userInfo?.uid ?? "") { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                im.image = image
+            }
+        }
+//        im.image = UIImage(named: "sample1")
         im.contentMode = .scaleToFill
         im.layer.cornerRadius = CGFloat(photoSize / 2) // 반지름을 이미지 크기의 절반으로 설정하여 원 모양으로 클리핑
         im.clipsToBounds = true // 이미지를 원 모양으로 클리핑

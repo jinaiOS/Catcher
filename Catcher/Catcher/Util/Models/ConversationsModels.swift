@@ -8,10 +8,10 @@
 import Foundation
 
 struct Conversation {
-    let name: String
+    var name: String
     let senderUid: String
     let message: String
     let date: String
     let isRead: Bool
-    let otherUserUid: String
+    var otherUserUid: String
 }
