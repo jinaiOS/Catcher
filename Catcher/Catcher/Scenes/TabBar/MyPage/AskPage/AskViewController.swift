@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class AskViewController: UIViewController {
+class AskViewController: BaseHeaderViewController {
     private lazy var askTitleLabel: UILabel = {
         let lb = UILabel()
         lb.text = "제목"
@@ -75,7 +75,8 @@ class AskViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1)
+        view.backgroundColor = .white
+        setHeaderTitleName(title: "1:1 문의")
         configure()
     }
 }
@@ -83,7 +84,7 @@ class AskViewController: UIViewController {
 extension AskViewController {
     func configure() {
         askTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(80)
             make.leading.equalTo(self.view).inset(36)
             make.height.equalTo(18)
         }
