@@ -55,9 +55,13 @@ private extension UserInfoViewController {
         }
         if isPicked {
             userInfoView.pickButton.isSelected = true
+        } else {
+            userInfoView.pickButton.isSelected = false
         }
-        let age = viewModel.calculateAge(birthDate: info.birth)
-        userInfoView.configure(nickName: info.nickName, age: age, location: info.location)
+        let infoText = viewModel.makeInfoText(info: info)
+        let textHeight = infoText.height
+        userInfoView.configure(nickName: info.nickName, infoText: infoText)
+        userInfoView.remakeLayout(textHeight: textHeight)
     }
     
     func setTarget() {
@@ -72,13 +76,9 @@ private extension UserInfoViewController {
     
     @objc func didTappedPickBtn(sender: UIButton) {
         sender.isSelected.toggle()
-        var upDate: Bool = false
+        let selected = sender.isSelected
         
-        if sender.isSelected {
-            upDate = true
-        }
-        
-        viewModel.processPickUser(isUpdate: upDate) { [weak self] result, error in
+        viewModel.processPickUser(isUpdate: selected) { [weak self] result, error in
             guard let self = self else { return }
             resultHandling(result: result, error: error)
         }
