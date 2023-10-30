@@ -55,6 +55,8 @@ extension DefaultSectionCell {
         }
         if nickNameOn {
             nickNameLabel.text = data.nickName
+        } else {
+            nickNameLabel.text = nil
         }
     }
 }
