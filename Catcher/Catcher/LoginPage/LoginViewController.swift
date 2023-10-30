@@ -20,17 +20,15 @@ class LoginViewController: BaseViewController {
         let email: String = loginView.emailTextField.text!.description
         let pw: String = loginView.passwordTextField.text!.description
         
-        // Firebase Auth Login
-        Auth.auth().signIn(withEmail: email, password: pw) { authResult, error in
-            if authResult != nil {
+        FirebaseManager().emailLogIn(email: email, password: pw) { error in
+            if let error = error {
+                CommonUtil.print(output: "로그인 실패: \(error)")
+            } else {
                 CommonUtil.print(output:"로그인 성공")
                 Task {
                     await self.storeUserInfo()
                 }
                 AppDelegate.applicationDelegate().changeInitViewController(type: .Main)
-            } else {
-                CommonUtil.print(output:"로그인 실패")
-                CommonUtil.print(output:error.debugDescription)
             }
         }
     }
@@ -63,7 +61,7 @@ class LoginViewController: BaseViewController {
             
             if let userInfo = userInfo {
                 // 성공적으로 정보를 가져온 경우
-                CommonUtil.print(output:userInfo)
+                CommonUtil.print(output: userInfo)
                 DataManager.sharedInstance.userInfo = userInfo
             } else if let error = error {
                 // 오류가 발생한 경우
