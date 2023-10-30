@@ -102,6 +102,7 @@ extension DatabaseManager {
                     } else {
                         // create
                         self?.database.child(self?.userInfo?.uid ?? "").child(otherUserUid).setValue(newConversationData)
+                        self?.database.child(otherUserUid).child(self?.userInfo?.uid ?? "").setValue(newConversationData)
                     }
                 })
             } else {
@@ -145,14 +146,16 @@ extension DatabaseManager {
                         ]
                 ]
                 
-                let otherUserNewConversationData: [String: [String: Any]] = [
+                let otherUserNewConversationData: [String: [[String: Any]]] = [
                     self?.userInfo?.uid ?? "":
                         [
-                            "sender_uid": self?.userInfo?.uid ?? "",
-                            "date": dateString,
-                            "message": message,
-                            "is_read": false,
-                            "type": firstMessage.kind.messageKindString
+                            [
+                                "sender_uid": self?.userInfo?.uid ?? "",
+                                "date": dateString,
+                                "message": message,
+                                "is_read": false,
+                                "type": firstMessage.kind.messageKindString
+                            ]
                         ]
                 ]
                 
