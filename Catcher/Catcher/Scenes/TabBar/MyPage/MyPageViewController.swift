@@ -21,7 +21,7 @@ enum MenuItems: String, CaseIterable {
 class MyPageViewController: BaseViewController {
     private lazy var nickName: UILabel = {
         let lb = UILabel()
-        lb.text = DataManager.sharedInstance.userInfo?.nickName ?? ""
+        lb.text = "\(DataManager.sharedInstance.userInfo?.nickName ?? "") 님 오늘도 파이팅!!"
         lb.font = .systemFont(ofSize: 20, weight: .light)
         lb.textAlignment = .center
         view.addSubview(lb)
@@ -146,7 +146,7 @@ class MyPageViewController: BaseViewController {
     let spacingStackVertical: CGFloat = 10
     let spacingStackHorizontal: CGFloat = 70
     let labelFontSize: CGFloat = 13
-    let photoSize = 44
+    let photoSize = 80
     var menuItems = MenuItems.setProfile
     var tableViewHeight: CGFloat = 0
 
@@ -263,7 +263,7 @@ extension MyPageViewController {
         }
         profilePhoto.snp.makeConstraints { make in
             make.centerY.equalTo(nickName.snp.centerY)
-            make.trailing.equalTo(view.snp.trailing).inset(40)
+            make.trailing.equalTo(view.snp.trailing).inset(20)
             make.height.width.equalTo(photoSize)
         }
 
