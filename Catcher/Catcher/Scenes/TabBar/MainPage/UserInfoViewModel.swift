@@ -42,6 +42,65 @@ extension UserInfoViewModel {
         }
     }
     
+    func makeInfoText(info: UserInfo) -> NSMutableAttributedString {
+        let newLine = NSAttributedString(string: "\n")
+        
+        let locationLabel = NSAttributedString.makeUserInfoText(
+            text: "지역: \(info.location)",
+            alignment: .left,
+            range: (0, 2))
+        
+        let birthLabel = NSAttributedString.makeUserInfoText(
+            text: "나이: 만 \(calculateAge(birthDate: info.birth))세",
+            alignment: .left,
+            range: (0, 2))
+        
+        let heightLabel = NSAttributedString.makeUserInfoText(
+            text: "키: \(info.height)cm",
+            alignment: .left,
+            range: (0, 1))
+        
+        let educationLabel = NSAttributedString.makeUserInfoText(
+            text: "학력: \(info.education)",
+            alignment: .left,
+            range: (0, 2))
+        
+        let scoreLabel = NSAttributedString.makeUserInfoText(
+            text: "점수: \(info.score)점",
+            alignment: .left,
+            range: (0, 2))
+        
+        let drinkingLabel = NSAttributedString.makeUserInfoText(
+            text: "음주: \(info.drinking)",
+            alignment: .left,
+            range: (0, 2))
+        
+        let smoking = info.smoking ? "O" : "X"
+        let smokingLabel = NSAttributedString.makeUserInfoText(
+            text: "흡연: \(smoking)",
+            alignment: .left,
+            range: (0, 2))
+        
+        let combinedAttributedString = NSMutableAttributedString()
+        combinedAttributedString.append(locationLabel)
+        combinedAttributedString.append(newLine)
+        combinedAttributedString.append(birthLabel)
+        combinedAttributedString.append(newLine)
+        combinedAttributedString.append(heightLabel)
+        combinedAttributedString.append(newLine)
+        combinedAttributedString.append(educationLabel)
+        combinedAttributedString.append(newLine)
+        combinedAttributedString.append(scoreLabel)
+        combinedAttributedString.append(newLine)
+        combinedAttributedString.append(drinkingLabel)
+        combinedAttributedString.append(newLine)
+        combinedAttributedString.append(smokingLabel)
+        
+        return combinedAttributedString
+    }
+}
+
+private extension UserInfoViewModel {
     func calculateAge(birthDate: Date) -> Int {
         let calendar = Calendar.current
         let now = Date()

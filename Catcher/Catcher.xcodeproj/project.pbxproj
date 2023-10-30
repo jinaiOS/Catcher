@@ -24,7 +24,6 @@
 		33532B832AE299E1008B47EB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33532B822AE299E1008B47EB /* GoogleService-Info.plist */; };
 		335AC1F32AE7E89B00F2CF51 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC1F22AE7E89B00F2CF51 /* UserInfoViewController.swift */; };
 		335AC1F52AE7E8D100F2CF51 /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC1F42AE7E8D100F2CF51 /* UserInfoView.swift */; };
-		335AC1F72AE86B8500F2CF51 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC1F62AE86B8500F2CF51 /* String+.swift */; };
 		335B78BA2AE70237004D2956 /* MainItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335B78B92AE70237004D2956 /* MainItems.swift */; };
 		335B78BC2AE70844004D2956 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335B78BB2AE70844004D2956 /* ImageCacheManager.swift */; };
 		33894A682AEEAB7C00582345 /* StrokeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33894A672AEEAB7C00582345 /* StrokeLabel.swift */; };
@@ -136,7 +135,6 @@
 		33532B822AE299E1008B47EB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		335AC1F22AE7E89B00F2CF51 /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		335AC1F42AE7E8D100F2CF51 /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
-		335AC1F62AE86B8500F2CF51 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		335B78B92AE70237004D2956 /* MainItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainItems.swift; sourceTree = "<group>"; };
 		335B78BB2AE70844004D2956 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		33894A672AEEAB7C00582345 /* StrokeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeLabel.swift; sourceTree = "<group>"; };
@@ -274,7 +272,6 @@
 			children = (
 				335241952AE5DB4A009EB771 /* Array+.swift */,
 				33C58EA22ADC73C9008EB6C2 /* NSAttributedString+.swift */,
-				335AC1F62AE86B8500F2CF51 /* String+.swift */,
 				569207FE2AEC448C007E2EF6 /* Date+.swift */,
 				33C58E8D2AD8B2F6008EB6C2 /* UIColor+.swift */,
 				33C58E7E2AD85024008EB6C2 /* UIViewController+.swift */,
@@ -697,7 +694,6 @@
 				5675E1712AEE94AE001EAF95 /* CommonHeaderView.swift in Sources */,
 				56C08BA02AE10D4C00FB8608 /* PhotoViewerViewController.swift in Sources */,
 				56C08B742ADF809300FB8608 /* InfoView.swift in Sources */,
-				335AC1F72AE86B8500F2CF51 /* String+.swift in Sources */,
 				3B3E35D72AE125A3006841D8 /* RegisterView.swift in Sources */,
 				562E36BB2AD8DD03008D99B2 /* CommonUtil.swift in Sources */,
 				2305095D2AE2475E00F58092 /* ContactTableViewCell.swift in Sources */,
