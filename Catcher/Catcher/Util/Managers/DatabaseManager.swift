@@ -166,6 +166,7 @@ extension DatabaseManager {
                     } else {
                         // create
                         self?.database.child(self?.userInfo?.uid ?? "").setValue(newConversationData)
+                        self?.database.child(otherUserUid).setValue(otherUserNewConversationData)
                     }
                 })
             }
@@ -403,6 +404,14 @@ extension DatabaseManager {
             currentMessages.append(newMessageEntry)
             
             strongSelf.database.child("\(self?.userInfo?.uid ?? "")/\(otherUserUid)").setValue(currentMessages) { error, _ in
+                guard error == nil else {
+                    completion(false)
+                    return
+                }
+                completion(true)
+            }
+            
+            strongSelf.database.child("\(otherUserUid)/\(self?.userInfo?.uid ?? "")").setValue(currentMessages) { error, _ in
                 guard error == nil else {
                     completion(false)
                     return
