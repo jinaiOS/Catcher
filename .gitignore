@@ -109,6 +109,11 @@ iOSInjectionProject/
 Const.swift
 .DS_Store
 
+### CoreML
+DetectObject.swift
+DistinguishGender.swift
+GenerateProfile.swift
+
 ### CoreML Model
 animegan2face_paint_512_v2.mlmodel
 GenderClassifier.mlmodel
