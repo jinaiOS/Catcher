@@ -45,6 +45,12 @@ final class ChattingDetailViewController: MessagesViewController {
                       displayName: "Me")
     }
     
+    var vBackHeader: UIView = {
+       let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
     /** @brief 공통 헤더 객체 */
     var headerView : CommonHeaderView!
     
@@ -77,7 +83,16 @@ final class ChattingDetailViewController: MessagesViewController {
         //header backButton selector setting
         headerView.btnBack.addTarget(self, action: #selector(backButtonTouched(sender:)), for: .touchUpInside)
         
+        if !Common.IS_IPHONE_SE() {
+            self.view.addSubview(vBackHeader)
+        }
         self.view.addSubview(headerView)
+        
+        vBackHeader.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(headerView)
+        }
+        
         view.backgroundColor = .red
         
         messagesCollectionView.messagesDataSource = self
