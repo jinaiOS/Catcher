@@ -50,7 +50,7 @@ struct CommonUtil {
                     }
                 }
             } else {
-                Swift.print("Petmily : \(filename) ----- \(line) Line ----- \(function) ----- \(output)")
+                Swift.print("Catcher : \(filename) ----- \(line) Line ----- \(function) ----- \(output)")
             }
             
             

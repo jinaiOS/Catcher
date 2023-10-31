@@ -14,6 +14,13 @@ final class LocationPickerViewController: UIViewController {
     public var completion: ((CLLocationCoordinate2D) -> Void)?
     private var coordinates: CLLocationCoordinate2D?
     private var isPickable = true
+    
+    private let btnSend: UIButton = {
+       let button = UIButton()
+        button.setTitle("Send", for: .normal)
+        return button
+    }()
+    
     private let map: MKMapView = {
         let map = MKMapView()
         return map
@@ -33,10 +40,7 @@ final class LocationPickerViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         if isPickable {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Send",
-                                                                style: .done,
-                                                                target: self,
-                                                                action: #selector(sendButtonTapped))
+            btnSend.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
             map.isUserInteractionEnabled = true
             let gesture = UITapGestureRecognizer(target: self,
                                                  action: #selector(didTapMap(_:)))
@@ -56,6 +60,17 @@ final class LocationPickerViewController: UIViewController {
             map.addAnnotation(pin)
         }
         view.addSubview(map)
+        setLayout()
+    }
+    
+    func setLayout() {
+        view.addSubview(btnSend)
+        
+        btnSend.snp.makeConstraints {
+            $0.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(10)
+            $0.height.equalTo(40)
+            $0.width.equalTo(50)
+        }
     }
 
     @objc func sendButtonTapped() {
