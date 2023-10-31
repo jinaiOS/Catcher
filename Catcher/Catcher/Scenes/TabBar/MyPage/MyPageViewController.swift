@@ -5,6 +5,7 @@
 //  Created by 정기현 on 2023/10/17.
 //
 
+import Combine
 import SnapKit
 import UIKit
 
@@ -19,6 +20,8 @@ enum MenuItems: String, CaseIterable {
 }
 
 class MyPageViewController: BaseViewController {
+    private var cancellables = Set<AnyCancellable>()
+    
     private lazy var nickName: UILabel = {
         let lb = UILabel()
         lb.text = "\(DataManager.sharedInstance.userInfo?.nickName ?? "") 님 오늘도 파이팅!!"
@@ -30,14 +33,8 @@ class MyPageViewController: BaseViewController {
 
     private lazy var profilePhoto: UIImageView = {
         let im = UIImageView()
-        ImageCacheManager.shared.loadImage(uid: DataManager.sharedInstance.userInfo?.uid ?? "") { [weak self] image in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                im.image = image
-            }
-        }
-//        im.image = UIImage(named: "sample1")
-        im.contentMode = .scaleToFill
+        loadProfileImage()
+        im.contentMode = .scaleAspectFill
         im.layer.cornerRadius = CGFloat(photoSize / 2) // 반지름을 이미지 크기의 절반으로 설정하여 원 모양으로 클리핑
         im.clipsToBounds = true // 이미지를 원 모양으로 클리핑
         view.addSubview(im)
@@ -195,6 +192,10 @@ class MyPageViewController: BaseViewController {
         view.backgroundColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1)
         configure()
         logOutButton.addTarget(self, action: #selector(pressLogOutButton), for: .touchUpInside)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapProfileImage))
+        profilePhoto.addGestureRecognizer(tapGesture)
+        profilePhoto.isUserInteractionEnabled = true
     }
 }
 
@@ -250,7 +251,7 @@ extension MyPageViewController {
     }
 }
 
-extension MyPageViewController {
+private extension MyPageViewController {
     func configure() {
         // 메뉴 아이템의 갯수에 따라 view의 높이를 변경
         tableViewHeight = CGFloat(MenuItems.allCases.count) * 44 + 70
@@ -298,5 +299,32 @@ extension MyPageViewController {
             make.leading.trailing.equalTo(self.view).inset(14)
             make.height.equalTo(53)
         }
+    }
+    
+    func loadProfileImage() {
+        guard let uid = FirebaseManager().getUID else { return }
+        ImageCacheManager.shared.loadImage(uid: uid) { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.profilePhoto.image = image
+            }
+        }
+    }
+    
+    @objc func tapProfileImage() {
+        let profileSettingVC = ProfileSettingViewController(allowAlbum: true)
+        profileSettingVC.delegate = self
+        self.navigationPushController(viewController: profileSettingVC, animated: true)
+    }
+}
+
+extension MyPageViewController: ReloadProfileImage {
+    func reloadProfile(profile: UIImage) {
+        guard let uid = FirebaseManager().getUID else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.profilePhoto.image = profile
+        }
+        ImageCacheManager.shared.cachingImage(uid: uid, image: profile)
     }
 }

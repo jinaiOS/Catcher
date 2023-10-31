@@ -82,7 +82,7 @@ final class InfoViewController: BaseHeaderViewController {
         } else {
             smokeCheck = false
         }
-        let profileSettingViewController = ProfileSettingViewController(nibName: "ProfileSettingViewController", bundle: nil)
+        let profileSettingViewController = ProfileSettingViewController(allowAlbum: false)
         profileSettingViewController.user = UserInfo(
             uid: "", sex: "", birth: birthDate, // 필요한 경"우 성별을 여기에 추가
             nickName: nickName,

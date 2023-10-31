@@ -33,14 +33,14 @@ final class ImageCacheManager {
             completion(profileImage)
         }
     }
-}
-
-private extension ImageCacheManager {
+    
     func cachingImage(uid: String, image: UIImage?) {
         guard let image = image else { return }
         cache.setObject(image, forKey: uid as NSString)
     }
-    
+}
+
+private extension ImageCacheManager {
     func cachedImage(uid: String) -> UIImage? {
         cache.object(forKey: uid as NSString)
     }

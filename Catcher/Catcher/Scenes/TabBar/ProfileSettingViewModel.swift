@@ -18,8 +18,7 @@ final class ProfileSettingViewModel {
 
 extension ProfileSettingViewModel {
     func createUser(user: UserInfo, eamil: String, password: String, completion: @escaping (Bool) -> Void) {
-        guard let profileImage = profileImage,
-              let gender = gender else {
+        guard let gender = gender else {
             completion(false)
             return
         }
@@ -32,6 +31,7 @@ extension ProfileSettingViewModel {
                     completion(false)
                     return
                 } else {
+                    UserDefaultsManager().setValue(value: user.location, key: "location")
                     let firebaseManager = FirebaseManager()
                     guard let uid = firebaseManager.getUID else {
                         CommonUtil.print(output:"Error: No UID available")
@@ -39,9 +39,26 @@ extension ProfileSettingViewModel {
                         return
                     }
                     let userInfo = makeUserInfo(user: user, uid: uid, gender: gender)
-                    setUserInfo(userInfo: userInfo, image: profileImage, completion: completion)
+                    setUserInfo(userInfo: userInfo, completion: completion)
                 }
             }
+    }
+    
+    func updateProfile(completion: @escaping (UIImage?) -> Void) {
+        guard let profileImage = profileImage else {
+            completion(nil)
+            return
+        }
+        FireStorageManager.shared.setProfileData(image: profileImage) { error in
+            completion(profileImage)
+        }
+    }
+    
+    func fetchProfile(completion: @escaping (UIImage?) -> Void) {
+        guard let uid = FirebaseManager().getUID else { return }
+        ImageCacheManager.shared.loadImage(uid: uid) { image in
+            completion(image)
+        }
     }
 }
 
@@ -71,20 +88,24 @@ private extension ProfileSettingViewModel {
         return "여성"
     }
     
-    func setUserInfo(userInfo: UserInfo, image: UIImage, completion: @escaping (Bool) -> Void) {
+    func setUserInfo(userInfo: UserInfo, completion: @escaping (Bool) -> Void) {
         Task {
             let error = await FireStoreManager.shared.setUserInfo(data: userInfo)
             if let error = error {
                 CommonUtil.print(output:"Error saving user info: \(error.localizedDescription)")
                 return
             }
-            setProfileImage(image: image, completion: completion)
+            setProfileImage(completion: completion)
             CommonUtil.print(output:"User info saved to Firestore successfully.")
         }
     }
     
-    func setProfileImage(image: UIImage, completion: @escaping (Bool) -> Void) {
-        FireStorageManager.shared.setProfileData(image: image) { [weak self] error in
+    func setProfileImage(completion: @escaping (Bool) -> Void) {
+        guard let profileImage = profileImage else {
+            completion(false)
+            return
+        }
+        FireStorageManager.shared.setProfileData(image: profileImage) { [weak self] error in
             guard self != nil else { return }
             if let error {
                 CommonUtil.print(output: error)

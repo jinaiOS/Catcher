@@ -8,17 +8,25 @@
 import UIKit
 import SnapKit
 import AVFoundation
+import Photos
+
+protocol ReloadProfileImage: AnyObject {
+    func reloadProfile(profile: UIImage)
+}
 
 class ProfileSettingViewController: BaseHeaderViewController {
+    private let viewModel = ProfileSettingViewModel()
+    private let indicator = UIActivityIndicatorView()
+    private let picker = UIImagePickerController()
+    private let allowAlbum: Bool
+    weak var delegate: ReloadProfileImage?
     var user: UserInfo?
     var newUserEmail: String?
     var newUserPassword: String?
-    private let picker = UIImagePickerController()
+    
     @IBOutlet var imageView: UIImageView!
     @IBOutlet weak var genderLabel: UILabel!
     @IBOutlet weak var registerButton: UIButton!
-    private let viewModel = ProfileSettingViewModel()
-    private let indicator = UIActivityIndicatorView()
     
     private lazy var indicatorView: UIView = {
         let view = UIView()
@@ -35,6 +43,43 @@ class ProfileSettingViewController: BaseHeaderViewController {
 
     // 회원가입 완료 버튼
     @IBAction func completeBtn(_ sender: UIButton) {
+        switch allowAlbum {
+        case true:
+            updateProfile()
+        case false:
+            setUser()
+        }
+    }
+    
+    init(allowAlbum: Bool) {
+        self.allowAlbum = allowAlbum
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        CommonUtil.print(output: "deinit - ProfileSettingVC")
+    }
+}
+
+private extension ProfileSettingViewController {
+    func updateProfile() {
+        self.processIndicatorView()
+        
+        viewModel.updateProfile { [weak self] image in
+            guard let self = self else { return }
+            self.processIndicatorView()
+            if let image {
+                delegate?.reloadProfile(profile: image)
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+        }
+    }
+    
+    func setUser() {
         guard let user = user,
               let newUserEmail = newUserEmail,
               let newUserPassword = newUserPassword else { return }
@@ -52,11 +97,11 @@ class ProfileSettingViewController: BaseHeaderViewController {
     }
     
     @objc func imageTapped() {
-        openCamera()
-    }
-    
-    deinit {
-        CommonUtil.print(output: "deinit - ProfileSettingVC")
+        if allowAlbum {
+            showAction()
+        } else {
+            openCamera()
+        }
     }
 }
 
@@ -69,6 +114,11 @@ private extension ProfileSettingViewController {
         picker.isEditing = true
         
         imageView.contentMode = .scaleAspectFill
+        viewModel.fetchProfile { [weak self] image in
+            guard let self = self else { return }
+            imageView.image = image
+        }
+        
         indicator.hidesWhenStopped = true
         indicator.stopAnimating()
         indicator.style = .large
@@ -78,6 +128,10 @@ private extension ProfileSettingViewController {
         registerButton.backgroundColor = ThemeColor.primary
         registerButton.tintColor = .white
         registerButton.cornerRadius = AppConstraint.defaultCornerRadius
+        
+        let buttonTitle = allowAlbum ? "프로필 변경" : "회원가입"
+        genderLabel.isHidden = allowAlbum
+        registerButton.setTitle(buttonTitle, for: .normal)
     }
     
     func setLayout() {
@@ -92,6 +146,25 @@ private extension ProfileSettingViewController {
         indicatorView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+}
+
+private extension ProfileSettingViewController {
+    func showAction() {
+        let alert = UIAlertController(title: "사진 가져오기", message: nil, preferredStyle: .actionSheet)
+        let library = UIAlertAction(title: "사진앨범", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self.openLibrary()
+        }
+        let camera = UIAlertAction(title: "카메라", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            openCamera()
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(library)
+        alert.addAction(camera)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func openCamera() {
@@ -112,22 +185,39 @@ private extension ProfileSettingViewController {
             } else {
                 DispatchQueue.main.async {
                     print("Camera: 권한 거부")
-                    self.moveToSettingAlert()
+                    self.moveToSettingAlert(reason: "카메라 접근 요청 거부됨", discription: "설정 > 카메라 접근 권한을 허용해 주세요.")
                 }
             }
         }
     }
     
-    func moveToSettingAlert() {
-        let alert = UIAlertController(title: "카메라 접근 요청 거부됨",
-                                      message: "설정 > 카메라 접근 권한을 허용해 주세요.",
-                                      preferredStyle: .alert)
+    private func openLibrary() {
+        PHPhotoLibrary.requestAuthorization { status in
+            switch status {
+            case .authorized:
+                DispatchQueue.main.async {
+                    print("Album: 권한 허용")
+                    self.picker.sourceType = .photoLibrary
+                    self.present(self.picker, animated: true)
+                }
+                
+            default:
+                DispatchQueue.main.async {
+                    self.moveToSettingAlert(reason: "사진 접근 요청 거부됨", discription: "설정 > 사진 접근 권한을 허용해 주세요.")
+                }
+            }
+        }
+    }
+    
+    private func moveToSettingAlert(reason: String, discription: String) {
+        let alert = UIAlertController(title: reason, message: discription, preferredStyle: .alert)
         let ok = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
             // 설정으로 이동
             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
         }
         let cancle = UIAlertAction(title: "취소", style: .default, handler: nil)
-        //        cancle.setValue(UIColor.darkGray, forKey: "titleTextColor")
+        // 색상 적용.
+        cancle.setValue(UIColor.darkGray, forKey: "titleTextColor")
         alert.addAction(cancle)
         alert.addAction(ok)
         present(alert, animated: true, completion: nil)
