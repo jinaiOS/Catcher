@@ -38,7 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-        let introVC = IntroViewController(nibName: "IntroViewController", bundle: nil)
+//        let introVC = IntroViewController(nibName: "IntroViewController", bundle: nil)
+        let introVC = AppversionViewController()
         navigationController = UINavigationController(rootViewController: introVC)
         // 네비게이션바 히든
         navigationController?.isNavigationBarHidden = true
