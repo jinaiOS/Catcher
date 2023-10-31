@@ -47,8 +47,7 @@ extension FireStoreManager {
 
 extension FireStoreManager {
     func setUserInfo(data: UserInfo) async -> Error? {
-        guard let uid = uid else { return FireStoreError.missingUID }
-        let docRef = db.collection(userInfoPath).document(uid)
+        let docRef = db.collection(userInfoPath).document(data.uid)
         do {
             try await docRef.setData(
                 encodingValue(data: data)

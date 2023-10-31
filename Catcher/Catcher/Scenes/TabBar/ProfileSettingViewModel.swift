@@ -18,10 +18,6 @@ final class ProfileSettingViewModel {
 
 extension ProfileSettingViewModel {
     func createUser(user: UserInfo, eamil: String, password: String, completion: @escaping (Bool) -> Void) {
-        guard let gender = gender else {
-            completion(false)
-            return
-        }
         FirebaseManager().createUsers(
             email: eamil,
             password: password) { [weak self] error in
@@ -38,7 +34,7 @@ extension ProfileSettingViewModel {
                         completion(false)
                         return
                     }
-                    let userInfo = makeUserInfo(user: user, uid: uid, gender: gender)
+                    let userInfo = makeUserInfo(user: user, uid: uid)
                     setUserInfo(userInfo: userInfo, completion: completion)
                 }
             }
@@ -117,10 +113,10 @@ private extension ProfileSettingViewModel {
         }
     }
     
-    func makeUserInfo(user: UserInfo, uid: String, gender: String) -> UserInfo {
+    func makeUserInfo(user: UserInfo, uid: String) -> UserInfo {
         UserInfo(
             uid: uid,
-            sex: gender,
+            sex: gender ?? "남성",
             birth: user.birth,
             nickName: user.nickName,
             location: user.location,

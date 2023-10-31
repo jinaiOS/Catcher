@@ -43,7 +43,7 @@
 		33E590292AF08C730060FBA0 /* GenerateProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E590282AF08C730060FBA0 /* GenerateProfile.swift */; };
 		33E5902C2AF08D5F0060FBA0 /* YOLOv3Int8LUT.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33E5902B2AF08D5F0060FBA0 /* YOLOv3Int8LUT.mlmodel */; };
 		33E5902F2AF08D670060FBA0 /* animegan2face_paint_512_v2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33E5902D2AF08D660060FBA0 /* animegan2face_paint_512_v2.mlmodel */; };
-		33E590302AF08D670060FBA0 /* GenderClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33E5902E2AF08D670060FBA0 /* GenderClassifier.mlmodel */; };
+		33E590352AF1AA590060FBA0 /* GenderClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33E590342AF1AA580060FBA0 /* GenderClassifier.mlmodel */; };
 		33EF35A92AEAD62500B4863B /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EF35A82AEAD62500B4863B /* UserInfoViewModel.swift */; };
 		33FCCB432AE8AF81004FF322 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FCCB422AE8AF81004FF322 /* UIImage+.swift */; };
 		3B2BE3012ADE4EAE00BD54CC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */; };
@@ -161,9 +161,9 @@
 		33E590282AF08C730060FBA0 /* GenerateProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateProfile.swift; sourceTree = "<group>"; };
 		33E5902B2AF08D5F0060FBA0 /* YOLOv3Int8LUT.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3Int8LUT.mlmodel; sourceTree = "<group>"; };
 		33E5902D2AF08D660060FBA0 /* animegan2face_paint_512_v2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = animegan2face_paint_512_v2.mlmodel; sourceTree = "<group>"; };
-		33E5902E2AF08D670060FBA0 /* GenderClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GenderClassifier.mlmodel; sourceTree = "<group>"; };
 		33E590322AF0DC260060FBA0 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		33E590332AF0DC260060FBA0 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		33E590342AF1AA580060FBA0 /* GenderClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GenderClassifier.mlmodel; sourceTree = "<group>"; };
 		33EF35A82AEAD62500B4863B /* UserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
 		33FCCB422AE8AF81004FF322 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				33E5902D2AF08D660060FBA0 /* animegan2face_paint_512_v2.mlmodel */,
-				33E5902E2AF08D670060FBA0 /* GenderClassifier.mlmodel */,
+				33E590342AF1AA580060FBA0 /* GenderClassifier.mlmodel */,
 				33E5902B2AF08D5F0060FBA0 /* YOLOv3Int8LUT.mlmodel */,
 			);
 			path = CoreMLModel;
@@ -715,7 +715,7 @@
 				33B358072ADE189E00A91C95 /* ButtonFactory.swift in Sources */,
 				56C08B662ADF805800FB8608 /* SectionHeaderView.swift in Sources */,
 				56C08B9C2AE10CDE00FB8608 /* ChatModels.swift in Sources */,
-				33E590302AF08D670060FBA0 /* GenderClassifier.mlmodel in Sources */,
+				33E590352AF1AA590060FBA0 /* GenderClassifier.mlmodel in Sources */,
 				56C08B662ADF805800FB8608 /* SectionHeaderView.swift in Sources */,
 				230509582AE2469000F58092 /* ContactViewController.swift in Sources */,
 				56C08B9A2AE10CAA00FB8608 /* ChattingDetailViewController.swift in Sources */,
