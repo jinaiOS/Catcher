@@ -51,6 +51,8 @@
 		3B3E35D52ADFA2F1006841D8 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E35D42ADFA2F1006841D8 /* RegisterViewController.swift */; };
 		3B3E35D72AE125A3006841D8 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E35D62AE125A3006841D8 /* RegisterView.swift */; };
 		5622C0702AEF0BE000455649 /* ResetPWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622C06F2AEF0BE000455649 /* ResetPWViewController.swift */; };
+		5622C0772AF1415300455649 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622C0762AF1415300455649 /* CustomTextField.swift */; };
+		5622C0792AF1416300455649 /* CustomTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5622C0782AF1416300455649 /* CustomTextField.xib */; };
 		562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36802AD80EF9008D99B2 /* AppDelegate.swift */; };
 		562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36842AD80EF9008D99B2 /* ViewController.swift */; };
 		562E36882AD80EF9008D99B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 562E36862AD80EF9008D99B2 /* Main.storyboard */; };
@@ -172,6 +174,8 @@
 		3B3E35D62AE125A3006841D8 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		5622C06F2AEF0BE000455649 /* ResetPWViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPWViewController.swift; sourceTree = "<group>"; };
 		5622C0752AF1385C00455649 /* CatcherDev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CatcherDev.xcconfig; sourceTree = "<group>"; };
+		5622C0762AF1415300455649 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		5622C0782AF1416300455649 /* CustomTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTextField.xib; sourceTree = "<group>"; };
 		562E367D2AD80EF9008D99B2 /* Catcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Catcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		562E36802AD80EF9008D99B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		562E36842AD80EF9008D99B2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -421,8 +425,10 @@
 			children = (
 				56BBF7E92AE6009700A2BADD /* IntroViewController.swift */,
 				56BBF7EA2AE6009700A2BADD /* IntroViewController.xib */,
-				3B2BE3042ADE4F3900BD54CC /* LoginPage */,
+				5622C0762AF1415300455649 /* CustomTextField.swift */,
+				5622C0782AF1416300455649 /* CustomTextField.xib */,
 				56C08B4B2ADF73C300FB8608 /* Base */,
+				3B2BE3042ADE4F3900BD54CC /* LoginPage */,
 				56C08B4C2ADF73D100FB8608 /* TabBar */,
 			);
 			path = Scenes;
@@ -456,8 +462,8 @@
 		56C08B4D2ADF747800FB8608 /* CommonHeaderView */ = {
 			isa = PBXGroup;
 			children = (
-				562E36BE2AD9172B008D99B2 /* CommonHeaderView.xib */,
 				5675E1702AEE94AE001EAF95 /* CommonHeaderView.swift */,
+				562E36BE2AD9172B008D99B2 /* CommonHeaderView.xib */,
 			);
 			path = CommonHeaderView;
 			sourceTree = "<group>";
@@ -676,6 +682,7 @@
 				562E368D2AD80EFA008D99B2 /* LaunchScreen.storyboard in Resources */,
 				562E368A2AD80EFA008D99B2 /* Assets.xcassets in Resources */,
 				33532B832AE299E1008B47EB /* GoogleService-Info.plist in Resources */,
+				5622C0792AF1416300455649 /* CustomTextField.xib in Resources */,
 				56BBF7EC2AE6009700A2BADD /* IntroViewController.xib in Resources */,
 				562E36BF2AD9172B008D99B2 /* CommonHeaderView.xib in Resources */,
 				562E36882AD80EF9008D99B2 /* Main.storyboard in Resources */,
