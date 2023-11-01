@@ -49,13 +49,6 @@ extension ProfileSettingViewModel {
             completion(profileImage)
         }
     }
-    
-    func fetchProfile(completion: @escaping (UIImage?) -> Void) {
-        guard let uid = FirebaseManager().getUID else { return }
-        ImageCacheManager.shared.loadImage(uid: uid) { image in
-            completion(image)
-        }
-    }
 }
 
 extension ProfileSettingViewModel {
@@ -127,7 +120,8 @@ private extension ProfileSettingViewModel {
             smoking: user.smoking,
             register: Date(),
             score: 0,
-            pick: []
+            pick: [],
+            block: []
         )
     }
 }

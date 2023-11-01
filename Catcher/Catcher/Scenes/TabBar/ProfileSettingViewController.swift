@@ -5,10 +5,10 @@
 //  Created by t2023-m0077 on 10/27/23.
 //
 
-import UIKit
-import SnapKit
 import AVFoundation
 import Photos
+import SnapKit
+import UIKit
 
 protocol ReloadProfileImage: AnyObject {
     func reloadProfile(profile: UIImage)
@@ -83,6 +83,10 @@ private extension ProfileSettingViewController {
         guard let user = user,
               let newUserEmail = newUserEmail,
               let newUserPassword = newUserPassword else { return }
+        if viewModel.profileImage == nil || viewModel.gender == nil {
+            showAlert(title: "프로필 사진 미등록", message: "프로필 사진을 등록해주세요.")
+            return
+        }
         CommonUtil.print(output: user)
         
         processIndicatorView()
@@ -110,14 +114,10 @@ private extension ProfileSettingViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         imageView.addGestureRecognizer(tapGesture)
         imageView.isUserInteractionEnabled = true
+        imageView.contentMode = .scaleAspectFill
+        
         picker.delegate = self
         picker.isEditing = true
-        
-        imageView.contentMode = .scaleAspectFill
-        viewModel.fetchProfile { [weak self] image in
-            guard let self = self else { return }
-            imageView.image = image
-        }
         
         indicator.hidesWhenStopped = true
         indicator.stopAnimating()
@@ -223,20 +223,23 @@ private extension ProfileSettingViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func retakeAlert() {
-        let alert = UIAlertController(title: "얼굴이 잘 안보여요 ㅠㅠ",
-                                      message: "사진을 다시 찍어주세요", preferredStyle: .alert)
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message, preferredStyle: .alert)
         let ok = UIAlertAction(title: "확인", style: .default)
         alert.addAction(ok)
         present(alert, animated: true, completion: nil)
     }
     
     func processIndicatorView() {
-        indicatorView.isHidden.toggle()
-        if indicator.isAnimating {
-            indicator.stopAnimating()
-        } else {
-            indicator.startAnimating()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            indicatorView.isHidden.toggle()
+            if indicator.isAnimating {
+                indicator.stopAnimating()
+            } else {
+                indicator.startAnimating()
+            }
         }
     }
 }
@@ -254,7 +257,7 @@ extension ProfileSettingViewController: UIImagePickerControllerDelegate, UINavig
             guard let image = result.image,
                   let gender = result.gender else {
                 processIndicatorView()
-                retakeAlert()
+                showAlert(title: "얼굴이 잘 안보여요 ㅠㅠ", message: "사진을 다시 찍어주세요")
                 return
             }
             processIndicatorView()
