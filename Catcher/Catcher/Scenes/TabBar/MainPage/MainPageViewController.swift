@@ -98,7 +98,12 @@ private extension MainPageViewController {
                 return SectionHeaderView()
             }
             let title = self.viewModel.getSectionTitle(section: indexPath.section)
-            header.configure(sectionTitle: title)
+            
+            if indexPath.section == 0 {
+                header.configure(sectionTitle: title, isTitle: true)
+            } else {
+                header.configure(sectionTitle: title)
+            }
             return header
         }
     }

@@ -5,12 +5,13 @@
 //  Copyright (c) 2023 z-wook. All right reserved.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 final class UserInfoView: UIView {
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
+        view.showsVerticalScrollIndicator = false
         return view
     }()
     
@@ -45,8 +46,7 @@ final class UserInfoView: UIView {
     lazy var chatButton: UIButton = {
         ButtonFactory.makeButton(
             image: UIImage(systemName: "paperplane.fill"),
-            titleColor: .systemGray,
-            backgroundColor: .white)
+            titleColor: .systemGray)
     }()
     
     private lazy var chatLabel: UILabel = {
@@ -122,6 +122,8 @@ final class UserInfoView: UIView {
     private lazy var userInfoView: UITextView = {
         let view = UITextView()
         view.backgroundColor = .systemBackground
+        view.isSelectable = false
+        view.isEditable = false
         return view
     }()
     
@@ -199,7 +201,7 @@ private extension UserInfoView {
         }
         
         vStack.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom).offset(50)
+            $0.top.equalTo(profileImageView.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(80)
         }
@@ -225,7 +227,7 @@ private extension UserInfoView {
         view.backgroundColor = .black
         
         view.snp.makeConstraints {
-            $0.height.equalTo(2)
+            $0.height.equalTo(1.5)
         }
         return view
     }

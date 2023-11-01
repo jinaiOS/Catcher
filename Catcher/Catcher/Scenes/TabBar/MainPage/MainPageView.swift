@@ -5,8 +5,8 @@
 //  Copyright (c) 2023 z-wook. All right reserved.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 final class MainPageView: UIView {
     lazy var refreshControl: UIRefreshControl = {
@@ -26,6 +26,7 @@ final class MainPageView: UIView {
                       withReuseIdentifier: SectionHeaderView.identifier)
         view.setCollectionViewLayout(collectionViewLayout(), animated: true)
         view.refreshControl = refreshControl
+        view.showsVerticalScrollIndicator = false
         return view
     }()
     
@@ -71,7 +72,7 @@ private extension MainPageView {
             widthDimension: .fractionalWidth(1),
             heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+        item.contentInsets = .init(top: 15, leading: 10, bottom: 0, trailing: 10)
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -80,7 +81,10 @@ private extension MainPageView {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
-        section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
+        section.contentInsets = .init(top: 10, leading: 0, bottom: 10, trailing: 0)
+        
+        let sectionHeader = headerSection()
+        section.boundarySupplementaryItems = [sectionHeader]
         return section
     }
     
@@ -98,7 +102,7 @@ private extension MainPageView {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
+        section.contentInsets = .init(top: 10, leading: 5, bottom: 10, trailing: 5)
         section.interGroupSpacing = 20
         
         let sectionHeader = headerSection()
@@ -120,7 +124,7 @@ private extension MainPageView {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
+        section.contentInsets = .init(top: 10, leading: 5, bottom: 10, trailing: 5)
         section.interGroupSpacing = 10
         
         let sectionHeader = headerSection()
@@ -142,7 +146,7 @@ private extension MainPageView {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
+        section.contentInsets = .init(top: 10, leading: 5, bottom: 10, trailing: 5)
         section.interGroupSpacing = 10
         
         let sectionHeader = headerSection()

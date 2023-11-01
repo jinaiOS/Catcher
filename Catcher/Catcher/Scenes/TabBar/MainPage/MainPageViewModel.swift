@@ -5,8 +5,8 @@
 //  Copyright (c) 2023 z-wook. All right reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 final class MainPageViewModel {
     private let storeManager = FireStoreManager.shared
@@ -56,9 +56,9 @@ extension MainPageViewModel {
     func getSectionTitle(section: Int) -> String? {
         switch section {
         case 0:
-            return nil
+            return "Catcher"
         case 1:
-            return "인기스타 9인을 소개해요"
+            return "인기스타를 소개해요"
         case 2:
             return "뉴~ 진스가 아닌 뉴~ 피플"
         case 3:

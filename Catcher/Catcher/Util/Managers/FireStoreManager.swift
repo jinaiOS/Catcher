@@ -67,7 +67,6 @@ extension FireStoreManager {
             let userInfo = document.documents.map { $0.data() }
             
             let shuffledArray = userInfo
-                .randomElements(count: itemCount)
                 .shuffleArray(userInfo)
                 .compactMap {
                     decodingValue(data: $0)
