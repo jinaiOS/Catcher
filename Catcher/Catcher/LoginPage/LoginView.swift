@@ -9,25 +9,19 @@ import SnapKit
 import UIKit
 
 final class LoginView: UIView {
-    lazy var emailTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "이메일을 입력해 주세요."
-        textField.borderStyle = .none
-        textField.textColor = .label
-        textField.font = .systemFont(ofSize: 15, weight: .regular)
-        textField.keyboardType = .emailAddress
-        textField.autocapitalizationType = .none
+    lazy var emailTextField: CustomTextField = {
+        let textField = CustomTextField()
+        textField.tf.keyboardType = .emailAddress
+//        textField.textColor = .label
+//        textField.font = .systemFont(ofSize: 15, weight: .regular)
+//        textField.keyboardType = .emailAddress
+//        textField.autocapitalizationType = .none
         return textField
     }()
     
-    lazy var passwordTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "비밀번호를 입력해 주세요."
-        textField.borderStyle = .none
-        textField.textColor = .label
-        textField.font = .systemFont(ofSize: 15, weight: .regular)
-        textField.keyboardType = .asciiCapable
-        textField.isSecureTextEntry = true
+    lazy var passwordTextField: CustomTextField = {
+        let textField = CustomTextField()
+        textField.tf.keyboardType = .asciiCapable
         return textField
     }()
     
@@ -62,11 +56,9 @@ final class LoginView: UIView {
         let view = UIStackView()
         view.axis = .vertical
         view.spacing = 10
-        view.alignment = .fill
-        view.distribution = .equalSpacing
+        view.distribution = .fillEqually
         
-        [makeLabel(text: "아이디"), emailTextField, separateView,
-         makeLabel(text: "비밀번호"), passwordTextField, separateView].forEach {
+        [emailTextField, passwordTextField].forEach {
             view.addArrangedSubview($0)
         }
         return view
@@ -94,36 +86,9 @@ final class LoginView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    lazy var eyeButton: UIButton = {
-        var btn = UIButton(type: .custom)
-        btn = UIButton(primaryAction: UIAction(handler: { [self] _ in
-            passwordTextField.isSecureTextEntry.toggle()
-            self.eyeButton.isSelected.toggle()
-        }))
-        var buttonConfiguration = UIButton.Configuration.plain()
-        buttonConfiguration.imagePadding = 10
-        buttonConfiguration.baseBackgroundColor = .clear
-        btn.tintColor = ThemeColor.primary
-        
-        btn.setImage(UIImage(systemName: "eye.slash"), for: .normal)
-        btn.setImage(UIImage(systemName: "eye"), for: .selected)
-        btn.configuration = buttonConfiguration
-        
-        return btn
-    }()
 }
 
 private extension LoginView {
-    var separateView: UIView {
-        let view = UIView()
-        view.backgroundColor = ThemeColor.primary
-        
-        view.snp.makeConstraints {
-            $0.height.equalTo(1)
-        }
-        return view
-    }
 
     func makeLabel(text: String) -> UILabel {
         LabelFactory.makeLabel(
@@ -133,7 +98,7 @@ private extension LoginView {
     }
     
     func setLayout() {
-        [vStack, loginBtn, appleLoginBtn, eyeButton, hStack].forEach {
+        [vStack, loginBtn, appleLoginBtn, hStack].forEach {
             addSubview($0)
         }
         
@@ -157,10 +122,10 @@ private extension LoginView {
             $0.leading.trailing.equalToSuperview().inset(50)
             $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-30)
         }
-        eyeButton.snp.makeConstraints { make in
-            make.centerX.centerY.equalTo(self.passwordTextField)
-            make.trailing.equalTo(-20)
-            make.width.height.equalTo(40)
-        }
+//        eyeButton.snp.makeConstraints { make in
+//            make.centerX.centerY.equalTo(self.passwordTextField)
+//            make.trailing.equalTo(-20)
+//            make.width.height.equalTo(40)
+//        }
     }
 }
