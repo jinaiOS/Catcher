@@ -52,7 +52,7 @@ class LoginViewController: BaseViewController {
     
     func storeUserInfo() async {
         do {
-            guard let uid = FireStoreManager.shared.uid else {
+            guard let uid = FirebaseManager().getUID else {
                 CommonUtil.print(output:"Error: UID is nil")
                 return
             }

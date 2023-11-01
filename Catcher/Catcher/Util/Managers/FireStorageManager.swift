@@ -25,7 +25,7 @@ final class FireStorageManager {
     private let chatImagePath = "chat"
     private let profileImagePath = "profile"
     private let fileSize: Int64 = 1024
-    private let compressionQuality: CGFloat = 0.7
+    private let compressionQuality: CGFloat = 0.5
     private var uid: String?
     
     private init() {

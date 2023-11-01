@@ -95,25 +95,29 @@ final class UserInfoView: UIView {
         return view
     }()
     
-    lazy var ignoreBtton: UIButton = {
-        ButtonFactory.makeButton(
-            image: UIImage(systemName: "xmark"),
+    lazy var blockBtton: UIButton = {
+        let button = ButtonFactory.makeButton(
+            type: .custom,
+            image: UIImage(systemName: "envelope"),
             tintColor: .black)
+        button.setImage(UIImage(systemName: "envelope.badge.shield.half.filled.fill"), for: .selected)
+        button.imageView?.contentMode = .scaleAspectFit
+        return button
     }()
     
-    private lazy var ignoreLabel: UILabel = {
+    lazy var blockLabel: UILabel = {
         LabelFactory.makeLabel(
-            text: "관심없음",
+            text: "채팅 차단",
             font: ThemeFont.demibold(size: 20))
     }()
     
-    private lazy var ignoreStack: UIStackView = {
+    private lazy var blockStack: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
         view.alignment = .fill
         view.distribution = .fillEqually
         
-        [ignoreBtton, ignoreLabel].forEach {
+        [blockBtton, blockLabel].forEach {
             view.addArrangedSubview($0)
         }
         return view
@@ -133,7 +137,7 @@ final class UserInfoView: UIView {
         stack.alignment = .fill
         stack.distribution = .fillEqually
         
-        [chatStack, pickStack, ignoreStack].forEach {
+        [chatStack, pickStack, blockStack].forEach {
             stack.addArrangedSubview($0)
         }
         return stack
@@ -197,6 +201,10 @@ private extension UserInfoView {
         }
         
         pickButton.imageView?.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(5)
+        }
+        
+        blockBtton.imageView?.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(5)
         }
         

@@ -42,6 +42,39 @@ extension UserInfoViewModel {
         }
     }
     
+    func processBlockUser(isBlock: Bool, completion: @escaping (_ result: Bool, _ error: Error?) -> Void) {
+        Task {
+            var error: Error?
+            
+            if isBlock {
+                error = await fireStoreManager.updateBlockUser(uuid: userInfo.uid)
+            } else {
+                error = await fireStoreManager.deleteBlockUser(uuid: userInfo.uid)
+            }
+            if let error = error {
+                completion(false, error)
+                return
+            }
+            completion(true, nil)
+        }
+    }
+    
+    func isBlockedUser(searchTarget: String, containUID: String, completion: @escaping (_ result: Bool) -> Void) {
+        Task {
+            let (result, error) = await fireStoreManager.fetchUserInfo(uuid: searchTarget)
+            if let error {
+                CommonUtil.print(output: error.localizedDescription)
+                return
+            }
+            guard let result = result,
+                    let block = result.block else { return }
+            let isBlocked = block.contains(containUID)
+            completion(isBlocked)
+        }
+    }
+}
+
+extension UserInfoViewModel {
     func makeInfoText(info: UserInfo) -> NSMutableAttributedString {
         let newLine = NSAttributedString(string: "\n")
         

@@ -22,7 +22,7 @@ final class FireStoreManager {
     private let userInfoPath = "userInfo"
     private let nearUserPath = "location"
     private let itemCount: Int = 9
-    let uid: String?
+    private let uid: String?
     
     private init(uid: String? = FirebaseManager().getUID) {
         self.uid = uid
@@ -163,6 +163,19 @@ extension FireStoreManager {
             return error
         }
     }
+    
+    func updateBlockUser(uuid: String) async -> Error? {
+        guard let uid = uid else { return FireStoreError.missingUID }
+        let docRef = db.collection(userInfoPath).document(uid)
+        do {
+            try await docRef.updateData([
+                Data.block.key: FieldValue.arrayUnion([uuid])
+            ])
+            return nil
+        } catch {
+            return error
+        }
+    }
 }
 
 extension FireStoreManager {
@@ -183,6 +196,19 @@ extension FireStoreManager {
         do {
             try await docRef.updateData([
                 Data.pick.key: FieldValue.arrayRemove([uuid])
+            ])
+            return nil
+        } catch {
+            return error
+        }
+    }
+    
+    func deleteBlockUser(uuid: String) async -> Error? {
+        guard let uid = uid else { return FireStoreError.missingUID }
+        let docRef = db.collection(userInfoPath).document(uid)
+        do {
+            try await docRef.updateData([
+                Data.block.key: FieldValue.arrayRemove([uuid])
             ])
             return nil
         } catch {
@@ -241,6 +267,7 @@ private extension FireStoreManager {
         case register
         case score
         case pick
+        case block
         
         var key: String { rawValue }
     }
@@ -261,7 +288,8 @@ private extension FireStoreManager {
             Data.smoking.key: data.smoking,
             Data.register.key: data.register,
             Data.score.key: data.score,
-            Data.pick.key: data.pick ?? []
+            Data.pick.key: data.pick ?? [],
+            Data.block.key: data.block ?? []
         ]
     }
     
@@ -282,7 +310,8 @@ private extension FireStoreManager {
             smoking: data[Data.smoking.key] as? Bool ?? false,
             register: data[Data.register.key] as? Date ?? Date(),
             score: data[Data.score.key] as? Int ?? 0,
-            pick: data[Data.pick.key] as? [String] ?? []
+            pick: data[Data.pick.key] as? [String] ?? [],
+            block: data[Data.block.key] as? [String] ?? []
         )
     }
 }

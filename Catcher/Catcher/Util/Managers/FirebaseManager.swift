@@ -41,13 +41,11 @@ class FirebaseManager {
         } else { return false }
     }
     
-    var logOut: String? {
+    var logOut: Void {
         do {
             try auth.signOut()
-            return nil
         } catch {
             CommonUtil.print(output:"error: \(error.localizedDescription)")
-            return error.localizedDescription
         }
     }
     

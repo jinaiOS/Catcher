@@ -240,14 +240,8 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension MyPageViewController {
     @objc func pressLogOutButton() {
-        if let errorMessage = FirebaseManager().logOut {
-            // 로그아웃 실패
-            CommonUtil.print(output:"로그아웃 실패: \(errorMessage)")
-        } else {
-            // 로그아웃 성공
-            CommonUtil.print(output:"로그아웃 성공")
-            AppDelegate.applicationDelegate().changeInitViewController(type: .Login)
-        }
+        FirebaseManager().logOut
+        AppDelegate.applicationDelegate().changeInitViewController(type: .Login)
     }
 }
 
