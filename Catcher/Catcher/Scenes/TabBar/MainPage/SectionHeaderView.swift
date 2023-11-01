@@ -5,8 +5,8 @@
 //  Copyright (c) 2023 z-wook. All right reserved.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 final class SectionHeaderView: UICollectionReusableView {
     static let identifier = "SectionHeaderView"
@@ -19,8 +19,15 @@ final class SectionHeaderView: UICollectionReusableView {
         return label
     }()
     
-    func configure(sectionTitle: String?) {
+    func configure(sectionTitle: String?, isTitle: Bool = false) {
         sectionNameLabel.text = sectionTitle
+        if isTitle {
+            sectionNameLabel.font = UIFont(name: "Futura-bold", size: 35)
+            sectionNameLabel.textColor = ThemeColor.primary
+        } else {
+            sectionNameLabel.font = ThemeFont.bold(size: 20)
+            sectionNameLabel.textColor = .label
+        }
     }
     
     override init(frame: CGRect) {
@@ -38,7 +45,7 @@ private extension SectionHeaderView {
         addSubview(sectionNameLabel)
         
         sectionNameLabel.snp.makeConstraints {
-            $0.leading.top.bottom.equalToSuperview().offset(10)
+            $0.leading.top.bottom.equalToSuperview().offset(15)
         }
     }
 }
