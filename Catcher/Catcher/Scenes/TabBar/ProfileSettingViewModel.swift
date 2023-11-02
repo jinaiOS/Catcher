@@ -27,7 +27,7 @@ extension ProfileSettingViewModel {
                     completion(false)
                     return
                 } else {
-                    UserDefaultsManager().setValue(value: user.location, key: userdefaultLocation)
+                    UserDefaultsManager().setValue(value: user.location, key: nearUserPath)
                     let firebaseManager = FirebaseManager()
                     guard let uid = firebaseManager.getUID else {
                         CommonUtil.print(output:"Error: No UID available")

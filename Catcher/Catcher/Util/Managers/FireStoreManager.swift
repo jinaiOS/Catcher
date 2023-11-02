@@ -20,7 +20,6 @@ final class FireStoreManager {
     static let shared = FireStoreManager()
     private let db = Firestore.firestore()
     private let userInfoPath = "userInfo"
-    private let nearUserPath = "location"
     private let itemCount: Int = 9
     private let uid: String?
     
@@ -86,6 +85,7 @@ extension FireStoreManager {
             return (nil, FireStoreError.noUIDList)
         }
         let userList = await groupTaskForFetchUsers(uidList: uidList)
+        NotificationManager.shared.postPickCount(count: userList.count)
         return (userList, nil)
     }
     
@@ -101,11 +101,11 @@ extension FireStoreManager {
     }
     
     func fetchRanking() async -> (result: [UserInfo]?, error: Error?) {
-        let docRef = db.collection(userInfoPath)
+        let query = db.collection(userInfoPath)
             .order(by: Data.score.key, descending: true)
             .limit(to: itemCount)
         do {
-            let document = try await docRef.getDocuments()
+            let document = try await query.getDocuments()
             let userInfoList = document.documents.map {
                 $0.data()
             }.compactMap {
@@ -144,6 +144,21 @@ extension FireStoreManager {
                 decodingValue(data: snapshot.data())
             }
             return (userInfoList, nil)
+        } catch {
+            return (nil, error)
+        }
+    }
+    
+    /// 받은 찜 갯수
+    func fetchMyPickedCount(uid: String) async -> (result: Int?, error: Error?) {
+        let query = db.collection(userInfoPath)
+            .whereField(Data.pick.key, arrayContains: uid)
+        let countQuery = query.count
+        
+        do {
+            let snapshot = try await countQuery.getAggregation(source: .server)
+            let count = snapshot.count as? Int
+            return (count, nil)
         } catch {
             return (nil, error)
         }
