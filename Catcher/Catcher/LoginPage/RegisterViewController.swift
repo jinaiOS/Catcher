@@ -17,21 +17,47 @@ final class RegisterViewController: BaseViewController {
     var headerView: CommonHeaderView!
 
     @objc func nextPressed() {
-        guard let nickName = registerView.nicknametextfield.text, !nickName.isEmpty else {
-            showAlert(title: "닉네임을 입력하세요", message: "닉네임을 입력해주세요.")
+        registerView.nicknametextfield.isError = false
+        registerView.emailtextfield.isError = false
+        registerView.passwordtextfield.isError = false
+        registerView.passwordconfirmtextfield.isError = false
+        guard let nickName = registerView.nicknametextfield.tf.text, !nickName.isEmpty else {
+            registerView.nicknametextfield.lblError.text = "닉네임을 입력해주세요"
+            registerView.nicknametextfield.isError = true
             return
         }
 
-        guard let email = registerView.emailtextfield.text, isValidEmail(email) else {
-            showAlert(title: "유효하지 않은 이메일", message: "올바른 이메일 주소를 입력하세요.")
+        guard let email = registerView.emailtextfield.tf.text, CommonUtil.isValidId(id: email) else {
+            registerView.emailtextfield.lblError.text = "올바른 이메일 형식을 입력해 주세요"
+            registerView.emailtextfield.isError = true
             return
         }
 
-        guard let password = registerView.passwordtextfield.text, !password.isEmpty, password == registerView.passwordconfirmtextfield.text, password.count >= 6 else {
-            showAlert(title: "유효하지 않은 비밀번호", message: "비밀번호를 다시 확인해주세요.")
+        guard let password = registerView.passwordtextfield.tf.text, !password.isEmpty else {
+            registerView.passwordtextfield.lblError.text = "비밀번호를 입력해주세요"
+            registerView.passwordconfirmtextfield.lblError.text = "비밀번호를 입력해주세요"
+            registerView.passwordtextfield.isError = true
+            registerView.passwordconfirmtextfield.isError = true
+
             return
         }
-        
+
+        guard password == registerView.passwordconfirmtextfield.tf.text else {
+            registerView.passwordtextfield.lblError.text = "비밀번호를 다르다"
+            registerView.passwordconfirmtextfield.lblError.text = "비밀번호를 다르다"
+            registerView.passwordtextfield.isError = true
+            registerView.passwordconfirmtextfield.isError = true
+            return
+        }
+        let passwordCheck = CommonUtil.isValidPassWord(pw: password)
+        guard passwordCheck == "" else {
+            registerView.passwordtextfield.lblError.text = passwordCheck
+            registerView.passwordconfirmtextfield.lblError.text = passwordCheck
+            registerView.passwordtextfield.isError = true
+            registerView.passwordconfirmtextfield.isError = true
+            return
+        }
+
         //        guard let nickName = registerView.nicknametextfield.text else { return }
         //        guard let email = registerView.emailtextfield.text else { return }
         //        guard let password = registerView.passwordtextfield.text else { return }
@@ -52,22 +78,13 @@ final class RegisterViewController: BaseViewController {
                     navigationPushController(viewController: vcInfo, animated: true)
                 } else {
                     // 닉네임 이미 사용 중
-                    showAlert(title: "닉네임 중복", message: "다른 닉네임을 사용해주세요.")
+                    registerView.nicknametextfield.lblError.text = "중복된 닉네임이 있습니다."
+                    registerView.nicknametextfield.isError = true
                 }
             } catch {
                 print("Error checking nickName availability: \(error.localizedDescription)")
             }
         }
-    }
-
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: .alert
-        )
-        alertController.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        present(alertController, animated: true, completion: nil)
     }
 
     func isValidEmail(_ email: String) -> Bool {
@@ -81,6 +98,7 @@ final class RegisterViewController: BaseViewController {
         view.addSubview(headerView)
 
         headerView.lblTitle.text = "회원가입"
+        headerView.btnBack.addTarget(self, action: #selector(backButtonTouched), for: .touchUpInside)
     }
 
     /**
@@ -111,5 +129,70 @@ final class RegisterViewController: BaseViewController {
         view.addGestureRecognizer(tapGesture)
 
         setHeaderView()
+        setUI()
+    }
+
+    func setUI() {
+        registerView.nicknametextfield.initTextFieldText(placeHolder: "닉네임을 입력해 주세요", delegate: self)
+        registerView.nicknametextfield.lblTitle.text = "닉네임"
+        registerView.nicknametextfield.tf.autocorrectionType = .no
+//        registerView.nicknametextfield.lblError.text = "닉네임이 중복되었습니다."
+        registerView.nicknametextfield.tf.keyboardType = .emailAddress
+        registerView.nicknametextfield.tf.returnKeyType = .next
+
+        registerView.emailtextfield.initTextFieldText(placeHolder: "이메일을 입력해 주세요", delegate: self)
+        registerView.emailtextfield.lblTitle.text = "이메일"
+//        registerView.emailtextfield.lblError.text = "올바른 이메일 형식을 입력해 주세요"
+        registerView.emailtextfield.tf.keyboardType = .emailAddress
+        registerView.emailtextfield.tf.returnKeyType = .next
+
+        registerView.passwordtextfield.initTextFieldText(placeHolder: "비밀번호를 입력해 주세요", delegate: self)
+        registerView.passwordtextfield.lblTitle.text = "비밀번호"
+//        registerView.passwordtextfield.lblError.text = "올바른 비밀번호 형식을 입력해 주세요"
+        registerView.passwordtextfield.tf.returnKeyType = .next
+        registerView.passwordtextfield.textFieldIsPW(isPW: true)
+
+        registerView.passwordconfirmtextfield.initTextFieldText(placeHolder: "비밀번호를 다시 입력해 주세요", delegate: self)
+        registerView.passwordconfirmtextfield.lblTitle.text = "비밀번호 확인"
+//        registerView.passwordconfirmtextfield.lblError.text = "올바른 비밀번호 형식을 입력해 주세요"
+        registerView.passwordconfirmtextfield.tf.returnKeyType = .done
+        registerView.passwordconfirmtextfield.textFieldIsPW(isPW: true)
+    }
+}
+
+extension RegisterViewController: CustomTextFieldDelegate {
+    func customTextFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == registerView.emailtextfield.tf {
+            registerView.passwordtextfield.tf.becomeFirstResponder() // next 버튼 선택 시 -> tfPW 포커싱
+        } else {
+            registerView.passwordtextfield.tf.resignFirstResponder() // return 버튼 선택 시 -> 키보드 내려감
+        }
+        return true
+    }
+
+    func customTextFieldValueChanged(_ textfield: UITextField) {
+        if textfield == registerView.emailtextfield.tf {
+            registerView.emailtextfield.isError = false // next 버튼 선택 시 -> tfPW 포커싱
+        } else {
+            registerView.passwordtextfield.isError = false // return 버튼 선택 시 -> 키보드 내려감
+        }
+    }
+
+    func customTextFieldDidEndEditing(_ textField: UITextField) {}
+
+    func customTextFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == registerView.emailtextfield.tf {
+            registerView.emailtextfield.isError = false // next 버튼 선택 시 -> tfPW 포커싱
+        } else {
+            registerView.passwordtextfield.isError = false // return 버튼 선택 시 -> 키보드 내려감
+        }
+    }
+
+    func errorStatus(isError: Bool, view: CustomTextField) {}
+
+    func customTextField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return true }
+        let newLength = text.count + string.count - range.length
+        return newLength <= 30 // 30개 제한
     }
 }

@@ -9,14 +9,6 @@ import SnapKit
 import UIKit
 
 final class RegisterView: UIView {
-    
-    private lazy var nicknameLabel: UILabel = LabelFactory.makeLabel(text: "닉네임", font: ThemeFont.regular(size: 22), textAlignment: .left)
-
-    private lazy var emailLabel: UILabel = LabelFactory.makeLabel(text: "이메일", font: ThemeFont.regular(size: 22), textAlignment: .left)
-
-    private lazy var passwordLabel: UILabel = LabelFactory.makeLabel(text: "비밀번호", font: ThemeFont.regular(size: 22), textAlignment: .left)
-
-    private lazy var passwordConfirmLabel: UILabel = LabelFactory.makeLabel(text: "비밀번호 확인", font: ThemeFont.regular(size: 22), textAlignment: .left)
 
     lazy var provisionButton: UIButton = ButtonFactory.makeButton(
         title: "약관동의",
@@ -32,39 +24,27 @@ final class RegisterView: UIView {
         backgroundColor: ThemeColor.primary,
         cornerRadius: 15)
 
-    var nicknametextfield: UITextField = {
-        let textfield = UITextField()
-        textfield.placeholder = "닉네임을 입력해주세요"
-        textfield.keyboardType = .emailAddress
-        textfield.font = ThemeFont.regular(size: 17)
-        textfield.autocapitalizationType = .none
+    var nicknametextfield: CustomTextField = {
+        let textfield = CustomTextField()
+        textfield.tf.keyboardType = .emailAddress
         return textfield
     }()
 
-    var emailtextfield: UITextField = {
-        let textfield = UITextField()
-        textfield.placeholder = "이메일을 입력해주세요"
-        textfield.keyboardType = .emailAddress
-        textfield.font = ThemeFont.regular(size: 17)
-        textfield.autocapitalizationType = .none
+    var emailtextfield: CustomTextField = {
+        let textfield = CustomTextField()
+        textfield.tf.keyboardType = .emailAddress
         return textfield
     }()
 
-    var passwordtextfield: UITextField = {
-        let textfield = UITextField()
-        textfield.placeholder = "비밀번호를 입력해주세요"
-        textfield.keyboardType = .asciiCapable
-        textfield.font = ThemeFont.regular(size: 17)
-        textfield.autocapitalizationType = .none
+    var passwordtextfield: CustomTextField = {
+        let textfield = CustomTextField()
+        textfield.tf.keyboardType = .asciiCapable
         return textfield
     }()
 
-    var passwordconfirmtextfield: UITextField = {
-        let textfield = UITextField()
-        textfield.placeholder = "비밀번호 확인을 해주세요"
-        textfield.keyboardType = .asciiCapable
-        textfield.font = ThemeFont.regular(size: 17)
-        textfield.autocapitalizationType = .none
+    var passwordconfirmtextfield: CustomTextField = {
+        let textfield = CustomTextField()
+        textfield.tf.keyboardType = .asciiCapable
         return textfield
     }()
 
@@ -74,18 +54,7 @@ final class RegisterView: UIView {
         view.spacing = 10
         view.alignment = .fill
         view.distribution = .fillProportionally
-        view.addArrangedSubview(nicknameLabel)
-        view.addArrangedSubview(nicknametextfield)
-        view.addArrangedSubview(separateView)
-        view.addArrangedSubview(emailLabel)
-        view.addArrangedSubview(emailtextfield)
-        view.addArrangedSubview(separateView)
-        view.addArrangedSubview(passwordLabel)
-        view.addArrangedSubview(passwordtextfield)
-        view.addArrangedSubview(separateView)
-        view.addArrangedSubview(passwordConfirmLabel)
-        view.addArrangedSubview(passwordconfirmtextfield)
-        view.addArrangedSubview(separateView)
+        [nicknametextfield, emailtextfield, passwordtextfield, passwordconfirmtextfield].forEach { view.addArrangedSubview($0) }
         return view
     }()
 
