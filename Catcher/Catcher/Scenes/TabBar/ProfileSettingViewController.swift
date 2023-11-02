@@ -67,6 +67,10 @@ class ProfileSettingViewController: BaseHeaderViewController {
 
 private extension ProfileSettingViewController {
     func updateProfile() {
+        if viewModel.profileImage == nil {
+            showAlert(title: "프로필 사진 미등록", message: "프로필 사진을 등록해주세요.")
+            return
+        }
         self.processIndicatorView()
         
         viewModel.updateProfile { [weak self] image in
