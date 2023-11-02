@@ -23,4 +23,5 @@ struct UserInfo: Hashable {
     var register: Date = Date()
     var score: Int = 0
     var pick: [String]? = []
+    var block: [String]? = []
 }

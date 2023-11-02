@@ -27,7 +27,7 @@ extension ProfileSettingViewModel {
                     completion(false)
                     return
                 } else {
-                    UserDefaultsManager().setValue(value: user.location, key: "location")
+                    UserDefaultsManager().setValue(value: user.location, key: nearUserPath)
                     let firebaseManager = FirebaseManager()
                     guard let uid = firebaseManager.getUID else {
                         CommonUtil.print(output:"Error: No UID available")
@@ -47,13 +47,6 @@ extension ProfileSettingViewModel {
         }
         FireStorageManager.shared.setProfileData(image: profileImage) { error in
             completion(profileImage)
-        }
-    }
-    
-    func fetchProfile(completion: @escaping (UIImage?) -> Void) {
-        guard let uid = FirebaseManager().getUID else { return }
-        ImageCacheManager.shared.loadImage(uid: uid) { image in
-            completion(image)
         }
     }
 }
@@ -127,7 +120,8 @@ private extension ProfileSettingViewModel {
             smoking: user.smoking,
             register: Date(),
             score: 0,
-            pick: []
+            pick: [],
+            block: []
         )
     }
 }

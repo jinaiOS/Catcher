@@ -55,7 +55,7 @@ class LoginViewController: BaseViewController {
     
     func storeUserInfo() async {
         do {
-            guard let uid = FireStoreManager.shared.uid else {
+            guard let uid = FirebaseManager().getUID else {
                 CommonUtil.print(output:"Error: UID is nil")
                 return
             }
@@ -66,6 +66,7 @@ class LoginViewController: BaseViewController {
                 // 성공적으로 정보를 가져온 경우
                 CommonUtil.print(output: userInfo)
                 DataManager.sharedInstance.userInfo = userInfo
+                UserDefaultsManager().setValue(value: userInfo.location, key: nearUserPath)
             } else if let error = error {
                 // 오류가 발생한 경우
                 CommonUtil.print(output:"Error: \(error)")
