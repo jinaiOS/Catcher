@@ -12,6 +12,7 @@ final class MainPageViewModel {
     private let storeManager = FireStoreManager.shared
     private let uid = FirebaseManager().getUID
     let mainSubject = CurrentValueSubject<MainItems, Never>(.init(data: DummyData))
+    var myInfo: UserInfo?
 }
 
 extension MainPageViewModel {
@@ -48,6 +49,18 @@ extension MainPageViewModel {
                   let nearUser = nearResult.result,
                   let pickUser = pickResult.result else { return }
             sendItems(data: (randomUser, rankUser, newUser, nearUser, pickUser))
+        }
+    }
+    
+    func fetchMyInfo() {
+        guard let uid = uid else { return }
+        Task {
+            let (result, error) = await storeManager.fetchUserInfo(uuid: uid)
+            if let error {
+                CommonUtil.print(output: error.localizedDescription)
+                return
+            }
+            myInfo = result
         }
     }
 }
@@ -102,6 +115,15 @@ extension MainPageViewModel {
     func isPickedUser(info: UserInfo) -> Bool {
         let uids = fetchPickedUser.map { $0.uid }
         if uids.contains(info.uid) {
+            return true
+        }
+        return false
+    }
+    
+    func isBlockedUser(uid: String) -> Bool {
+        guard let myInfo = myInfo,
+              let blockList = myInfo.block else { return false }
+        if blockList.contains(uid) {
             return true
         }
         return false

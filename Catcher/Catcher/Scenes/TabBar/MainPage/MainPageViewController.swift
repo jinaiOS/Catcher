@@ -30,6 +30,7 @@ final class MainPageViewController: UIViewController {
         setHeader()
         bind()
         viewModel.fetchMainPageData()
+        viewModel.fetchMyInfo()
     }
 }
 
@@ -144,8 +145,9 @@ extension MainPageViewController: UICollectionViewDelegate {
         let item = items[indexPath.item]
         let userInfo = viewModel.userInfoFromItem(item: item)
         let isPicked = viewModel.isPickedUser(info: userInfo)
+        let isBlocked = viewModel.isBlockedUser(uid: userInfo.uid)
         
-        let userInfoVC = UserInfoViewController(info: userInfo, isPicked: isPicked)
+        let userInfoVC = UserInfoViewController(info: userInfo, isPicked: isPicked, isBlocked: isBlocked)
         userInfoVC.delegate = self
         
         userInfoVC.modalPresentationStyle = .custom
@@ -157,5 +159,9 @@ extension MainPageViewController: UICollectionViewDelegate {
 extension MainPageViewController: UpdatePickUserInfo {
     func updatePickUser(info: [UserInfo]) {
         viewModel.updatePickUser(info: info)
+    }
+    
+    func updateBlockUser() {
+        viewModel.fetchMyInfo()
     }
 }

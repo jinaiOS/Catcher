@@ -126,7 +126,6 @@ class MyPageViewController: BaseViewController {
 
     private lazy var mySaveNumber: UILabel = {
         let lb = UILabel()
-        lb.text = "3"
         lb.font = .systemFont(ofSize: 20, weight: .bold)
         lb.textAlignment = .center
         return lb
@@ -189,13 +188,52 @@ class MyPageViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1)
+        
+        setLayout()
         configure()
+    }
+}
+
+private extension MyPageViewController {
+    func configure() {
+        view.backgroundColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1)
         logOutButton.addTarget(self, action: #selector(pressLogOutButton), for: .touchUpInside)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapProfileImage))
         profilePhoto.addGestureRecognizer(tapGesture)
         profilePhoto.isUserInteractionEnabled = true
+        
+        fetchPickCount { [weak self] pickCount in
+            guard let self = self else { return }
+            mySaveNumber.text = "\(pickCount)"
+        }
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didRecievePickUserCountNotification),
+            name: NSNotification.Name(NotificationManager.NotiName.pick.key),
+            object: nil)
+    }
+    
+    @objc func didRecievePickUserCountNotification(_ notification: Notification) {
+        let count = notification.object as? Int
+        if let count {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                mySaveNumber.text = "\(count)"
+            }
+        }
+    }
+    
+    func fetchPickCount(completion: @escaping (Int) -> Void) {
+        Task {
+            let (result, error) = await FireStoreManager.shared.fetchPickUsers()
+            if let error {
+                CommonUtil.print(output: error.localizedDescription)
+            }
+            guard let result = result else { return }
+            completion(result.count)
+        }
     }
 }
 
@@ -240,19 +278,13 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension MyPageViewController {
     @objc func pressLogOutButton() {
-        if let errorMessage = FirebaseManager().logOut {
-            // 로그아웃 실패
-            CommonUtil.print(output:"로그아웃 실패: \(errorMessage)")
-        } else {
-            // 로그아웃 성공
-            CommonUtil.print(output:"로그아웃 성공")
-            AppDelegate.applicationDelegate().changeInitViewController(type: .Login)
-        }
+        FirebaseManager().logOut
+        AppDelegate.applicationDelegate().changeInitViewController(type: .Login)
     }
 }
 
 private extension MyPageViewController {
-    func configure() {
+    func setLayout() {
         // 메뉴 아이템의 갯수에 따라 view의 높이를 변경
         tableViewHeight = CGFloat(MenuItems.allCases.count) * 44 + 70
         myTable.dataSource = self

@@ -20,9 +20,8 @@ final class FireStoreManager {
     static let shared = FireStoreManager()
     private let db = Firestore.firestore()
     private let userInfoPath = "userInfo"
-    private let nearUserPath = "location"
     private let itemCount: Int = 9
-    let uid: String?
+    private let uid: String?
     
     private init(uid: String? = FirebaseManager().getUID) {
         self.uid = uid
@@ -86,6 +85,7 @@ extension FireStoreManager {
             return (nil, FireStoreError.noUIDList)
         }
         let userList = await groupTaskForFetchUsers(uidList: uidList)
+        NotificationManager.shared.postPickCount(count: userList.count)
         return (userList, nil)
     }
     
@@ -101,11 +101,11 @@ extension FireStoreManager {
     }
     
     func fetchRanking() async -> (result: [UserInfo]?, error: Error?) {
-        let docRef = db.collection(userInfoPath)
+        let query = db.collection(userInfoPath)
             .order(by: Data.score.key, descending: true)
             .limit(to: itemCount)
         do {
-            let document = try await docRef.getDocuments()
+            let document = try await query.getDocuments()
             let userInfoList = document.documents.map {
                 $0.data()
             }.compactMap {
@@ -148,6 +148,21 @@ extension FireStoreManager {
             return (nil, error)
         }
     }
+    
+    /// 받은 찜 갯수
+    func fetchMyPickedCount(uid: String) async -> (result: Int?, error: Error?) {
+        let query = db.collection(userInfoPath)
+            .whereField(Data.pick.key, arrayContains: uid)
+        let countQuery = query.count
+        
+        do {
+            let snapshot = try await countQuery.getAggregation(source: .server)
+            let count = snapshot.count as? Int
+            return (count, nil)
+        } catch {
+            return (nil, error)
+        }
+    }
 }
 
 extension FireStoreManager {
@@ -157,6 +172,19 @@ extension FireStoreManager {
         do {
             try await docRef.updateData([
                 Data.pick.key: FieldValue.arrayUnion([uuid])
+            ])
+            return nil
+        } catch {
+            return error
+        }
+    }
+    
+    func updateBlockUser(uuid: String) async -> Error? {
+        guard let uid = uid else { return FireStoreError.missingUID }
+        let docRef = db.collection(userInfoPath).document(uid)
+        do {
+            try await docRef.updateData([
+                Data.block.key: FieldValue.arrayUnion([uuid])
             ])
             return nil
         } catch {
@@ -183,6 +211,19 @@ extension FireStoreManager {
         do {
             try await docRef.updateData([
                 Data.pick.key: FieldValue.arrayRemove([uuid])
+            ])
+            return nil
+        } catch {
+            return error
+        }
+    }
+    
+    func deleteBlockUser(uuid: String) async -> Error? {
+        guard let uid = uid else { return FireStoreError.missingUID }
+        let docRef = db.collection(userInfoPath).document(uid)
+        do {
+            try await docRef.updateData([
+                Data.block.key: FieldValue.arrayRemove([uuid])
             ])
             return nil
         } catch {
@@ -241,6 +282,7 @@ private extension FireStoreManager {
         case register
         case score
         case pick
+        case block
         
         var key: String { rawValue }
     }
@@ -261,7 +303,8 @@ private extension FireStoreManager {
             Data.smoking.key: data.smoking,
             Data.register.key: data.register,
             Data.score.key: data.score,
-            Data.pick.key: data.pick ?? []
+            Data.pick.key: data.pick ?? [],
+            Data.block.key: data.block ?? []
         ]
     }
     
@@ -282,7 +325,8 @@ private extension FireStoreManager {
             smoking: data[Data.smoking.key] as? Bool ?? false,
             register: data[Data.register.key] as? Date ?? Date(),
             score: data[Data.score.key] as? Int ?? 0,
-            pick: data[Data.pick.key] as? [String] ?? []
+            pick: data[Data.pick.key] as? [String] ?? [],
+            block: data[Data.block.key] as? [String] ?? []
         )
     }
 }

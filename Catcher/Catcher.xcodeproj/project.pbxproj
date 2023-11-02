@@ -15,6 +15,8 @@
 		23E7DABB2AEB978600CDBC53 /* ProfileSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E7DAB92AEB978600CDBC53 /* ProfileSettingViewController.swift */; };
 		23E7DABC2AEB978600CDBC53 /* ProfileSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23E7DABA2AEB978600CDBC53 /* ProfileSettingViewController.xib */; };
 		33192D772AE9D00200069582 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33192D762AE9D00200069582 /* Dummy.swift */; };
+		33462AF42AF35C6C006CDFBA /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622C0762AF1415300455649 /* CustomTextField.swift */; };
+		33462AF62AF3CAC4006CDFBA /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33462AF52AF3CAC4006CDFBA /* NotificationManager.swift */; };
 		335241942AE5AEBB009EB771 /* FireStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335241932AE5AEBB009EB771 /* FireStoreManager.swift */; };
 		335241962AE5DB4A009EB771 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335241952AE5DB4A009EB771 /* Array+.swift */; };
 		33532B782AE17A31008B47EB /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33532B772AE17A31008B47EB /* UserInfo.swift */; };
@@ -135,6 +137,7 @@
 		23E7DAB92AEB978600CDBC53 /* ProfileSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewController.swift; sourceTree = "<group>"; };
 		23E7DABA2AEB978600CDBC53 /* ProfileSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileSettingViewController.xib; sourceTree = "<group>"; };
 		33192D762AE9D00200069582 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
+		33462AF52AF3CAC4006CDFBA /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		335241932AE5AEBB009EB771 /* FireStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreManager.swift; sourceTree = "<group>"; };
 		335241952AE5DB4A009EB771 /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
 		33532B772AE17A31008B47EB /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
@@ -275,6 +278,7 @@
 				33532B7F2AE17A75008B47EB /* UserDefaultsManager.swift */,
 				68708AB82AEE32CC00B4C7B9 /* StorageManager.swift */,
 				56BBF82E2AEB1EBB00A2BADD /* DatabaseManager.swift */,
+				33462AF52AF3CAC4006CDFBA /* NotificationManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -474,8 +478,8 @@
 				562E36BA2AD8DD03008D99B2 /* CommonUtil.swift */,
 				562E36C02AD91901008D99B2 /* Common.swift */,
 				562E36B42AD8DB57008D99B2 /* DataManager.swift */,
-				33894A672AEEAB7C00582345 /* StrokeLabel.swift */,
 				33532B812AE17A8E008B47EB /* Managers */,
+				33894A672AEEAB7C00582345 /* StrokeLabel.swift */,
 				56BBF7ED2AE6687B00A2BADD /* Models */,
 				33C58E802AD85028008EB6C2 /* Extensions */,
 			);
@@ -731,6 +735,7 @@
 				56C08B842AE0FE8300FB8608 /* ConversationsModels.swift in Sources */,
 				56BBF82F2AEB1EBB00A2BADD /* DatabaseManager.swift in Sources */,
 				56C08BA42AE10EB400FB8608 /* SearchResult.swift in Sources */,
+				33462AF62AF3CAC4006CDFBA /* NotificationManager.swift in Sources */,
 				562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */,
 				562E36C12AD91901008D99B2 /* Common.swift in Sources */,
 				5622C0702AEF0BE000455649 /* ResetPWViewController.swift in Sources */,
@@ -789,6 +794,7 @@
 				56C08B472ADF6B7E00FB8608 /* ChatViewController.swift in Sources */,
 				33C58E8E2AD8B2F6008EB6C2 /* UIColor+.swift in Sources */,
 				23E7DAB82AEB919400CDBC53 /* Const.swift in Sources */,
+				33462AF42AF35C6C006CDFBA /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -912,6 +918,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Catcher/Catcher.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -1100,6 +1107,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Catcher/Catcher.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -1134,6 +1142,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Catcher/Catcher.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
