@@ -32,6 +32,9 @@
 		33845E3B2AF43B9100539068 /* RevokeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33845E3A2AF43B9100539068 /* RevokeViewController.swift */; };
 		33845E3D2AF43B9600539068 /* RevokeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33845E3C2AF43B9600539068 /* RevokeView.swift */; };
 		33845E422AF442CE00539068 /* RevokeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33845E412AF442CE00539068 /* RevokeViewModel.swift */; };
+		33845E502AF4AEFD00539068 /* YOLOv3Int8LUT.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33845E4D2AF4AEFC00539068 /* YOLOv3Int8LUT.mlmodel */; };
+		33845E512AF4AEFD00539068 /* animegan2face_paint_512_v2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33845E4E2AF4AEFC00539068 /* animegan2face_paint_512_v2.mlmodel */; };
+		33845E522AF4AEFD00539068 /* GenderClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33845E4F2AF4AEFD00539068 /* GenderClassifier.mlmodel */; };
 		33894A682AEEAB7C00582345 /* StrokeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33894A672AEEAB7C00582345 /* StrokeLabel.swift */; };
 		33ABF3552AE46F2F002DCCF4 /* FireStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3542AE46F2F002DCCF4 /* FireStorageManager.swift */; };
 		33ABF3592AE4889D002DCCF4 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */; };
@@ -49,9 +52,6 @@
 		33E590252AF08C480060FBA0 /* DetectObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E590242AF08C480060FBA0 /* DetectObject.swift */; };
 		33E590272AF08C5F0060FBA0 /* DistinguishGender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E590262AF08C5F0060FBA0 /* DistinguishGender.swift */; };
 		33E590292AF08C730060FBA0 /* GenerateProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E590282AF08C730060FBA0 /* GenerateProfile.swift */; };
-		33E5902C2AF08D5F0060FBA0 /* YOLOv3Int8LUT.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33E5902B2AF08D5F0060FBA0 /* YOLOv3Int8LUT.mlmodel */; };
-		33E5902F2AF08D670060FBA0 /* animegan2face_paint_512_v2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33E5902D2AF08D660060FBA0 /* animegan2face_paint_512_v2.mlmodel */; };
-		33E590352AF1AA590060FBA0 /* GenderClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33E590342AF1AA580060FBA0 /* GenderClassifier.mlmodel */; };
 		33EF35A92AEAD62500B4863B /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EF35A82AEAD62500B4863B /* UserInfoViewModel.swift */; };
 		33FCCB432AE8AF81004FF322 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FCCB422AE8AF81004FF322 /* UIImage+.swift */; };
 		3B2BE3012ADE4EAE00BD54CC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */; };
@@ -158,6 +158,9 @@
 		33845E3A2AF43B9100539068 /* RevokeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeViewController.swift; sourceTree = "<group>"; };
 		33845E3C2AF43B9600539068 /* RevokeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeView.swift; sourceTree = "<group>"; };
 		33845E412AF442CE00539068 /* RevokeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeViewModel.swift; sourceTree = "<group>"; };
+		33845E4D2AF4AEFC00539068 /* YOLOv3Int8LUT.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3Int8LUT.mlmodel; sourceTree = "<group>"; };
+		33845E4E2AF4AEFC00539068 /* animegan2face_paint_512_v2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = animegan2face_paint_512_v2.mlmodel; sourceTree = "<group>"; };
+		33845E4F2AF4AEFD00539068 /* GenderClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GenderClassifier.mlmodel; sourceTree = "<group>"; };
 		33894A672AEEAB7C00582345 /* StrokeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeLabel.swift; sourceTree = "<group>"; };
 		33ABF3542AE46F2F002DCCF4 /* FireStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStorageManager.swift; sourceTree = "<group>"; };
 		33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
@@ -175,11 +178,8 @@
 		33E590242AF08C480060FBA0 /* DetectObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectObject.swift; sourceTree = "<group>"; };
 		33E590262AF08C5F0060FBA0 /* DistinguishGender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistinguishGender.swift; sourceTree = "<group>"; };
 		33E590282AF08C730060FBA0 /* GenerateProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateProfile.swift; sourceTree = "<group>"; };
-		33E5902B2AF08D5F0060FBA0 /* YOLOv3Int8LUT.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3Int8LUT.mlmodel; sourceTree = "<group>"; };
-		33E5902D2AF08D660060FBA0 /* animegan2face_paint_512_v2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = animegan2face_paint_512_v2.mlmodel; sourceTree = "<group>"; };
 		33E590322AF0DC260060FBA0 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		33E590332AF0DC260060FBA0 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		33E590342AF1AA580060FBA0 /* GenderClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GenderClassifier.mlmodel; sourceTree = "<group>"; };
 		33EF35A82AEAD62500B4863B /* UserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
 		33FCCB422AE8AF81004FF322 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -367,9 +367,9 @@
 		33E590312AF08D710060FBA0 /* CoreMLModel */ = {
 			isa = PBXGroup;
 			children = (
-				33E5902D2AF08D660060FBA0 /* animegan2face_paint_512_v2.mlmodel */,
-				33E590342AF1AA580060FBA0 /* GenderClassifier.mlmodel */,
-				33E5902B2AF08D5F0060FBA0 /* YOLOv3Int8LUT.mlmodel */,
+				33845E4E2AF4AEFC00539068 /* animegan2face_paint_512_v2.mlmodel */,
+				33845E4F2AF4AEFD00539068 /* GenderClassifier.mlmodel */,
+				33845E4D2AF4AEFC00539068 /* YOLOv3Int8LUT.mlmodel */,
 			);
 			path = CoreMLModel;
 			sourceTree = "<group>";
@@ -761,6 +761,7 @@
 				68708AB72AE745C200B4C7B9 /* SurveyViewController.swift in Sources */,
 				56C08B692ADF805800FB8608 /* HomeItem.swift in Sources */,
 				562E36B52AD8DB57008D99B2 /* DataManager.swift in Sources */,
+				33845E522AF4AEFD00539068 /* GenderClassifier.mlmodel in Sources */,
 				33532B7E2AE17A67008B47EB /* FirebaseManager.swift in Sources */,
 				562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */,
 				56C08B712ADF808B00FB8608 /* AskViewController.swift in Sources */,
@@ -770,7 +771,6 @@
 				33B358072ADE189E00A91C95 /* ButtonFactory.swift in Sources */,
 				56C08B662ADF805800FB8608 /* SectionHeaderView.swift in Sources */,
 				56C08B9C2AE10CDE00FB8608 /* ChatModels.swift in Sources */,
-				33E590352AF1AA590060FBA0 /* GenderClassifier.mlmodel in Sources */,
 				56C08B662ADF805800FB8608 /* SectionHeaderView.swift in Sources */,
 				230509582AE2469000F58092 /* ContactViewController.swift in Sources */,
 				56C08B9A2AE10CAA00FB8608 /* ChattingDetailViewController.swift in Sources */,
@@ -790,13 +790,13 @@
 				56C08B672ADF805800FB8608 /* RankSectionCell.swift in Sources */,
 				5675E1712AEE94AE001EAF95 /* CommonHeaderView.swift in Sources */,
 				56C08BA02AE10D4C00FB8608 /* PhotoViewerViewController.swift in Sources */,
-				33E5902F2AF08D670060FBA0 /* animegan2face_paint_512_v2.mlmodel in Sources */,
 				33845E3D2AF43B9600539068 /* RevokeView.swift in Sources */,
 				56C08B742ADF809300FB8608 /* InfoView.swift in Sources */,
 				3B3E35D72AE125A3006841D8 /* RegisterView.swift in Sources */,
 				562E36BB2AD8DD03008D99B2 /* CommonUtil.swift in Sources */,
 				33B7B5B12AF4271F00773E9F /* AppVersionView.swift in Sources */,
 				2305095D2AE2475E00F58092 /* ContactTableViewCell.swift in Sources */,
+				33845E502AF4AEFD00539068 /* YOLOv3Int8LUT.mlmodel in Sources */,
 				562E36B72AD8DCAA008D99B2 /* BaseViewController.swift in Sources */,
 				562E36B12AD8D0EE008D99B2 /* BaseTabBarController.swift in Sources */,
 				33E590252AF08C480060FBA0 /* DetectObject.swift in Sources */,
@@ -809,6 +809,7 @@
 				56C08B9E2AE10D2D00FB8608 /* LocationPickerViewController.swift in Sources */,
 				33E590292AF08C730060FBA0 /* GenerateProfile.swift in Sources */,
 				33EF35A92AEAD62500B4863B /* UserInfoViewModel.swift in Sources */,
+				33845E512AF4AEFD00539068 /* animegan2face_paint_512_v2.mlmodel in Sources */,
 				33E590272AF08C5F0060FBA0 /* DistinguishGender.swift in Sources */,
 				56C08B752ADF809300FB8608 /* InfoViewController.swift in Sources */,
 				33C58E892AD8B28D008EB6C2 /* ThemeColor.swift in Sources */,
@@ -832,7 +833,6 @@
 				33ABF3592AE4889D002DCCF4 /* LocalFileManager.swift in Sources */,
 				23E7DABB2AEB978600CDBC53 /* ProfileSettingViewController.swift in Sources */,
 				56C08B642ADF805800FB8608 /* MainPageView.swift in Sources */,
-				33E5902C2AF08D5F0060FBA0 /* YOLOv3Int8LUT.mlmodel in Sources */,
 				56C08B862AE0FEB300FB8608 /* ConversationTableViewCell.swift in Sources */,
 				33E590232AF08C0A0060FBA0 /* ProfileSettingViewModel.swift in Sources */,
 				335AC1F32AE7E89B00F2CF51 /* UserInfoViewController.swift in Sources */,
