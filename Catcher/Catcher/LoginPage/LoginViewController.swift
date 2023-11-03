@@ -26,7 +26,7 @@ class LoginViewController: BaseViewController {
                 self.loginView.emailTextField.isError = true
                 self.loginView.passwordTextField.isError = true
             } else {
-                CommonUtil.print(output:"로그인 성공")
+                CommonUtil.print(output: "로그인 성공")
                 Task {
                     await self.storeUserInfo()
                 }
@@ -37,12 +37,12 @@ class LoginViewController: BaseViewController {
   
     @objc func signUpPressed() {
         let vc = RegisterViewController()
-        self.navigationPushController(viewController: vc, animated: true)
+        navigationPushController(viewController: vc, animated: true)
     }
     
     @objc func resetPasswordButton() {
         let vc = ResetPWViewController()
-        self.navigationPushController(viewController: vc, animated: true)
+        navigationPushController(viewController: vc, animated: true)
     }
 
     override func viewDidLoad() {
@@ -54,9 +54,10 @@ class LoginViewController: BaseViewController {
     }
     
     func storeUserInfo() async {
+        let nearUserPath = "location"
         do {
             guard let uid = FirebaseManager().getUID else {
-                CommonUtil.print(output:"Error: UID is nil")
+                CommonUtil.print(output: "Error: UID is nil")
                 return
             }
             
@@ -69,7 +70,7 @@ class LoginViewController: BaseViewController {
                 UserDefaultsManager().setValue(value: userInfo.location, key: nearUserPath)
             } else if let error = error {
                 // 오류가 발생한 경우
-                CommonUtil.print(output:"Error: \(error)")
+                CommonUtil.print(output: "Error: \(error)")
             }
         }
     }
@@ -108,8 +109,7 @@ extension LoginViewController: CustomTextFieldDelegate {
         }
     }
     
-    func customTextFieldDidEndEditing(_ textField: UITextField) {
-    }
+    func customTextFieldDidEndEditing(_ textField: UITextField) {}
     
     func customTextFieldDidBeginEditing(_ textField: UITextField) {
         if textField == loginView.emailTextField.tf {
@@ -119,9 +119,7 @@ extension LoginViewController: CustomTextFieldDelegate {
         }
     }
     
-    func errorStatus(isError: Bool, view: CustomTextField) {
-        
-    }
+    func errorStatus(isError: Bool, view: CustomTextField) {}
     
     func customTextField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }
