@@ -74,6 +74,7 @@ extension FirebaseManager {
         }
     }
     
+    /// 사용자 삭제
     func removeUser() async -> Bool {
         guard let user = auth.currentUser else { return false }
         do {
