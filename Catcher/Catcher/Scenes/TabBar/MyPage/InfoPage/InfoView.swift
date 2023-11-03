@@ -12,28 +12,24 @@ final class InfoView: UIView {
     var selectedBodyButton: UIButton?
     var selectedDrinkButton: UIButton?
     var selectedSmokeButton: UIButton?
-    lazy var regionTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "지역을 입력해 주세요"
+    lazy var regionTextField: CustomTextField = {
+        let textField = CustomTextField()
         return textField
     }()
     
-    lazy var educationTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "학력을 입력해 주세요"
+    lazy var educationTextField: CustomTextField = {
+        let textField = CustomTextField()
         return textField
     }()
     
-    lazy var heightTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "키를 입력해 주세요"
-        textField.keyboardType = .numberPad
+    lazy var heightTextField: CustomTextField = {
+        let textField = CustomTextField()
+        textField.tf.keyboardType = .numberPad
         return textField
     }()
 
-    lazy var birthTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "생일을 입력해 주세요"
+    lazy var birthTextField: CustomTextField = {
+        let textField = CustomTextField()
         return textField
     }()
     
@@ -144,10 +140,10 @@ final class InfoView: UIView {
         view.distribution = .fillProportionally
         view.spacing = AppConstraint.stackViewSpacing
         
-        [makeLabel(text: "지역"), regionTextField, separateView,
-         makeLabel(text: "생일"), birthTextField, separateView,
-         makeLabel(text: "학력"), educationTextField, separateView,
-         makeLabel(text: "키"), heightTextField, separateView,
+        [regionTextField,
+         birthTextField,
+         educationTextField,
+         heightTextField,
          makeLabel(text: "체형"), bodyHstack, separateView,
          makeLabel(text: "음주"), drinkingHstack, separateView,
          makeLabel(text: "흡연"), smokingHstack].forEach {

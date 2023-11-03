@@ -5,8 +5,8 @@
 //  Copyright (c) 2023 z-wook. All right reserved.
 //
 
-import Foundation
 import FirebaseFirestore
+import Foundation
 
 enum FireStoreError: Error {
     case canNotConvert
@@ -22,7 +22,7 @@ final class FireStoreManager {
     private let userInfoPath = "userInfo"
     private let itemCount: Int = 9
     private let uid: String?
-    
+    private let nearUserPath = "location"
     private init(uid: String? = FirebaseManager().getUID) {
         self.uid = uid
     }
@@ -34,12 +34,12 @@ extension FireStoreManager {
         let docRef = db.collection(userInfoPath)
             .whereField(Data.nickName.key, isEqualTo: nickName)
         do {
-            if (try await docRef.getDocuments().documents.first?.data()) != nil {
+            if try (await docRef.getDocuments().documents.first?.data()) != nil {
                 return (false, nil)
             }
             return (true, nil)
         } catch {
-            return(nil, error)
+            return (nil, error)
         }
     }
 }
@@ -261,7 +261,7 @@ private extension FireStoreManager {
                 group.addTask {
                     let data = await self.fetchUserInfo(uuid: uid)
                     if let error = data.error {
-                        CommonUtil.print(output:"error: \(error.localizedDescription)")
+                        CommonUtil.print(output: "error: \(error.localizedDescription)")
                         return nil
                     }
                     return data.result
