@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SafariServices
 import SnapKit
 import UIKit
 
@@ -15,7 +16,7 @@ enum MenuItems: String, CaseIterable {
     case report = "사용자 신고"
     case terms = "개인 정보 및 처리 방침"
     case opensource = "오픈소스 라이선스"
-    case version = "앱 버전 v1.0"
+    case version = "앱 버전"
     case withdraw = "회원 탈퇴"
 }
 
@@ -265,11 +266,19 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             let vc = ReportViewController()
             self.navigationPushController(viewController: vc, animated: true)
         case 3:
-            break
+            let url = URL(string: "https://plip.kr/pcc/bbd65582-9034-4359-a09a-022a093eda26/privacy/1.html")
+            let vc = SFSafariViewController(url: url!)
+            present(vc, animated: true)
         case 4:
-            break
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
         case 5:
-            break
+            let appVersionVC = AppVersionViewController()
+            self.navigationPushController(viewController: appVersionVC, animated: true)
+        case 6:
+            let revokeVC = RevokeViewController()
+            self.navigationPushController(viewController: revokeVC, animated: true)
         default:
             break
         }
@@ -278,12 +287,26 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension MyPageViewController {
     @objc func pressLogOutButton() {
-        FirebaseManager().logOut
-        AppDelegate.applicationDelegate().changeInitViewController(type: .Login)
+        showLogOutAlert()
     }
 }
 
 private extension MyPageViewController {
+    func showLogOutAlert() {
+        let alert = UIAlertController(
+            title: "로그아웃",
+            message: "로그아웃을 하시겠습니까?",
+            preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .destructive) { _ in
+            FirebaseManager().logOut
+            AppDelegate.applicationDelegate().changeInitViewController(type: .Login)
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .default)
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
+    
     func setLayout() {
         // 메뉴 아이템의 갯수에 따라 view의 높이를 변경
         tableViewHeight = CGFloat(MenuItems.allCases.count) * 44 + 70

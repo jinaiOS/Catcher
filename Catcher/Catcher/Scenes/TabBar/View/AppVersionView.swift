@@ -65,7 +65,7 @@ private extension AppVersionView {
         }
         
         appIconView.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(50)
             $0.leading.trailing.equalTo(self.safeAreaLayoutGuide).inset(100)
             $0.height.equalTo(appIconView.snp.width)
         }

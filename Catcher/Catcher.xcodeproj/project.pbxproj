@@ -28,11 +28,17 @@
 		335AC1F52AE7E8D100F2CF51 /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC1F42AE7E8D100F2CF51 /* UserInfoView.swift */; };
 		335B78BA2AE70237004D2956 /* MainItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335B78B92AE70237004D2956 /* MainItems.swift */; };
 		335B78BC2AE70844004D2956 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335B78BB2AE70844004D2956 /* ImageCacheManager.swift */; };
+		33845E392AF4393F00539068 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 33845E382AF4393F00539068 /* Settings.bundle */; };
+		33845E3B2AF43B9100539068 /* RevokeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33845E3A2AF43B9100539068 /* RevokeViewController.swift */; };
+		33845E3D2AF43B9600539068 /* RevokeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33845E3C2AF43B9600539068 /* RevokeView.swift */; };
+		33845E422AF442CE00539068 /* RevokeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33845E412AF442CE00539068 /* RevokeViewModel.swift */; };
 		33894A682AEEAB7C00582345 /* StrokeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33894A672AEEAB7C00582345 /* StrokeLabel.swift */; };
 		33ABF3552AE46F2F002DCCF4 /* FireStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3542AE46F2F002DCCF4 /* FireStorageManager.swift */; };
 		33ABF3592AE4889D002DCCF4 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */; };
 		33B358072ADE189E00A91C95 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B358062ADE189E00A91C95 /* ButtonFactory.swift */; };
 		33B3580A2ADE18D600A91C95 /* LabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B358092ADE18D600A91C95 /* LabelFactory.swift */; };
+		33B7B5AF2AF4271700773E9F /* AppVersionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B7B5AE2AF4271700773E9F /* AppVersionViewController.swift */; };
+		33B7B5B12AF4271F00773E9F /* AppVersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B7B5B02AF4271F00773E9F /* AppVersionView.swift */; };
 		33C58E7F2AD85024008EB6C2 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E7E2AD85024008EB6C2 /* UIViewController+.swift */; };
 		33C58E892AD8B28D008EB6C2 /* ThemeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E882AD8B28D008EB6C2 /* ThemeColor.swift */; };
 		33C58E8C2AD8B2B5008EB6C2 /* ThemeFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C58E8B2AD8B2B5008EB6C2 /* ThemeFont.swift */; };
@@ -148,11 +154,17 @@
 		335AC1F42AE7E8D100F2CF51 /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		335B78B92AE70237004D2956 /* MainItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainItems.swift; sourceTree = "<group>"; };
 		335B78BB2AE70844004D2956 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		33845E382AF4393F00539068 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		33845E3A2AF43B9100539068 /* RevokeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeViewController.swift; sourceTree = "<group>"; };
+		33845E3C2AF43B9600539068 /* RevokeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeView.swift; sourceTree = "<group>"; };
+		33845E412AF442CE00539068 /* RevokeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeViewModel.swift; sourceTree = "<group>"; };
 		33894A672AEEAB7C00582345 /* StrokeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeLabel.swift; sourceTree = "<group>"; };
 		33ABF3542AE46F2F002DCCF4 /* FireStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStorageManager.swift; sourceTree = "<group>"; };
 		33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		33B358062ADE189E00A91C95 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
 		33B358092ADE18D600A91C95 /* LabelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelFactory.swift; sourceTree = "<group>"; };
+		33B7B5AE2AF4271700773E9F /* AppVersionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionViewController.swift; sourceTree = "<group>"; };
+		33B7B5B02AF4271F00773E9F /* AppVersionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionView.swift; sourceTree = "<group>"; };
 		33C58E7E2AD85024008EB6C2 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		33C58E882AD8B28D008EB6C2 /* ThemeColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColor.swift; sourceTree = "<group>"; };
 		33C58E8B2AD8B2B5008EB6C2 /* ThemeFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeFont.swift; sourceTree = "<group>"; };
@@ -282,6 +294,33 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		33845E3E2AF43D0300539068 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				33B7B5B02AF4271F00773E9F /* AppVersionView.swift */,
+				33845E3C2AF43B9600539068 /* RevokeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		33845E3F2AF43D1200539068 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				33B7B5AE2AF4271700773E9F /* AppVersionViewController.swift */,
+				33845E3A2AF43B9100539068 /* RevokeViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		33845E402AF43D2700539068 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				33E590222AF08C0A0060FBA0 /* ProfileSettingViewModel.swift */,
+				33845E412AF442CE00539068 /* RevokeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		33B358082ADE18B200A91C95 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
@@ -351,6 +390,7 @@
 		562E36742AD80EF9008D99B2 = {
 			isa = PBXGroup;
 			children = (
+				33845E382AF4393F00539068 /* Settings.bundle */,
 				562E367F2AD80EF9008D99B2 /* Catcher */,
 				33E590312AF08D710060FBA0 /* CoreMLModel */,
 				562E36962AD80EFB008D99B2 /* CatcherTests */,
@@ -456,7 +496,9 @@
 				56C08B782ADF80AC00FB8608 /* MyPage */,
 				68708AB62AE745C200B4C7B9 /* SurveyViewController.swift */,
 				23E7DAB92AEB978600CDBC53 /* ProfileSettingViewController.swift */,
-				33E590222AF08C0A0060FBA0 /* ProfileSettingViewModel.swift */,
+				33845E3E2AF43D0300539068 /* View */,
+				33845E402AF43D2700539068 /* ViewModel */,
+				33845E3F2AF43D1200539068 /* ViewController */,
 				23E7DABA2AEB978600CDBC53 /* ProfileSettingViewController.xib */,
 			);
 			path = TabBar;
@@ -682,6 +724,7 @@
 			files = (
 				2305095E2AE2475E00F58092 /* ContactTableViewCell.xib in Resources */,
 				23E7DABC2AEB978600CDBC53 /* ProfileSettingViewController.xib in Resources */,
+				33845E392AF4393F00539068 /* Settings.bundle in Resources */,
 				562E368D2AD80EFA008D99B2 /* LaunchScreen.storyboard in Resources */,
 				562E368A2AD80EFA008D99B2 /* Assets.xcassets in Resources */,
 				33532B832AE299E1008B47EB /* GoogleService-Info.plist in Resources */,
@@ -731,6 +774,7 @@
 				56C08B662ADF805800FB8608 /* SectionHeaderView.swift in Sources */,
 				230509582AE2469000F58092 /* ContactViewController.swift in Sources */,
 				56C08B9A2AE10CAA00FB8608 /* ChattingDetailViewController.swift in Sources */,
+				33845E422AF442CE00539068 /* RevokeViewModel.swift in Sources */,
 				68708AB92AEE32CC00B4C7B9 /* StorageManager.swift in Sources */,
 				56C08B842AE0FE8300FB8608 /* ConversationsModels.swift in Sources */,
 				56BBF82F2AEB1EBB00A2BADD /* DatabaseManager.swift in Sources */,
@@ -747,9 +791,11 @@
 				5675E1712AEE94AE001EAF95 /* CommonHeaderView.swift in Sources */,
 				56C08BA02AE10D4C00FB8608 /* PhotoViewerViewController.swift in Sources */,
 				33E5902F2AF08D670060FBA0 /* animegan2face_paint_512_v2.mlmodel in Sources */,
+				33845E3D2AF43B9600539068 /* RevokeView.swift in Sources */,
 				56C08B742ADF809300FB8608 /* InfoView.swift in Sources */,
 				3B3E35D72AE125A3006841D8 /* RegisterView.swift in Sources */,
 				562E36BB2AD8DD03008D99B2 /* CommonUtil.swift in Sources */,
+				33B7B5B12AF4271F00773E9F /* AppVersionView.swift in Sources */,
 				2305095D2AE2475E00F58092 /* ContactTableViewCell.swift in Sources */,
 				562E36B72AD8DCAA008D99B2 /* BaseViewController.swift in Sources */,
 				562E36B12AD8D0EE008D99B2 /* BaseTabBarController.swift in Sources */,
@@ -773,6 +819,7 @@
 				33192D772AE9D00200069582 /* Dummy.swift in Sources */,
 				335B78BA2AE70237004D2956 /* MainItems.swift in Sources */,
 				2305095A2AE2470B00F58092 /* UnderlineSegmentedControl.swift in Sources */,
+				33845E3B2AF43B9100539068 /* RevokeViewController.swift in Sources */,
 				33C58EA12ADC5392008EB6C2 /* AppConstraint.swift in Sources */,
 				33532B7C2AE17A53008B47EB /* FirebaseErrors.swift in Sources */,
 				56C08B652ADF805800FB8608 /* MainPageViewController.swift in Sources */,
@@ -792,6 +839,7 @@
 				56C08B472ADF6B7E00FB8608 /* ChatViewController.swift in Sources */,
 				33C58E8E2AD8B2F6008EB6C2 /* UIColor+.swift in Sources */,
 				23E7DAB82AEB919400CDBC53 /* Const.swift in Sources */,
+				33B7B5AF2AF4271700773E9F /* AppVersionViewController.swift in Sources */,
 				33462AF42AF35C6C006CDFBA /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -934,7 +982,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.utopia.Catcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1123,7 +1171,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.utopia.Catcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1158,7 +1206,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.utopia.Catcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
