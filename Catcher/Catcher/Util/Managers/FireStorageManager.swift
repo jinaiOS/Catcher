@@ -22,7 +22,6 @@ final class FireStorageManager {
     static let shared = FireStorageManager()
     private let storage = Storage.storage()
     
-    private let chatImagePath = "chat"
     private let profileImagePath = "profile"
     private let fileSize: Int64 = 1024
     private let compressionQuality: CGFloat = 0.5
@@ -30,41 +29,6 @@ final class FireStorageManager {
     
     private init() {
         uid = FirebaseManager().getUID
-    }
-}
-
-extension FireStorageManager {
-    func setChatImageData(chatID: String, imageID: String, image: UIImage, completion: @escaping (Error?) -> Void) {
-        let data = makeImageData(image: image, completion: completion)
-        let spaceRef = makeChatRef(chatID: chatID, imageID: imageID)
-        putData(spaceRef: spaceRef, imageData: data, completion: completion)
-    }
-    
-    func fetchChatImageData(chatID: String, imageID: String, completion: @escaping (Data?, Error?) -> Void) {
-        let spaceRef = makeChatRef(chatID: chatID, imageID: imageID)
-        fetchData(spaceRef: spaceRef, completion: completion)
-    }
-    
-    func allChatImage(chatID: String, completion: @escaping (_ imageList: [String]?, Error?) -> Void) {
-        let path = "\(chatImagePath)/\(chatID)"
-        let storageReference = storage.reference().child(path)
-        storageReference.listAll { (result, error) in
-            if let error = error {
-                completion(nil, error)
-                return
-            }
-            guard let result = result else {
-                completion(nil, FireStorageError.noResult)
-                return
-            }
-            let imageList = result.items.map { $0.name }
-            completion(imageList, nil)
-        }
-    }
-    
-    func deleteChatImageData(chatID: String, imageID: String, completion: @escaping (Error?) -> Void) {
-        let spaceRef = makeChatRef(chatID: chatID, imageID: imageID)
-        deleteData(spaceRef: spaceRef, completion: completion)
     }
 }
 
@@ -95,15 +59,6 @@ extension FireStorageManager {
 }
 
 private extension FireStorageManager {
-    func makeChatRef(chatID: String, imageID: String) -> StorageReference? {
-        let storageRef = storage.reference()
-        let pathRef = storageRef.child(chatImagePath)
-        let spaceRef = pathRef.child(chatID)
-        let imageRef = spaceRef.child(imageID)
-        
-        return imageRef
-    }
-    
     func makeProfileRef(uid: String) -> StorageReference? {
         let storageRef = storage.reference()
         let pathRef = storageRef.child(profileImagePath)

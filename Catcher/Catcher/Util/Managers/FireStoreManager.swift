@@ -191,6 +191,16 @@ extension FireStoreManager {
             return error
         }
     }
+    
+    func updateScore(uid: String, score: Int) async -> Error? {
+        let docRef = db.collection(userInfoPath).document(uid)
+        do {
+            try await docRef.updateData(["score": score])
+            return nil
+        } catch {
+            return error
+        }
+    }
 }
 
 extension FireStoreManager {
