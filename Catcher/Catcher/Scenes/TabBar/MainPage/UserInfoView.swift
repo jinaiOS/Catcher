@@ -34,6 +34,13 @@ final class UserInfoView: UIView {
         return label
     }()
     
+    lazy var reportButton: UIButton = {
+        ButtonFactory.makeButton(
+            image: UIImage(systemName: "info.circle"),
+            tintColor: .systemGray,
+            cornerRadius: AppConstraint.defaultCornerRadius)
+    }()
+    
     lazy var closeButton: UIButton = {
         let button = ButtonFactory.makeButton(
             type: .close,
@@ -182,7 +189,7 @@ extension UserInfoView {
 
 private extension UserInfoView {
     func setLayout() {
-        [profileImageView, nickNameLabel, vStack, userInfoView].forEach {
+        [profileImageView, reportButton, nickNameLabel, vStack, userInfoView].forEach {
             scrollView.addSubview($0)
         }
         
@@ -194,6 +201,11 @@ private extension UserInfoView {
             $0.leading.top.trailing.equalToSuperview()
             $0.width.equalTo(UIScreen.main.bounds.width)
             $0.height.equalTo(500)
+        }
+        
+        reportButton.snp.makeConstraints {
+            $0.trailing.bottom.equalTo(profileImageView).inset(20)
+            $0.width.height.equalTo(50)
         }
         
         nickNameLabel.snp.makeConstraints {
