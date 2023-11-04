@@ -204,15 +204,21 @@ private extension ReportViewController {
         if button4.isSelected {
             title += "/기타"
         }
-        let descriptions = reportDetailTextView.text
-        if title.isEmpty { return }
+        if title.isEmpty || reportDetailTextView.text.isEmpty {
+            showAlert(title: "신고사항 미입력", message: "신고 사유를 자세히 작성해 주세요.")
+            return
+        }
+        sendReport(title: title, descriptions: reportDetailTextView.text)
+        completeAlert()
+    }
+    
+    func sendReport(title: String, descriptions: String) {
         Task {
-            let error = await fireStoreManager.setReport(targetUID: userInfo?.uid, title: title, descriptions: descriptions ?? "")
+            let error = await fireStoreManager.setReport(targetUID: userInfo?.uid, title: title, descriptions: descriptions)
             if let error {
                 CommonUtil.print(output: error.localizedDescription)
             }
         }
-        dismissVC()
     }
     
     func dismissVC() {
@@ -226,6 +232,33 @@ private extension ReportViewController {
                 self.present(userInfoVC, animated: true)
             }
         }
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert)
+        let okAction = UIAlertAction(
+            title: "확인",
+            style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
+    func completeAlert() {
+        let alert = UIAlertController(
+            title: "신고 완료",
+            message: "신고가 접수되었습니다.",
+            preferredStyle: .alert)
+        let okAction = UIAlertAction(
+            title: "확인",
+            style: .default) { [weak self] _ in
+                guard let self = self else { return }
+                dismissVC()
+            }
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
 }
 

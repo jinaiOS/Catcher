@@ -87,7 +87,7 @@ private extension RevokeViewController {
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel) { [weak self] _ in
             guard let self = self else { return }
-            navigationPopToRootViewController(animated: true) { () -> (Void) in }
+            navigationPopToRootViewController(animated: true, completion: nil)
         }
         alert.addAction(reAuthAction)
         alert.addAction(cancelAction)
@@ -131,7 +131,7 @@ private extension RevokeViewController {
             title: "계정 유지",
             style: .default) { [weak self] _ in
                 guard let self = self else { return }
-                navigationPopToRootViewController(animated: true) { () -> (Void) in }
+                navigationPopToRootViewController(animated: true, completion: nil)
             }
         
         alert.addAction(revokeAction)

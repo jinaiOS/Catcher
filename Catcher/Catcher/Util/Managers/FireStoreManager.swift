@@ -21,6 +21,7 @@ final class FireStoreManager {
     private let db = Firestore.firestore()
     private let userInfoPath = "userInfo"
     private let reportPath = "report"
+    private let askPath = "ask"
     private let itemCount: Int = 9
     private let uid: String?
     private let nearUserPath = "location"
@@ -64,6 +65,20 @@ extension FireStoreManager {
             try await docRef.setData([
                 "currentUser": uid ?? "익명",
                 "targetUser": targetUID ?? "익명",
+                "title" : title,
+                "descriptions": descriptions
+            ])
+            return nil
+        } catch {
+            return error
+        }
+    }
+    
+    func setAsk(title: String, descriptions: String) async -> Error? {
+        let docRef = db.collection(askPath).document(Date().debugDescription)
+        do {
+            try await docRef.setData([
+                "currentUser": uid ?? "익명",
                 "title" : title,
                 "descriptions": descriptions
             ])

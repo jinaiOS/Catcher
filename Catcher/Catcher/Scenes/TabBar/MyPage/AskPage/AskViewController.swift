@@ -47,7 +47,6 @@ class AskViewController: BaseHeaderViewController {
 
     private lazy var askDetailTextView: UITextView = {
         let tv = UITextView()
-
         tv.font = .systemFont(ofSize: 14, weight: .light)
         return tv
     }()
@@ -69,6 +68,7 @@ class AskViewController: BaseHeaderViewController {
         btn.layer.cornerRadius = 15
         btn.setTitleColor(.white, for: .normal)
         btn.backgroundColor = ThemeColor.primary
+        btn.addTarget(self, action: #selector(pressAskButton), for: .touchUpInside)
         view.addSubview(btn)
         return btn
     }()
@@ -81,7 +81,7 @@ class AskViewController: BaseHeaderViewController {
     }
 }
 
-extension AskViewController {
+private extension AskViewController {
     func configure() {
         askTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(80)
@@ -115,5 +115,54 @@ extension AskViewController {
             make.leading.trailing.equalTo(self.view).inset(14)
             make.height.equalTo(53)
         }
+    }
+}
+
+private extension AskViewController {
+    @objc func pressAskButton() {
+        guard let title = askTextField.text,
+              let descriptions = askDetailTextView.text else { return }
+        if title.isEmpty || descriptions.isEmpty {
+            showAlert(title: "문의사항 미입력", message: "문의할 내용을 입력해 주세요.")
+            return
+        }
+        sendAsk(title: title, descriptions: descriptions)
+        completeAlert()
+    }
+    
+    func sendAsk(title: String, descriptions: String) {
+        Task {
+            let error = await FireStoreManager.shared.setAsk(title: title, descriptions: descriptions)
+            if let error {
+                CommonUtil.print(output: error)
+            }
+        }
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert)
+        let okAction = UIAlertAction(
+            title: "확인",
+            style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
+    func completeAlert() {
+        let alert = UIAlertController(
+            title: "접수 완료",
+            message: "문의가 접수되었습니다.",
+            preferredStyle: .alert)
+        let okAction = UIAlertAction(
+            title: "확인",
+            style: .default) { [weak self] _ in
+                guard let self = self else { return }
+                navigationPopToRootViewController(animated: true, completion: nil)
+            }
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
 }
