@@ -27,20 +27,20 @@ class MyPageViewController: BaseViewController {
         lb.text = "\(DataManager.sharedInstance.userInfo?.nickName ?? "") 님 오늘도 파이팅!!"
         lb.font = .systemFont(ofSize: 20, weight: .light)
         lb.textAlignment = .center
-        view.addSubview(lb)
+        //        view.addSubview(lb)
         return lb
     }()
-
+    
     private lazy var profilePhoto: UIImageView = {
         let im = UIImageView()
         loadProfileImage()
         im.contentMode = .scaleAspectFill
         im.layer.cornerRadius = CGFloat(photoSize / 2) // 반지름을 이미지 크기의 절반으로 설정하여 원 모양으로 클리핑
         im.clipsToBounds = true // 이미지를 원 모양으로 클리핑
-        view.addSubview(im)
+        //        view.addSubview(im)
         return im
     }()
-
+    
     private lazy var myMainView: UIView = {
         let vw = UIView()
         vw.backgroundColor = .white
@@ -48,30 +48,30 @@ class MyPageViewController: BaseViewController {
         vw.addSubview(myMainStack)
         vw.borderColor = ThemeColor.primary
         vw.borderWidth = 1
-        view.addSubview(vw)
+        //        view.addSubview(vw)
         return vw
     }()
-
+    
     private lazy var myMainStack: UIStackView = {
         let st = UIStackView(arrangedSubviews: [myTemperatureStack, myPointStack, mySaveStack])
         st.axis = .horizontal
         st.alignment = .fill
         st.distribution = .fill
         st.spacing = spacingStackHorizontal
-
+        
         return st
     }()
-
+    
     private lazy var myTemperatureStack: UIStackView = {
         let st = UIStackView(arrangedSubviews: [myTemperatureNumber, myTemperatureLabel])
         st.axis = .vertical
         st.alignment = .fill
         st.distribution = .equalSpacing
         st.spacing = spacingStackVertical
-
+        
         return st
     }()
-
+    
     private lazy var myTemperatureNumber: UILabel = {
         let lb = UILabel()
         lb.text = "30°"
@@ -79,7 +79,7 @@ class MyPageViewController: BaseViewController {
         lb.textAlignment = .center
         return lb
     }()
-
+    
     private lazy var myTemperatureLabel: UILabel = {
         let lb = UILabel()
         lb.text = "내 온도"
@@ -87,17 +87,17 @@ class MyPageViewController: BaseViewController {
         lb.textAlignment = .center
         return lb
     }()
-
+    
     private lazy var myPointStack: UIStackView = {
         let st = UIStackView(arrangedSubviews: [myPointNumber, myPointLabel])
         st.axis = .vertical
         st.alignment = .fill
         st.distribution = .equalSpacing
         st.spacing = spacingStackVertical
-
+        
         return st
     }()
-
+    
     private lazy var myPointNumber: UILabel = {
         let lb = UILabel()
         lb.text = "3000P"
@@ -105,7 +105,7 @@ class MyPageViewController: BaseViewController {
         lb.textAlignment = .center
         return lb
     }()
-
+    
     private lazy var myPointLabel: UILabel = {
         let lb = UILabel()
         lb.text = "마일리지"
@@ -113,24 +113,24 @@ class MyPageViewController: BaseViewController {
         lb.textAlignment = .center
         return lb
     }()
-
+    
     private lazy var mySaveStack: UIStackView = {
         let st = UIStackView(arrangedSubviews: [mySaveNumber, mySaveLabel])
         st.axis = .vertical
         st.alignment = .fill
         st.distribution = .equalSpacing
         st.spacing = spacingStackVertical
-
+        
         return st
     }()
-
+    
     private lazy var mySaveNumber: UILabel = {
         let lb = UILabel()
         lb.font = .systemFont(ofSize: 20, weight: .bold)
         lb.textAlignment = .center
         return lb
     }()
-
+    
     private lazy var mySaveLabel: UILabel = {
         let lb = UILabel()
         lb.text = "나의 찜"
@@ -138,14 +138,14 @@ class MyPageViewController: BaseViewController {
         lb.textAlignment = .center
         return lb
     }()
-
+    
     let spacingStackVertical: CGFloat = 10
     let spacingStackHorizontal: CGFloat = 70
     let labelFontSize: CGFloat = 13
     let photoSize = 80
     var menuItems = MenuItems.setProfile
     var tableViewHeight: CGFloat = 0
-
+    
     private lazy var myTableView: UIView = {
         let vw = UIView()
         vw.backgroundColor = .white
@@ -154,10 +154,10 @@ class MyPageViewController: BaseViewController {
         vw.addSubview(myTable)
         vw.borderColor = ThemeColor.primary
         vw.borderWidth = 1
-        view.addSubview(vw)
+        //        view.addSubview(vw)
         return vw
     }()
-
+    
     private lazy var menuLabel: UILabel = {
         let lb = UILabel()
         lb.text = "메뉴"
@@ -165,7 +165,7 @@ class MyPageViewController: BaseViewController {
         lb.textAlignment = .left
         return lb
     }()
-
+    
     private lazy var myTable: UITableView = {
         let tb = UITableView()
         tb.register(MenuTableViewCell.self, forCellReuseIdentifier: MenuTableViewCell.identifier)
@@ -175,15 +175,28 @@ class MyPageViewController: BaseViewController {
         tb.isScrollEnabled = false
         return tb
     }()
-
+    
     private lazy var logOutButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("로그아웃", for: .normal)
         btn.layer.cornerRadius = 15
         btn.setTitleColor(.white, for: .normal)
         btn.backgroundColor = ThemeColor.primary
-        view.addSubview(btn)
+        //        view.addSubview(btn)
         return btn
+    }()
+
+    private lazy var contentView: UIView = {
+        let vw = UIView()
+        [nickName, profilePhoto, myMainView, myTableView, logOutButton].forEach { vw.addSubview($0) }
+        return vw
+    }()
+
+    private lazy var scrollView: UIScrollView = {
+        let sc = UIScrollView()
+        sc.addSubview(contentView)
+        view.addSubview(sc)
+        return sc
     }()
 
     override func viewDidLoad() {
@@ -257,10 +270,10 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.row {
         case 0:
             let vc = InfoViewController()
-            self.navigationPushController(viewController: vc, animated: true)
+            navigationPushController(viewController: vc, animated: true)
         case 1:
             let vc = AskViewController()
-            self.navigationPushController(viewController: vc, animated: true)
+            navigationPushController(viewController: vc, animated: true)
         case 2:
             let url = URL(string: "https://plip.kr/pcc/bbd65582-9034-4359-a09a-022a093eda26/privacy/1.html")
             let vc = SFSafariViewController(url: url!)
@@ -271,10 +284,10 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             }
         case 4:
             let appVersionVC = AppVersionViewController()
-            self.navigationPushController(viewController: appVersionVC, animated: true)
+            navigationPushController(viewController: appVersionVC, animated: true)
         case 5:
             let revokeVC = RevokeViewController()
-            self.navigationPushController(viewController: revokeVC, animated: true)
+            navigationPushController(viewController: revokeVC, animated: true)
         default:
             break
         }
@@ -308,19 +321,30 @@ private extension MyPageViewController {
         tableViewHeight = CGFloat(MenuItems.allCases.count) * 44 + 70
         myTable.dataSource = self
         myTable.delegate = self
+        
+        scrollView.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom) // Set the bottom constraint to the top of the next button.
+        }
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide)
+            make.centerX.equalTo(scrollView)
+        }
         nickName.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(30)
-            make.leading.equalTo(view.snp.leading).inset(27)
+            make.top.equalTo(contentView.snp.top).inset(30)
+            make.leading.equalTo(contentView.snp.leading).inset(27)
             make.height.equalTo(24)
         }
         profilePhoto.snp.makeConstraints { make in
             make.centerY.equalTo(nickName.snp.centerY)
-            make.trailing.equalTo(view.snp.trailing).inset(20)
+            make.trailing.equalTo(contentView.snp.trailing).inset(20)
             make.height.width.equalTo(photoSize)
         }
 
         myMainView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(self.view).inset(14)
+            make.leading.trailing.equalTo(contentView).inset(14)
             make.top.equalTo(nickName.snp.bottom).inset(-50)
             make.height.equalTo(100)
         }
@@ -346,9 +370,11 @@ private extension MyPageViewController {
             make.height.equalTo(tableViewHeight)
         }
         logOutButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.snp.bottom).inset(100)
-            make.leading.trailing.equalTo(self.view).inset(14)
+            make.top.equalTo(myTableView.snp.bottom).inset(-20)
+          
+            make.leading.trailing.equalTo(contentView).inset(14)
             make.height.equalTo(53)
+            make.bottom.equalTo(contentView.snp.bottom).inset(20)
         }
     }
     
@@ -365,7 +391,7 @@ private extension MyPageViewController {
     @objc func tapProfileImage() {
         let profileSettingVC = ProfileSettingViewController(allowAlbum: true)
         profileSettingVC.delegate = self
-        self.navigationPushController(viewController: profileSettingVC, animated: true)
+        navigationPushController(viewController: profileSettingVC, animated: true)
     }
 }
 

@@ -6,12 +6,11 @@
 //
 
 import Firebase
-import UIKit
 import FirebaseMessaging
+import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
     var window: UIWindow?
     /**
      @brief  navigationBarController 객체
@@ -42,14 +41,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
-        let introVC = IntroViewController(nibName: "IntroViewController", bundle: nil);
-        navigationController = UINavigationController(rootViewController: introVC);
+        let introVC = IntroViewController(nibName: "IntroViewController", bundle: nil)
+//        let introVC = MyPageViewController()
+        navigationController = UINavigationController(rootViewController: introVC)
         // 네비게이션바 히든
-        navigationController?.isNavigationBarHidden = true;
-        window = UIWindow.init(frame: UIScreen.main.bounds);
-        window?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1);
-        window?.rootViewController = navigationController;
-        window?.makeKeyAndVisible();
+        navigationController?.isNavigationBarHidden = true
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
         return true
     }
 
@@ -96,20 +96,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             let storyBoard = UIStoryboard(name: type.rawValue, bundle: nil)
             self.navigationController = nil
-            self.tabBarController = nil
-            let navigationController : UINavigationController?
-            navigationController =  storyBoard.instantiateInitialViewController() as? UINavigationController
-            if  navigationController?.topViewController is UITabBarController {
+            tabBarController = nil
+            let navigationController: UINavigationController?
+            navigationController = storyBoard.instantiateInitialViewController() as? UINavigationController
+            if navigationController?.topViewController is UITabBarController {
                 tabBarController = navigationController!.topViewController as? BaseTabBarController
             }
             self.navigationController = navigationController
         }
-        
-        //네비게이션바 히든
-        navigationController?.isNavigationBarHidden = true;
+
+        // 네비게이션바 히든
+        navigationController?.isNavigationBarHidden = true
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
             AppDelegate.applicationDelegate().window?.rootViewController?.view.alpha = 0
-        }) {[weak self] (finished) in
+        }) { [weak self] _ in
             guard let strongSelf = self else {
                 return
             }
@@ -118,34 +118,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 strongSelf.window?.rootViewController?.view.alpha = 0
                 UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
                     AppDelegate.applicationDelegate().window?.rootViewController?.view.alpha = 1
-                }, completion: { (finished) in
+                }, completion: { _ in
                 })
             }
         }
     }
 }
 
-extension AppDelegate : UNUserNotificationCenterDelegate, MessagingDelegate {
+extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
     /*
      @brief 최초 앱 시작 시 및 토큰이 업데이트/무효화될 때마다 신규 또는 기존 토큰을 알려주는 FCM delegate
      */
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         //        CommonUtil.showOneButtonAlertWithTitle(title: "", message: fcmToken, okButton: "ok", okHandler: nil)
-        
+
         guard fcmToken != nil else {
             return
         }
-        
+
         CommonUtil.print(output: "DeviceToken : \(fcmToken!)")
-        //NSLog("DeviceToken : %@", fcmToken)
-        
-        //기존 저장한 token값과 다르면
+        // NSLog("DeviceToken : %@", fcmToken)
+
+        // 기존 저장한 token값과 다르면
         if UserDefaultsManager().getValue(forKey: Userdefault_Key.PUSH_KEY) != fcmToken {
             UserDefaultsManager().setValue(value: fcmToken, key: Userdefault_Key.PUSH_KEY)
-            
         }
     }
-    
+
     /**
      @brief APNS를 통해 들어오는 pushData가 아닌 FCM을 통해 들어오는 push Message
      */
@@ -153,8 +152,6 @@ extension AppDelegate : UNUserNotificationCenterDelegate, MessagingDelegate {
         CommonUtil.print(output: "remoteMessage : \(remoteMessage)")
     }
 }
-
-
 
 extension UIApplication {
     class func topViewController(controller: UIViewController? = AppDelegate.realDelegate?.keyWindow?.rootViewController) -> UIViewController? {
