@@ -57,6 +57,10 @@ class FirebaseManager {
     var getUID: String? {
         return auth.currentUser?.uid
     }
+    
+    var getNickName: String? {
+        return auth.currentUser?.displayName
+    }
 }
 
 extension FirebaseManager {

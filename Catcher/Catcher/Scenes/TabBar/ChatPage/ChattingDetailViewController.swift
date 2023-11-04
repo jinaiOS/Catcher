@@ -42,7 +42,7 @@ final class ChattingDetailViewController: MessagesViewController {
 
     private var selfSender: Sender? {
         return Sender(photoURL: "",
-                      senderId: DataManager.sharedInstance.userInfo?.uid ?? "",
+                      senderId: FirebaseManager().getUID ?? "",
                       displayName: "Me")
     }
     
@@ -312,7 +312,7 @@ final class ChattingDetailViewController: MessagesViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageInputBar.inputTextView.becomeFirstResponder()
-        guard let uid = DataManager.sharedInstance.userInfo?.uid else { return }
+        guard let uid = FirebaseManager().getUID else { return }
         listenForMessages(id: uid, shouldScrollToBottom: true)
     }
 
@@ -510,7 +510,7 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
             let parameters: [String: Any] = [
                 "to": result ?? "",
                     "notification": [
-                        "title": DataManager.sharedInstance.userInfo?.nickName ?? "",
+                        "title": FirebaseManager().getNickName,
                         "body": messageStr
                     ]
             ]
@@ -589,7 +589,7 @@ extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelega
             else {
 
 //                let path = "images/\("safeEmail")_profile_picture.png"
-                ImageCacheManager.shared.loadImage(uid: DataManager.sharedInstance.userInfo?.uid ?? "") { [weak self] image in
+                ImageCacheManager.shared.loadImage(uid: FirebaseManager().getUID ?? "") { [weak self] image in
                     guard let self = self else { return }
                     DispatchQueue.main.async {
                         avatarView.image = image

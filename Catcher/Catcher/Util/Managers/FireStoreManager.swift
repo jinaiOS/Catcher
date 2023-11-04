@@ -90,7 +90,7 @@ extension FireStoreManager {
     }
     
     func setFcmToken(fcmToken: String) async -> Error? {
-        let docRef = db.collection(fcmTokenPath).document(DataManager.sharedInstance.userInfo?.uid ?? "")
+        let docRef = db.collection(fcmTokenPath).document(FirebaseManager().getUID ?? "")
         do {
             try await docRef.setData([
                 "fcmToken": UserDefaultsManager().getValue(forKey: Userdefault_Key.PUSH_KEY) ?? ""
@@ -261,7 +261,7 @@ extension FireStoreManager {
     }
     
     func updateFcmToken(fcmToken: String) async -> Error? {
-        let docRef = db.collection(fcmTokenPath).document(DataManager.sharedInstance.userInfo?.uid ?? "")
+        let docRef = db.collection(fcmTokenPath).document(FirebaseManager().getUID ?? "")
         do {
             try await docRef.updateData(["fcmToken": UserDefaultsManager().getValue(forKey: Userdefault_Key.PUSH_KEY) ?? ""])
             return nil
