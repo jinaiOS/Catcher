@@ -22,7 +22,6 @@ final class FireStoreManager {
     private let userInfoPath = "userInfo"
     private let reportPath = "report"
     private let askPath = "ask"
-    private let fcmTokenPath = "fcmToken"
     private let itemCount: Int = 9
     private let uid: String?
     private let nearUserPath = "location"
@@ -82,18 +81,6 @@ extension FireStoreManager {
                 "currentUser": uid ?? "익명",
                 "title" : title,
                 "descriptions": descriptions
-            ])
-            return nil
-        } catch {
-            return error
-        }
-    }
-    
-    func setFcmToken(fcmToken: String) async -> Error? {
-        let docRef = db.collection(fcmTokenPath).document(DataManager.sharedInstance.userInfo?.uid ?? "")
-        do {
-            try await docRef.setData([
-                "fcmToken": UserDefaultsManager().getValue(forKey: Userdefault_Key.PUSH_KEY) ?? ""
             ])
             return nil
         } catch {
@@ -203,18 +190,6 @@ extension FireStoreManager {
             let snapshot = try await countQuery.getAggregation(source: .server)
             let count = snapshot.count as? Int
             return (count, nil)
-        } catch {
-            return (nil, error)
-        }
-    }
-    
-    /// fcm token
-    func fetchFcmToken(uid: String) async -> (result: String?, error: Error?) {
-        let docRef = db.collection(fcmTokenPath).document(uid)
-        do {
-            let document = try await docRef.getDocument()
-            let fcmTok = document.data()?["fcmToken"] as? String
-            return (fcmTok, nil)
         } catch {
             return (nil, error)
         }
