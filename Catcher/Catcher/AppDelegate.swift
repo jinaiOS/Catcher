@@ -42,7 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         let introVC = IntroViewController(nibName: "IntroViewController", bundle: nil)
-//        let introVC = MyPageViewController()
         navigationController = UINavigationController(rootViewController: introVC)
         // 네비게이션바 히든
         navigationController?.isNavigationBarHidden = true
