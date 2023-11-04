@@ -37,7 +37,7 @@ private extension RevokeViewController {
     func setButtonTarget() {
         revokeView.revokeBtn.addTarget(
             self,
-            action: #selector(didTappedRevokeBtn),
+            action: #selector(pressRevokeBtn),
             for: .touchUpInside)
     }
     
@@ -53,7 +53,7 @@ private extension RevokeViewController {
         }
     }
     
-    @objc func didTappedRevokeBtn(sender: UIButton) {
+    @objc func pressRevokeBtn(sender: UIButton) {
         reAuthenticateAlert()
     }
 }
