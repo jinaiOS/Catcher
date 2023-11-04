@@ -100,22 +100,8 @@ private extension UserInfoViewController {
     }
     
     @objc func pressChattingButton() {
-        guard let uid = FirebaseManager().getUID,
-              let userInfo = userInfo else { return }
-        viewModel.isBlockedUser(searchTarget: userInfo.uid, containUID: uid) { [weak self] result in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                if result {
-                    self.showAlert(title: "차단 상태", message: "상대방이 차단해서 메시지를 보낼 수 없습니다.")
-                    return
-                }
-                let vc = ChattingDetailViewController(otherUid: userInfo.uid)
-                vc.isNewConversation = true
-                vc.modalChecking = true
-                vc.headerTitle = userInfo.nickName
-                self.present(vc, animated: true)
-            }
-        }
+        listenForMessages()
+       
     }
     
     @objc func pressPickBtn(sender: UIButton) {
@@ -175,5 +161,42 @@ private extension UserInfoViewController {
         let okAction = UIAlertAction(title: "확인", style: .default)
         alert.addAction(okAction)
         present(alert, animated: true)
+    }
+    
+    func listenForMessages() {
+        DatabaseManager.shared.getAllMessagesForConversation(with: userInfo?.uid ?? "", completion: { [weak self] result in
+            switch result {
+            case .success(let messages):
+                CommonUtil.print(output:"success in getting messages: \(messages)")
+                guard !messages.isEmpty else {
+                    CommonUtil.print(output:"messages are empty")
+                    self?.sendMessageBtn(isNewConversation: true)
+                    return
+                }
+                self?.sendMessageBtn(isNewConversation: false)
+            case .failure(let error):
+                CommonUtil.print(output:"failed to get messages: \(error)")
+            }
+        })
+    }
+    
+    func sendMessageBtn(isNewConversation: Bool) {
+        guard let uid = FirebaseManager().getUID,
+              let userInfo = self.userInfo else { return }
+        
+        viewModel.isBlockedUser(searchTarget: userInfo.uid, containUID: uid) { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                if result {
+                    self.showAlert(title: "차단 상태", message: "상대방이 차단해서 메시지를 보낼 수 없습니다.")
+                    return
+                }
+                let vc = ChattingDetailViewController(otherUid: userInfo.uid)
+                vc.isNewConversation = isNewConversation
+                vc.modalChecking = true
+                vc.headerTitle = userInfo.nickName
+                self.present(vc, animated: true)
+            }
+        }
     }
 }
