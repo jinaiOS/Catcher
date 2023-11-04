@@ -12,6 +12,7 @@ import SDWebImage
 import AVFoundation
 import AVKit
 import CoreLocation
+import Alamofire
 
 final class ChattingDetailViewController: MessagesViewController {
 
@@ -175,9 +176,6 @@ final class ChattingDetailViewController: MessagesViewController {
         }))
         actionSheet.addAction(UIAlertAction(title: "Video", style: .default, handler: { [weak self]  _ in
             self?.presentVideoInputActionsheet()
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Audio", style: .default, handler: {  _ in
-
         }))
         actionSheet.addAction(UIAlertAction(title: "Location", style: .default, handler: { [weak self]  _ in
             self?.presentLocationPicker()
@@ -430,8 +428,7 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
 }
 
 extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
-
-    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         guard !text.replacingOccurrences(of: " ", with: "").isEmpty,
             let selfSender = self.selfSender,
             let messageId = createMessageId() else {
@@ -474,8 +471,66 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
                 }
             })
         }
+        requestPush(message: message)
     }
 
+    func requestPush(message: Message) {
+        let apiUrl = "https://fcm.googleapis.com/fcm/send"
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization": ServerKey.Authorization
+        ]
+        
+        var messageStr = ""
+        
+        switch message.kind {
+        case .text(let messageText):
+            messageStr = messageText
+        case .attributedText(_):
+            break
+        case .photo(_):
+            break
+        case .video(_):
+            break
+        case .location(_):
+            break
+        case .emoji(_):
+            break
+        case .audio(_):
+            break
+        case .contact(_):
+            break
+        case .custom(_), .linkPreview(_):
+            break
+        }
+        
+        Task {
+            let (result, error) = await FireStoreManager.shared.fetchFcmToken(uid: otherUserUid)
+            if let error {
+                CommonUtil.print(output: error.localizedDescription)
+                return
+            }
+            
+            let parameters: [String: Any] = [
+                "to": result ?? "",
+                    "notification": [
+                        "title": DataManager.sharedInstance.userInfo?.nickName ?? "",
+                        "body": messageStr
+                    ]
+            ]
+
+            AF.request(apiUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+                .response { response in
+                    switch response.result {
+                    case .success(let value):
+                        print("API Success: \(String(describing: value))")
+                    case .failure(let error):
+                        print("API Error: \(error)")
+                    }
+                }
+        }
+    }
+    
     private func createMessageId() -> String? {
         CommonUtil.print(output:"created message id: \(otherUserUid)")
 
@@ -492,15 +547,7 @@ extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelega
         
         fatalError("Self Sender is nil, email should be cached")
     }
-//
-//    func currentSender() -> SenderType {
-//        if let sender = selfSender {
-//            return sender
-//        }
-//
-//        fatalError("Self Sender is nil, email should be cached")
-//    }
-
+    
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
         return messages[indexPath.section]
     }
