@@ -29,12 +29,28 @@ class LoginViewController: BaseViewController {
                 CommonUtil.print(output: "로그인 성공")
                 Task {
                     await self.storeUserInfo()
+                    let (result, error) = await FireStoreManager.shared.fetchFcmToken(uid: DataManager.sharedInstance.userInfo?.uid ?? "")
+                    if let error {
+                        CommonUtil.print(output: error.localizedDescription)
+                        return
+                    }
+                    if result == "" {
+                        let error = await FireStoreManager.shared.setFcmToken(fcmToken: UserDefaultsManager().getValue(forKey: Userdefault_Key.PUSH_KEY) ?? "")
+                        if let error {
+                            CommonUtil.print(output: error)
+                        }
+                    } else {
+                        let error = await FireStoreManager.shared.updateFcmToken(fcmToken: UserDefaultsManager().getValue(forKey: Userdefault_Key.PUSH_KEY) ?? "")
+                        if let error {
+                            CommonUtil.print(output: error)
+                        }
+                    }
                 }
                 AppDelegate.applicationDelegate().changeInitViewController(type: .Main)
             }
         }
     }
-  
+    
     @objc func signUpPressed() {
         let vc = RegisterViewController()
         navigationPushController(viewController: vc, animated: true)
@@ -44,7 +60,7 @@ class LoginViewController: BaseViewController {
         let vc = ResetPWViewController()
         navigationPushController(viewController: vc, animated: true)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loginView.loginBtn.addTarget(self, action: #selector(loginPressed), for: .touchUpInside)
