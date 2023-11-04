@@ -9,7 +9,6 @@ import SnapKit
 import UIKit
 
 final class RegisterView: UIView {
-
     lazy var provisionButton: UIButton = ButtonFactory.makeButton(
         title: "약관동의",
         titleColor: .darkGray)
@@ -58,6 +57,21 @@ final class RegisterView: UIView {
         return view
     }()
 
+    lazy var contentView: UIView = {
+        let scV = UIView()
+        scV.addSubview(vstack)
+        scV.addSubview(provisionButton)
+        scV.addSubview(ageButton)
+        scV.addSubview(nextButton)
+        return scV
+    }()
+
+    lazy var scrollView: UIScrollView = {
+        let sc = UIScrollView()
+        sc.addSubview(contentView)
+        return sc
+    }()
+
     init() {
         super.init(frame: .zero)
         backgroundColor = .white
@@ -82,30 +96,40 @@ private extension RegisterView {
     }
 
     func setlayout() {
-        addSubview(vstack)
-        addSubview(provisionButton)
-        addSubview(ageButton)
-        addSubview(nextButton)
+//        addSubview(vstack)
+//        addSubview(provisionButton)
+//        addSubview(ageButton)
+        addSubview(scrollView)
+//        addSubview(nextButton)
+        scrollView.snp.makeConstraints { make in
+            make.top.equalTo(self.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom) // Set the bottom constraint to the top of the next button.
+        }
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide)
+            make.centerX.equalTo(scrollView)
+        }
         vstack.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide).offset(50)
-            make.leading.trailing.equalTo(self.safeAreaLayoutGuide).inset(AppConstraint.defaultSpacing)
+            make.top.equalTo(contentView.snp.top)
+            make.leading.trailing.equalTo(self.contentView).inset(AppConstraint.defaultSpacing)
         }
         provisionButton.snp.makeConstraints { make in
-            make.width.equalTo(200)
+            make.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
             make.height.equalTo(50)
             make.top.equalTo(vstack.snp.bottom).offset(50)
-            make.centerX.equalToSuperview()
         }
         ageButton.snp.makeConstraints { make in
-            make.width.equalTo(200)
+            make.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
             make.height.equalTo(50)
             make.top.equalTo(provisionButton.snp.bottom).offset(20)
-            make.centerX.equalToSuperview()
         }
         nextButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
-            make.bottom.equalTo(self.safeAreaInsets).inset(50)
+            make.top.equalTo(self.ageButton).inset(50)
             make.height.equalTo(50)
+            make.bottom.equalTo(contentView).inset(20)
         }
     }
 }

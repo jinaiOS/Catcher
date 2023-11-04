@@ -46,9 +46,38 @@ final class InfoViewController: BaseHeaderViewController {
         view.addSubview(infoView)
 
         infoView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaInsets).offset(80)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(80)
             $0.leading.bottom.trailing.equalToSuperview()
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
+            infoView.scrollView.contentInset = contentInsets
+            infoView.scrollView.scrollIndicatorInsets = contentInsets
+
+            // 텍스트 필드가 가려지지 않도록 스크롤 위치 조절
+            if let activeTextField = findActiveTextField() {
+                let rect = activeTextField.convert(activeTextField.bounds, to: infoView.scrollView)
+                infoView.scrollView.scrollRectToVisible(rect, animated: true)
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+        let contentInsets = UIEdgeInsets.zero
+        infoView.scrollView.contentInset = contentInsets
+        infoView.scrollView.scrollIndicatorInsets = contentInsets
+    }
+
+    private func findActiveTextField() -> UITextField? {
+        for case let textField as UITextField in infoView.contentView.subviews where textField.isFirstResponder {
+            return textField
+        }
+        return nil
     }
 
     override func viewDidLoad() {

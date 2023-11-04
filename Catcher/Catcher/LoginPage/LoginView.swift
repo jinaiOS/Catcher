@@ -47,10 +47,10 @@ final class LoginView: UIView {
         titleColor: .darkGray,
         cornerRadius: 15)
 
-    lazy var appleLoginBtn: UIButton = ButtonFactory.makeButton(
-        type: .custom,
-        image: UIImage(named: "appleid_button"),
-        cornerRadius: 15)
+//    lazy var appleLoginBtn: UIButton = ButtonFactory.makeButton(
+//        type: .custom,
+//        image: UIImage(named: "appleid_button"),
+//        cornerRadius: 15)
     
     private lazy var vStack: UIStackView = {
         let view = UIStackView()
@@ -89,7 +89,6 @@ final class LoginView: UIView {
 }
 
 private extension LoginView {
-
     func makeLabel(text: String) -> UILabel {
         LabelFactory.makeLabel(
             text: text,
@@ -98,7 +97,7 @@ private extension LoginView {
     }
     
     func setLayout() {
-        [vStack, loginBtn, appleLoginBtn, hStack].forEach {
+        [vStack, loginBtn, hStack].forEach {
             addSubview($0)
         }
         
@@ -113,11 +112,11 @@ private extension LoginView {
             $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
             $0.top.equalTo(vStack.snp.bottom).offset(30)
         }
-        appleLoginBtn.snp.makeConstraints { make in
-            make.top.equalTo(loginBtn.snp.bottom).offset(50)
-            make.width.equalTo(200)
-            make.centerX.equalToSuperview()
-        }
+//        appleLoginBtn.snp.makeConstraints { make in
+//            make.top.equalTo(loginBtn.snp.bottom).offset(50)
+//            make.width.equalTo(200)
+//            make.centerX.equalToSuperview()
+//        }
         hStack.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(50)
             $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-30)
