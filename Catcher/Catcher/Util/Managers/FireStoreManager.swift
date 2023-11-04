@@ -259,6 +259,16 @@ extension FireStoreManager {
             return error
         }
     }
+    
+    func updateFcmToken(fcmToken: String) async -> Error? {
+        let docRef = db.collection(fcmTokenPath).document(DataManager.sharedInstance.userInfo?.uid ?? "")
+        do {
+            try await docRef.updateData(["fcmToken": UserDefaultsManager().getValue(forKey: Userdefault_Key.PUSH_KEY) ?? ""])
+            return nil
+        } catch {
+            return error
+        }
+    }
 }
 
 extension FireStoreManager {

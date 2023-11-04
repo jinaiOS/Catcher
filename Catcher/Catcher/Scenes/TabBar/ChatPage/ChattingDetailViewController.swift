@@ -456,12 +456,8 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
                 }
             })
         } else {
-            guard let name = self.title else {
-                return
-            }
-
             // append to existing conversation data
-            DatabaseManager.shared.sendMessage(otherUserUid: otherUserUid, name: name, newMessage: message, completion: { [weak self] success in
+            DatabaseManager.shared.sendMessage(otherUserUid: otherUserUid, name: headerTitle ?? "", newMessage: message, completion: { [weak self] success in
                 if success {
                     self?.messageInputBar.inputTextView.text = ""
                     CommonUtil.print(output:"message sent")
