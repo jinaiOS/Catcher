@@ -24,9 +24,14 @@ class MyPageViewController: BaseViewController {
     
     private lazy var nickName: UILabel = {
         let lb = UILabel()
-        lb.text = "\(DataManager.sharedInstance.userInfo?.nickName ?? "") 님 오늘도 파이팅!!"
+//        lb.text = "\(DataManager.sharedInstance.userInfo?.nickName ?? "") 님 오늘도 파이팅!!"
+        lb.text = "ㅁㅁㅁㅁㅁqweqwe 님 오늘도 파이팅!!"
+
         lb.font = .systemFont(ofSize: 20, weight: .light)
-        lb.textAlignment = .center
+        lb.textAlignment = .left
+        lb.numberOfLines = 0 // 두 줄로 표시
+        lb.lineBreakMode = .byWordWrapping
+//        lb.sizeToFit()
         //        view.addSubview(lb)
         return lb
     }()
@@ -335,7 +340,8 @@ private extension MyPageViewController {
         nickName.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).inset(30)
             make.leading.equalTo(contentView.snp.leading).inset(27)
-            make.height.equalTo(24)
+            make.trailing.equalTo(contentView.snp.trailing).inset(110)
+//            make.height.equalTo(24)
         }
         profilePhoto.snp.makeConstraints { make in
             make.centerY.equalTo(nickName.snp.centerY)
