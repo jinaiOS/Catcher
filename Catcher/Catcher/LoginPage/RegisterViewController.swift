@@ -86,10 +86,6 @@ final class RegisterViewController: BaseViewController {
         }
     }
 
-    func isValidEmail(_ email: String) -> Bool {
-        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")
-        return emailPredicate.evaluate(with: email)
-    }
 
     func setHeaderView() {
         headerView = CommonHeaderView(frame: CGRect(x: 0, y: Common.kStatusbarHeight, width: Common.SCREEN_WIDTH(), height: 50))
@@ -114,9 +110,39 @@ final class RegisterViewController: BaseViewController {
         view.addSubview(registerView)
 
         registerView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaInsets).offset(80)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(80)
             $0.leading.bottom.trailing.equalToSuperview()
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
+            registerView.scrollView.contentInset = contentInsets
+            registerView.scrollView.scrollIndicatorInsets = contentInsets
+
+            // 텍스트 필드가 가려지지 않도록 스크롤 위치 조절
+            if let activeTextField = findActiveTextField() {
+                let rect = activeTextField.convert(activeTextField.bounds, to: registerView.scrollView)
+                registerView.scrollView.scrollRectToVisible(rect, animated: true)
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+        let contentInsets = UIEdgeInsets.zero
+        registerView.scrollView.contentInset = contentInsets
+        registerView.scrollView.scrollIndicatorInsets = contentInsets
+    }
+
+    // 현재 활성화된 텍스트 필드 찾기
+    private func findActiveTextField() -> UITextField? {
+        for case let textField as UITextField in registerView.contentView.subviews where textField.isFirstResponder {
+            return textField
+        }
+        return nil
     }
 
     override func viewDidLoad() {

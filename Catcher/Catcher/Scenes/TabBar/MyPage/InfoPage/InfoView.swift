@@ -151,7 +151,20 @@ final class InfoView: UIView {
         }
         return view
     }()
-    
+
+    lazy var contentView: UIView = {
+        let vw = UIView()
+        vw.addSubview(vStack)
+        vw.addSubview(saveButton)
+        return vw
+    }()
+
+    lazy var scrollView: UIScrollView = {
+        let vw = UIScrollView()
+        vw.addSubview(contentView)
+        return vw
+    }()
+
     lazy var saveButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("저장하기", for: .normal)
@@ -253,20 +266,28 @@ extension InfoView {
     }
     
     func setLayout() {
-        [vStack, saveButton].forEach {
+        [scrollView].forEach {
             addSubview($0)
         }
-        
+        scrollView.snp.makeConstraints { make in
+            make.top.equalTo(self.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
+        }
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide)
+            make.centerX.equalToSuperview()
+        }
         vStack.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(AppConstraint.defaultSpacing)
+            $0.top.equalTo(contentView.snp.top)
             $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
         }
-        
         saveButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.height.equalTo(50)
-            $0.top.equalTo(vStack.snp.bottom).offset(50)
             $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
+            $0.top.equalTo(vStack.snp.bottom).inset(-50)
+            $0.height.equalTo(50)
+            $0.bottom.equalTo(contentView).inset(20)
         }
     }
 }
