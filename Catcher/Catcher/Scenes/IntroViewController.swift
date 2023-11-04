@@ -11,11 +11,14 @@ class IntroViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        /// 자동 로그인 완성되면 반드시 삭제해주세요.
-        FirebaseManager().logOut
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
-            AppDelegate.applicationDelegate().changeInitViewController(type: .Login)
+        if FirebaseManager().checkLoginState == true {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+                AppDelegate.applicationDelegate().changeInitViewController(type: .Main)
+            }
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+                AppDelegate.applicationDelegate().changeInitViewController(type: .Login)
+            }
         }
     }
 
