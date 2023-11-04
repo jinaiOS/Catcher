@@ -13,12 +13,14 @@ protocol UpdatePickUserInfo: AnyObject {
     func updateBlockUser()
 }
 
-final class UserInfoViewController: UIViewController {
+final class UserInfoViewController: BaseViewController {
     private let userInfoView = UserInfoView()
     private let viewModel: UserInfoViewModel
+    private var userInfo: UserInfo?
+    private var isPicked: Bool
+    private var isBlocked: Bool
     
     weak var delegate: UpdatePickUserInfo?
-    var userInfo: UserInfo?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,9 +34,11 @@ final class UserInfoViewController: UIViewController {
     
     init(info: UserInfo, isPicked: Bool, isBlocked: Bool) {
         viewModel = UserInfoViewModel(userInfo: info)
-        userInfo = info
+        self.userInfo = info
+        self.isPicked = isPicked
+        self.isBlocked = isBlocked
         super.init(nibName: nil, bundle: nil)
-        configure(info: info, isPicked: isPicked, isBlocked: isBlocked)
+        configure()
     }
     
     required init?(coder: NSCoder) {
@@ -47,8 +51,9 @@ final class UserInfoViewController: UIViewController {
 }
 
 private extension UserInfoViewController {
-    func configure(info: UserInfo, isPicked: Bool, isBlocked: Bool) {
-        ImageCacheManager.shared.loadImage(uid: info.uid) { [weak self] image in
+    func configure() {
+        guard let userInfo = userInfo else { return }
+        ImageCacheManager.shared.loadImage(uid: userInfo.uid) { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.userInfoView.profileImageView.image = image
@@ -68,22 +73,29 @@ private extension UserInfoViewController {
             userInfoView.blockLabel.text = "차단 해제"
         }
         
-        let infoText = viewModel.makeInfoText(info: info)
+        let infoText = viewModel.makeInfoText(info: userInfo)
         let textHeight = infoText.height
-        userInfoView.configure(nickName: info.nickName, infoText: infoText)
+        userInfoView.configure(nickName: userInfo.nickName, infoText: infoText)
         userInfoView.remakeLayout(textHeight: textHeight)
     }
     
     func setTarget() {
         userInfoView.closeButton.addTarget(self, action: #selector(didTappedCloseBtn), for: .touchUpInside)
+        userInfoView.reportButton.addTarget(self, action: #selector(pressReportButton), for: .touchUpInside)
         userInfoView.chatButton.addTarget(self, action: #selector(pressChattingButton), for: .touchUpInside)
-        userInfoView.pickButton.addTarget(self, action: #selector(didTappedPickBtn), for: .touchUpInside)
-        userInfoView.blockBtton.addTarget(self, action: #selector(didTappedBlockBtn), for: .touchUpInside)
+        userInfoView.pickButton.addTarget(self, action: #selector(pressPickBtn), for: .touchUpInside)
+        userInfoView.blockBtton.addTarget(self, action: #selector(pressBlockBtn), for: .touchUpInside)
     }
 }
 
 private extension UserInfoViewController {
     @objc func didTappedCloseBtn() {
+        dismiss(animated: true)
+    }
+    
+    @objc func pressReportButton() {
+        let reportVC = ReportViewController(userinfo: userInfo, isPicked: isPicked, isBlocked: isBlocked)
+        navigationPushController(viewController: reportVC, animated: true)
         dismiss(animated: true)
     }
     
@@ -106,7 +118,7 @@ private extension UserInfoViewController {
         }
     }
     
-    @objc func didTappedPickBtn(sender: UIButton) {
+    @objc func pressPickBtn(sender: UIButton) {
         sender.isSelected.toggle()
         let selected = sender.isSelected
         
@@ -116,7 +128,7 @@ private extension UserInfoViewController {
         }
     }
     
-    @objc func didTappedBlockBtn(sender: UIButton) {
+    @objc func pressBlockBtn(sender: UIButton) {
         sender.isSelected.toggle()
         let selected = sender.isSelected
         

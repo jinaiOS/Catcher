@@ -13,7 +13,6 @@ import UIKit
 enum MenuItems: String, CaseIterable {
     case setProfile = "기본 프로필 설정"
     case inquiry = "1:1 문의"
-    case report = "사용자 신고"
     case terms = "개인 정보 및 처리 방침"
     case opensource = "오픈소스 라이선스"
     case version = "앱 버전"
@@ -263,20 +262,17 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             let vc = AskViewController()
             self.navigationPushController(viewController: vc, animated: true)
         case 2:
-            let vc = ReportViewController()
-            self.navigationPushController(viewController: vc, animated: true)
-        case 3:
             let url = URL(string: "https://plip.kr/pcc/bbd65582-9034-4359-a09a-022a093eda26/privacy/1.html")
             let vc = SFSafariViewController(url: url!)
             present(vc, animated: true)
-        case 4:
+        case 3:
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url)
             }
-        case 5:
+        case 4:
             let appVersionVC = AppVersionViewController()
             self.navigationPushController(viewController: appVersionVC, animated: true)
-        case 6:
+        case 5:
             let revokeVC = RevokeViewController()
             self.navigationPushController(viewController: revokeVC, animated: true)
         default:
