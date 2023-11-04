@@ -29,7 +29,7 @@ class LoginViewController: BaseViewController {
                 CommonUtil.print(output: "로그인 성공")
                 Task {
                     await self.storeUserInfo()
-                    let (result, error) = await FireStoreManager.shared.fetchFcmToken(uid: DataManager.sharedInstance.userInfo?.uid ?? "")
+                    let (result, error) = await FireStoreManager.shared.fetchFcmToken(uid: FirebaseManager().getUID ?? "")
                     if let error {
                         CommonUtil.print(output: error.localizedDescription)
                         return
@@ -82,7 +82,6 @@ class LoginViewController: BaseViewController {
             if let userInfo = userInfo {
                 // 성공적으로 정보를 가져온 경우
                 CommonUtil.print(output: userInfo)
-                DataManager.sharedInstance.userInfo = userInfo
                 UserDefaultsManager().setValue(value: userInfo.location, key: nearUserPath)
             } else if let error = error {
                 // 오류가 발생한 경우

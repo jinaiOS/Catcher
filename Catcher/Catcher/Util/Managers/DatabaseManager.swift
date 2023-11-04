@@ -18,9 +18,7 @@ class DatabaseManager {
     private let storeManager = FireStoreManager.shared
     
     private let database = Database.database(url: "https://catcher-dcac0-default-rtdb.asia-southeast1.firebasedatabase.app").reference()
-    
-    private let userInfo = DataManager.sharedInstance.userInfo
-    
+        
     var otherUserInfo: UserInfo? = nil
 }
 
@@ -39,7 +37,7 @@ extension DatabaseManager {
 
 extension DatabaseManager {
     public func createNewConversation(otherUserUid: String, firstMessage: Message, completion: @escaping (Bool) -> Void) {
-        let ref =  database.child(userInfo?.uid ?? "")
+        let ref =  database.child(FirebaseManager().getUID ?? "")
         
         ref.observeSingleEvent(of: .value, with: {[weak self] snapshot in
             if let userNode = snapshot.value as? [String: Any] {
@@ -73,7 +71,7 @@ extension DatabaseManager {
                 
                 let newConversationData: [[String: Any]] = [
                     [
-                        "sender_uid": self?.userInfo?.uid ?? "",
+                        "sender_uid": FirebaseManager().getUID,
                         "date": dateString,
                         "message": message,
                         "is_read": false,
@@ -82,9 +80,9 @@ extension DatabaseManager {
                 ]
                 
                 let otherUserNewConversationData: [String: [String: Any]] = [
-                    self?.userInfo?.uid ?? "":
+                    FirebaseManager().getUID ?? "":
                         [
-                            "sender_uid": self?.userInfo?.uid ?? "",
+                            "sender_uid": FirebaseManager().getUID,
                             "date": dateString,
                             "message": message,
                             "is_read": false,
@@ -94,15 +92,15 @@ extension DatabaseManager {
                 
                 // Update recipient conversation entry
                 
-                self?.database.child(self?.userInfo?.uid ?? "").observeSingleEvent(of: .value, with: {[weak self] snapshot in
+                self?.database.child(FirebaseManager().getUID ?? "").observeSingleEvent(of: .value, with: {[weak self] snapshot in
                     if var conversations = snapshot.value as? [[String: Any]] {
                         //append
                         //                        conversations.append(newConversationData)
                         //                        self?.database.child(self?.userInfo?.uid ?? "").setValue(conversations)
                     } else {
                         // create
-                        self?.database.child(self?.userInfo?.uid ?? "").child(otherUserUid).setValue(newConversationData)
-                        self?.database.child(otherUserUid).child(self?.userInfo?.uid ?? "").setValue(newConversationData)
+                        self?.database.child(FirebaseManager().getUID ?? "").child(otherUserUid).setValue(newConversationData)
+                        self?.database.child(otherUserUid).child(FirebaseManager().getUID ?? "").setValue(newConversationData)
                     }
                 })
             } else {
@@ -137,7 +135,7 @@ extension DatabaseManager {
                     otherUserUid:
                         [
                             [
-                                "sender_uid": self?.userInfo?.uid ?? "",
+                                "sender_uid": FirebaseManager().getUID ?? "",
                                 "date": dateString,
                                 "message": message,
                                 "is_read": false,
@@ -147,10 +145,10 @@ extension DatabaseManager {
                 ]
                 
                 let otherUserNewConversationData: [String: [[String: Any]]] = [
-                    self?.userInfo?.uid ?? "":
+                    FirebaseManager().getUID ?? "":
                         [
                             [
-                                "sender_uid": self?.userInfo?.uid ?? "",
+                                "sender_uid": FirebaseManager().getUID ?? "",
                                 "date": dateString,
                                 "message": message,
                                 "is_read": false,
@@ -161,14 +159,14 @@ extension DatabaseManager {
                 
                 // Update recipient conversation entry
                 
-                self?.database.child(self?.userInfo?.uid ?? "").child(otherUserUid).observeSingleEvent(of: .value, with: {[weak self] snapshot in
+                self?.database.child(FirebaseManager().getUID ?? "").child(otherUserUid).observeSingleEvent(of: .value, with: {[weak self] snapshot in
                     if var conversations = snapshot.value as? [[String: Any]] {
                         //append
                         conversations.append(newConversationData)
-                        self?.database.child(self?.userInfo?.uid ?? "").setValue(conversations)
+                        self?.database.child(FirebaseManager().getUID ?? "").setValue(conversations)
                     } else {
                         // create
-                        self?.database.child(self?.userInfo?.uid ?? "").setValue(newConversationData)
+                        self?.database.child(FirebaseManager().getUID ?? "").setValue(newConversationData)
                         self?.database.child(otherUserUid).setValue(otherUserNewConversationData)
                     }
                 })
@@ -217,7 +215,7 @@ extension DatabaseManager {
     }
     
     public func getAllConversations(completion: @escaping (Result<[Conversation], Error>) -> Void) {
-        database.child(self.userInfo?.uid ?? "").observe(.value, with: { snapshot in
+        database.child(FirebaseManager().getUID ?? "").observe(.value, with: { snapshot in
             guard let value = snapshot.value as? [String: [[String: Any]]] else {
                 completion(.failure(DatabaseError.failedToFetch))
                 return
@@ -269,7 +267,7 @@ extension DatabaseManager {
     
     /// Gets all mmessages for a given conversatino
     public func getAllMessagesForConversation(with uid: String, completion: @escaping (Result<[Message], Error>) -> Void) {
-        database.child(userInfo?.uid ?? "").child(uid).observe(.value, with: { snapshot in
+        database.child(FirebaseManager().getUID ?? "").child(uid).observe(.value, with: { snapshot in
             guard let value = snapshot.value as? [[String: Any]] else{
                 completion(.failure(DatabaseError.failedToFetch))
                 return
@@ -352,7 +350,7 @@ extension DatabaseManager {
         // add new message to messages
         // update sender latest message
         // update recipient latest message
-        guard let uid = DataManager.sharedInstance.userInfo?.uid else { return }
+        guard let uid = FirebaseManager().getUID else { return }
         database.child(uid).child(otherUserUid).observeSingleEvent(of: .value, with: { [weak self] snapshot in
             guard let strongSelf = self else {
                 return
@@ -400,13 +398,13 @@ extension DatabaseManager {
                 "type": newMessage.kind.messageKindString,
                 "message": message,
                 "date": dateString,
-                "sender_uid": self?.userInfo?.uid ?? "",
+                "sender_uid": FirebaseManager().getUID,
                 "is_read": false
             ]
             
             currentMessages.append(newMessageEntry)
             
-            strongSelf.database.child("\(self?.userInfo?.uid ?? "")/\(otherUserUid)").setValue(currentMessages) { error, _ in
+            strongSelf.database.child("\(FirebaseManager().getUID ?? "")/\(otherUserUid)").setValue(currentMessages) { error, _ in
                 guard error == nil else {
                     completion(false)
                     return
@@ -414,7 +412,7 @@ extension DatabaseManager {
                 completion(true)
             }
             
-            strongSelf.database.child("\(otherUserUid)/\(self?.userInfo?.uid ?? "")").setValue(currentMessages) { error, _ in
+            strongSelf.database.child("\(otherUserUid)/\(FirebaseManager().getUID ?? "")").setValue(currentMessages) { error, _ in
                 guard error == nil else {
                     completion(false)
                     return
