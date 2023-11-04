@@ -1,5 +1,7 @@
 name: abseil-cpp-binary, nameSpecified: abseil, owner: google, version: 1.2022062300.0, source: https://github.com/google/abseil-cpp-binary
 
+name: Alamofire, nameSpecified: Alamofire, owner: Alamofire, version: 5.8.1, source: https://github.com/Alamofire/Alamofire
+
 name: firebase-ios-sdk, nameSpecified: Firebase, owner: firebase, version: 10.16.0, source: https://github.com/firebase/firebase-ios-sdk
 
 name: GoogleAppMeasurement, nameSpecified: GoogleAppMeasurement, owner: google, version: 10.16.0, source: https://github.com/google/GoogleAppMeasurement

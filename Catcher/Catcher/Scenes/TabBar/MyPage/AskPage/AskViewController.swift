@@ -9,6 +9,11 @@ import SnapKit
 import UIKit
 
 class AskViewController: BaseHeaderViewController {
+    private lazy var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        return view
+    }()
+    
     private lazy var askTitleLabel: UILabel = {
         let lb = UILabel()
         lb.text = "제목"
@@ -24,18 +29,17 @@ class AskViewController: BaseHeaderViewController {
         tf.font = .systemFont(ofSize: 14, weight: .light)
         return tf
     }()
-
+    
     private lazy var textFieldView: UIView = {
         let vw = UIView()
         vw.layer.cornerRadius = 10
         vw.layer.borderWidth = 2
         vw.layer.borderColor = ThemeColor.primary.cgColor
         vw.backgroundColor = .white
-        vw.addSubview(askTextField)
         view.addSubview(vw)
         return vw
     }()
-
+    
     private lazy var askDetailLabel: UILabel = {
         let lb = UILabel()
         lb.text = "문의내용"
@@ -48,6 +52,7 @@ class AskViewController: BaseHeaderViewController {
     private lazy var askDetailTextView: UITextView = {
         let tv = UITextView()
         tv.font = .systemFont(ofSize: 14, weight: .light)
+        tv.delegate = self
         return tv
     }()
 
@@ -57,7 +62,6 @@ class AskViewController: BaseHeaderViewController {
         vw.layer.borderWidth = 2
         vw.layer.borderColor = ThemeColor.primary.cgColor
         vw.backgroundColor = .white
-        vw.addSubview(askDetailTextView)
         view.addSubview(vw)
         return vw
     }()
@@ -65,55 +69,134 @@ class AskViewController: BaseHeaderViewController {
     private lazy var askButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("문의하기", for: .normal)
-        btn.layer.cornerRadius = 15
+        btn.layer.cornerRadius = AppConstraint.defaultCornerRadius
         btn.setTitleColor(.white, for: .normal)
         btn.backgroundColor = ThemeColor.primary
         btn.addTarget(self, action: #selector(pressAskButton), for: .touchUpInside)
         view.addSubview(btn)
         return btn
     }()
+    
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        return view
+    }()
 
+    private lazy var tempView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         setHeaderTitleName(title: "1:1 문의")
         configure()
+        setKeyboardObserver()
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        removeKeyboardObserver()
+    }
+    
+    deinit {
+        CommonUtil.print(output: "deinit - AskVC")
+    }
+}
+
+extension AskViewController {
+    override func keyboardWillShow(notification: NSNotification) {
+        tempView.snp.remakeConstraints {
+            $0.top.equalTo(askButton.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(300)
+            $0.bottom.equalToSuperview()
+        }
+    }
+    
+    override func keyboardWillHide(notification: NSNotification) {
+        tempView.snp.remakeConstraints {
+            $0.top.equalTo(askButton.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    }
+}
+
+extension AskViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        let textViewFrame = askDetailTextView.convert(askDetailTextView.bounds, to: scrollView)
+        let visibleContentHeight = scrollView.frame.height - 300
+        if textViewFrame.maxY > visibleContentHeight {
+            let scrollOffset = textViewFrame.maxY - visibleContentHeight
+            scrollView.setContentOffset(CGPoint(x: 0, y: scrollOffset), animated: true)
+        }
     }
 }
 
 private extension AskViewController {
     func configure() {
-        askTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(80)
-            make.leading.equalTo(self.view).inset(36)
-            make.height.equalTo(18)
+        textFieldView.addSubview(askTextField)
+        askDetailView.addSubview(askDetailTextView)
+        scrollView.addSubview(contentView)
+        view.addSubview(scrollView)
+        
+        askTextField.snp.makeConstraints {
+            $0.edges.equalTo(textFieldView).inset(16)
         }
-        askTextField.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(self.textFieldView).inset(13)
-            make.top.bottom.equalTo(self.textFieldView).inset(10)
+        
+        askDetailTextView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(16)
         }
-        textFieldView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(self.view).inset(20)
-            make.top.equalTo(askTitleLabel.snp.bottom).inset(-10)
-            make.height.equalTo(38)
+        
+        [askTitleLabel, textFieldView, askDetailLabel,
+         askDetailView, askButton, tempView].forEach {
+            contentView.addSubview($0)
         }
-        askDetailLabel.snp.makeConstraints { make in
-            make.top.equalTo(textFieldView.snp.bottom).inset(-26)
-            make.leading.equalTo(self.view).inset(36)
-            make.height.equalTo(18)
+        
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(AppConstraint.headerViewHeight)
+            $0.leading.bottom.trailing.equalToSuperview()
         }
-        askDetailTextView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalTo(self.askDetailView).inset(16)
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.centerX.equalToSuperview()
         }
-        askDetailView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(self.view).inset(20)
-            make.top.equalTo(askDetailLabel.snp.bottom).inset(-10)
-            make.height.equalTo(262)
+        
+        askTitleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
         }
-        askButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(20)
-            make.leading.trailing.equalTo(self.view).inset(14)
-            make.height.equalTo(53)
+        
+        textFieldView.snp.makeConstraints {
+            $0.top.equalTo(askTitleLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
+        }
+        
+        askDetailLabel.snp.makeConstraints {
+            $0.top.equalTo(textFieldView.snp.bottom).offset(30)
+            $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
+        }
+        
+        askDetailView.snp.makeConstraints {
+            $0.top.equalTo(askDetailLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
+            $0.height.equalTo(300)
+        }
+        
+        askButton.snp.makeConstraints {
+            $0.top.equalTo(askDetailView.snp.bottom).offset(50)
+            $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
+            $0.height.equalTo(50)
+        }
+        
+        tempView.snp.makeConstraints {
+            $0.top.equalTo(askButton.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
     }
 }

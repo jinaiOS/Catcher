@@ -35,14 +35,16 @@ final class AppVersionView: UIView {
         ===== 개발자 정보 =====
         
         김지은
+        kj227777@naver.com
         
         김현승
         
         정기현
+        jkh001301@naver.com
         
         정하진
         
-        한지욱
+        👑 한지욱
         jiwook.han.dev@gmail.com
         """
         return view
@@ -78,7 +80,7 @@ private extension AppVersionView {
         developerView.snp.makeConstraints {
             $0.top.equalTo(versionLabel.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(20)
         }
     }
 }

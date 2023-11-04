@@ -80,28 +80,27 @@ private extension UserInfoViewController {
     }
     
     func setTarget() {
-        userInfoView.closeButton.addTarget(self, action: #selector(didTappedCloseBtn), for: .touchUpInside)
-        userInfoView.reportButton.addTarget(self, action: #selector(pressReportButton), for: .touchUpInside)
-        userInfoView.chatButton.addTarget(self, action: #selector(pressChattingButton), for: .touchUpInside)
+        userInfoView.closeButton.addTarget(self, action: #selector(pressCloseBtn), for: .touchUpInside)
+        userInfoView.reportButton.addTarget(self, action: #selector(pressReportBtn), for: .touchUpInside)
+        userInfoView.chatButton.addTarget(self, action: #selector(pressChattingBtn), for: .touchUpInside)
         userInfoView.pickButton.addTarget(self, action: #selector(pressPickBtn), for: .touchUpInside)
         userInfoView.blockBtton.addTarget(self, action: #selector(pressBlockBtn), for: .touchUpInside)
     }
 }
 
 private extension UserInfoViewController {
-    @objc func didTappedCloseBtn() {
+    @objc func pressCloseBtn() {
         dismiss(animated: true)
     }
     
-    @objc func pressReportButton() {
+    @objc func pressReportBtn() {
         let reportVC = ReportViewController(userinfo: userInfo, isPicked: isPicked, isBlocked: isBlocked)
         navigationPushController(viewController: reportVC, animated: true)
         dismiss(animated: true)
     }
     
-    @objc func pressChattingButton() {
+    @objc func pressChattingBtn() {
         listenForMessages()
-       
     }
     
     @objc func pressPickBtn(sender: UIButton) {

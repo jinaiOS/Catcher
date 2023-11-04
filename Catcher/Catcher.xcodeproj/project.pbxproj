@@ -28,6 +28,7 @@
 		335AC1F52AE7E8D100F2CF51 /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335AC1F42AE7E8D100F2CF51 /* UserInfoView.swift */; };
 		335B78BA2AE70237004D2956 /* MainItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335B78B92AE70237004D2956 /* MainItems.swift */; };
 		335B78BC2AE70844004D2956 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335B78BB2AE70844004D2956 /* ImageCacheManager.swift */; };
+		3366170D2AF6E563008AB63C /* ServerKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3366170C2AF6E562008AB63C /* ServerKey.swift */; };
 		33845E392AF4393F00539068 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 33845E382AF4393F00539068 /* Settings.bundle */; };
 		33845E3B2AF43B9100539068 /* RevokeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33845E3A2AF43B9100539068 /* RevokeViewController.swift */; };
 		33845E3D2AF43B9600539068 /* RevokeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33845E3C2AF43B9600539068 /* RevokeView.swift */; };
@@ -62,7 +63,6 @@
 		5622C0792AF1416300455649 /* CustomTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5622C0782AF1416300455649 /* CustomTextField.xib */; };
 		5622C0A12AF6A7D400455649 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 5622C0A02AF6A7D400455649 /* FirebaseMessaging */; };
 		5622C0A82AF6ACEC00455649 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5622C0A72AF6ACEC00455649 /* Alamofire */; };
-		5622C0AA2AF6CF2600455649 /* ServerKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622C0A92AF6CF2600455649 /* ServerKey.swift */; };
 		5622C0AC2AF6D3EE00455649 /* Userdefault_Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622C0AB2AF6D3EE00455649 /* Userdefault_Key.swift */; };
 		562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36802AD80EF9008D99B2 /* AppDelegate.swift */; };
 		562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36842AD80EF9008D99B2 /* ViewController.swift */; };
@@ -158,6 +158,7 @@
 		335AC1F42AE7E8D100F2CF51 /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		335B78B92AE70237004D2956 /* MainItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainItems.swift; sourceTree = "<group>"; };
 		335B78BB2AE70844004D2956 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		3366170C2AF6E562008AB63C /* ServerKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerKey.swift; sourceTree = "<group>"; };
 		33845E382AF4393F00539068 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		33845E3A2AF43B9100539068 /* RevokeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeViewController.swift; sourceTree = "<group>"; };
 		33845E3C2AF43B9600539068 /* RevokeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeView.swift; sourceTree = "<group>"; };
@@ -195,7 +196,6 @@
 		5622C0762AF1415300455649 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		5622C0782AF1416300455649 /* CustomTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTextField.xib; sourceTree = "<group>"; };
 		5622C09E2AF6A64D00455649 /* CatcherDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CatcherDebug.entitlements; sourceTree = "<group>"; };
-		5622C0A92AF6CF2600455649 /* ServerKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerKey.swift; sourceTree = "<group>"; };
 		5622C0AB2AF6D3EE00455649 /* Userdefault_Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Userdefault_Key.swift; sourceTree = "<group>"; };
 		562E367D2AD80EF9008D99B2 /* Catcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Catcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		562E36802AD80EF9008D99B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -542,7 +542,7 @@
 				33894A672AEEAB7C00582345 /* StrokeLabel.swift */,
 				56BBF7ED2AE6687B00A2BADD /* Models */,
 				33C58E802AD85028008EB6C2 /* Extensions */,
-				5622C0A92AF6CF2600455649 /* ServerKey.swift */,
+				3366170C2AF6E562008AB63C /* ServerKey.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -863,7 +863,7 @@
 				56C08B472ADF6B7E00FB8608 /* ChatViewController.swift in Sources */,
 				33C58E8E2AD8B2F6008EB6C2 /* UIColor+.swift in Sources */,
 				23E7DAB82AEB919400CDBC53 /* Const.swift in Sources */,
-				5622C0AA2AF6CF2600455649 /* ServerKey.swift in Sources */,
+				3366170D2AF6E563008AB63C /* ServerKey.swift in Sources */,
 				33B7B5AF2AF4271700773E9F /* AppVersionViewController.swift in Sources */,
 				33462AF42AF35C6C006CDFBA /* CustomTextField.swift in Sources */,
 			);
@@ -1181,7 +1181,7 @@
 				CODE_SIGN_ENTITLEMENTS = Catcher/CatcherDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YRZW7MZ3P5;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Catcher/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "앱에서 프로필 등록을 하기 위해 카메라 접근 권한 동의가 필요합니다.";
