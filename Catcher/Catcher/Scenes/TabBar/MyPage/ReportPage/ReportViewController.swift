@@ -7,48 +7,70 @@
 
 import UIKit
 import SnapKit
-class ReportViewController: BaseHeaderViewController {
-    var button1: UIButton!
-    var button2: UIButton!
-    var button3: UIButton!
-    var button4: UIButton!
-    var userBlockButton: UIButton!
-    lazy var label1: UILabel = {
+
+final class ReportViewController: BaseHeaderViewController {
+    private let fireStoreManager = FireStoreManager.shared
+    private var userInfo: UserInfo?
+    private var isPicked: Bool
+    private var isBlocked: Bool
+    private var button1: UIButton!
+    private var button2: UIButton!
+    private var button3: UIButton!
+    private var button4: UIButton!
+    private var userBlockButton: UIButton!
+    
+    init(userinfo: UserInfo?, isPicked: Bool, isBlocked: Bool) {
+        self.userInfo = userinfo
+        self.isPicked = isPicked
+        self.isBlocked = isBlocked
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private lazy var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        return view
+    }()
+    
+    private lazy var label1: UILabel = {
         let lb = UILabel()
-        lb.text = "신고사유"
+        lb.text = "비속어 / 폭언 음란 등"
         lb.font = .systemFont(ofSize: 14, weight: .light)
         return lb
     }()
 
-    lazy var label2: UILabel = {
+    private lazy var label2: UILabel = {
         let lb = UILabel()
-        lb.text = "신고사유"
+        lb.text = "사진 도용"
         lb.font = .systemFont(ofSize: 14, weight: .light)
         return lb
     }()
 
-    lazy var label3: UILabel = {
+    private lazy var label3: UILabel = {
         let lb = UILabel()
-        lb.text = "신고사유"
+        lb.text = "도배 및 광고 등"
         lb.font = .systemFont(ofSize: 14, weight: .light)
         return lb
     }()
 
-    lazy var label4: UILabel = {
+    private lazy var label4: UILabel = {
         let lb = UILabel()
-        lb.text = "신고사유"
+        lb.text = "기타"
         lb.font = .systemFont(ofSize: 14, weight: .light)
         return lb
     }()
 
-    lazy var userBlockLabel: UILabel = {
+    private lazy var userBlockLabel: UILabel = {
         let lb = UILabel()
         lb.text = "해당 사용자 다시 보지 않기"
         lb.font = .systemFont(ofSize: 14, weight: .light)
         return lb
     }()
-
-    lazy var userBlockStack: UIStackView = {
+    
+    private lazy var userBlockStack: UIStackView = {
         let st = UIStackView(arrangedSubviews: [userBlockButton, userBlockLabel])
         st.axis = .horizontal
         st.alignment = .fill
@@ -58,7 +80,7 @@ class ReportViewController: BaseHeaderViewController {
         return st
     }()
 
-    lazy var stack1: UIStackView = {
+    private lazy var stack1: UIStackView = {
         let st = UIStackView(arrangedSubviews: [button1, label1])
         st.axis = .horizontal
         st.alignment = .fill
@@ -68,7 +90,7 @@ class ReportViewController: BaseHeaderViewController {
         return st
     }()
 
-    lazy var stack2: UIStackView = {
+    private lazy var stack2: UIStackView = {
         let st = UIStackView(arrangedSubviews: [button2, label2])
         st.axis = .horizontal
         st.alignment = .fill
@@ -78,7 +100,7 @@ class ReportViewController: BaseHeaderViewController {
         return st
     }()
 
-    lazy var stack3: UIStackView = {
+    private lazy var stack3: UIStackView = {
         let st = UIStackView(arrangedSubviews: [button3, label3])
         st.axis = .horizontal
         st.alignment = .fill
@@ -88,7 +110,7 @@ class ReportViewController: BaseHeaderViewController {
         return st
     }()
 
-    lazy var stack4: UIStackView = {
+    private lazy var stack4: UIStackView = {
         let st = UIStackView(arrangedSubviews: [button4, label4])
         st.axis = .horizontal
         st.alignment = .fill
@@ -138,9 +160,10 @@ class ReportViewController: BaseHeaderViewController {
     private lazy var reportButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("신고하기", for: .normal)
-        btn.layer.cornerRadius = 15
+        btn.layer.cornerRadius = AppConstraint.defaultCornerRadius
         btn.setTitleColor(.white, for: .normal)
         btn.backgroundColor = ThemeColor.primary
+        btn.addTarget(self, action: #selector(reportUser), for: .touchUpInside)
         view.addSubview(btn)
         return btn
     }()
@@ -151,10 +174,91 @@ class ReportViewController: BaseHeaderViewController {
         view.backgroundColor = .white
         configure()
     }
+    
+    deinit {
+        CommonUtil.print(output: "deinit - ReportVC")
+    }
+    
+    override func backButtonTouched(sender: UIButton) {
+        dismissVC()
+    }
+}
 
+private extension ReportViewController {
     @objc func buttonTapped(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         sender.tintColor = sender.isSelected ? .systemRed : .systemGray
+    }
+    
+    @objc func reportUser() {
+        var title = ""
+        if button1.isSelected {
+            title += "/비속어"
+        }
+        if button2.isSelected {
+            title += "/사진 도용"
+        }
+        if button3.isSelected {
+            title += "/광고"
+        }
+        if button4.isSelected {
+            title += "/기타"
+        }
+        if title.isEmpty || reportDetailTextView.text.isEmpty {
+            showAlert(title: "신고사항 미입력", message: "신고 사유를 자세히 작성해 주세요.")
+            return
+        }
+        sendReport(title: title, descriptions: reportDetailTextView.text)
+        completeAlert()
+    }
+    
+    func sendReport(title: String, descriptions: String) {
+        Task {
+            let error = await fireStoreManager.setReport(targetUID: userInfo?.uid, title: title, descriptions: descriptions)
+            if let error {
+                CommonUtil.print(output: error.localizedDescription)
+            }
+        }
+    }
+    
+    func dismissVC() {
+        navigationPopToRootViewController(animated: true) { [weak self] in
+            guard let self = self,
+                  let userInfo = userInfo else { return }
+            let userInfoVC = UserInfoViewController(info: userInfo, isPicked: isPicked, isBlocked: isBlocked)
+            userInfoVC.modalPresentationStyle = .custom
+            userInfoVC.modalTransitionStyle = .crossDissolve
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.present(userInfoVC, animated: true)
+            }
+        }
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert)
+        let okAction = UIAlertAction(
+            title: "확인",
+            style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
+    func completeAlert() {
+        let alert = UIAlertController(
+            title: "신고 완료",
+            message: "신고가 접수되었습니다.",
+            preferredStyle: .alert)
+        let okAction = UIAlertAction(
+            title: "확인",
+            style: .default) { [weak self] _ in
+                guard let self = self else { return }
+                dismissVC()
+            }
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
 }
 
@@ -244,4 +348,3 @@ extension ReportViewController {
         }
     }
 }
-
