@@ -60,6 +60,9 @@
 		3B3E35D72AE125A3006841D8 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E35D62AE125A3006841D8 /* RegisterView.swift */; };
 		5622C0702AEF0BE000455649 /* ResetPWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622C06F2AEF0BE000455649 /* ResetPWViewController.swift */; };
 		5622C0792AF1416300455649 /* CustomTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5622C0782AF1416300455649 /* CustomTextField.xib */; };
+		5622C0A12AF6A7D400455649 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 5622C0A02AF6A7D400455649 /* FirebaseMessaging */; };
+		5622C0A52AF6AA4100455649 /* Userdefault_Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622C0A42AF6AA4100455649 /* Userdefault_Key.swift */; };
+		5622C0A82AF6ACEC00455649 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5622C0A72AF6ACEC00455649 /* Alamofire */; };
 		562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36802AD80EF9008D99B2 /* AppDelegate.swift */; };
 		562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36842AD80EF9008D99B2 /* ViewController.swift */; };
 		562E36882AD80EF9008D99B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 562E36862AD80EF9008D99B2 /* Main.storyboard */; };
@@ -190,6 +193,8 @@
 		5622C0752AF1385C00455649 /* CatcherDev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CatcherDev.xcconfig; sourceTree = "<group>"; };
 		5622C0762AF1415300455649 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		5622C0782AF1416300455649 /* CustomTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTextField.xib; sourceTree = "<group>"; };
+		5622C09E2AF6A64D00455649 /* CatcherDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CatcherDebug.entitlements; sourceTree = "<group>"; };
+		5622C0A42AF6AA4100455649 /* Userdefault_Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Userdefault_Key.swift; sourceTree = "<group>"; };
 		562E367D2AD80EF9008D99B2 /* Catcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Catcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		562E36802AD80EF9008D99B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		562E36842AD80EF9008D99B2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -254,6 +259,8 @@
 				56BBF7D72AE53C3600A2BADD /* FirebaseAuth in Frameworks */,
 				56BBF7DD2AE53C3600A2BADD /* FirebaseFirestore in Frameworks */,
 				56BBF7DF2AE53C3600A2BADD /* FirebaseFirestoreSwift in Frameworks */,
+				5622C0A82AF6ACEC00455649 /* Alamofire in Frameworks */,
+				5622C0A12AF6A7D400455649 /* FirebaseMessaging in Frameworks */,
 				56BBF7E62AE53D5600A2BADD /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,7 +286,6 @@
 			isa = PBXGroup;
 			children = (
 				23E7DAB72AEB919400CDBC53 /* Const.swift */,
-				33532B772AE17A31008B47EB /* UserInfo.swift */,
 				335241932AE5AEBB009EB771 /* FireStoreManager.swift */,
 				33532B7B2AE17A53008B47EB /* FirebaseErrors.swift */,
 				33532B7D2AE17A67008B47EB /* FirebaseManager.swift */,
@@ -290,6 +296,7 @@
 				68708AB82AEE32CC00B4C7B9 /* StorageManager.swift */,
 				56BBF82E2AEB1EBB00A2BADD /* DatabaseManager.swift */,
 				33462AF52AF3CAC4006CDFBA /* NotificationManager.swift */,
+				562E36B42AD8DB57008D99B2 /* DataManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -387,6 +394,13 @@
 			path = ../LoginPage;
 			sourceTree = "<group>";
 		};
+		5622C09F2AF6A7D400455649 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		562E36742AD80EF9008D99B2 = {
 			isa = PBXGroup;
 			children = (
@@ -397,6 +411,7 @@
 				562E36A02AD80EFB008D99B2 /* CatcherUITests */,
 				562E367E2AD80EF9008D99B2 /* Products */,
 				56BBF7B42AE5389400A2BADD /* Recovered References */,
+				5622C09F2AF6A7D400455649 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -413,6 +428,7 @@
 		562E367F2AD80EF9008D99B2 /* Catcher */ = {
 			isa = PBXGroup;
 			children = (
+				5622C09E2AF6A64D00455649 /* CatcherDebug.entitlements */,
 				562E36802AD80EF9008D99B2 /* AppDelegate.swift */,
 				562E36842AD80EF9008D99B2 /* ViewController.swift */,
 				562E36862AD80EF9008D99B2 /* Main.storyboard */,
@@ -459,6 +475,8 @@
 			children = (
 				56C08B832AE0FE8300FB8608 /* ConversationsModels.swift */,
 				56C08B9B2AE10CDE00FB8608 /* ChatModels.swift */,
+				33532B772AE17A31008B47EB /* UserInfo.swift */,
+				5622C0A42AF6AA4100455649 /* Userdefault_Key.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -518,7 +536,6 @@
 			children = (
 				562E36BA2AD8DD03008D99B2 /* CommonUtil.swift */,
 				562E36C02AD91901008D99B2 /* Common.swift */,
-				562E36B42AD8DB57008D99B2 /* DataManager.swift */,
 				33532B812AE17A8E008B47EB /* Managers */,
 				33894A672AEEAB7C00582345 /* StrokeLabel.swift */,
 				56BBF7ED2AE6687B00A2BADD /* Models */,
@@ -627,6 +644,8 @@
 				56BBF7DE2AE53C3600A2BADD /* FirebaseFirestoreSwift */,
 				56BBF7E02AE53C3600A2BADD /* FirebaseStorage */,
 				56BBF7E52AE53D5600A2BADD /* SnapKit */,
+				5622C0A02AF6A7D400455649 /* FirebaseMessaging */,
+				5622C0A72AF6ACEC00455649 /* Alamofire */,
 			);
 			productName = Catcher;
 			productReference = 562E367D2AD80EF9008D99B2 /* Catcher.app */;
@@ -705,6 +724,7 @@
 				56BBF7B12AE16FF400A2BADD /* XCRemoteSwiftPackageReference "MessageKit" */,
 				56BBF7D32AE53C3600A2BADD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				56BBF7E42AE53D5600A2BADD /* XCRemoteSwiftPackageReference "SnapKit" */,
+				5622C0A62AF6ACEC00455649 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 562E367E2AD80EF9008D99B2 /* Products */;
 			projectDirPath = "";
@@ -824,6 +844,7 @@
 				33C58EA12ADC5392008EB6C2 /* AppConstraint.swift in Sources */,
 				33532B7C2AE17A53008B47EB /* FirebaseErrors.swift in Sources */,
 				56C08B652ADF805800FB8608 /* MainPageViewController.swift in Sources */,
+				5622C0A52AF6AA4100455649 /* Userdefault_Key.swift in Sources */,
 				3B2BE3012ADE4EAE00BD54CC /* LoginView.swift in Sources */,
 				56C08B682ADF805800FB8608 /* DefaultSectionCell.swift in Sources */,
 				33FCCB432AE8AF81004FF322 /* UIImage+.swift in Sources */,
@@ -1153,10 +1174,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Catcher/Catcher.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Catcher/CatcherDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YRZW7MZ3P5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Catcher/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "앱에서 프로필 등록을 하기 위해 카메라 접근 권한 동의가 필요합니다.";
@@ -1340,6 +1361,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5622C0A62AF6ACEC00455649 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		56BBF7AE2AE16FE300A2BADD /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
@@ -1375,6 +1404,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5622C0A02AF6A7D400455649 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 56BBF7D32AE53C3600A2BADD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		5622C0A72AF6ACEC00455649 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5622C0A62AF6ACEC00455649 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		56BBF7AF2AE16FE300A2BADD /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 56BBF7AE2AE16FE300A2BADD /* XCRemoteSwiftPackageReference "SDWebImage" */;
