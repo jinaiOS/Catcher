@@ -160,6 +160,11 @@ final class UserInfoView: UIView {
         return stack
     }()
     
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     func configure(nickName: String, infoText: NSMutableAttributedString) {
         nickNameLabel.text = nickName
         userInfoView.attributedText = infoText
@@ -190,16 +195,26 @@ extension UserInfoView {
 private extension UserInfoView {
     func setLayout() {
         [profileImageView, reportButton, nickNameLabel, vStack, userInfoView].forEach {
-            scrollView.addSubview($0)
+            contentView.addSubview($0)
         }
+        
+        scrollView.addSubview(contentView)
         
         [scrollView, closeButton].forEach {
             addSubview($0)
         }
         
+        scrollView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.centerX.equalToSuperview()
+        }
+        
         profileImageView.snp.makeConstraints {
             $0.leading.top.trailing.equalToSuperview()
-            $0.width.equalTo(UIScreen.main.bounds.width)
             $0.height.equalTo(500)
         }
         
@@ -231,10 +246,6 @@ private extension UserInfoView {
             $0.leading.trailing.equalToSuperview().inset(50)
             $0.bottom.equalToSuperview()
             $0.height.equalTo(500)
-        }
-        
-        scrollView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
         }
         
         closeButton.snp.makeConstraints {
