@@ -9,9 +9,13 @@ import FirebaseAuth
 import FirebaseFirestore
 import SnapKit
 import UIKit
+import SafariServices
+
 final class RegisterViewController: BaseViewController {
     private let registerView = RegisterView()
     private let fireManager = FirebaseManager()
+    private let titleList = ["[필수] 14세 이상", "[필수] 개인정보 동의서"]
+    var selectList : [Bool] = []
 
     /** @brief 공통 헤더 객체 */
     var headerView: CommonHeaderView!
@@ -136,7 +140,75 @@ final class RegisterViewController: BaseViewController {
         registerView.scrollView.contentInset = contentInsets
         registerView.scrollView.scrollIndicatorInsets = contentInsets
     }
+    
+    /**
+    * @brief 상세 약관 보기 버튼 클릭
+    */
+    @objc func detailButtonTouched(sender : UIButton) {
+        let url = URL(string: "https://plip.kr/pcc/bbd65582-9034-4359-a09a-022a093eda26/privacy/1.html")
+        let vc = SFSafariViewController(url: url!)
+        present(vc, animated: true)
+    }
+    
+    /**
+    * @brief 리스트 선택 버튼 클릭
+    */
+    @objc func listSelectButtonTouched(sender : UIButton) {
+        // 버튼 선택 변경
+        sender.isSelected = !sender.isSelected
+        // 인덱스
+        let index = sender.tag
+        // 선택 리스트 상태 변경
+        selectList[index] = sender.isSelected
+        
+        // 전체 동의 하기 버튼 셋팅
+        allSelectButtonSetting()
+        // 동의 버튼 변경
+        agreeButtonClicked()
+    }
+    
+    /** @brief 전체 동의 하기 버튼 셋팅 */
+    @objc func allSelectButtonSetting() {
+        // 모든 항목 선택 체크
+        var intSelectCount = 0
+        for index in 0..<selectList.count {
+            if selectList[index] == true {
+                intSelectCount += 1
+            }
+        }
+        if intSelectCount == selectList.count {
+            // 전체 선택
+            registerView.allAgreeButton.isSelected = true
+        } else {
+            // 선택 취소
+            registerView.allAgreeButton.isSelected = false
+        }
+    }
 
+    /** @brief 약관 동의 완료 버튼 선택 가능/불가능 변경 */
+    func agreeButtonClicked() {
+        if selectList[0] == true && selectList[1] == true{
+            registerView.nextButton.isEnabled = true
+            registerView.nextButton.backgroundColor = ThemeColor.primary
+        } else {
+            registerView.nextButton.isEnabled = false
+            registerView.nextButton.backgroundColor = #colorLiteral(red: 0.6039215686, green: 0.6039215686, blue: 0.6039215686, alpha: 1)
+        }
+    }
+    
+    @objc func allSelectButtonTouched(sender: UIButton) {
+        // 버튼 선택 변경
+        sender.isSelected = !sender.isSelected
+        // 선택 리스트 전체 변경
+        for index in 0..<selectList.count {
+            selectList[index] = sender.isSelected
+        }
+        // 테이블 리로드
+        registerView.termsTableView.reloadData()
+        // 동의 버튼 변경
+        agreeButtonClicked()
+    }
+    
     // 현재 활성화된 텍스트 필드 찾기
     private func findActiveTextField() -> UITextField? {
         for case let textField as UITextField in registerView.contentView.subviews where textField.isFirstResponder {
@@ -147,11 +219,19 @@ final class RegisterViewController: BaseViewController {
 
     override func viewDidLoad() {
         registerView.nextButton.addTarget(self, action: #selector(nextPressed), for: .touchUpInside)
-
+        registerView.allAgreeButton.addTarget(self, action: #selector(allSelectButtonTouched), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         // gesture의 이벤트가 끝나도 뒤에 이벤트를 View로 전달
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
+        // 선택 리스트 초기화
+        for _ in titleList {
+            selectList.append(false)
+        }
+        // tableViewCell 연결
+        registerView.termsTableView.register(UINib(nibName: "TermsTableViewCell", bundle: nil), forCellReuseIdentifier: "TermsTableViewCell")
+        registerView.termsTableView.delegate = self
+        registerView.termsTableView.dataSource = self
 
         setHeaderView()
         setUI()
@@ -220,4 +300,35 @@ extension RegisterViewController: CustomTextFieldDelegate {
         let newLength = text.count + string.count - range.length
         return newLength <= 30 // 30개 제한
     }
+}
+extension RegisterViewController : UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return titleList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TermsTableViewCell", for: indexPath) as! TermsTableViewCell
+        
+        let index = indexPath.row
+        // 선택 버튼 태그 Setting
+        cell.btnSelect.tag = index
+        // 선택 버튼 클릭 이벤트 셋팅
+        cell.btnSelect.addTarget(self, action: #selector(listSelectButtonTouched(sender:)), for: .touchUpInside)
+        cell.btnSelect.isSelected = selectList[index]
+        // 타이틀 셋팅
+        cell.lbTitle.text = titleList[index]
+        // 상세 버튼 태그 Setting
+        cell.btnDetail.tag = index
+        // 상세 버튼 클릭 이벤트 셋팅
+        cell.btnDetail.addTarget(self, action: #selector(detailButtonTouched(sender:)), for: .touchUpInside)
+        cell.btnDetail.isHidden = index == 0
+        cell.selectionStyle = .none
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+
 }
