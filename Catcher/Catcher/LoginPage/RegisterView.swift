@@ -132,7 +132,7 @@ private extension RegisterView {
             make.centerX.equalTo(scrollView)
         }
         vstack.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top)
+            make.top.equalTo(contentView.snp.top).offset(20)
             make.leading.trailing.equalTo(self.contentView).inset(AppConstraint.defaultSpacing)
         }
         allAgreeButton.snp.makeConstraints { make in

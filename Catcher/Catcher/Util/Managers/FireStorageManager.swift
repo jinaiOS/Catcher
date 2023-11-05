@@ -85,11 +85,10 @@ private extension FireStorageManager {
                 completion(error)
                 return
             }
-            guard let metadata = metadata else {
+            guard let _ = metadata else {
                 completion(FireStorageError.noMetaData)
                 return
             }
-            CommonUtil.print(output:"metaData: \(metadata.description)")
             completion(nil)
         }
     }
