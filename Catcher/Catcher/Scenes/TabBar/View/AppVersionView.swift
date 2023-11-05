@@ -9,17 +9,36 @@ import SnapKit
 import UIKit
 
 final class AppVersionView: UIView {
+    private lazy var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        return view
+    }()
+    
+    private lazy var vStack: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.alignment = .fill
+        view.distribution = .fill
+        view.spacing = 30
+        
+        [appIconView, versionLabel, developerView].forEach {
+            view.addArrangedSubview($0)
+        }
+        return view
+    }()
+    
     private lazy var appIconView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
-        view.image = UIImage(named: "AppIcon")
+        view.image = UIImage(named: "Catcher")
         view.cornerRadius = AppConstraint.defaultCornerRadius
         return view
     }()
     
     private lazy var versionLabel: UILabel = {
-        LabelFactory.makeLabel(
-            text: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0",
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        return LabelFactory.makeLabel(
+            text: "v" + (version ?? "1.0.0"),
             font: ThemeFont.bold(size: 24))
     }()
     
@@ -52,7 +71,7 @@ final class AppVersionView: UIView {
     
     init() {
         super.init(frame: .zero)
-        backgroundColor = .systemBackground
+        backgroundColor = ThemeColor.backGroundColor
         setLayout()
     }
     
@@ -62,14 +81,24 @@ final class AppVersionView: UIView {
 }
 private extension AppVersionView {
     func setLayout() {
-        [appIconView, versionLabel, developerView].forEach {
-            addSubview($0)
+        scrollView.addSubview(vStack)
+        addSubview(scrollView)
+        
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(AppConstraint.headerViewHeight)
+            $0.leading.bottom.trailing.equalToSuperview()
+        }
+        
+        vStack.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(20)
+            $0.leading.bottom.trailing.equalToSuperview()
+            $0.centerX.equalToSuperview()
         }
         
         appIconView.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(50)
-            $0.leading.trailing.equalTo(self.safeAreaLayoutGuide).inset(100)
-            $0.height.equalTo(appIconView.snp.width)
+            $0.top.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.width.height.equalTo(300)
         }
         
         versionLabel.snp.makeConstraints {
@@ -80,7 +109,8 @@ private extension AppVersionView {
         developerView.snp.makeConstraints {
             $0.top.equalTo(versionLabel.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(20)
+            $0.height.equalTo(500)
+            $0.bottom.equalToSuperview()
         }
     }
 }

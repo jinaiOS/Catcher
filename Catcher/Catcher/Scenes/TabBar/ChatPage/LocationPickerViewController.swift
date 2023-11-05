@@ -38,7 +38,7 @@ final class LocationPickerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = ThemeColor.backGroundColor
         if isPickable {
             btnSend.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
             map.isUserInteractionEnabled = true
@@ -100,6 +100,4 @@ final class LocationPickerViewController: UIViewController {
         super.viewDidLayoutSubviews()
         map.frame = view.bounds
     }
-
 }
-

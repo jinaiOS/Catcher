@@ -94,12 +94,14 @@ private extension ProfileSettingViewController {
         CommonUtil.print(output: user)
         
         processIndicatorView()
-        viewModel.createUser(user: user,
+        viewModel.registerUser(user: user,
                              eamil: newUserEmail,
-                             password: newUserPassword) { result in
+                             password: newUserPassword) { [weak self] result in
+            guard let self = self else { return }
             self.processIndicatorView()
             if result {
                 self.navigationController?.popToRootViewController(animated: true)
+                return
             }
         }
     }
@@ -108,7 +110,8 @@ private extension ProfileSettingViewController {
         if allowAlbum {
             showAction()
         } else {
-            openCamera()
+            showAction()
+//            openCamera()
         }
     }
 }

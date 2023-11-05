@@ -89,7 +89,7 @@ class AskViewController: BaseHeaderViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = ThemeColor.backGroundColor
         setHeaderTitleName(title: "1:1 문의")
         configure()
         setKeyboardObserver()

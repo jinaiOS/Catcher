@@ -220,7 +220,6 @@ extension FireStoreManager {
             return (nil, error)
         }
     }
-
 }
 
 extension FireStoreManager {
