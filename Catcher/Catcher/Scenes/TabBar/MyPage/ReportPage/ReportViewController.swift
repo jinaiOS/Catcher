@@ -360,10 +360,10 @@ extension ReportViewController {
             make.top.equalTo(reportView.snp.top).inset(10)
             make.height.equalTo(24)
         }
-        label2.snp.makeConstraints { make in
-            make.width.equalTo(75)
-            make.height.equalTo(21)
-        }
+//        label2.snp.makeConstraints { make in
+//            make.width.equalTo(90)
+//            make.height.equalTo(21)
+//        }
 
         stack3.snp.makeConstraints { make in
             make.leading.equalTo(reportView.snp.leading).inset(23)
@@ -376,14 +376,15 @@ extension ReportViewController {
         }
 
         stack4.snp.makeConstraints { make in
-            make.trailing.equalTo(reportView.snp.trailing).inset(23)
+//            make.trailing.equalTo(reportView.snp.trailing).inset(23)
             make.top.equalTo(stack2.snp.top).inset(23)
             make.height.equalTo(24)
+            make.leading.equalTo(stack2.snp.leading)
         }
-        label4.snp.makeConstraints { make in
-            make.width.equalTo(75)
-            make.height.equalTo(21)
-        }
+//        label4.snp.makeConstraints { make in
+//            make.width.equalTo(75)
+//            make.height.equalTo(21)
+//        }
 
         reportView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(contentView).inset(20)
