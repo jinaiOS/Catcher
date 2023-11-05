@@ -25,21 +25,14 @@ final class FireStorageManager {
     private let profileImagePath = "profile"
     private let fileSize: Int64 = 1024
     private let compressionQuality: CGFloat = 0.5
-    private var uid: String?
     
-    private init() {
-        uid = FirebaseManager().getUID
-    }
+    private init() {}
 }
 
 extension FireStorageManager {
     func setProfileData(image: UIImage, completion: @escaping (Error?) -> Void) {
-        guard let uid = uid else {
-            completion(FireStorageError.missingUID)
-            return
-        }
         let data = makeImageData(image: image, completion: completion)
-        let spaceRef = makeProfileRef(uid: uid)
+        let spaceRef = makeProfileRef(uid: FirebaseManager().getUID ?? "")
         putData(spaceRef: spaceRef, imageData: data, completion: completion)
     }
     
@@ -49,11 +42,7 @@ extension FireStorageManager {
     }
     
     func deleteProfileData(completion: @escaping (Error?) -> Void) {
-        guard let uid = uid else {
-            completion(FireStorageError.missingUID)
-            return
-        }
-        let spaceRef = makeProfileRef(uid: uid)
+        let spaceRef = makeProfileRef(uid: FirebaseManager().getUID ?? "")
         deleteData(spaceRef: spaceRef, completion: completion)
     }
 }
