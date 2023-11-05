@@ -304,6 +304,17 @@ extension FireStoreManager {
             return error
         }
     }
+    
+    func deleteFcmToken() async -> Error? {
+        guard let uid = FirebaseManager().getUID else { return FireStoreError.missingUID }
+        let docRef = db.collection(fcmTokenPath).document(uid)
+        do {
+            try await docRef.delete()
+            return nil
+        } catch {
+            return error
+        }
+    }
 }
 
 private extension FireStoreManager {
