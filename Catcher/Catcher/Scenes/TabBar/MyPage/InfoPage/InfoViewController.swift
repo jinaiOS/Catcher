@@ -9,12 +9,17 @@ import FirebaseAuth
 import FirebaseFirestore
 import SwiftUI
 import UIKit
+
+protocol UpdateUserInfo: AnyObject {
+    func updateUserInfo()
+}
+
 final class InfoViewController: BaseHeaderViewController {
+    private let infoView: InfoView
+    private let userInfo: UserInfo?
     var newUserEmail: String?
     var newUserPassword: String?
     var newUserNickName: String?
-    private let infoView: InfoView
-    private let userInfo: UserInfo?
     let pickerRegion = UIPickerView()
     let pickerEducation = UIPickerView()
     let dateFormatter: DateFormatter = {
@@ -22,6 +27,8 @@ final class InfoViewController: BaseHeaderViewController {
         formatter.dateFormat = "yyyy / MM / dd"
         return formatter
     }()
+    
+    weak var delegate: UpdateUserInfo?
 
     var education = ["박사", "학사", "대졸", "고졸", "중졸"]
     var region = [
@@ -109,6 +116,7 @@ private extension InfoViewController {
         infoView.nickNameTextField.tf.text = userInfo.nickName
         infoView.regionTextField.tf.text = userInfo.location
         infoView.birthTextField.tf.text = "만 \(calculateAge(birthDate: userInfo.birth))세"
+        infoView.birthTextField.lblTitle.text = "나이"
         infoView.birthTextField.tf.isEnabled = false
         infoView.educationTextField.tf.text = userInfo.education
         infoView.heightTextField.tf.text = "\(userInfo.height)"
@@ -166,6 +174,8 @@ private extension InfoViewController {
         infoView.birthTextField.isError = false
         infoView.educationTextField.isError = false
         infoView.heightTextField.isError = false
+        var birth: Date?
+        
         guard let body = infoView.selectedBodyButton?.title(for: .normal) else { return }
         guard let drinking = infoView.selectedDrinkButton?.title(for: .normal) else { return }
         guard let smoking = infoView.selectedSmokeButton?.title(for: .normal) else { return }
@@ -173,10 +183,15 @@ private extension InfoViewController {
             infoView.regionTextField.isError = true
             return
         }
-        guard let birthText = infoView.birthTextField.tf.text, let birthDate = dateFormatter.date(from: birthText) else {
-            infoView.birthTextField.isError = true
-            return
+        
+        if userInfo == nil {
+            guard let birthText = infoView.birthTextField.tf.text, let birthDate = dateFormatter.date(from: birthText) else {
+                infoView.birthTextField.isError = true
+                return
+            }
+            birth = birthDate
         }
+        
         guard let education = infoView.educationTextField.tf.text, !education.isEmpty else {
             infoView.educationTextField.isError = true
             return
@@ -195,23 +210,32 @@ private extension InfoViewController {
         } else {
             smokeCheck = false
         }
-        let profileSettingViewController = ProfileSettingViewController(allowAlbum: false)
-        profileSettingViewController.user = UserInfo(
-            uid: "", sex: "", birth: birthDate, // 필요한 경"우 성별을 여기에 추가
-            nickName: nickName,
-            location: location,
-            height: Int(height) ?? 0,
-            body: body,
-            education: education,
-            drinking: drinking,
-            smoking: smokeCheck,
-            register: Date(),
-            score: 0,
-            pick: []
-        )
-        profileSettingViewController.newUserEmail = newUserEmail
-        profileSettingViewController.newUserPassword = newUserPassword
-        navigationController?.pushViewController(profileSettingViewController, animated: true)
+        
+        if userInfo == nil {
+            let profileSettingViewController = ProfileSettingViewController(allowAlbum: false)
+            profileSettingViewController.user = UserInfo(
+                uid: "", sex: "", birth: birth ?? Date(),
+                nickName: nickName,
+                location: location,
+                height: Int(height) ?? 0,
+                body: body,
+                education: education,
+                drinking: drinking,
+                smoking: smokeCheck,
+                register: Date(),
+                score: 0,
+                pick: []
+            )
+            profileSettingViewController.newUserEmail = newUserEmail
+            profileSettingViewController.newUserPassword = newUserPassword
+            navigationController?.pushViewController(profileSettingViewController, animated: true)
+            return
+        }
+        
+        navigationPopToRootViewController(animated: true) { [weak self] in
+            guard let self = self else { return }
+            delegate?.updateUserInfo()
+        }
     }
 
     @objc func pickerDoneButtonTapped() {

@@ -19,7 +19,7 @@ enum MenuItems: String, CaseIterable {
     case withdraw = "회원 탈퇴"
 }
 
-class MyPageViewController: BaseViewController {
+final class MyPageViewController: BaseViewController {
     private var userInfo: UserInfo?
     private var cancellables = Set<AnyCancellable>()
     
@@ -232,6 +232,16 @@ private extension MyPageViewController {
             mySaveNumber.text = "\(pickCount)"
         }
         
+        fetchMyInfo()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didRecievePickUserCountNotification),
+            name: NSNotification.Name(NotificationManager.NotiName.pick.key),
+            object: nil)
+    }
+    
+    func fetchMyInfo() {
         Task {
             guard let uid = FirebaseManager().getUID else { return }
             let (result, error) = await FireStoreManager.shared.fetchUserInfo(uuid: uid)
@@ -243,12 +253,6 @@ private extension MyPageViewController {
                 nickName.text = "\(result.nickName)님의 인연을 응원합니다!!"
             }
         }
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(didRecievePickUserCountNotification),
-            name: NSNotification.Name(NotificationManager.NotiName.pick.key),
-            object: nil)
     }
     
     @objc func didRecievePickUserCountNotification(_ notification: Notification) {
@@ -293,6 +297,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.row {
         case 0:
             let vc = InfoViewController(userInfo: userInfo, isValidNickName: true)
+            vc.delegate = self
             navigationPushController(viewController: vc, animated: true)
         case 1:
             let vc = AskViewController()
@@ -433,5 +438,11 @@ extension MyPageViewController: ReloadProfileImage {
             self.profilePhoto.image = profile
         }
         ImageCacheManager.shared.cachingImage(uid: uid, image: profile)
+    }
+}
+
+extension MyPageViewController: UpdateUserInfo {
+    func updateUserInfo() {
+        fetchMyInfo()
     }
 }
