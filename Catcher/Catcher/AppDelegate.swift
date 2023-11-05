@@ -41,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
+        setFirebasePush()
         let introVC = IntroViewController(nibName: "IntroViewController", bundle: nil)
         navigationController = UINavigationController(rootViewController: introVC)
         // 네비게이션바 히든
@@ -50,6 +51,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         return true
+    }
+    
+    //MARK: - APNS
+    func setFirebasePush() {
+        UNUserNotificationCenter.current().delegate = self
+        
+        //set push receive type
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        //push requestAuthorization
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: {(granted, error) in
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        })
     }
 
     /**
