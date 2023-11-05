@@ -294,11 +294,50 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 }
 
 extension InfoViewController: CustomTextFieldDelegate {
-    func customTextFieldValueChanged(_ textfield: UITextField) {}
+    func customTextFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == infoView.regionTextField.tf {
+            infoView.birthTextField.tf.becomeFirstResponder() // next 버튼 선택 시 -> tfPW 포커싱
+        } else if textField == infoView.birthTextField.tf {
+            infoView.educationTextField.tf.becomeFirstResponder() // return 버튼 선택 시 -> 키보드 내려감
+        } else if textField == infoView.educationTextField.tf {
+            infoView.heightTextField.tf.becomeFirstResponder()
+        } else {
+            infoView.heightTextField.tf.resignFirstResponder()
+        }
+        return true
+    }
+
+    func customTextFieldValueChanged(_ textfield: UITextField) {
+        if textfield == infoView.regionTextField.tf {
+            infoView.regionTextField.isError = false
+        } else if textfield == infoView.birthTextField.tf {
+            infoView.birthTextField.isError = false
+        } else if textfield == infoView.educationTextField.tf {
+            infoView.educationTextField.isError = false
+        } else {
+            infoView.heightTextField.isError = false
+        }
+    }
 
     func customTextFieldDidEndEditing(_ textField: UITextField) {}
 
-    func customTextFieldDidBeginEditing(_ textField: UITextField) {}
+    func customTextFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == infoView.regionTextField.tf {
+            infoView.regionTextField.isError = false
+        } else if textField == infoView.birthTextField.tf {
+            infoView.birthTextField.isError = false
+        } else if textField == infoView.educationTextField.tf {
+            infoView.educationTextField.isError = false
+        } else {
+            infoView.heightTextField.isError = false
+        }
+    }
 
     func errorStatus(isError: Bool, view: CustomTextField) {}
+
+    func customTextField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return true }
+        let newLength = text.count + string.count - range.length
+        return newLength <= 30 // 30개 제한
+    }
 }
