@@ -174,6 +174,7 @@ private extension UserInfoViewController {
                 }
                 self?.sendMessageBtn(isNewConversation: false)
             case .failure(let error):
+                self?.sendMessageBtn(isNewConversation: true)
                 CommonUtil.print(output:"failed to get messages: \(error)")
             }
         })
