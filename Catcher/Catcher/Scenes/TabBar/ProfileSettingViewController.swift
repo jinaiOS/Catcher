@@ -110,8 +110,7 @@ private extension ProfileSettingViewController {
         if allowAlbum {
             showAction()
         } else {
-            showAction()
-//            openCamera()
+            openCamera()
         }
     }
 }

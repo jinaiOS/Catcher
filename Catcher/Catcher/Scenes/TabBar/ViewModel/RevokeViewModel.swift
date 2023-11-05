@@ -36,12 +36,16 @@ extension RevokeViewModel {
         }
         Task {
             let error = await FireStoreManager.shared.deleteUserInfo()
+            let fcmerror = await FireStoreManager.shared.deleteFcmToken()
+            if let fcmerror {
+                CommonUtil.print(output: fcmerror)
+            }
             let _ = await firebaseManager.removeUser()
             if let error {
                 CommonUtil.print(output: error)
             }
+            completion()
         }
-        completion()
     }
 }
 

@@ -122,8 +122,10 @@ private extension RevokeViewController {
                 guard let self = self else { return }
                 processIndicatorView()
                 viewModel.removeAllInfo {
-                    self.processIndicatorView()
-                    self.revokeDoneAlert()
+                    DispatchQueue.main.async {
+                        self.processIndicatorView()
+                        self.revokeDoneAlert()
+                    }
                 }
             }
         
@@ -145,7 +147,7 @@ private extension RevokeViewController {
     func revokeDoneAlert() {
         let alert = UIAlertController(
             title: "탈퇴 완료",
-            message: "PlanBee를 종료합니다.",
+            message: "Catcher를 종료합니다.",
             preferredStyle: .alert)
         
         let revokeAction = UIAlertAction(
