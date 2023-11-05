@@ -36,7 +36,7 @@ class ProfileSettingViewController: BaseHeaderViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setHeaderTitleName(title: "프로필 사진 설정")
         setLayout()
         configure()
     }
