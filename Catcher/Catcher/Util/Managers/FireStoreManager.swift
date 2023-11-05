@@ -24,11 +24,8 @@ final class FireStoreManager {
     private let askPath = "ask"
     private let fcmTokenPath = "fcmToken"
     private let itemCount: Int = 9
-    private let uid: String?
     private let nearUserPath = "location"
-    private init(uid: String? = FirebaseManager().getUID) {
-        self.uid = uid
-    }
+    private init() { }
 }
 
 extension FireStoreManager {
@@ -64,7 +61,7 @@ extension FireStoreManager {
         let docRef = db.collection(reportPath).document(Date().debugDescription)
         do {
             try await docRef.setData([
-                "currentUser": uid ?? "익명",
+                "currentUser": FirebaseManager().getUID ?? "익명",
                 "targetUser": targetUID ?? "익명",
                 "title" : title,
                 "descriptions": descriptions
@@ -79,7 +76,7 @@ extension FireStoreManager {
         let docRef = db.collection(askPath).document(Date().debugDescription)
         do {
             try await docRef.setData([
-                "currentUser": uid ?? "익명",
+                "currentUser": FirebaseManager().getUID ?? "익명",
                 "title" : title,
                 "descriptions": descriptions
             ])
@@ -224,7 +221,7 @@ extension FireStoreManager {
 
 extension FireStoreManager {
     func updatePickUser(uuid: String) async -> Error? {
-        guard let uid = uid else { return FireStoreError.missingUID }
+        guard let uid = FirebaseManager().getUID else { return FireStoreError.missingUID }
         let docRef = db.collection(userInfoPath).document(uid)
         do {
             try await docRef.updateData([
@@ -237,7 +234,7 @@ extension FireStoreManager {
     }
     
     func updateBlockUser(uuid: String) async -> Error? {
-        guard let uid = uid else { return FireStoreError.missingUID }
+        guard let uid = FirebaseManager().getUID else { return FireStoreError.missingUID }
         let docRef = db.collection(userInfoPath).document(uid)
         do {
             try await docRef.updateData([
@@ -272,7 +269,7 @@ extension FireStoreManager {
 
 extension FireStoreManager {
     func deleteUserInfo() async -> Error? {
-        guard let uid = uid else { return FireStoreError.deleteFail }
+        guard let uid = FirebaseManager().getUID else { return FireStoreError.deleteFail }
         let docRef = db.collection(userInfoPath).document(uid)
         do {
             try await docRef.delete()
@@ -283,7 +280,7 @@ extension FireStoreManager {
     }
     
     func deletePickUser(uuid: String) async -> Error? {
-        guard let uid = uid else { return FireStoreError.missingUID }
+        guard let uid = FirebaseManager().getUID else { return FireStoreError.missingUID }
         let docRef = db.collection(userInfoPath).document(uid)
         do {
             try await docRef.updateData([
@@ -296,7 +293,7 @@ extension FireStoreManager {
     }
     
     func deleteBlockUser(uuid: String) async -> Error? {
-        guard let uid = uid else { return FireStoreError.missingUID }
+        guard let uid = FirebaseManager().getUID else { return FireStoreError.missingUID }
         let docRef = db.collection(userInfoPath).document(uid)
         do {
             try await docRef.updateData([
@@ -311,7 +308,7 @@ extension FireStoreManager {
 
 private extension FireStoreManager {
     func fetchMyPickUsersUID() async -> (result: [String]?, error: Error?) {
-        guard let uid = uid else { return (nil, FireStoreError.missingUID) }
+        guard let uid = FirebaseManager().getUID else { return (nil, FireStoreError.missingUID) }
         let docRef = db.collection(userInfoPath).document(uid)
         do {
             let document = try await docRef.getDocument()
