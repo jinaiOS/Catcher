@@ -69,7 +69,6 @@ final class MyPageViewController: BaseViewController {
         st.alignment = .fill
         st.distribution = .fill
         st.spacing = spacingStackHorizontal
-        
         return st
     }()
     
@@ -79,13 +78,11 @@ final class MyPageViewController: BaseViewController {
         st.alignment = .fill
         st.distribution = .equalSpacing
         st.spacing = spacingStackVertical
-        
         return st
     }()
     
     private lazy var myTemperatureNumber: UILabel = {
         let lb = UILabel()
-        lb.text = "30°"
         lb.font = .systemFont(ofSize: 20, weight: .bold)
         lb.textAlignment = .center
         return lb
@@ -93,7 +90,7 @@ final class MyPageViewController: BaseViewController {
     
     private lazy var myTemperatureLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "내 온도"
+        lb.text = "성별"
         lb.font = .systemFont(ofSize: labelFontSize, weight: .light)
         lb.textAlignment = .center
         return lb
@@ -105,13 +102,11 @@ final class MyPageViewController: BaseViewController {
         st.alignment = .fill
         st.distribution = .equalSpacing
         st.spacing = spacingStackVertical
-        
         return st
     }()
     
     private lazy var myPointNumber: UILabel = {
         let lb = UILabel()
-        lb.text = "3000P"
         lb.font = .systemFont(ofSize: 20, weight: .bold)
         lb.textAlignment = .center
         return lb
@@ -119,7 +114,7 @@ final class MyPageViewController: BaseViewController {
     
     private lazy var myPointLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "마일리지"
+        lb.text = "나이"
         lb.font = .systemFont(ofSize: labelFontSize, weight: .light)
         lb.textAlignment = .center
         return lb
@@ -250,6 +245,8 @@ private extension MyPageViewController {
             }
             if let result {
                 self.userInfo = result
+                myTemperatureNumber.text = result.sex
+                myPointNumber.text = "만 \(calculateAge(birthDate: result.birth))세"
                 nickName.text = "\(result.nickName)님의 인연을 응원합니다!!"
             }
         }
@@ -444,5 +441,17 @@ extension MyPageViewController: ReloadProfileImage {
 extension MyPageViewController: UpdateUserInfo {
     func updateUserInfo() {
         fetchMyInfo()
+    }
+}
+
+private extension MyPageViewController {
+    func calculateAge(birthDate: Date) -> Int {
+        let calendar = Calendar.current
+        let now = Date()
+        
+        let ageComponents = calendar.dateComponents([.year], from: birthDate, to: now)
+        let age = ageComponents.year ?? 0
+        
+        return age
     }
 }
