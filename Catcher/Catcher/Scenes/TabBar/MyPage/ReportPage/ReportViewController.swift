@@ -333,7 +333,7 @@ extension ReportViewController {
         userBlockButton = createButton()
 
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).inset(AppConstraint.headerViewHeight)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom) // Set the bottom constraint to the top of the next button.
         }
@@ -387,7 +387,7 @@ extension ReportViewController {
 
         reportView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(contentView).inset(20)
-            make.top.equalTo(contentView.snp.top).inset(80)
+            make.top.equalTo(contentView.snp.top)
             make.bottom.equalTo(label4.snp.bottom).inset(-10)
 //            make.height.equalTo(50)
         }
