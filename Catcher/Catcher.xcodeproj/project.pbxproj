@@ -64,6 +64,8 @@
 		5622C0A12AF6A7D400455649 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 5622C0A02AF6A7D400455649 /* FirebaseMessaging */; };
 		5622C0A82AF6ACEC00455649 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5622C0A72AF6ACEC00455649 /* Alamofire */; };
 		5622C0AC2AF6D3EE00455649 /* Userdefault_Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622C0AB2AF6D3EE00455649 /* Userdefault_Key.swift */; };
+		5622C0AF2AF7837D00455649 /* TermsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622C0AD2AF7837D00455649 /* TermsTableViewCell.swift */; };
+		5622C0B02AF7837D00455649 /* TermsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5622C0AE2AF7837D00455649 /* TermsTableViewCell.xib */; };
 		562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36802AD80EF9008D99B2 /* AppDelegate.swift */; };
 		562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36842AD80EF9008D99B2 /* ViewController.swift */; };
 		562E36882AD80EF9008D99B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 562E36862AD80EF9008D99B2 /* Main.storyboard */; };
@@ -197,6 +199,8 @@
 		5622C0782AF1416300455649 /* CustomTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTextField.xib; sourceTree = "<group>"; };
 		5622C09E2AF6A64D00455649 /* CatcherDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CatcherDebug.entitlements; sourceTree = "<group>"; };
 		5622C0AB2AF6D3EE00455649 /* Userdefault_Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Userdefault_Key.swift; sourceTree = "<group>"; };
+		5622C0AD2AF7837D00455649 /* TermsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsTableViewCell.swift; sourceTree = "<group>"; };
+		5622C0AE2AF7837D00455649 /* TermsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsTableViewCell.xib; sourceTree = "<group>"; };
 		562E367D2AD80EF9008D99B2 /* Catcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Catcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		562E36802AD80EF9008D99B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		562E36842AD80EF9008D99B2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -390,6 +394,8 @@
 				3B2BE3002ADE4EAE00BD54CC /* LoginView.swift */,
 				3B3E35D42ADFA2F1006841D8 /* RegisterViewController.swift */,
 				3B3E35D62AE125A3006841D8 /* RegisterView.swift */,
+				5622C0AD2AF7837D00455649 /* TermsTableViewCell.swift */,
+				5622C0AE2AF7837D00455649 /* TermsTableViewCell.xib */,
 				5622C06F2AEF0BE000455649 /* ResetPWViewController.swift */,
 			);
 			name = LoginPage;
@@ -750,6 +756,7 @@
 				33845E392AF4393F00539068 /* Settings.bundle in Resources */,
 				562E368D2AD80EFA008D99B2 /* LaunchScreen.storyboard in Resources */,
 				562E368A2AD80EFA008D99B2 /* Assets.xcassets in Resources */,
+				5622C0B02AF7837D00455649 /* TermsTableViewCell.xib in Resources */,
 				33532B832AE299E1008B47EB /* GoogleService-Info.plist in Resources */,
 				5622C0792AF1416300455649 /* CustomTextField.xib in Resources */,
 				56BBF7EC2AE6009700A2BADD /* IntroViewController.xib in Resources */,
@@ -820,6 +827,7 @@
 				33B7B5B12AF4271F00773E9F /* AppVersionView.swift in Sources */,
 				2305095D2AE2475E00F58092 /* ContactTableViewCell.swift in Sources */,
 				33845E502AF4AEFD00539068 /* YOLOv3Int8LUT.mlmodel in Sources */,
+				5622C0AF2AF7837D00455649 /* TermsTableViewCell.swift in Sources */,
 				562E36B72AD8DCAA008D99B2 /* BaseViewController.swift in Sources */,
 				562E36B12AD8D0EE008D99B2 /* BaseTabBarController.swift in Sources */,
 				33E590252AF08C480060FBA0 /* DetectObject.swift in Sources */,
@@ -1181,7 +1189,7 @@
 				CODE_SIGN_ENTITLEMENTS = Catcher/CatcherDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YRZW7MZ3P5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Catcher/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "앱에서 프로필 등록을 하기 위해 카메라 접근 권한 동의가 필요합니다.";
