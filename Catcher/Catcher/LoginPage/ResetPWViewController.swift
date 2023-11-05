@@ -36,7 +36,7 @@ class ResetPWViewController: BaseHeaderViewController {
         super.viewDidLoad()
         setHeaderTitleName(title: "비밀번호 재설정")
         setLayout()
-        view.backgroundColor = .white
+        view.backgroundColor = ThemeColor.backGroundColor
         loginBtn.addTarget(self, action: #selector(requestResetPW), for: .touchUpInside)
     }
     

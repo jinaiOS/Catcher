@@ -186,8 +186,7 @@ final class ReportViewController: BaseHeaderViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeaderTitleName(title: "사용자 신고")
-
-        view.backgroundColor = .white
+        view.backgroundColor = ThemeColor.backGroundColor
         configure()
         setKeyboardObserver()
     }
