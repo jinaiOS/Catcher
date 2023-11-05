@@ -57,11 +57,13 @@ final class AppVersionView: UIView {
         kj227777@naver.com
         
         김현승
+        khseung1009@naver.com
         
         정기현
         jkh001301@naver.com
         
         정하진
+        haajin12@gmail.com
         
         👑 한지욱
         jiwook.han.dev@gmail.com

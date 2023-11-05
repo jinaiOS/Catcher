@@ -34,7 +34,7 @@ class LoginViewController: BaseViewController {
                         CommonUtil.print(output: error.localizedDescription)
                         return
                     }
-                    if result == "" {
+                    if result == nil {
                         let error = await FireStoreManager.shared.setFcmToken(fcmToken: UserDefaultsManager().getValue(forKey: Userdefault_Key.PUSH_KEY) ?? "")
                         if let error {
                             CommonUtil.print(output: error)
