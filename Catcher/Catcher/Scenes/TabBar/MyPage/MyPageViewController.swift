@@ -20,13 +20,12 @@ enum MenuItems: String, CaseIterable {
 }
 
 class MyPageViewController: BaseViewController {
+    private var userInfo: UserInfo?
     private var cancellables = Set<AnyCancellable>()
     
     private lazy var nickName: UILabel = {
         let lb = UILabel()
-//        lb.text = "\(DataManager.sharedInstance.userInfo?.nickName ?? "") 님 오늘도 파이팅!!"
-        lb.text = "ㅁㅁㅁㅁㅁqweqwe 님 오늘도 파이팅!!"
-
+        lb.text = "익명 님의 인연을 응원합니다!!"
         lb.font = .systemFont(ofSize: 20, weight: .light)
         lb.textAlignment = .left
         lb.numberOfLines = 0 // 두 줄로 표시
@@ -226,6 +225,18 @@ private extension MyPageViewController {
             mySaveNumber.text = "\(pickCount)"
         }
         
+        Task {
+            guard let uid = FirebaseManager().getUID else { return }
+            let (result, error) = await FireStoreManager.shared.fetchUserInfo(uuid: uid)
+            if let error {
+                CommonUtil.print(output: error.localizedDescription)
+            }
+            if let result {
+                self.userInfo = result
+                nickName.text = "\(result.nickName)님의 인연을 응원합니다!!"
+            }
+        }
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didRecievePickUserCountNotification),
@@ -267,20 +278,20 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         // 셀 선택시 색상 변경 x
         menuTableViewCell.selectionStyle = .none
         let menu = MenuItems.allCases[indexPath.row]
-        menuTableViewCell.menuLabel.text = MenuItems.allCases[indexPath.row].rawValue
+        menuTableViewCell.menuLabel.text = menu.rawValue
         return menuTableViewCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            let vc = InfoViewController()
+            let vc = InfoViewController(userInfo: userInfo, isValidNickName: true)
             navigationPushController(viewController: vc, animated: true)
         case 1:
             let vc = AskViewController()
             navigationPushController(viewController: vc, animated: true)
         case 2:
-            let url = URL(string: "https://plip.kr/pcc/bbd65582-9034-4359-a09a-022a093eda26/privacy/1.html")
+            let url = URL(string: PRIVACY)
             let vc = SFSafariViewController(url: url!)
             present(vc, animated: true)
         case 3:

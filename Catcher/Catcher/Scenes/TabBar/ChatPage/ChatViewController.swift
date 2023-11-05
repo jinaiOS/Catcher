@@ -46,7 +46,7 @@ class ChatViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = ThemeColor.backGroundColor
         view.addSubview(tbvConversation)
         view.addSubview(noConversationsLabel)
         setupTableView()

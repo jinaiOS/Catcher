@@ -74,7 +74,7 @@ final class RegisterView: UIView {
 
     init() {
         super.init(frame: .zero)
-        backgroundColor = .white
+        backgroundColor = ThemeColor.backGroundColor
         setlayout()
     }
 

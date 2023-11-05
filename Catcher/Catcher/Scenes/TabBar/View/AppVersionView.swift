@@ -71,7 +71,7 @@ final class AppVersionView: UIView {
     
     init() {
         super.init(frame: .zero)
-        backgroundColor = .systemBackground
+        backgroundColor = ThemeColor.backGroundColor
         setLayout()
     }
     

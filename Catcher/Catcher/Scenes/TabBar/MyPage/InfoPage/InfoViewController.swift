@@ -13,7 +13,8 @@ final class InfoViewController: BaseHeaderViewController {
     var newUserEmail: String?
     var newUserPassword: String?
     var newUserNickName: String?
-    private let infoView = InfoView()
+    private let infoView: InfoView
+    private let userInfo: UserInfo?
     let pickerRegion = UIPickerView()
     let pickerEducation = UIPickerView()
     let dateFormatter: DateFormatter = {
@@ -43,17 +44,45 @@ final class InfoViewController: BaseHeaderViewController {
 
     override func loadView() {
         super.loadView()
-        view.addSubview(infoView)
-
-        infoView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(80)
-            $0.leading.bottom.trailing.equalToSuperview()
-        }
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        view = infoView
     }
 
-    @objc func keyboardWillShow(_ notification: Notification) {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configPickerView()
+        setKeyboardObserver()
+        infoView.saveButton.addTarget(self, action: #selector(completeBtn), for: .touchUpInside)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        // gesture의 이벤트가 끝나도 뒤에 이벤트를 View로 전달
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+
+        setHeaderTitleName(title: "기본 프로필 설정")
+        setUI()
+        configure()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        removeKeyboardObserver()
+    }
+    
+    init(userInfo: UserInfo? = nil, isValidNickName: Bool = false) {
+        self.userInfo = userInfo
+        self.infoView = InfoView(isValidNickName: isValidNickName)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        CommonUtil.print(output: "deinit - InfoVC")
+    }
+}
+
+extension InfoViewController {
+    override func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
             infoView.scrollView.contentInset = contentInsets
@@ -66,33 +95,72 @@ final class InfoViewController: BaseHeaderViewController {
             }
         }
     }
-
-    @objc func keyboardWillHide(_ notification: Notification) {
+    
+    override func keyboardWillHide(notification: NSNotification) {
         let contentInsets = UIEdgeInsets.zero
         infoView.scrollView.contentInset = contentInsets
         infoView.scrollView.scrollIndicatorInsets = contentInsets
     }
+}
 
-    private func findActiveTextField() -> UITextField? {
+private extension InfoViewController {
+    func configure() {
+        guard let userInfo = userInfo else { return }
+        infoView.nickNameTextField.tf.text = userInfo.nickName
+        infoView.regionTextField.tf.text = userInfo.location
+        infoView.birthTextField.tf.text = "만 \(calculateAge(birthDate: userInfo.birth))세"
+        infoView.birthTextField.tf.isEnabled = false
+        infoView.educationTextField.tf.text = userInfo.education
+        infoView.heightTextField.tf.text = "\(userInfo.height)"
+        
+        var button: UIButton
+        
+        switch userInfo.body {
+        case "마름":
+            button = infoView.thinBodyBtn
+        case "평범함":
+            button = infoView.nomalBodyBtn
+        case "통통함":
+            button = infoView.chubbyBodyBtn
+        case "뚱뚱함":
+            button = infoView.fatBodyBtn
+        default:
+            button = UIButton()
+            break
+        }
+        infoView.bodyButtonTapped(button)
+        
+        switch userInfo.drinking {
+        case "안 마심":
+            button = infoView.drinkingNoBtn
+        case "주 1~2회":
+            button = infoView.drinkingTwiceBtn
+        case "주 3~5회":
+            button = infoView.drinkingOftenBtn
+        case "그 이상":
+            button = infoView.drinkingDailyBtn
+        default:
+            button = UIButton()
+            break
+        }
+        infoView.drinkButtonTapped(button)
+        
+        switch userInfo.smoking {
+        case true:
+            button = infoView.smokingBtn
+        case false:
+            button = infoView.noSmokingBtn
+        }
+        infoView.smokeButtonTapped(button)
+    }
+    
+    func findActiveTextField() -> UITextField? {
         for case let textField as UITextField in infoView.contentView.subviews where textField.isFirstResponder {
             return textField
         }
         return nil
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configPickerView()
-        infoView.saveButton.addTarget(self, action: #selector(completeBtn), for: .touchUpInside)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        // gesture의 이벤트가 끝나도 뒤에 이벤트를 View로 전달
-        tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
-
-        setHeaderTitleName(title: "기본 프로필 설정")
-        setUI()
-    }
-
+    
     @objc func completeBtn() {
         infoView.regionTextField.isError = false
         infoView.birthTextField.isError = false
@@ -170,31 +238,29 @@ final class InfoViewController: BaseHeaderViewController {
 //        infoView.regionTextField.tf.keyboardType = .emailAddress
 //        infoView.regionTextField.tf.returnKeyType = .next
 
-        infoView.birthTextField.initTextFieldText(placeHolder: "생년월일을 선택해주세요", delegate: self)
+        infoView.birthTextField.initTextFieldText(placeHolder: "생년월일을 선택해 주세요", delegate: self)
         infoView.birthTextField.lblTitle.text = "생일"
-        infoView.birthTextField.lblError.text = "생년월일을 선택해주세요"
+        infoView.birthTextField.lblError.text = "생년월일을 선택해 주세요"
 //        infoView.birthTextField.tf.keyboardType = .emailAddress
 //        infoView.birthTextField.tf.returnKeyType = .next
 
-        infoView.educationTextField.initTextFieldText(placeHolder: "학력을 선택해주세요", delegate: self)
+        infoView.educationTextField.initTextFieldText(placeHolder: "학력을 선택해 주세요", delegate: self)
         infoView.educationTextField.lblTitle.text = "학력"
-        infoView.educationTextField.lblError.text = "학력을 선택해주세요"
+        infoView.educationTextField.lblError.text = "학력을 선택해 주세요"
 //        infoView.educationTextField.tf.keyboardType = .emailAddress
 //        infoView.educationTextField.tf.returnKeyType = .next
 
-        infoView.heightTextField.initTextFieldText(placeHolder: "키를 선택해주세요", delegate: self)
+        infoView.heightTextField.initTextFieldText(placeHolder: "키를 입력해 주세요", delegate: self)
         infoView.heightTextField.lblTitle.text = "키"
-        infoView.heightTextField.lblError.text = "키를 선택해주세요"
+        infoView.heightTextField.lblError.text = "키를 입력해 주세요"
 //        infoView.heightTextField.tf.keyboardType = .emailAddress
 //        infoView.heightTextField.tf.returnKeyType = .next
+        
+        infoView.nickNameTextField.initTextFieldText(placeHolder: "닉네임을 입력해 주세요", delegate: self)
+        infoView.nickNameTextField.lblTitle.text = "닉네임"
+        infoView.nickNameTextField.lblError.text = "닉네임을 입력해 주세요"
     }
 }
-
-// struct InfoViewControllerPreView: PreviewProvider {
-//    static var previews: some View {
-//        InfoViewController.toPreview().edgesIgnoringSafeArea(.all)
-//    }
-// }
 
 extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     // delegate, datasource 연결 및 picker를 textfied의 inputview로 설정한다
@@ -301,4 +367,16 @@ extension InfoViewController: CustomTextFieldDelegate {
     func customTextFieldDidBeginEditing(_ textField: UITextField) {}
 
     func errorStatus(isError: Bool, view: CustomTextField) {}
+}
+
+private extension InfoViewController {
+    func calculateAge(birthDate: Date) -> Int {
+        let calendar = Calendar.current
+        let now = Date()
+        
+        let ageComponents = calendar.dateComponents([.year], from: birthDate, to: now)
+        let age = ageComponents.year ?? 0
+        
+        return age
+    }
 }

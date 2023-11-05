@@ -12,4 +12,6 @@ struct ThemeColor {
     static let primary = UIColor(hexString: "EB315C")
     static let boarder = UIColor(hexString: "CDB4DB")
     static let sectionLabel = UIColor(hexString: "FFC8DD")
+    
+    static let backGroundColor: UIColor = .systemBackground
 }

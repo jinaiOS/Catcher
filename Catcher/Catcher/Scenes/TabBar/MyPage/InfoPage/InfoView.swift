@@ -9,9 +9,16 @@ import SnapKit
 import UIKit
 
 final class InfoView: UIView {
+    private let isValidNickName: Bool
     var selectedBodyButton: UIButton?
     var selectedDrinkButton: UIButton?
     var selectedSmokeButton: UIButton?
+    
+    lazy var nickNameTextField: CustomTextField = {
+        let textField = CustomTextField()
+        return textField
+    }()
+    
     lazy var regionTextField: CustomTextField = {
         let textField = CustomTextField()
         return textField
@@ -45,7 +52,7 @@ final class InfoView: UIView {
     
     lazy var drinkingTwiceBtn: UIButton = drinkButton(title: "주 1~2회")
     
-    lazy var drinkingOftenBtn: UIButton = drinkButton(title: "주 3~5")
+    lazy var drinkingOftenBtn: UIButton = drinkButton(title: "주 3~5회")
     
     lazy var drinkingDailyBtn: UIButton = drinkButton(title: "그 이상")
     
@@ -140,6 +147,9 @@ final class InfoView: UIView {
         view.distribution = .fillProportionally
         view.spacing = AppConstraint.stackViewSpacing
         
+        if isValidNickName {
+            view.addArrangedSubview(nickNameTextField)
+        }
         [regionTextField,
          birthTextField,
          educationTextField,
@@ -175,9 +185,10 @@ final class InfoView: UIView {
         return button
     }()
     
-    init() {
+    init(isValidNickName: Bool = false) {
+        self.isValidNickName = isValidNickName
         super.init(frame: .zero)
-        backgroundColor = .white
+        backgroundColor = ThemeColor.backGroundColor
         setLayout()
     }
     
@@ -238,13 +249,6 @@ extension InfoView {
             titleColor: .darkGray,
             backgroundColor: .systemGray4,
             cornerRadius: 15)
-        
-//        let size = getLabelSize(text: text, font: font)
-        
-//        button.snp.makeConstraints {
-//            $0.width.equalTo(size.0 + 20)
-//            $0.height.equalTo(size.1 + 10)
-//        }
     }
     
     var separateView: UIView {
@@ -270,7 +274,7 @@ extension InfoView {
             addSubview($0)
         }
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide)
+            make.top.equalTo(self.safeAreaLayoutGuide).offset(AppConstraint.headerViewHeight)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
         }
@@ -280,7 +284,7 @@ extension InfoView {
             make.centerX.equalToSuperview()
         }
         vStack.snp.makeConstraints {
-            $0.top.equalTo(contentView.snp.top)
+            $0.top.equalTo(contentView.snp.top).offset(20)
             $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
         }
         saveButton.snp.makeConstraints {

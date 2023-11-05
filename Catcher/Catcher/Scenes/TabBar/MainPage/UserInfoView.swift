@@ -132,7 +132,7 @@ final class UserInfoView: UIView {
     
     private lazy var userInfoView: UITextView = {
         let view = UITextView()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = ThemeColor.backGroundColor
         view.isSelectable = false
         view.isEditable = false
         return view
@@ -172,7 +172,7 @@ final class UserInfoView: UIView {
     
     init() {
         super.init(frame: .zero)
-        backgroundColor = .systemBackground
+        backgroundColor = ThemeColor.backGroundColor
         setLayout()
     }
     
