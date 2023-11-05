@@ -14,7 +14,7 @@ import SafariServices
 final class RegisterViewController: BaseViewController {
     private let registerView = RegisterView()
     private let fireManager = FirebaseManager()
-    private let titleList = ["[필수] 14세 이상", "[필수] 개인정보 동의서"]
+    private let titleList = ["[필수] 17세 이상", "[필수] 개인정보 동의서"]
     var selectList : [Bool] = []
 
     /** @brief 공통 헤더 객체 */
@@ -112,42 +112,21 @@ final class RegisterViewController: BaseViewController {
     override func loadView() {
         super.loadView()
         view.addSubview(registerView)
-
+        
         registerView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(80)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(AppConstraint.headerViewHeight)
             $0.leading.bottom.trailing.equalToSuperview()
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    @objc func keyboardWillShow(_ notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
-            registerView.scrollView.contentInset = contentInsets
-            registerView.scrollView.scrollIndicatorInsets = contentInsets
-
-            // 텍스트 필드가 가려지지 않도록 스크롤 위치 조절
-            if let activeTextField = findActiveTextField() {
-                let rect = activeTextField.convert(activeTextField.bounds, to: registerView.scrollView)
-                registerView.scrollView.scrollRectToVisible(rect, animated: true)
-            }
-        }
-    }
-
-    @objc func keyboardWillHide(_ notification: Notification) {
-        let contentInsets = UIEdgeInsets.zero
-        registerView.scrollView.contentInset = contentInsets
-        registerView.scrollView.scrollIndicatorInsets = contentInsets
     }
     
     /**
     * @brief 상세 약관 보기 버튼 클릭
     */
     @objc func detailButtonTouched(sender : UIButton) {
-        let url = URL(string: "https://plip.kr/pcc/bbd65582-9034-4359-a09a-022a093eda26/privacy/1.html")
-        let vc = SFSafariViewController(url: url!)
-        present(vc, animated: true)
+        if let url = URL(string: CONSENT) {
+            let vc = SFSafariViewController(url: url)
+            present(vc, animated: true)
+        }
     }
     
     /**
@@ -220,6 +199,7 @@ final class RegisterViewController: BaseViewController {
     override func viewDidLoad() {
         registerView.nextButton.addTarget(self, action: #selector(nextPressed), for: .touchUpInside)
         registerView.allAgreeButton.addTarget(self, action: #selector(allSelectButtonTouched), for: .touchUpInside)
+        setKeyboardObserver()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         // gesture의 이벤트가 끝나도 뒤에 이벤트를 View로 전달
         tapGesture.cancelsTouchesInView = false
@@ -235,6 +215,11 @@ final class RegisterViewController: BaseViewController {
 
         setHeaderView()
         setUI()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        removeKeyboardObserver()
     }
 
     func setUI() {
@@ -262,6 +247,28 @@ final class RegisterViewController: BaseViewController {
 //        registerView.passwordconfirmtextfield.lblError.text = "올바른 비밀번호 형식을 입력해 주세요"
         registerView.passwordconfirmtextfield.tf.returnKeyType = .done
         registerView.passwordconfirmtextfield.textFieldIsPW(isPW: true)
+    }
+}
+
+extension RegisterViewController {
+    override func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
+            registerView.scrollView.contentInset = contentInsets
+            registerView.scrollView.scrollIndicatorInsets = contentInsets
+            
+            // 텍스트 필드가 가려지지 않도록 스크롤 위치 조절
+            if let activeTextField = findActiveTextField() {
+                let rect = activeTextField.convert(activeTextField.bounds, to: registerView.scrollView)
+                registerView.scrollView.scrollRectToVisible(rect, animated: true)
+            }
+        }
+    }
+    
+    override func keyboardWillHide(notification: NSNotification) {
+        let contentInsets = UIEdgeInsets.zero
+        registerView.scrollView.contentInset = contentInsets
+        registerView.scrollView.scrollIndicatorInsets = contentInsets
     }
 }
 
@@ -342,5 +349,4 @@ extension RegisterViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
-
 }

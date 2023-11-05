@@ -17,7 +17,7 @@ final class ProfileSettingViewModel {
 }
 
 extension ProfileSettingViewModel {
-    func createUser(user: UserInfo, eamil: String, password: String, completion: @escaping (Bool) -> Void) {
+    func registerUser(user: UserInfo, eamil: String, password: String, completion: @escaping (Bool) -> Void) {
         FirebaseManager().createUsers(
             email: eamil,
             password: password
@@ -96,9 +96,9 @@ private extension ProfileSettingViewModel {
             return
         }
         FireStorageManager.shared.setProfileData(image: profileImage) { [weak self] error in
-            guard self != nil else { return }
+            guard let self = self else { return }
             if let error {
-                CommonUtil.print(output: error)
+                CommonUtil.print(output: error.localizedDescription)
                 completion(false)
                 return
             }
