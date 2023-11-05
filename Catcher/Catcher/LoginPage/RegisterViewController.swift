@@ -267,29 +267,41 @@ final class RegisterViewController: BaseViewController {
 
 extension RegisterViewController: CustomTextFieldDelegate {
     func customTextFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == registerView.emailtextfield.tf {
-            registerView.passwordtextfield.tf.becomeFirstResponder() // next 버튼 선택 시 -> tfPW 포커싱
+        if textField == registerView.nicknametextfield.tf {
+            registerView.emailtextfield.tf.becomeFirstResponder() // next 버튼 선택 시 -> tfPW 포커싱
+        } else if textField == registerView.emailtextfield.tf {
+            registerView.passwordtextfield.tf.becomeFirstResponder() // return 버튼 선택 시 -> 키보드 내려감
+        } else if textField == registerView.passwordtextfield.tf {
+            registerView.passwordconfirmtextfield.tf.becomeFirstResponder()
         } else {
-            registerView.passwordtextfield.tf.resignFirstResponder() // return 버튼 선택 시 -> 키보드 내려감
+            registerView.passwordconfirmtextfield.tf.resignFirstResponder()
         }
         return true
     }
 
     func customTextFieldValueChanged(_ textfield: UITextField) {
-        if textfield == registerView.emailtextfield.tf {
-            registerView.emailtextfield.isError = false // next 버튼 선택 시 -> tfPW 포커싱
+        if textfield == registerView.nicknametextfield.tf {
+            registerView.nicknametextfield.isError = false
+        } else if textfield == registerView.emailtextfield.tf {
+            registerView.emailtextfield.isError = false
+        } else if textfield == registerView.passwordtextfield.tf {
+            registerView.passwordtextfield.isError = false
         } else {
-            registerView.passwordtextfield.isError = false // return 버튼 선택 시 -> 키보드 내려감
+            registerView.passwordconfirmtextfield.isError = false
         }
     }
 
     func customTextFieldDidEndEditing(_ textField: UITextField) {}
 
     func customTextFieldDidBeginEditing(_ textField: UITextField) {
-        if textField == registerView.emailtextfield.tf {
-            registerView.emailtextfield.isError = false // next 버튼 선택 시 -> tfPW 포커싱
+        if textField == registerView.nicknametextfield.tf {
+            registerView.nicknametextfield.isError = false
+        } else if textField == registerView.emailtextfield.tf {
+            registerView.emailtextfield.isError = false
+        } else if textField == registerView.passwordtextfield.tf {
+            registerView.passwordtextfield.isError = false
         } else {
-            registerView.passwordtextfield.isError = false // return 버튼 선택 시 -> 키보드 내려감
+            registerView.passwordconfirmtextfield.isError = false
         }
     }
 
