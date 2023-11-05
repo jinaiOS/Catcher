@@ -46,6 +46,13 @@ class MyPageViewController: BaseViewController {
         return im
     }()
     
+    private lazy var imgCamera: UIImageView = {
+       let im = UIImageView()
+        im.image = UIImage(systemName: "camera.fill")
+        im.tintColor = .black
+        return im
+    }()
+    
     private lazy var myMainView: UIView = {
         let vw = UIView()
         vw.backgroundColor = .white
@@ -193,7 +200,7 @@ class MyPageViewController: BaseViewController {
 
     private lazy var contentView: UIView = {
         let vw = UIView()
-        [nickName, profilePhoto, myMainView, myTableView, logOutButton].forEach { vw.addSubview($0) }
+        [nickName, profilePhoto, imgCamera, myMainView, myTableView, logOutButton].forEach { vw.addSubview($0) }
         return vw
     }()
 
@@ -348,7 +355,13 @@ private extension MyPageViewController {
             make.trailing.equalTo(contentView.snp.trailing).inset(20)
             make.height.width.equalTo(photoSize)
         }
-
+        imgCamera.snp.makeConstraints { make in
+            make.top.equalTo(profilePhoto).inset(50)
+//            make.leading.equalTo(profilePhoto).inset(10)
+            make.trailing.equalTo(contentView).inset(13)
+            make.height.equalTo(25)
+            make.width.equalTo(30)
+        }
         myMainView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(contentView).inset(14)
             make.top.equalTo(nickName.snp.bottom).inset(-50)
