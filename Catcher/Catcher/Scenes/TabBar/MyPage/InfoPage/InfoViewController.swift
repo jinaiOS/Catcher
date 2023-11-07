@@ -118,7 +118,7 @@ private extension InfoViewController {
         guard let userInfo = userInfo else { return }
         infoView.nickNameTextField.tf.text = userInfo.nickName
         infoView.regionTextField.tf.text = userInfo.location
-        infoView.birthTextField.tf.text = "만 \(calculateAge(birthDate: userInfo.birth))세"
+        infoView.birthTextField.tf.text = "만 \(Date.calculateAge(birthDate: userInfo.birth))세"
         infoView.birthTextField.lblTitle.text = "나이"
         infoView.birthTextField.tf.isEnabled = false
         infoView.educationTextField.tf.text = userInfo.education
@@ -472,17 +472,5 @@ extension InfoViewController: CustomTextFieldDelegate {
         guard let text = textField.text else { return true }
         let newLength = text.count + string.count - range.length
         return newLength <= 30 // 30개 제한
-    }
-}
-
-private extension InfoViewController {
-    func calculateAge(birthDate: Date) -> Int {
-        let calendar = Calendar.current
-        let now = Date()
-
-        let ageComponents = calendar.dateComponents([.year], from: birthDate, to: now)
-        let age = ageComponents.year ?? 0
-
-        return age
     }
 }

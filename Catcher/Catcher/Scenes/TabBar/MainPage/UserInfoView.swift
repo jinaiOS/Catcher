@@ -22,23 +22,13 @@ final class UserInfoView: UIView {
         return view
     }()
     
-    private lazy var nickNameLabel: UILabel = {
-        let label = LabelFactory.makeLabel(
-            text: nil,
-            font: ThemeFont.bold(size: 35),
-            textColor: .white)
-        label.layer.shadowColor = UIColor.black.cgColor
-        label.layer.shadowOffset = CGSize(width: 2, height: 2)
-        label.layer.shadowRadius = 5
-        label.layer.shadowOpacity = 0.5
-        return label
-    }()
-    
     lazy var reportButton: UIButton = {
-        ButtonFactory.makeButton(
+        let button = ButtonFactory.makeButton(
             image: UIImage(systemName: "info.circle"),
-            tintColor: .systemGray,
+            tintColor: .white,
             cornerRadius: AppConstraint.defaultCornerRadius)
+        makeShadow(view: button)
+        return button
     }()
     
     lazy var closeButton: UIButton = {
@@ -47,31 +37,8 @@ final class UserInfoView: UIView {
             backgroundColor: .systemGray6
         )
         button.layer.cornerRadius = button.bounds.width
+        button.imageView?.contentMode = .scaleAspectFit
         return button
-    }()
-    
-    lazy var chatButton: UIButton = {
-        ButtonFactory.makeButton(
-            image: UIImage(systemName: "paperplane.fill"),
-            titleColor: .systemGray)
-    }()
-    
-    private lazy var chatLabel: UILabel = {
-        LabelFactory.makeLabel(
-            text: "대화하기",
-            font: ThemeFont.demibold(size: 20))
-    }()
-    
-    private lazy var chatStack: UIStackView = {
-        let view = UIStackView()
-        view.axis = .vertical
-        view.alignment = .fill
-        view.distribution = .fillEqually
-        
-        [chatButton, chatLabel].forEach {
-            view.addArrangedSubview($0)
-        }
-        return view
     }()
     
     lazy var pickButton: UIButton = {
@@ -87,7 +54,7 @@ final class UserInfoView: UIView {
     private lazy var pickLabel: UILabel = {
         LabelFactory.makeLabel(
             text: "찜",
-            font: ThemeFont.demibold(size: 20))
+            font: ThemeFont.demibold(size: 12))
     }()
     
     private lazy var pickStack: UIStackView = {
@@ -97,6 +64,32 @@ final class UserInfoView: UIView {
         view.distribution = .fillEqually
         
         [pickButton, pickLabel].forEach {
+            view.addArrangedSubview($0)
+        }
+        return view
+    }()
+    
+    lazy var chatButton: UIButton = {
+        let button = ButtonFactory.makeButton(
+            image: UIImage(systemName: "ellipsis.bubble"),
+            titleColor: .systemGray)
+        button.imageView?.contentMode = .scaleAspectFit
+        return button
+    }()
+    
+    private lazy var chatLabel: UILabel = {
+        LabelFactory.makeLabel(
+            text: "대화하기",
+            font: ThemeFont.demibold(size: 12))
+    }()
+    
+    private lazy var chatStack: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.alignment = .fill
+        view.distribution = .fillEqually
+        
+        [chatButton, chatLabel].forEach {
             view.addArrangedSubview($0)
         }
         return view
@@ -114,8 +107,8 @@ final class UserInfoView: UIView {
     
     lazy var blockLabel: UILabel = {
         LabelFactory.makeLabel(
-            text: "채팅 차단",
-            font: ThemeFont.demibold(size: 20))
+            text: "차단",
+            font: ThemeFont.demibold(size: 12))
     }()
     
     private lazy var blockStack: UIStackView = {
@@ -130,45 +123,149 @@ final class UserInfoView: UIView {
         return view
     }()
     
-    private lazy var userInfoView: UITextView = {
-        let view = UITextView()
-        view.backgroundColor = ThemeColor.backGroundColor
-        view.isSelectable = false
-        view.isEditable = false
+    private lazy var buttonHStack: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.alignment = .fill
+        view.distribution = .fillEqually
+        
+        [pickStack, chatStack, blockStack].forEach {
+            view.addArrangedSubview($0)
+        }
         return view
     }()
     
-    private lazy var hStack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.alignment = .fill
-        stack.distribution = .fillEqually
+    private lazy var buttonContentView: UIView = {
+        let view = UIView()
+        view.clipsToBounds = true
+        view.cornerRadius = AppConstraint.defaultCornerRadius
+        view.borderColor = ThemeColor.userInfoHeaderView
+        view.borderWidth = 1
         
-        [chatStack, pickStack, blockStack].forEach {
-            stack.addArrangedSubview($0)
+        view.addSubview(buttonHStack)
+        buttonHStack.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(15)
+            $0.leading.bottom.trailing.equalToSuperview().inset(10)
         }
-        return stack
+        return view
     }()
     
-    private lazy var vStack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
+    private lazy var userInfoLabel: UILabel = {
+        let label = LabelFactory.makeLabel(
+            text: nil,
+            font: ThemeFont.bold(size: 27),
+            textColor: .white,
+            textAlignment: .left)
+        makeShadow(view: label)
+        return label
+    }()
+    
+    private lazy var ageLabel: UILabel = {
+        let label = LabelFactory.makeLabel(
+            text: nil,
+            font: ThemeFont.bold(size: 27),
+            textColor: .white,
+            textAlignment: .right)
+        makeShadow(view: label)
+        return label
+    }()
+    
+    private lazy var userHStack: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.alignment = .fill
+        view.distribution = .fillProportionally
         
-        [separateView, hStack, separateView].forEach {
-            stack.addArrangedSubview($0)
+        [userInfoLabel, ageLabel].forEach {
+            view.addArrangedSubview($0)
         }
-        return stack
+        return view
+    }()
+    
+    private lazy var headerLabel: UILabel = {
+        LabelFactory.makeLabel(
+            text: "유저 정보",
+            font: ThemeFont.bold(size: 20),
+            textColor: .white,
+            textAlignment: .left)
+    }()
+    
+    private lazy var headerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = ThemeColor.userInfoHeaderView
+        view.addSubview(headerLabel)
+        
+        headerLabel.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(16)
+        }
+        return view
+    }()
+
+    private lazy var regionCategory: UILabel = {
+        makeInfoLabel(title: "지역", font: ThemeFont.bold(size: 16))
+    }()
+    
+    private lazy var regionLabel: UILabel = {
+        makeInfoLabel(title: "nil", font: ThemeFont.demibold(size: 16))
+    }()
+    
+    private lazy var heightCategory: UILabel = {
+        makeInfoLabel(title: "신장", font: ThemeFont.bold(size: 16))
+    }()
+    
+    private lazy var heightLabel: UILabel = {
+        makeInfoLabel(title: "nil", font: ThemeFont.demibold(size: 16))
+    }()
+    
+    private lazy var mbtiCategory: UILabel = {
+        makeInfoLabel(title: "mbti", font: ThemeFont.bold(size: 16))
+    }()
+    
+    private lazy var mbtiLabel: UILabel = {
+        makeInfoLabel(title: "nil", font: ThemeFont.demibold(size: 16))
+    }()
+    
+    private lazy var introductionCategory: UILabel = {
+        makeInfoLabel(title: "자기소개", font: ThemeFont.bold(size: 16))
+    }()
+    
+    private lazy var introductionLabel: UILabel = {
+        makeInfoLabel(title: "nil", font: ThemeFont.demibold(size: 16))
+    }()
+    
+    private lazy var userInfoStack: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.alignment = .fill
+        view.distribution = .fillProportionally
+        view.backgroundColor = .white
+        view.layer.cornerRadius = AppConstraint.defaultCornerRadius
+        view.layer.masksToBounds = true
+        view.borderColor = .lightGray.withAlphaComponent(0.5)
+        view.borderWidth = 1
+        
+        [
+            headerView,
+            makeInfoHStack(category: regionCategory, data: regionLabel),
+            separateView,
+            makeInfoHStack(category: heightCategory, data: heightLabel),
+            separateView,
+            makeInfoHStack(category: mbtiCategory, data: mbtiLabel),
+            separateView,
+            makeInfoHStack(category: introductionCategory, data: introductionLabel)
+        ].forEach {
+            view.addArrangedSubview($0)
+        }
+        return view
     }()
     
     private lazy var contentView: UIView = {
         let view = UIView()
+        [profileImageView, reportButton, userHStack, buttonContentView, userInfoStack].forEach {
+            view.addSubview($0)
+        }
         return view
     }()
-    
-    func configure(nickName: String, infoText: NSMutableAttributedString) {
-        nickNameLabel.text = nickName
-        userInfoView.attributedText = infoText
-    }
     
     init() {
         super.init(frame: .zero)
@@ -182,35 +279,38 @@ final class UserInfoView: UIView {
 }
 
 extension UserInfoView {
-    func remakeLayout(textHeight: CGFloat) {
-        userInfoView.snp.remakeConstraints {
-            $0.top.equalTo(vStack.snp.bottom).offset(50)
-            $0.leading.trailing.equalToSuperview().inset(50)
-            $0.height.equalTo(textHeight + 20)
-            $0.bottom.equalToSuperview().inset(50)
+    func configure(userInfo: UserInfo) {
+        ImageCacheManager.shared.loadImage(uid: userInfo.uid) { [weak self] in
+            guard let self = self else { return }
+            profileImageView.image = $0
         }
+        userInfoLabel.text = userInfo.nickName +  "/" + userInfo.sex
+        ageLabel.text = "만 \(Date.calculateAge(birthDate: userInfo.birth))세"
+        regionLabel.text = userInfo.location
+        heightLabel.text = "\(userInfo.height)cm"
+        mbtiLabel.text = "INTJ"
+        introductionLabel.text = "나는 전설이다."
     }
 }
 
 private extension UserInfoView {
     func setLayout() {
-        [profileImageView, reportButton, nickNameLabel, vStack, userInfoView].forEach {
-            contentView.addSubview($0)
-        }
-        
-        scrollView.addSubview(contentView)
-        
         [scrollView, closeButton].forEach {
             addSubview($0)
         }
+        scrollView.addSubview(contentView)
         
         scrollView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
+        closeButton.snp.makeConstraints {
+            $0.top.trailing.equalTo(safeAreaLayoutGuide).inset(16)
+        }
+        
         contentView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
             $0.centerX.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
         
         profileImageView.snp.makeConstraints {
@@ -218,48 +318,82 @@ private extension UserInfoView {
             $0.height.equalTo(500)
         }
         
-        reportButton.snp.makeConstraints {
-            $0.trailing.bottom.equalTo(profileImageView).inset(20)
-            $0.width.height.equalTo(50)
+        userHStack.snp.makeConstraints {
+            $0.leading.trailing.equalTo(profileImageView).inset(16)
+            $0.bottom.equalTo(profileImageView.snp.bottom).inset(16)
         }
         
-        nickNameLabel.snp.makeConstraints {
-            $0.leading.bottom.equalTo(profileImageView).inset(30)
+        reportButton.snp.makeConstraints {
+            $0.bottom.equalTo(userHStack.snp.top).offset(-20)
+            $0.trailing.equalToSuperview().inset(16)
+        }
+        
+        buttonContentView.snp.makeConstraints {
+            $0.top.equalTo(profileImageView.snp.bottom).offset(30)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(90)
+        }
+        
+        userInfoStack.snp.makeConstraints {
+            $0.top.equalTo(buttonContentView.snp.bottom).offset(30)
+            $0.leading.bottom.trailing.equalToSuperview().inset(16)
         }
         
         pickButton.imageView?.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(5)
+            $0.edges.equalToSuperview()
+        }
+        
+        chatButton.imageView?.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
         blockBtton.imageView?.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(5)
-        }
-        
-        vStack.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(30)
-            $0.height.equalTo(80)
-        }
-        
-        userInfoView.snp.makeConstraints {
-            $0.top.equalTo(vStack.snp.bottom).offset(50)
-            $0.leading.trailing.equalToSuperview().inset(50)
-            $0.bottom.equalToSuperview()
-            $0.height.equalTo(500)
-        }
-        
-        closeButton.snp.makeConstraints {
-            $0.top.trailing.equalTo(self.safeAreaLayoutGuide).inset(AppConstraint.defaultSpacing)
+            $0.edges.equalToSuperview()
         }
     }
-    
+}
+
+private extension UserInfoView {
     var separateView: UIView {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = .systemGray5
         
         view.snp.makeConstraints {
-            $0.height.equalTo(1.5)
+            $0.height.equalTo(0.5)
         }
         return view
+    }
+    
+    func makeInfoLabel(title: String?, font: UIFont) -> UILabel {
+        LabelFactory.makeLabel(
+            text: title,
+            font: font,
+            textAlignment: .left)
+    }
+    
+    func makeInfoHStack(category: UILabel, data: UILabel) -> UIView {
+        let view = UIView()
+        
+        [category, data].forEach {
+            view.addSubview($0)
+        }
+        category.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(70)
+            $0.leading.top.bottom.equalToSuperview().inset(16)
+        }
+        
+        data.snp.makeConstraints {
+            $0.leading.equalTo(category.snp.trailing).offset(16)
+            $0.top.trailing.bottom.equalToSuperview().inset(16)
+        }
+        return view
+    }
+    
+    func makeShadow<T: UIView>(view: T) {
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 2, height: 2)
+        view.layer.shadowRadius = 5
+        view.layer.shadowOpacity = 0.5
     }
 }

@@ -67,16 +67,12 @@ private extension UserInfoViewController {
         
         if isBlocked {
             userInfoView.blockBtton.isSelected = true
-            userInfoView.blockLabel.text = "채팅 차단"
+            userInfoView.blockLabel.text = "해제"
         } else {
             userInfoView.blockBtton.isSelected = false
-            userInfoView.blockLabel.text = "차단 해제"
+            userInfoView.blockLabel.text = "차단"
         }
-        
-        let infoText = viewModel.makeInfoText(info: userInfo)
-        let textHeight = infoText.height
-        userInfoView.configure(nickName: userInfo.nickName, infoText: infoText)
-        userInfoView.remakeLayout(textHeight: textHeight)
+        userInfoView.configure(userInfo: userInfo)
     }
     
     func setTarget() {
@@ -118,9 +114,9 @@ private extension UserInfoViewController {
         let selected = sender.isSelected
         
         if selected {
-            userInfoView.blockLabel.text = "채팅 차단"
+            userInfoView.blockLabel.text = "해제"
         } else {
-            userInfoView.blockLabel.text = "차단 해제"
+            userInfoView.blockLabel.text = "차단"
         }
         
         viewModel.processBlockUser(isBlock: selected) { [weak self] result, error in
