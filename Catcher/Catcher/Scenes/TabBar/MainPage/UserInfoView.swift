@@ -210,7 +210,7 @@ final class UserInfoView: UIView {
     }()
     
     private lazy var heightCategory: UILabel = {
-        makeInfoLabel(title: "신장", font: ThemeFont.bold(size: 16))
+        makeInfoLabel(title: "키", font: ThemeFont.bold(size: 16))
     }()
     
     private lazy var heightLabel: UILabel = {
@@ -218,7 +218,7 @@ final class UserInfoView: UIView {
     }()
     
     private lazy var mbtiCategory: UILabel = {
-        makeInfoLabel(title: "mbti", font: ThemeFont.bold(size: 16))
+        makeInfoLabel(title: "MBTI", font: ThemeFont.demibold(size: 16))
     }()
     
     private lazy var mbtiLabel: UILabel = {
@@ -337,6 +337,7 @@ private extension UserInfoView {
         userInfoStack.snp.makeConstraints {
             $0.top.equalTo(buttonContentView.snp.bottom).offset(30)
             $0.leading.bottom.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(250)
         }
         
         pickButton.imageView?.snp.makeConstraints {
