@@ -421,6 +421,25 @@ extension DatabaseManager {
             }
         })
     }
+    
+    public func readMessage(otherUserUid: String, completion: @escaping (Bool) -> Void) {
+        database.child(FirebaseManager().getUID ?? "").child(otherUserUid).observeSingleEvent(of: .value, with: { [weak self] snapshot in
+                guard var value = snapshot.value as? [[String: Any]] else {
+                    completion(false)
+                    return
+                }
+                for i in 0..<value.count {
+                    if value[i]["sender_uid"] as? String == otherUserUid {
+                        value[i]["is_read"] = true
+                    }
+                }
+
+                // 변경된 데이터를 다시 저장
+                self?.database.child(FirebaseManager().getUID ?? "").child(otherUserUid).setValue(value)
+                self?.database.child(otherUserUid).child(FirebaseManager().getUID ?? "").setValue(value)
+                completion(true)
+        })
+    }
 }
 //strongSelf.database.child("\(self?.userInfo?.uid ?? "")/\(uid)").observeSingleEvent(of: .value, with: { snapshot in
 //    var databaseEntryConversations = [[String: Any]]()
