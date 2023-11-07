@@ -336,7 +336,7 @@ extension DatabaseManager {
                     
                     return Message(sender: sender,
                                    messageId: senderUid,
-                                   sentDate: ChattingDetailViewController.dateFormatter.date(from: dateString) ?? .now,
+                                   sentDate: Date.dateFromyyyyMMddHHmm(str: dateString) ?? .now,
                                    kind: finalKind)
                 })
                 
