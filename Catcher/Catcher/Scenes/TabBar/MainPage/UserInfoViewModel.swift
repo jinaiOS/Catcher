@@ -25,8 +25,10 @@ extension UserInfoViewModel {
             
             if isUpdate {
                 error = await fireStoreManager.updatePickUser(uuid: userInfo.uid)
+                error = await fireStoreManager.updatePicker(uuid: userInfo.uid)
             } else {
                 error = await fireStoreManager.deletePickUser(uuid: userInfo.uid)
+                error = await fireStoreManager.deletePicker(uuid: userInfo.uid)
             }
             if let error = error {
                 completion(nil, error)
@@ -119,6 +121,12 @@ extension UserInfoViewModel {
             alignment: .left,
             range: (0, 2))
         
+        let heart = info.heart
+        let heartLabel = NSAttributedString.makeUserInfoText(
+            text: "받은 찜 \(heart)개",
+            alignment: .left,
+            range: (0, 4))
+        
         let combinedAttributedString = NSMutableAttributedString()
         combinedAttributedString.append(locationLabel)
         combinedAttributedString.append(newLine)
@@ -135,6 +143,8 @@ extension UserInfoViewModel {
         combinedAttributedString.append(drinkingLabel)
         combinedAttributedString.append(newLine)
         combinedAttributedString.append(smokingLabel)
+        combinedAttributedString.append(newLine)
+        combinedAttributedString.append(heartLabel)
         
         return combinedAttributedString
     }
