@@ -10,6 +10,7 @@ import FirebaseDatabase
 import MessageKit
 import CoreLocation
 import UIKit
+import AVFoundation
 
 class DatabaseManager {
     /// 클래스의 공유 인스턴스입니다.
@@ -18,7 +19,7 @@ class DatabaseManager {
     private let storeManager = FireStoreManager.shared
     
     private let database = Database.database(url: "https://catcher-dcac0-default-rtdb.asia-southeast1.firebasedatabase.app").reference()
-        
+    
     var otherUserInfo: UserInfo? = nil
 }
 
@@ -234,10 +235,11 @@ extension DatabaseManager {
                     guard let senderUid = dictionary["sender_uid"] as? String,
                           let message = dictionary["message"] as? String,
                           let date = dictionary["date"] as? String,
-                          let isRead = dictionary["is_read"] as? Bool else {
+                          let isRead = dictionary["is_read"] as? Bool,
+                          let kind = dictionary["type"] as? String else {
                         return nil
                     }
-                    return Conversation(name: "", senderUid: senderUid, message: message, date: date, isRead: isRead, otherUserUid: "")
+                    return Conversation(name: "", senderUid: senderUid, kind: ConversationKind(rawValue: kind) ?? .Text, message: message, date: date, isRead: isRead, otherUserUid: "")
                 }
                 conversationsHave = conversations
                 var nickNames: [String] = []
@@ -300,8 +302,14 @@ extension DatabaseManager {
                     }
                     else if type == "video" {
                         // photo
-                        guard let videoUrl = URL(string: content),
-                              let placeHolder = UIImage(named: "video_placeholder") else {
+                        guard let videoUrl = URL(string: content) else { return nil }
+                        let myAsset = AVAsset(url: videoUrl)
+                        let imageGenerator = AVAssetImageGenerator(asset: myAsset)
+                        let time: CMTime = CMTime(value: 600, timescale: 600)
+                        guard let cgImage = try? imageGenerator.copyCGImage(at: time, actualTime: nil) else { fatalError() }
+                        
+                        let uiImage: UIImage? = UIImage(cgImage: cgImage)
+                        guard let placeHolder = uiImage else {
                             return nil
                         }
                         
@@ -336,7 +344,7 @@ extension DatabaseManager {
                     
                     return Message(sender: sender,
                                    messageId: senderUid,
-                                   sentDate: ChattingDetailViewController.dateFormatter.date(from: dateString) ?? .now,
+                                   sentDate: Date.dateFromyyyyMMddHHmm(str: dateString) ?? .now,
                                    kind: finalKind)
                 })
                 
@@ -424,20 +432,37 @@ extension DatabaseManager {
     
     public func readMessage(otherUserUid: String, completion: @escaping (Bool) -> Void) {
         database.child(FirebaseManager().getUID ?? "").child(otherUserUid).observeSingleEvent(of: .value, with: { [weak self] snapshot in
-                guard var value = snapshot.value as? [[String: Any]] else {
-                    completion(false)
-                    return
+            guard var value = snapshot.value as? [[String: Any]] else {
+                completion(false)
+                return
+            }
+            for i in 0..<value.count {
+                if value[i]["sender_uid"] as? String == otherUserUid {
+                    value[i]["is_read"] = true
                 }
-                for i in 0..<value.count {
-                    if value[i]["sender_uid"] as? String == otherUserUid {
-                        value[i]["is_read"] = true
-                    }
-                }
-
-                // 변경된 데이터를 다시 저장
-                self?.database.child(FirebaseManager().getUID ?? "").child(otherUserUid).setValue(value)
-                self?.database.child(otherUserUid).child(FirebaseManager().getUID ?? "").setValue(value)
-                completion(true)
+            }
+            
+            // 변경된 데이터를 다시 저장
+            self?.database.child(FirebaseManager().getUID ?? "").child(otherUserUid).setValue(value)
+            self?.database.child(otherUserUid).child(FirebaseManager().getUID ?? "").setValue(value)
+            completion(true)
+        })
+    }
+    
+    public func deleteMessage(completion: @escaping (Bool) -> Void) {
+        database.child(FirebaseManager().getUID ?? "").observeSingleEvent(of: .value, with: { [weak self] snapshot in
+            guard var value = snapshot.value as? [String: [[String: Any]]] else {
+                completion(false)
+                return
+            }
+            let otherUserUids: [String] = value.compactMap { dictionary in
+                return dictionary.key
+            }
+            self?.database.child(FirebaseManager().getUID ?? "").removeValue()
+            for i in otherUserUids {
+                self?.database.child(i).child(FirebaseManager().getUID ?? "").removeValue()
+            }
+            completion(true)
         })
     }
 }

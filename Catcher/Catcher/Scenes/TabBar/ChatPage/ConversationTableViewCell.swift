@@ -42,12 +42,21 @@ class ConversationTableViewCell: UITableViewCell {
         label.textColor = ThemeColor.primary
         return label
     }()
+    
+    private let newMessageTimeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 13, weight: .regular)
+        label.numberOfLines = 0
+        label.textColor = .systemGray2
+        return label
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(userImageView)
         contentView.addSubview(userNameLabel)
         contentView.addSubview(userMessageLabel)
+        contentView.addSubview(newMessageTimeLabel)
         contentView.addSubview(newMessageCheckLabel)
     }
 
@@ -73,16 +82,30 @@ class ConversationTableViewCell: UITableViewCell {
                                         width: contentView.width - 40 - userImageView.width - newMessageCheckLabel.width,
                                         height: (contentView.height-20)/2)
         
+        newMessageTimeLabel.frame = CGRect(x: contentView.right - 50,
+                                           y: 10,
+                                           width: 50,
+                                           height: (contentView.height-20)/2)
+        
         newMessageCheckLabel.frame = CGRect(x: contentView.right - 60,
                                             y: userNameLabel.bottom,
                                             width: 50,
                                             height: (contentView.height-20)/2)
-
     }
 
     public func configure(with model: Conversation) {
-        userMessageLabel.text = model.message
+        switch model.kind {
+        case .Text:
+            userMessageLabel.text = model.message
+        case .Photo:
+            userMessageLabel.text = "이미지"
+        case .Video:
+            userMessageLabel.text = "비디오"
+        case .Location:
+            userMessageLabel.text = "지도"
+        }
         userNameLabel.text = model.name
+        newMessageTimeLabel.text = Date.stringFromDate(date: Date.dateFromyyyyMMddHHmm(str: model.date) ?? .now, format: "HH:mm")
         newMessageCheckLabel.text = "읽지 않음"
         if model.senderUid != FirebaseManager().getUID ?? "" && model.isRead == false {
             newMessageCheckLabel.isHidden = false

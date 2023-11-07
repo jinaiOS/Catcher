@@ -23,7 +23,7 @@ final class InfoViewController: BaseHeaderViewController {
     var newUserPassword: String?
     var newUserNickName: String?
     let pickerRegion = UIPickerView()
-    let pickerEducation = UIPickerView()
+    let pickerMbti = UIPickerView()
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy / MM / dd"
@@ -32,7 +32,12 @@ final class InfoViewController: BaseHeaderViewController {
 
     weak var delegate: UpdateUserInfo?
 
-    var education = ["박사", "학사", "대졸", "고졸", "중졸"]
+    var mbti = [
+        "INTJ", "INTP", "ENTJ", "ENTP",
+        "INFJ", "INFP", "ENFJ", "ENFP",
+        "ISTJ", "ISFJ", "ESTJ", "ESFJ",
+        "ISTP", "ISFP", "ESTP", "ESFP",
+    ]
     var region = [
         "서울특별시",
         "경기도",
@@ -121,46 +126,9 @@ private extension InfoViewController {
         infoView.birthTextField.tf.text = "만 \(Date.calculateAge(birthDate: userInfo.birth))세"
         infoView.birthTextField.lblTitle.text = "나이"
         infoView.birthTextField.tf.isEnabled = false
-        infoView.educationTextField.tf.text = userInfo.education
+        infoView.mbtiTextField.tf.text = userInfo.education
+        infoView.introduceTextField.tf.text = userInfo.body
         infoView.heightTextField.tf.text = "\(userInfo.height)"
-
-        var button: UIButton
-
-        switch userInfo.body {
-        case "마름":
-            button = infoView.thinBodyBtn
-        case "평범함":
-            button = infoView.nomalBodyBtn
-        case "통통함":
-            button = infoView.chubbyBodyBtn
-        case "뚱뚱함":
-            button = infoView.fatBodyBtn
-        default:
-            button = UIButton()
-        }
-        infoView.bodyButtonTapped(button)
-
-        switch userInfo.drinking {
-        case "안 마심":
-            button = infoView.drinkingNoBtn
-        case "주 1~2회":
-            button = infoView.drinkingTwiceBtn
-        case "주 3~5회":
-            button = infoView.drinkingOftenBtn
-        case "그 이상":
-            button = infoView.drinkingDailyBtn
-        default:
-            button = UIButton()
-        }
-        infoView.drinkButtonTapped(button)
-
-        switch userInfo.smoking {
-        case true:
-            button = infoView.smokingBtn
-        case false:
-            button = infoView.noSmokingBtn
-        }
-        infoView.smokeButtonTapped(button)
     }
 
     func findActiveTextField() -> UITextField? {
@@ -173,14 +141,13 @@ private extension InfoViewController {
     @objc func completeBtn() {
         infoView.regionTextField.isError = false
         infoView.birthTextField.isError = false
-        infoView.educationTextField.isError = false
+        infoView.mbtiTextField.isError = false
         infoView.heightTextField.isError = false
         infoView.nickNameTextField.isError = false
+        infoView.introduceTextField.isError = false
+
         var birth: Date?
 
-        guard let body = infoView.selectedBodyButton?.title(for: .normal) else { return }
-        guard let drinking = infoView.selectedDrinkButton?.title(for: .normal) else { return }
-        guard let smoking = infoView.selectedSmokeButton?.title(for: .normal) else { return }
         guard let location = infoView.regionTextField.tf.text, !location.isEmpty else {
             infoView.regionTextField.isError = true
             return
@@ -194,20 +161,24 @@ private extension InfoViewController {
             birth = birthDate
         }
 
-        guard let education = infoView.educationTextField.tf.text, !education.isEmpty else {
-            infoView.educationTextField.isError = true
+        guard let mbti = infoView.mbtiTextField.tf.text, !mbti.isEmpty else {
+            infoView.mbtiTextField.isError = true
             return
         }
         guard let height = infoView.heightTextField.tf.text, !height.isEmpty else {
             infoView.heightTextField.isError = true
             return
         }
+        guard let introduce = infoView.introduceTextField.tf.text, !introduce.isEmpty else {
+            infoView.introduceTextField.lblError.text = "자기소개를 입력해주세요"
+            infoView.introduceTextField.isError = true
 
-        var smokeCheck = false
-        if smoking == "흡연" {
-            smokeCheck = true
-        } else {
-            smokeCheck = false
+            return
+        }
+        guard introduce.count < 16 else {
+            infoView.introduceTextField.lblError.text = "15글자 이하로 적어주세요"
+            infoView.introduceTextField.isError = true
+            return
         }
 
         if userInfo == nil {
@@ -219,10 +190,10 @@ private extension InfoViewController {
                 nickName: nickName,
                 location: location,
                 height: Int(height) ?? 0,
-                body: body,
-                education: education,
-                drinking: drinking,
-                smoking: smokeCheck,
+                body: introduce,
+                education: mbti,
+                drinking: "",
+                smoking: false,
                 register: Date(),
                 score: 0,
                 pick: []
@@ -249,10 +220,10 @@ private extension InfoViewController {
                 nickName: nickName,
                 location: location,
                 height: Int(height) ?? 0,
-                body: body,
-                education: education,
-                drinking: drinking,
-                smoking: smokeCheck,
+                body: introduce,
+                education: mbti,
+                drinking: "",
+                smoking: false,
                 register: Date(),
                 score: 0,
                 pick: []
@@ -285,8 +256,8 @@ private extension InfoViewController {
         infoView.regionTextField.tf.resignFirstResponder()
     }
 
-    @objc func educationPickerDoneButtonTapped() {
-        infoView.educationTextField.tf.resignFirstResponder()
+    @objc func mbtiPickerDoneButtonTapped() {
+        infoView.mbtiTextField.tf.resignFirstResponder()
     }
 
     @objc func birthPickerDoneButtonTapped() {
@@ -311,9 +282,9 @@ private extension InfoViewController {
 //        infoView.birthTextField.tf.keyboardType = .emailAddress
 //        infoView.birthTextField.tf.returnKeyType = .next
 
-        infoView.educationTextField.initTextFieldText(placeHolder: "학력을 선택해 주세요", delegate: self)
-        infoView.educationTextField.lblTitle.text = "학력"
-        infoView.educationTextField.lblError.text = "학력을 선택해 주세요"
+        infoView.mbtiTextField.initTextFieldText(placeHolder: "MBTI를 선택해 주세요", delegate: self)
+        infoView.mbtiTextField.lblTitle.text = "MBTI"
+        infoView.mbtiTextField.lblError.text = "MBTI를 선택해 주세요"
 //        infoView.educationTextField.tf.keyboardType = .emailAddress
 //        infoView.educationTextField.tf.returnKeyType = .next
 
@@ -326,6 +297,9 @@ private extension InfoViewController {
         infoView.nickNameTextField.initTextFieldText(placeHolder: "닉네임을 입력해 주세요", delegate: self)
         infoView.nickNameTextField.lblTitle.text = "닉네임"
 //        infoView.nickNameTextField.lblError.text = "닉네임을 입력해 주세요"
+
+        infoView.introduceTextField.initTextFieldText(placeHolder: "15글자 이하로 작성해주세요", delegate: self)
+        infoView.introduceTextField.lblTitle.text = "한 줄 자기소개"
     }
 }
 
@@ -335,9 +309,9 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         pickerRegion.delegate = self
         pickerRegion.dataSource = self
 
-        pickerEducation.delegate = self
-        pickerEducation.dataSource = self
-        infoView.educationTextField.tf.inputView = pickerEducation
+        pickerMbti.delegate = self
+        pickerMbti.dataSource = self
+        infoView.mbtiTextField.tf.inputView = pickerMbti
         infoView.regionTextField.tf.inputView = pickerRegion
         // Add a toolbar with a custom button title
         let toolbar = UIToolbar()
@@ -348,12 +322,12 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolbar.setItems([space, doneButton], animated: false)
 
-        let educationToolbar = UIToolbar()
-        educationToolbar.sizeToFit()
-        educationToolbar.backgroundColor = .clear
-        let educationDoneButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(educationPickerDoneButtonTapped))
-        let educationSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        educationToolbar.setItems([educationSpace, educationDoneButton], animated: false)
+        let mbtiToolbar = UIToolbar()
+        mbtiToolbar.sizeToFit()
+        mbtiToolbar.backgroundColor = .clear
+        let mbtiDoneButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(mbtiPickerDoneButtonTapped))
+        let mbtiSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        mbtiToolbar.setItems([mbtiSpace, mbtiDoneButton], animated: false)
 
         let birthToolbar = UIToolbar()
         birthToolbar.sizeToFit()
@@ -373,7 +347,7 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         datePicker.addTarget(self, action: #selector(dateChange), for: .valueChanged)
         // textField의 inputView가 nil이라면 기본 할당은 키보드입니다.
         infoView.regionTextField.tf.inputAccessoryView = toolbar
-        infoView.educationTextField.tf.inputAccessoryView = educationToolbar
+        infoView.mbtiTextField.tf.inputAccessoryView = mbtiToolbar
         infoView.birthTextField.tf.inputAccessoryView = birthToolbar
         infoView.birthTextField.tf.inputView = datePicker
         // textField에 오늘 날짜로 표시되게 설정
@@ -397,8 +371,8 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView == pickerRegion {
             num = region.count
         }
-        if pickerView == pickerEducation {
-            num = education.count
+        if pickerView == pickerMbti {
+            num = mbti.count
         }
         return num
     }
@@ -409,8 +383,8 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView == pickerRegion {
             return region[row]
         }
-        if pickerView == pickerEducation {
-            return education[row]
+        if pickerView == pickerMbti {
+            return mbti[row]
         }
         return nil
     }
@@ -420,8 +394,8 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView == pickerRegion {
             infoView.regionTextField.tf.text = region[row]
         }
-        if pickerView == pickerEducation {
-            infoView.educationTextField.tf.text = education[row]
+        if pickerView == pickerMbti {
+            infoView.mbtiTextField.tf.text = mbti[row]
         }
     }
 }
@@ -431,8 +405,8 @@ extension InfoViewController: CustomTextFieldDelegate {
         if textField == infoView.regionTextField.tf {
             infoView.birthTextField.tf.becomeFirstResponder() // next 버튼 선택 시 -> tfPW 포커싱
         } else if textField == infoView.birthTextField.tf {
-            infoView.educationTextField.tf.becomeFirstResponder() // return 버튼 선택 시 -> 키보드 내려감
-        } else if textField == infoView.educationTextField.tf {
+            infoView.mbtiTextField.tf.becomeFirstResponder() // return 버튼 선택 시 -> 키보드 내려감
+        } else if textField == infoView.mbtiTextField.tf {
             infoView.heightTextField.tf.becomeFirstResponder()
         } else {
             infoView.heightTextField.tf.resignFirstResponder()
@@ -445,8 +419,8 @@ extension InfoViewController: CustomTextFieldDelegate {
             infoView.regionTextField.isError = false
         } else if textfield == infoView.birthTextField.tf {
             infoView.birthTextField.isError = false
-        } else if textfield == infoView.educationTextField.tf {
-            infoView.educationTextField.isError = false
+        } else if textfield == infoView.mbtiTextField.tf {
+            infoView.mbtiTextField.isError = false
         } else {
             infoView.heightTextField.isError = false
         }
@@ -459,8 +433,8 @@ extension InfoViewController: CustomTextFieldDelegate {
             infoView.regionTextField.isError = false
         } else if textField == infoView.birthTextField.tf {
             infoView.birthTextField.isError = false
-        } else if textField == infoView.educationTextField.tf {
-            infoView.educationTextField.isError = false
+        } else if textField == infoView.mbtiTextField.tf {
+            infoView.mbtiTextField.isError = false
         } else {
             infoView.heightTextField.isError = false
         }
