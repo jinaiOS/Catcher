@@ -235,10 +235,11 @@ extension DatabaseManager {
                     guard let senderUid = dictionary["sender_uid"] as? String,
                           let message = dictionary["message"] as? String,
                           let date = dictionary["date"] as? String,
-                          let isRead = dictionary["is_read"] as? Bool else {
+                          let isRead = dictionary["is_read"] as? Bool,
+                    let kind = dictionary["type"] as? String else {
                         return nil
                     }
-                    return Conversation(name: "", senderUid: senderUid, message: message, date: date, isRead: isRead, otherUserUid: "")
+                    return Conversation(name: "", senderUid: senderUid, kind: ConversationKind(rawValue: kind) ?? .Text, message: message, date: date, isRead: isRead, otherUserUid: "")
                 }
                 conversationsHave = conversations
                 var nickNames: [String] = []

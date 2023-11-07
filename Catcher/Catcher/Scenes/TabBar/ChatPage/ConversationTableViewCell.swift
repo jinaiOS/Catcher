@@ -94,7 +94,16 @@ class ConversationTableViewCell: UITableViewCell {
     }
 
     public func configure(with model: Conversation) {
-        userMessageLabel.text = model.message
+        switch model.kind {
+        case .Text:
+            userMessageLabel.text = model.message
+        case .Photo:
+            userMessageLabel.text = "이미지"
+        case .Video:
+            userMessageLabel.text = "비디오"
+        case .Location:
+            userMessageLabel.text = "지도"
+        }
         userNameLabel.text = model.name
         newMessageTimeLabel.text = Date.stringFromDate(date: Date.dateFromyyyyMMddHHmm(str: model.date) ?? .now, format: "HH:mm")
         newMessageCheckLabel.text = "읽지 않음"
