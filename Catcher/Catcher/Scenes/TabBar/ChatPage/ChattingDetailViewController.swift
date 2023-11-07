@@ -517,11 +517,20 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
                 return
             }
             
+            let (nameResult, nameError) = await FireStoreManager.shared.fetchUserInfo(uuid: FirebaseManager().getUID ?? "")
+            if let nameError {
+                CommonUtil.print(output: nameError.localizedDescription)
+                return
+            }
+            
             let parameters: [String: Any] = [
                 "to": result ?? "",
                 "notification": [
-                    "title": FirebaseManager().getNickName,
+                    "title": nameResult?.nickName,
                     "body": messageStr
+                ],
+                "data": [
+                    "otherUserUid": FirebaseManager().getUID ?? ""
                 ]
             ]
             
@@ -582,7 +591,7 @@ extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelega
             player = AVPlayer(url: imageUrl)
             avPlayerLayer = AVPlayerLayer(player: player)
             avPlayerLayer.videoGravity = AVLayerVideoGravity.resize
-
+            
             imageView.layer.addSublayer(avPlayerLayer)
         default:
             break
@@ -669,19 +678,19 @@ extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelega
         ])
     }
     //MARK: jingni 날짜 별로 헤더 다르게 설정
-//    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-//            // 이전 섹션과 현재 섹션의 날짜를 비교하여 날짜가 바뀌면 새로운 날짜를 반환
-//            let currentSectionDate = message.sentDate
-//            let previousSectionDate = indexPath.section > 0 ? messages[indexPath.section - 1].sentDate : Date.distantPast
-//
-//            if !Calendar.current.isDate(currentSectionDate, inSameDayAs: previousSectionDate) {
-//                let formatter = DateFormatter()
-//                formatter.dateFormat = "MMM d, yyyy" // 원하는 날짜 형식으로 설정
-//                return NSAttributedString(string: formatter.string(from: currentSectionDate))
-//            }
-//
-//            return nil
-//        }
+    //    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+    //            // 이전 섹션과 현재 섹션의 날짜를 비교하여 날짜가 바뀌면 새로운 날짜를 반환
+    //            let currentSectionDate = message.sentDate
+    //            let previousSectionDate = indexPath.section > 0 ? messages[indexPath.section - 1].sentDate : Date.distantPast
+    //
+    //            if !Calendar.current.isDate(currentSectionDate, inSameDayAs: previousSectionDate) {
+    //                let formatter = DateFormatter()
+    //                formatter.dateFormat = "MMM d, yyyy" // 원하는 날짜 형식으로 설정
+    //                return NSAttributedString(string: formatter.string(from: currentSectionDate))
+    //            }
+    //
+    //            return nil
+    //        }
 }
 
 extension ChattingDetailViewController: MessageCellDelegate {
