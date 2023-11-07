@@ -15,8 +15,7 @@ protocol UpdateUserInfo: AnyObject {
 }
 
 final class InfoViewController: BaseHeaderViewController {
-    let db = Firestore.firestore()
-
+    private let db = Firestore.firestore()
     private let infoView: InfoView
     private let userInfo: UserInfo?
     var newUserEmail: String?
@@ -126,8 +125,8 @@ private extension InfoViewController {
         infoView.birthTextField.tf.text = "만 \(Date.calculateAge(birthDate: userInfo.birth))세"
         infoView.birthTextField.lblTitle.text = "나이"
         infoView.birthTextField.tf.isEnabled = false
-        infoView.mbtiTextField.tf.text = userInfo.education
-        infoView.introduceTextField.tf.text = userInfo.body
+        infoView.mbtiTextField.tf.text = userInfo.mbti
+        infoView.introduceTextField.tf.text = userInfo.introduction
         infoView.heightTextField.tf.text = "\(userInfo.height)"
     }
 
@@ -182,6 +181,7 @@ private extension InfoViewController {
         }
 
         if userInfo == nil {
+            // 회원가입
             guard let nickName = newUserNickName else { return }
             guard let newUserEmail = newUserEmail, let newUserPassword = newUserPassword else { return }
             let profileSettingViewController = ProfileSettingViewController(allowAlbum: false)
@@ -190,12 +190,9 @@ private extension InfoViewController {
                 nickName: nickName,
                 location: location,
                 height: Int(height) ?? 0,
-                body: introduce,
-                education: mbti,
-                drinking: "",
-                smoking: false,
+                mbti: mbti,
+                introduction: introduce,
                 register: Date(),
-                score: 0,
                 pick: []
             )
             profileSettingViewController.newUserEmail = newUserEmail
@@ -203,6 +200,7 @@ private extension InfoViewController {
             navigationController?.pushViewController(profileSettingViewController, animated: true)
             return
         } else {
+            // 프로필 수정
             guard let uid = FirebaseManager().getUID else { return }
             guard let nickName = infoView.nickNameTextField.tf.text, !nickName.isEmpty else {
                 infoView.nickNameTextField.lblError.text = "닉네임을 입력해주세요"
@@ -214,28 +212,23 @@ private extension InfoViewController {
                 infoView.nickNameTextField.isError = true
                 return
             }
-            let userDocRef = db.collection("userInfo").document(uid)
             let userUpadate = UserInfo(
-                uid: "", sex: "", birth: birth ?? Date(),
+                uid: "",
+                sex: "",
+                birth: birth ?? Date(),
                 nickName: nickName,
                 location: location,
                 height: Int(height) ?? 0,
-                body: introduce,
-                education: mbti,
-                drinking: "",
-                smoking: false,
-                register: Date(),
-                score: 0,
-                pick: []
-            )
+                mbti: mbti,
+                introduction: introduce)
+            
+            let userDocRef = db.collection("userInfo").document(uid)
             userDocRef.updateData([
                 "nickName": userUpadate.nickName,
                 "location": userUpadate.location,
-                "education": userUpadate.education,
                 "height": userUpadate.height,
-                "body": userUpadate.body,
-                "drinking": userUpadate.drinking,
-                "smoking": userUpadate.smoking,
+                "mbti": userUpadate.mbti,
+                "introduction": userUpadate.introduction
             ]) { error in
                 if let error = error {
                     // Handle the error, e.g., show an alert to the user.

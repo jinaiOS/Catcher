@@ -296,15 +296,15 @@ extension FireStoreManager {
         }
     }
     
-    func updateScore(uid: String, score: Int) async -> Error? {
-        let docRef = db.collection(userInfoPath).document(uid)
-        do {
-            try await docRef.updateData(["score": score])
-            return nil
-        } catch {
-            return error
-        }
-    }
+//    func updateScore(uid: String, score: Int) async -> Error? {
+//        let docRef = db.collection(userInfoPath).document(uid)
+//        do {
+//            try await docRef.updateData(["score": score])
+//            return nil
+//        } catch {
+//            return error
+//        }
+//    }
     
     func updateFcmToken(fcmToken: String) async -> Error? {
         let docRef = db.collection(fcmTokenPath).document(FirebaseManager().getUID ?? "")
@@ -443,12 +443,9 @@ private extension FireStoreManager {
         case nickName
         case location
         case height
-        case body
-        case education
-        case drinking
-        case smoking
+        case mbti
         case register
-        case score
+        case introduction
         case pick
         case block
         case heart
@@ -466,12 +463,9 @@ private extension FireStoreManager {
             Data.nickName.key: data.nickName,
             Data.location.key: data.location,
             Data.height.key: data.height,
-            Data.body.key: data.body,
-            Data.education.key: data.education,
-            Data.drinking.key: data.drinking,
-            Data.smoking.key: data.smoking,
             Data.register.key: data.register,
-            Data.score.key: data.score,
+            Data.mbti.key: data.mbti,
+            Data.introduction.key: data.introduction,
             Data.pick.key: data.pick ?? [],
             Data.block.key: data.block ?? []
         ]
@@ -488,12 +482,9 @@ private extension FireStoreManager {
             nickName: data[Data.nickName.key] as? String ?? "",
             location: data[Data.location.key] as? String ?? "",
             height: data[Data.height.key] as? Int ?? -1,
-            body: data[Data.body.key] as? String ?? "",
-            education: data[Data.education.key] as? String ?? "",
-            drinking: data[Data.drinking.key] as? String ?? "",
-            smoking: data[Data.smoking.key] as? Bool ?? false,
+            mbti: data[Data.mbti.key] as? String ?? "",
+            introduction: data[Data.introduction.key] as? String ?? "",
             register: data[Data.register.key] as? Date ?? Date(),
-            score: data[Data.score.key] as? Int ?? 0,
             pick: data[Data.pick.key] as? [String] ?? [],
             block: data[Data.block.key] as? [String] ?? [],
             heart: data[Data.heart.key] as? Int ?? 0

@@ -16,12 +16,9 @@ struct UserInfo: Hashable {
     var nickName: String
     var location: String
     var height: Int
-    var body: String
-    var education: String
-    var drinking: String
-    var smoking: Bool
+    var mbti: String
+    var introduction: String
     var register: Date = Date()
-    var score: Int = 0
     var pick: [String]? = []
     var block: [String]? = []
     
