@@ -246,7 +246,7 @@ private extension MyPageViewController {
             if let result {
                 self.userInfo = result
                 myTemperatureNumber.text = result.sex
-                myPointNumber.text = "만 \(calculateAge(birthDate: result.birth))세"
+                myPointNumber.text = "만 \(Date.calculateAge(birthDate: result.birth)))세"
                 nickName.text = "\(result.nickName)님의 인연을 응원합니다!!"
             }
         }
@@ -441,17 +441,5 @@ extension MyPageViewController: ReloadProfileImage {
 extension MyPageViewController: UpdateUserInfo {
     func updateUserInfo() {
         fetchMyInfo()
-    }
-}
-
-private extension MyPageViewController {
-    func calculateAge(birthDate: Date) -> Int {
-        let calendar = Calendar.current
-        let now = Date()
-        
-        let ageComponents = calendar.dateComponents([.year], from: birthDate, to: now)
-        let age = ageComponents.year ?? 0
-        
-        return age
     }
 }

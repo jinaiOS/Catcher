@@ -46,4 +46,15 @@ extension Date {
         }
         return Date()
     }
+    
+    /// 나이 계산
+    static func calculateAge(birthDate: Date) -> Int {
+        let calendar = Calendar.current
+        let now = Date()
+        
+        let ageComponents = calendar.dateComponents([.year], from: birthDate, to: now)
+        let age = ageComponents.year ?? 0
+        
+        return age
+    }
 }
