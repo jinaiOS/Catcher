@@ -171,11 +171,11 @@ private extension InfoViewController {
     }
 
     @objc func completeBtn() {
-        print("버튼 눌림")
         infoView.regionTextField.isError = false
         infoView.birthTextField.isError = false
         infoView.educationTextField.isError = false
         infoView.heightTextField.isError = false
+        infoView.nickNameTextField.isError = false
         var birth: Date?
 
         guard let body = infoView.selectedBodyButton?.title(for: .normal) else { return }
@@ -192,20 +192,16 @@ private extension InfoViewController {
                 return
             }
             birth = birthDate
-            print("유저인포 닐 첫")
         }
 
         guard let education = infoView.educationTextField.tf.text, !education.isEmpty else {
             infoView.educationTextField.isError = true
-            print("education")
             return
         }
         guard let height = infoView.heightTextField.tf.text, !height.isEmpty else {
             infoView.heightTextField.isError = true
-            print("height")
             return
         }
-
 
         var smokeCheck = false
         if smoking == "흡연" {
@@ -215,12 +211,8 @@ private extension InfoViewController {
         }
 
         if userInfo == nil {
-            guard let nickName = newUserNickName else { print("nickName")
-                return
-            }
-            guard let newUserEmail = newUserEmail, let newUserPassword = newUserPassword else { print("newUserEmail,newUserPassword")
-                return
-            }
+            guard let nickName = newUserNickName else { return }
+            guard let newUserEmail = newUserEmail, let newUserPassword = newUserPassword else { return }
             let profileSettingViewController = ProfileSettingViewController(allowAlbum: false)
             profileSettingViewController.user = UserInfo(
                 uid: "", sex: "", birth: birth ?? Date(),
@@ -241,7 +233,16 @@ private extension InfoViewController {
             return
         } else {
             guard let uid = FirebaseManager().getUID else { return }
-            guard let nickName = infoView.nickNameTextField.tf.text else { return }
+            guard let nickName = infoView.nickNameTextField.tf.text, !nickName.isEmpty else {
+                infoView.nickNameTextField.lblError.text = "닉네임을 입력해주세요"
+                infoView.nickNameTextField.isError = true
+                return
+            }
+            guard nickName.count < 7 else {
+                infoView.nickNameTextField.lblError.text = "6글자까지 입력이 가능합니다"
+                infoView.nickNameTextField.isError = true
+                return
+            }
             let userDocRef = db.collection("userInfo").document(uid)
             let userUpadate = UserInfo(
                 uid: "", sex: "", birth: birth ?? Date(),
@@ -324,7 +325,7 @@ private extension InfoViewController {
 
         infoView.nickNameTextField.initTextFieldText(placeHolder: "닉네임을 입력해 주세요", delegate: self)
         infoView.nickNameTextField.lblTitle.text = "닉네임"
-        infoView.nickNameTextField.lblError.text = "닉네임을 입력해 주세요"
+//        infoView.nickNameTextField.lblError.text = "닉네임을 입력해 주세요"
     }
 }
 
