@@ -15,6 +15,8 @@ protocol UpdateUserInfo: AnyObject {
 }
 
 final class InfoViewController: BaseHeaderViewController {
+    let db = Firestore.firestore()
+
     private let infoView: InfoView
     private let userInfo: UserInfo?
     var newUserEmail: String?
@@ -27,7 +29,7 @@ final class InfoViewController: BaseHeaderViewController {
         formatter.dateFormat = "yyyy / MM / dd"
         return formatter
     }()
-    
+
     weak var delegate: UpdateUserInfo?
 
     var education = ["박사", "학사", "대졸", "고졸", "중졸"]
@@ -46,7 +48,7 @@ final class InfoViewController: BaseHeaderViewController {
         "경상남도",
         "대구광역시",
         "부산광역시",
-        "제주특별자치도"
+        "제주특별자치도",
     ]
 
     override func loadView() {
@@ -68,21 +70,22 @@ final class InfoViewController: BaseHeaderViewController {
         setUI()
         configure()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         removeKeyboardObserver()
     }
-    
+
     init(userInfo: UserInfo? = nil, isValidNickName: Bool = false) {
         self.userInfo = userInfo
         self.infoView = InfoView(isValidNickName: isValidNickName)
         super.init(nibName: nil, bundle: nil)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     deinit {
         CommonUtil.print(output: "deinit - InfoVC")
     }
@@ -102,7 +105,7 @@ extension InfoViewController {
             }
         }
     }
-    
+
     override func keyboardWillHide(notification: NSNotification) {
         let contentInsets = UIEdgeInsets.zero
         infoView.scrollView.contentInset = contentInsets
@@ -120,9 +123,9 @@ private extension InfoViewController {
         infoView.birthTextField.tf.isEnabled = false
         infoView.educationTextField.tf.text = userInfo.education
         infoView.heightTextField.tf.text = "\(userInfo.height)"
-        
+
         var button: UIButton
-        
+
         switch userInfo.body {
         case "마름":
             button = infoView.thinBodyBtn
@@ -134,10 +137,9 @@ private extension InfoViewController {
             button = infoView.fatBodyBtn
         default:
             button = UIButton()
-            break
         }
         infoView.bodyButtonTapped(button)
-        
+
         switch userInfo.drinking {
         case "안 마심":
             button = infoView.drinkingNoBtn
@@ -149,10 +151,9 @@ private extension InfoViewController {
             button = infoView.drinkingDailyBtn
         default:
             button = UIButton()
-            break
         }
         infoView.drinkButtonTapped(button)
-        
+
         switch userInfo.smoking {
         case true:
             button = infoView.smokingBtn
@@ -161,21 +162,22 @@ private extension InfoViewController {
         }
         infoView.smokeButtonTapped(button)
     }
-    
+
     func findActiveTextField() -> UITextField? {
         for case let textField as UITextField in infoView.contentView.subviews where textField.isFirstResponder {
             return textField
         }
         return nil
     }
-    
+
     @objc func completeBtn() {
+        print("버튼 눌림")
         infoView.regionTextField.isError = false
         infoView.birthTextField.isError = false
         infoView.educationTextField.isError = false
         infoView.heightTextField.isError = false
         var birth: Date?
-        
+
         guard let body = infoView.selectedBodyButton?.title(for: .normal) else { return }
         guard let drinking = infoView.selectedDrinkButton?.title(for: .normal) else { return }
         guard let smoking = infoView.selectedSmokeButton?.title(for: .normal) else { return }
@@ -183,26 +185,27 @@ private extension InfoViewController {
             infoView.regionTextField.isError = true
             return
         }
-        
+
         if userInfo == nil {
             guard let birthText = infoView.birthTextField.tf.text, let birthDate = dateFormatter.date(from: birthText) else {
                 infoView.birthTextField.isError = true
                 return
             }
             birth = birthDate
+            print("유저인포 닐 첫")
         }
-        
+
         guard let education = infoView.educationTextField.tf.text, !education.isEmpty else {
             infoView.educationTextField.isError = true
+            print("education")
             return
         }
         guard let height = infoView.heightTextField.tf.text, !height.isEmpty else {
             infoView.heightTextField.isError = true
+            print("height")
             return
         }
 
-        guard let nickName = newUserNickName else { return }
-        guard let newUserEmail = newUserEmail, let newUserPassword = newUserPassword else { return }
 
         var smokeCheck = false
         if smoking == "흡연" {
@@ -210,8 +213,14 @@ private extension InfoViewController {
         } else {
             smokeCheck = false
         }
-        
+
         if userInfo == nil {
+            guard let nickName = newUserNickName else { print("nickName")
+                return
+            }
+            guard let newUserEmail = newUserEmail, let newUserPassword = newUserPassword else { print("newUserEmail,newUserPassword")
+                return
+            }
             let profileSettingViewController = ProfileSettingViewController(allowAlbum: false)
             profileSettingViewController.user = UserInfo(
                 uid: "", sex: "", birth: birth ?? Date(),
@@ -230,11 +239,44 @@ private extension InfoViewController {
             profileSettingViewController.newUserPassword = newUserPassword
             navigationController?.pushViewController(profileSettingViewController, animated: true)
             return
-        }
-        
-        navigationPopToRootViewController(animated: true) { [weak self] in
-            guard let self = self else { return }
-            delegate?.updateUserInfo()
+        } else {
+            guard let uid = FirebaseManager().getUID else { return }
+            guard let nickName = infoView.nickNameTextField.tf.text else { return }
+            let userDocRef = db.collection("userInfo").document(uid)
+            let userUpadate = UserInfo(
+                uid: "", sex: "", birth: birth ?? Date(),
+                nickName: nickName,
+                location: location,
+                height: Int(height) ?? 0,
+                body: body,
+                education: education,
+                drinking: drinking,
+                smoking: smokeCheck,
+                register: Date(),
+                score: 0,
+                pick: []
+            )
+            userDocRef.updateData([
+                "nickName": userUpadate.nickName,
+                "location": userUpadate.location,
+                "education": userUpadate.education,
+                "height": userUpadate.height,
+                "body": userUpadate.body,
+                "drinking": userUpadate.drinking,
+                "smoking": userUpadate.smoking,
+            ]) { error in
+                if let error = error {
+                    // Handle the error, e.g., show an alert to the user.
+                    print("Error updating user information: \(error.localizedDescription)")
+                } else {
+                    // Information updated successfully.
+                    print("User information updated successfully.")
+                    self.navigationPopToRootViewController(animated: true) { [weak self] in
+                        guard let self = self else { return }
+                        self.delegate?.updateUserInfo()
+                    }
+                }
+            }
         }
     }
 
@@ -279,7 +321,7 @@ private extension InfoViewController {
         infoView.heightTextField.lblError.text = "키를 입력해 주세요"
 //        infoView.heightTextField.tf.keyboardType = .emailAddress
 //        infoView.heightTextField.tf.returnKeyType = .next
-        
+
         infoView.nickNameTextField.initTextFieldText(placeHolder: "닉네임을 입력해 주세요", delegate: self)
         infoView.nickNameTextField.lblTitle.text = "닉네임"
         infoView.nickNameTextField.lblError.text = "닉네임을 입력해 주세요"
@@ -436,10 +478,10 @@ private extension InfoViewController {
     func calculateAge(birthDate: Date) -> Int {
         let calendar = Calendar.current
         let now = Date()
-        
+
         let ageComponents = calendar.dateComponents([.year], from: birthDate, to: now)
         let age = ageComponents.year ?? 0
-        
+
         return age
     }
 }
