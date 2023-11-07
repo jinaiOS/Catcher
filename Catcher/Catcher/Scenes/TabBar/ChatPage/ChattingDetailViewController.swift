@@ -217,6 +217,7 @@ final class ChattingDetailViewController: MessagesViewController {
             
             DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
                 if success {
+                    self?.requestPush(message: message)
                     CommonUtil.print(output:"sent location message")
                 }
                 else {
@@ -377,6 +378,7 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                         
                         if success {
                             CommonUtil.print(output:"sent photo message")
+                            self?.requestPush(message: message)
                         }
                         else {
                             CommonUtil.print(output:"failed to send photo message")
@@ -420,7 +422,8 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                     
                     DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
                         if success {
-                            CommonUtil.print(output:"sent photo message")
+                            CommonUtil.print(output:"sent video message")
+                            self?.requestPush(message: message)
                         }
                         else {
                             CommonUtil.print(output:"failed to send photo message")
@@ -494,11 +497,14 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
             messageStr = messageText
         case .attributedText(_):
             break
-        case .photo(_):
+        case .photo(let photoUrl):
+            messageStr = "이미지"
             break
-        case .video(_):
+        case .video(let videoUrl):
+            messageStr = "비디오"
             break
-        case .location(_):
+        case .location(let loc):
+            messageStr = "지도"
             break
         case .emoji(_):
             break
