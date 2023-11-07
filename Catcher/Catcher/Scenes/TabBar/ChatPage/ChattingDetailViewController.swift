@@ -15,14 +15,14 @@ import CoreLocation
 import Alamofire
 
 final class ChattingDetailViewController: MessagesViewController {
-
+    
     /// 프로필 이미지 - 나
     var senderPhotoURL: URL?
     /// 프로필 이미지 - 상대
     var otherUserPhotoURL: URL?
     
     var modalChecking = false
-
+    
     public static let dateFormatter: DateFormatter = {
         let formattre = DateFormatter()
         formattre.dateFormat = "yyyy-MM-dd HH:mm"
@@ -36,10 +36,10 @@ final class ChattingDetailViewController: MessagesViewController {
     public var otherUserUid: String
     
     public var isNewConversation = false
-
+    
     /// 메시지 데이터
     private var messages = [Message]()
-
+    
     private var selfSender: Sender? {
         return Sender(photoURL: "",
                       senderId: FirebaseManager().getUID ?? "",
@@ -47,7 +47,7 @@ final class ChattingDetailViewController: MessagesViewController {
     }
     
     var vBackHeader: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = .white
         return view
     }()
@@ -56,12 +56,12 @@ final class ChattingDetailViewController: MessagesViewController {
     var headerView : CommonHeaderView!
     
     var headerTitle: String?
-
+    
     init(otherUid: String) {
         self.otherUserUid = otherUid
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -100,7 +100,7 @@ final class ChattingDetailViewController: MessagesViewController {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
-
+        
         self.messagesCollectionView.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 70, right: 0)
         
         messageInputBar.delegate = self
@@ -155,7 +155,7 @@ final class ChattingDetailViewController: MessagesViewController {
             }
         }
     }
-
+    
     private func setupInputButton() {
         let button = InputBarButtonItem()
         button.setSize(CGSize(width: 35, height: 35), animated: false)
@@ -166,7 +166,7 @@ final class ChattingDetailViewController: MessagesViewController {
         messageInputBar.setLeftStackViewWidthConstant(to: 36, animated: false)
         messageInputBar.setStackViewItems([button], forStack: .left, animated: false)
     }
-
+    
     private func presentInputActionSheet() {
         let actionSheet = UIAlertController(title: "Attach Media",
                                             message: "What would you like to attach?",
@@ -181,40 +181,40 @@ final class ChattingDetailViewController: MessagesViewController {
             self?.presentLocationPicker()
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
+        
         present(actionSheet, animated: true)
     }
-
+    
     private func presentLocationPicker() {
         let vc = LocationPickerViewController(coordinates: nil)
         vc.title = "Pick Location"
         vc.navigationItem.largeTitleDisplayMode = .never
         vc.completion = { [weak self] selectedCoorindates in
-
+            
             guard let strongSelf = self else {
                 return
             }
-
+            
             guard let messageId = strongSelf.createMessageId(),
-                let name = strongSelf.title,
-                let selfSender = strongSelf.selfSender else {
-                    return
+                  let name = strongSelf.title,
+                  let selfSender = strongSelf.selfSender else {
+                return
             }
-
+            
             let longitude: Double = selectedCoorindates.longitude
             let latitude: Double = selectedCoorindates.latitude
-
+            
             CommonUtil.print(output:"long=\(longitude) | lat= \(latitude)")
-
-
+            
+            
             let location = Location(location: CLLocation(latitude: latitude, longitude: longitude),
-                                 size: .zero)
-
+                                    size: .zero)
+            
             let message = Message(sender: selfSender,
                                   messageId: messageId,
                                   sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
                                   kind: .location(location))
-
+            
             DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
                 if success {
                     CommonUtil.print(output:"sent location message")
@@ -226,40 +226,40 @@ final class ChattingDetailViewController: MessagesViewController {
         }
         navigationController?.pushViewController(vc, animated: true)
     }
-
+    
     private func presentPhotoInputActionsheet() {
         let actionSheet = UIAlertController(title: "Attach Photo",
                                             message: "Where would you like to attach a photo from",
                                             preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { [weak self] _ in
-
+            
             let picker = UIImagePickerController()
             picker.sourceType = .camera
             picker.delegate = self
             picker.allowsEditing = true
             self?.present(picker, animated: true)
-
+            
         }))
         actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { [weak self] _ in
-
+            
             let picker = UIImagePickerController()
             picker.sourceType = .photoLibrary
             picker.delegate = self
             picker.allowsEditing = true
             self?.present(picker, animated: true)
-
+            
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
+        
         present(actionSheet, animated: true)
     }
-
+    
     private func presentVideoInputActionsheet() {
         let actionSheet = UIAlertController(title: "Attach Video",
                                             message: "Where would you like to attach a video from?",
                                             preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { [weak self] _ in
-
+            
             let picker = UIImagePickerController()
             picker.sourceType = .camera
             picker.delegate = self
@@ -267,10 +267,10 @@ final class ChattingDetailViewController: MessagesViewController {
             picker.videoQuality = .typeMedium
             picker.allowsEditing = true
             self?.present(picker, animated: true)
-
+            
         }))
         actionSheet.addAction(UIAlertAction(title: "Library", style: .default, handler: { [weak self] _ in
-
+            
             let picker = UIImagePickerController()
             picker.sourceType = .photoLibrary
             picker.delegate = self
@@ -278,13 +278,13 @@ final class ChattingDetailViewController: MessagesViewController {
             picker.mediaTypes = ["public.movie"]
             picker.videoQuality = .typeMedium
             self?.present(picker, animated: true)
-
+            
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
+        
         present(actionSheet, animated: true)
     }
-
+    
     private func listenForMessages(id: String, shouldScrollToBottom: Bool) {
         DatabaseManager.shared.getAllMessagesForConversation(with: otherUserUid, completion: { [weak self] result in
             switch result {
@@ -295,31 +295,42 @@ final class ChattingDetailViewController: MessagesViewController {
                     return
                 }
                 self?.messages = messages
-
+                self?.readMessage()
                 DispatchQueue.main.async {
                     self?.messagesCollectionView.reloadDataAndKeepOffset()
-
-//                    if shouldScrollToBottom {
-//                        self?.messagesCollectionView.scrollt
-//                    }
+                    
+                    //                    if shouldScrollToBottom {
+                    //                        self?.messagesCollectionView.scrollt
+                    //                    }
                 }
             case .failure(let error):
                 CommonUtil.print(output:"failed to get messages: \(error)")
             }
         })
     }
-
+    
+    private func readMessage() {
+        DatabaseManager.shared.readMessage(otherUserUid: otherUserUid, completion: { success in
+            if success {
+                CommonUtil.print(output: "Read Message")
+            }
+            else {
+                CommonUtil.print(output: "Read Message Error")
+            }
+        })
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageInputBar.inputTextView.becomeFirstResponder()
         guard let uid = FirebaseManager().getUID else { return }
         listenForMessages(id: uid, shouldScrollToBottom: true)
     }
-
+    
 }
 // 이미지 및 비디오 선택을 처리하는 UIImagePickerControllerDelegate 및 UINavigationControllerDelegate 메서드 구현
 extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
     // 이미지 선택 취소 시 호출되는 메서드
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
@@ -328,51 +339,51 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         guard let messageId = createMessageId(),
-            let name = self.title,
-            let selfSender = selfSender else {
-                return
+              let name = self.title,
+              let selfSender = selfSender else {
+            return
         }
-
+        
         if let image = info[.editedImage] as? UIImage, let imageData =  image.pngData() {
             let fileName = "photo_message_" + messageId.replacingOccurrences(of: " ", with: "-") + ".png"
-
+            
             // 이미지 업로드
             StorageManager.shared.uploadMessagePhoto(with: imageData, fileName: fileName, completion: { [weak self] result in
                 guard let strongSelf = self else {
                     return
                 }
-
+                
                 switch result {
                 case .success(let urlString):
                     // 메시지 전송 준비
                     CommonUtil.print(output:"Uploaded Message Photo: \(urlString)")
-
+                    
                     guard let url = URL(string: urlString),
-                        let placeholder = UIImage(systemName: "plus") else {
-                            return
+                          let placeholder = UIImage(systemName: "plus") else {
+                        return
                     }
-
+                    
                     let media = Media(url: url,
                                       image: nil,
                                       placeholderImage: placeholder,
                                       size: .zero)
-
+                    
                     let message = Message(sender: selfSender,
                                           messageId: messageId,
                                           sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
                                           kind: .photo(media))
-
+                    
                     DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
-
+                        
                         if success {
                             CommonUtil.print(output:"sent photo message")
                         }
                         else {
                             CommonUtil.print(output:"failed to send photo message")
                         }
-
+                        
                     })
-
+                    
                 case .failure(let error):
                     CommonUtil.print(output:"message photo upload error: \(error)")
                 }
@@ -380,68 +391,68 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
         }
         else if let videoUrl = info[.mediaURL] as? URL {
             let fileName = "photo_message_" + messageId.replacingOccurrences(of: " ", with: "-") + ".mov"
-
+            
             // 비디오 업로드
             StorageManager.shared.uploadMessageVideo(with: videoUrl, fileName: fileName, completion: { [weak self] result in
                 guard let strongSelf = self else {
                     return
                 }
-
+                
                 switch result {
                 case .success(let urlString):
                     // 메시지 전송 준비
                     CommonUtil.print(output:"Uploaded Message Video: \(urlString)")
-
+                    
                     guard let url = URL(string: urlString),
-                        let placeholder = UIImage(systemName: "plus") else {
-                            return
+                          let placeholder = UIImage(systemName: "plus") else {
+                        return
                     }
-
+                    
                     let media = Media(url: url,
                                       image: nil,
                                       placeholderImage: placeholder,
                                       size: .zero)
-
+                    
                     let message = Message(sender: selfSender,
                                           messageId: messageId,
                                           sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
                                           kind: .video(media))
-
+                    
                     DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
-
+                        
                         if success {
                             CommonUtil.print(output:"sent photo message")
                         }
                         else {
                             CommonUtil.print(output:"failed to send photo message")
                         }
-
+                        
                     })
-
+                    
                 case .failure(let error):
                     CommonUtil.print(output:"message photo upload error: \(error)")
                 }
             })
         }
     }
-
+    
 }
 
 extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
-     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         guard !text.replacingOccurrences(of: " ", with: "").isEmpty,
-            let selfSender = self.selfSender,
-            let messageId = createMessageId() else {
-                return
+              let selfSender = self.selfSender,
+              let messageId = createMessageId() else {
+            return
         }
-
+        
         CommonUtil.print(output:"Sending: \(text)")
-
+        
         let message = Message(sender: selfSender,
-                               messageId: messageId,
+                              messageId: messageId,
                               sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
-                               kind: .text(text))
-
+                              kind: .text(text))
+        
         // Send Message
         if isNewConversation {
             // create convo in database
@@ -469,7 +480,7 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
         }
         requestPush(message: message)
     }
-
+    
     func requestPush(message: Message) {
         let apiUrl = "https://fcm.googleapis.com/fcm/send"
         let headers: HTTPHeaders = [
@@ -509,12 +520,12 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
             
             let parameters: [String: Any] = [
                 "to": result ?? "",
-                    "notification": [
-                        "title": FirebaseManager().getNickName,
-                        "body": messageStr
-                    ]
+                "notification": [
+                    "title": FirebaseManager().getNickName,
+                    "body": messageStr
+                ]
             ]
-
+            
             AF.request(apiUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
                 .response { response in
                     switch response.result {
@@ -529,10 +540,10 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
     
     private func createMessageId() -> String? {
         CommonUtil.print(output:"created message id: \(otherUserUid)")
-
+        
         return otherUserUid
     }
-
+    
 }
 
 extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate {
@@ -547,16 +558,16 @@ extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelega
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
         return messages[indexPath.section]
     }
-
+    
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messages.count
     }
-
+    
     func configureMediaMessageImageView(_ imageView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         guard let message = message as? Message else {
             return
         }
-
+        
         switch message.kind {
         case .photo(let media):
             guard let imageUrl = media.url else {
@@ -567,67 +578,67 @@ extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelega
             break
         }
     }
-
+    
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         let sender = message.sender
         if sender.senderId == selfSender?.senderId {
             // our message that we've sent
             return .link
         }
-
+        
         return .secondarySystemBackground
     }
-
+    
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
-
+        
         let sender = message.sender
-
+        
         if sender.senderId == selfSender?.senderId {
             if let currentUserImageURL = self.senderPhotoURL {
                 avatarView.sd_setImage(with: currentUserImageURL, completed: nil)
             }
             else {
-
-//                let path = "images/\("safeEmail")_profile_picture.png"
+                
+                //                let path = "images/\("safeEmail")_profile_picture.png"
                 ImageCacheManager.shared.loadImage(uid: FirebaseManager().getUID ?? "") { [weak self] image in
                     guard let self = self else { return }
                     DispatchQueue.main.async {
                         avatarView.image = image
                     }
                 }
-//                StorageManager.shared.downloadURL(for: path, completion: { [weak self] result in
-//                    switch result {
-//                    case .success(let url):
-//                        self?.senderPhotoURL = url
-//                        DispatchQueue.main.async {
-//                            avatarView.sd_setImage(with: url, completed: nil)
-//                        }
-//                    case .failure(let error):
-//                        CommonUtil.print(output:"\(error)")
-//                    }
-//                })
+                //                StorageManager.shared.downloadURL(for: path, completion: { [weak self] result in
+                //                    switch result {
+                //                    case .success(let url):
+                //                        self?.senderPhotoURL = url
+                //                        DispatchQueue.main.async {
+                //                            avatarView.sd_setImage(with: url, completed: nil)
+                //                        }
+                //                    case .failure(let error):
+                //                        CommonUtil.print(output:"\(error)")
+                //                    }
+                //                })
             }
         } else {
-//            // other user image
-//            if let otherUsrePHotoURL = self.otherUserPhotoURL {
-//                avatarView.sd_setImage(with: otherUsrePHotoURL, completed: nil)
-//            }
-//            else {
-//                let path = "images/\(otherUserUid)_profile_picture.png"
-//
-//                StorageManager.shared.downloadURL(for: path, completion: { [weak self] result in
-//                    switch result {
-//                    case .success(let url):
-//                        self?.otherUserPhotoURL = url
-//                        DispatchQueue.main.async {
-//                            avatarView.sd_setImage(with: url, completed: nil)
-//                        }
-//                    case .failure(let error):
-//                        CommonUtil.print(output:"\(error)")
-//                    }
-//                })
-//            }
-//
+            //            // other user image
+            //            if let otherUsrePHotoURL = self.otherUserPhotoURL {
+            //                avatarView.sd_setImage(with: otherUsrePHotoURL, completed: nil)
+            //            }
+            //            else {
+            //                let path = "images/\(otherUserUid)_profile_picture.png"
+            //
+            //                StorageManager.shared.downloadURL(for: path, completion: { [weak self] result in
+            //                    switch result {
+            //                    case .success(let url):
+            //                        self?.otherUserPhotoURL = url
+            //                        DispatchQueue.main.async {
+            //                            avatarView.sd_setImage(with: url, completed: nil)
+            //                        }
+            //                    case .failure(let error):
+            //                        CommonUtil.print(output:"\(error)")
+            //                    }
+            //                })
+            //            }
+            //
             ImageCacheManager.shared.loadImage(uid: otherUserUid) { [weak self] image in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
@@ -635,8 +646,32 @@ extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelega
                 }
             }
         }
-
+        
     }
+    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 20
+    }
+    func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let dateString = Date.stringFromDate(date: message.sentDate, format: "MM/dd HH:mm")
+        return NSAttributedString(string: dateString, attributes: [
+            .font: UIFont.systemFont(ofSize: 10),
+            .foregroundColor: UIColor.gray
+        ])
+    }
+    //MARK: jingni 날짜 별로 헤더 다르게 설정
+//    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+//            // 이전 섹션과 현재 섹션의 날짜를 비교하여 날짜가 바뀌면 새로운 날짜를 반환
+//            let currentSectionDate = message.sentDate
+//            let previousSectionDate = indexPath.section > 0 ? messages[indexPath.section - 1].sentDate : Date.distantPast
+//
+//            if !Calendar.current.isDate(currentSectionDate, inSameDayAs: previousSectionDate) {
+//                let formatter = DateFormatter()
+//                formatter.dateFormat = "MMM d, yyyy" // 원하는 날짜 형식으로 설정
+//                return NSAttributedString(string: formatter.string(from: currentSectionDate))
+//            }
+//
+//            return nil
+//        }
 }
 
 extension ChattingDetailViewController: MessageCellDelegate {
@@ -644,9 +679,9 @@ extension ChattingDetailViewController: MessageCellDelegate {
         guard let indexPath = messagesCollectionView.indexPath(for: cell) else {
             return
         }
-
+        
         let message = messages[indexPath.section]
-
+        
         switch message.kind {
         case .location(let locationData):
             let coordinates = locationData.location.coordinate
@@ -658,14 +693,14 @@ extension ChattingDetailViewController: MessageCellDelegate {
             break
         }
     }
-
+    
     func didTapImage(in cell: MessageCollectionViewCell) {
         guard let indexPath = messagesCollectionView.indexPath(for: cell) else {
             return
         }
-
+        
         let message = messages[indexPath.section]
-
+        
         switch message.kind {
         case .photo(let media):
             guard let imageUrl = media.url else {
@@ -677,7 +712,7 @@ extension ChattingDetailViewController: MessageCellDelegate {
             guard let videoUrl = media.url else {
                 return
             }
-
+            
             let vc = AVPlayerViewController()
             vc.player = AVPlayer(url: videoUrl)
             present(vc, animated: true)
