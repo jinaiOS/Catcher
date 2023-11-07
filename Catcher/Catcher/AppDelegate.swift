@@ -41,6 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
+        setFirebasePush()
+        clearPushNotificationCenter()
         let introVC = IntroViewController(nibName: "IntroViewController", bundle: nil)
         navigationController = UINavigationController(rootViewController: introVC)
         // 네비게이션바 히든
@@ -52,6 +54,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
+    //MARK: - APNS
+    func setFirebasePush() {
+        UNUserNotificationCenter.current().delegate = self
+        
+        //set push receive type
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        //push requestAuthorization
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: {(granted, error) in
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        })
+    }
+    
     /**
      @brief navigationController의 쌓여있는 스택을 리턴
      */
@@ -122,6 +138,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    /**
+     @brief push notification의 badgeNumber를 초기화한다.
+     */
+    func clearPushNotificationCenter() {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -149,6 +172,48 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
      */
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingDelegate) {
         CommonUtil.print(output: "remoteMessage : \(remoteMessage)")
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        clearPushNotificationCenter()
+        completionHandler([.sound])
+        
+        if let payloadData = notification.request.content.userInfo as? Dictionary<String, Any>
+        {
+            CommonUtil.print(output: "payloadData: \(payloadData)")
+            let otherUserUid = payloadData["otherUserUid"] as? String ?? ""
+            let viewController = ChattingDetailViewController(otherUid: otherUserUid)
+            viewController.title = notification.request.content.title
+            AppDelegate.applicationDelegate().navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
+    // 백그라운드에서 action을 눌렀을때
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+        clearPushNotificationCenter()
+
+        guard let payloadData = response.notification.request.content.userInfo as? [String: Any] else {
+            CommonUtil.print(output: "Invalid payload data")
+            return
+        }
+
+        CommonUtil.print(output: "payloadData: \(payloadData)")
+
+        // Check if the app is active
+        let isActive = !(AppDelegate.applicationDelegate().navigationController?.viewControllers.contains { $0 is MainPageViewController } ?? true)
+
+        if isActive {
+            // Handle the payload data based on your requirements
+            let otherUserUid = payloadData["otherUserUid"] as? String ?? ""
+            let viewController = ChattingDetailViewController(otherUid: otherUserUid)
+            viewController.title = response.notification.request.content.title
+            AppDelegate.applicationDelegate().navigationController?.pushViewController(viewController, animated: true)
+        }
     }
 }
 
