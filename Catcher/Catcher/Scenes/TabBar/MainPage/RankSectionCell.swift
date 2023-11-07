@@ -88,7 +88,7 @@ extension RankSectionCell {
         }
         userLabel.text = "\(index + 1)위  \(data.nickName)"
         attractionLabel.text = "받은 찜 \(data.heart)개"
-        introductionLabel.text = "유저의 소개 한 마디"
+        introductionLabel.text = data.introduction
     }
 }
 

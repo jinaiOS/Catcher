@@ -95,8 +95,7 @@ private extension ProfileSettingViewModel {
             completion(false)
             return
         }
-        FireStorageManager.shared.setProfileData(image: profileImage) { [weak self] error in
-            guard let self = self else { return }
+        FireStorageManager.shared.setProfileData(image: profileImage) { error in
             if let error {
                 CommonUtil.print(output: error.localizedDescription)
                 completion(false)
@@ -115,12 +114,9 @@ private extension ProfileSettingViewModel {
             nickName: user.nickName,
             location: user.location,
             height: Int(user.height),
-            body: user.body,
-            education: user.education,
-            drinking: user.drinking,
-            smoking: user.smoking,
+            mbti: user.mbti,
+            introduction: user.introduction,
             register: Date(),
-            score: 0,
             pick: [],
             block: []
         )

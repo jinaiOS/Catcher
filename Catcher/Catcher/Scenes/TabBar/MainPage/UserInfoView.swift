@@ -288,8 +288,8 @@ extension UserInfoView {
         ageLabel.text = "만 \(Date.calculateAge(birthDate: userInfo.birth))세"
         regionLabel.text = userInfo.location
         heightLabel.text = "\(userInfo.height)cm"
-        mbtiLabel.text = "INTJ"
-        introductionLabel.text = "나는 전설이다."
+        mbtiLabel.text = userInfo.mbti
+        introductionLabel.text = userInfo.introduction
     }
 }
 
