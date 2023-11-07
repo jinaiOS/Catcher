@@ -443,7 +443,6 @@ private extension FireStoreManager {
         case nickName
         case location
         case height
-        case body
         case mbti
         case register
         case introduction
