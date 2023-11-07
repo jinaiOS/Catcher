@@ -584,8 +584,6 @@ extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelega
             avPlayerLayer.videoGravity = AVLayerVideoGravity.resize
 
             imageView.layer.addSublayer(avPlayerLayer)
-          
-            avPlayerLayer.frame = .infinite
         default:
             break
         }
