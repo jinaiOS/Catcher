@@ -186,7 +186,7 @@ final class ChattingDetailViewController: MessagesViewController {
     }
     
     private func presentLocationPicker() {
-        let vc = LocationPickerViewController(coordinates: nil)
+        let vc = LocationPickerViewController(coordinates: nil, isSendUsable: true)
         vc.title = "Pick Location"
         vc.navigationItem.largeTitleDisplayMode = .never
         vc.completion = { [weak self] selectedCoorindates in
@@ -697,7 +697,7 @@ extension ChattingDetailViewController: MessageCellDelegate {
         switch message.kind {
         case .location(let locationData):
             let coordinates = locationData.location.coordinate
-            let vc = LocationPickerViewController(coordinates: coordinates)
+            let vc = LocationPickerViewController(coordinates: coordinates, isSendUsable: false)
             
             vc.title = "Location"
             navigationController?.pushViewController(vc, animated: true)
