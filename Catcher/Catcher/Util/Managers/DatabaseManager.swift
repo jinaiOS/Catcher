@@ -406,7 +406,7 @@ extension DatabaseManager {
                 "type": newMessage.kind.messageKindString,
                 "message": message,
                 "date": dateString,
-                "sender_uid": FirebaseManager().getUID,
+                "sender_uid": FirebaseManager().getUID ?? "",
                 "is_read": false
             ]
             
@@ -417,7 +417,6 @@ extension DatabaseManager {
                     completion(false)
                     return
                 }
-                completion(true)
             }
             
             strongSelf.database.child("\(otherUserUid)/\(FirebaseManager().getUID ?? "")").setValue(currentMessages) { error, _ in
@@ -425,8 +424,8 @@ extension DatabaseManager {
                     completion(false)
                     return
                 }
-                completion(true)
             }
+            completion(true)
         })
     }
     
