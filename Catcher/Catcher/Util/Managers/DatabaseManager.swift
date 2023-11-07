@@ -10,6 +10,7 @@ import FirebaseDatabase
 import MessageKit
 import CoreLocation
 import UIKit
+import AVFoundation
 
 class DatabaseManager {
     /// 클래스의 공유 인스턴스입니다.
@@ -300,8 +301,14 @@ extension DatabaseManager {
                     }
                     else if type == "video" {
                         // photo
-                        guard let videoUrl = URL(string: content),
-                              let placeHolder = UIImage(named: "video_placeholder") else {
+                        guard let videoUrl = URL(string: content) else { return nil }
+                          let myAsset = AVAsset(url: videoUrl)
+                          let imageGenerator = AVAssetImageGenerator(asset: myAsset)
+                          let time: CMTime = CMTime(value: 600, timescale: 600)
+                          guard let cgImage = try? imageGenerator.copyCGImage(at: time, actualTime: nil) else { fatalError() }
+
+                        let uiImage: UIImage? = UIImage(cgImage: cgImage)
+                        guard let placeHolder = uiImage else {
                             return nil
                         }
                         

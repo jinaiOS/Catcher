@@ -419,7 +419,6 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                                           kind: .video(media))
                     
                     DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
-                        
                         if success {
                             CommonUtil.print(output:"sent photo message")
                         }
@@ -574,6 +573,19 @@ extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelega
                 return
             }
             imageView.sd_setImage(with: imageUrl, completed: nil)
+        case .video(let video):
+            guard let imageUrl = video.url else {
+                return
+            }
+            var player : AVPlayer!
+            var avPlayerLayer : AVPlayerLayer!
+            player = AVPlayer(url: imageUrl)
+            avPlayerLayer = AVPlayerLayer(player: player)
+            avPlayerLayer.videoGravity = AVLayerVideoGravity.resize
+
+            imageView.layer.addSublayer(avPlayerLayer)
+          
+            avPlayerLayer.frame = .infinite
         default:
             break
         }
