@@ -186,7 +186,7 @@ final class ChattingDetailViewController: MessagesViewController {
     }
     
     private func presentLocationPicker() {
-        let vc = LocationPickerViewController(coordinates: nil)
+        let vc = LocationPickerViewController(coordinates: nil, isSendUsable: true)
         vc.title = "Pick Location"
         vc.navigationItem.largeTitleDisplayMode = .never
         vc.completion = { [weak self] selectedCoorindates in
@@ -419,7 +419,6 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                                           kind: .video(media))
                     
                     DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
-                        
                         if success {
                             CommonUtil.print(output:"sent photo message")
                         }
@@ -574,6 +573,17 @@ extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelega
                 return
             }
             imageView.sd_setImage(with: imageUrl, completed: nil)
+        case .video(let video):
+            guard let imageUrl = video.url else {
+                return
+            }
+            var player : AVPlayer!
+            var avPlayerLayer : AVPlayerLayer!
+            player = AVPlayer(url: imageUrl)
+            avPlayerLayer = AVPlayerLayer(player: player)
+            avPlayerLayer.videoGravity = AVLayerVideoGravity.resize
+
+            imageView.layer.addSublayer(avPlayerLayer)
         default:
             break
         }
@@ -685,7 +695,7 @@ extension ChattingDetailViewController: MessageCellDelegate {
         switch message.kind {
         case .location(let locationData):
             let coordinates = locationData.location.coordinate
-            let vc = LocationPickerViewController(coordinates: coordinates)
+            let vc = LocationPickerViewController(coordinates: coordinates, isSendUsable: false)
             
             vc.title = "Location"
             navigationController?.pushViewController(vc, animated: true)
