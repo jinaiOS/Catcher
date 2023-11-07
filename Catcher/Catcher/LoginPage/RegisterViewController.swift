@@ -7,15 +7,15 @@
 
 import FirebaseAuth
 import FirebaseFirestore
+import SafariServices
 import SnapKit
 import UIKit
-import SafariServices
 
 final class RegisterViewController: BaseViewController {
     private let registerView = RegisterView()
     private let fireManager = FirebaseManager()
     private let titleList = ["[필수] 17세 이상", "[필수] 개인정보 동의서"]
-    var selectList : [Bool] = []
+    var selectList: [Bool] = []
 
     /** @brief 공통 헤더 객체 */
     var headerView: CommonHeaderView!
@@ -30,7 +30,11 @@ final class RegisterViewController: BaseViewController {
             registerView.nicknametextfield.isError = true
             return
         }
-
+        guard nickName.count < 7 else {
+            registerView.nicknametextfield.lblError.text = "6글자까지 입력이 가능합니다"
+            registerView.nicknametextfield.isError = true
+            return
+        }
         guard let email = registerView.emailtextfield.tf.text, CommonUtil.isValidId(id: email) else {
             registerView.emailtextfield.lblError.text = "올바른 이메일 형식을 입력해 주세요"
             registerView.emailtextfield.isError = true
@@ -47,8 +51,8 @@ final class RegisterViewController: BaseViewController {
         }
 
         guard password == registerView.passwordconfirmtextfield.tf.text else {
-            registerView.passwordtextfield.lblError.text = "비밀번호를 다르다"
-            registerView.passwordconfirmtextfield.lblError.text = "비밀번호를 다르다"
+            registerView.passwordtextfield.lblError.text = "비밀번호를 다릅니다"
+            registerView.passwordconfirmtextfield.lblError.text = "비밀번호를 다릅니다"
             registerView.passwordtextfield.isError = true
             registerView.passwordconfirmtextfield.isError = true
             return
@@ -90,7 +94,6 @@ final class RegisterViewController: BaseViewController {
         }
     }
 
-
     func setHeaderView() {
         headerView = CommonHeaderView(frame: CGRect(x: 0, y: Common.kStatusbarHeight, width: Common.SCREEN_WIDTH(), height: 50))
 
@@ -112,40 +115,40 @@ final class RegisterViewController: BaseViewController {
     override func loadView() {
         super.loadView()
         view.addSubview(registerView)
-        
+
         registerView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(AppConstraint.headerViewHeight)
             $0.leading.bottom.trailing.equalToSuperview()
         }
     }
-    
+
     /**
-    * @brief 상세 약관 보기 버튼 클릭
-    */
-    @objc func detailButtonTouched(sender : UIButton) {
+     * @brief 상세 약관 보기 버튼 클릭
+     */
+    @objc func detailButtonTouched(sender: UIButton) {
         if let url = URL(string: CONSENT) {
             let vc = SFSafariViewController(url: url)
             present(vc, animated: true)
         }
     }
-    
+
     /**
-    * @brief 리스트 선택 버튼 클릭
-    */
-    @objc func listSelectButtonTouched(sender : UIButton) {
+     * @brief 리스트 선택 버튼 클릭
+     */
+    @objc func listSelectButtonTouched(sender: UIButton) {
         // 버튼 선택 변경
         sender.isSelected = !sender.isSelected
         // 인덱스
         let index = sender.tag
         // 선택 리스트 상태 변경
         selectList[index] = sender.isSelected
-        
+
         // 전체 동의 하기 버튼 셋팅
         allSelectButtonSetting()
         // 동의 버튼 변경
         agreeButtonClicked()
     }
-    
+
     /** @brief 전체 동의 하기 버튼 셋팅 */
     @objc func allSelectButtonSetting() {
         // 모든 항목 선택 체크
@@ -166,7 +169,7 @@ final class RegisterViewController: BaseViewController {
 
     /** @brief 약관 동의 완료 버튼 선택 가능/불가능 변경 */
     func agreeButtonClicked() {
-        if selectList[0] == true && selectList[1] == true{
+        if selectList[0] == true && selectList[1] == true {
             registerView.nextButton.isEnabled = true
             registerView.nextButton.backgroundColor = ThemeColor.primary
         } else {
@@ -174,7 +177,7 @@ final class RegisterViewController: BaseViewController {
             registerView.nextButton.backgroundColor = #colorLiteral(red: 0.6039215686, green: 0.6039215686, blue: 0.6039215686, alpha: 1)
         }
     }
-    
+
     @objc func allSelectButtonTouched(sender: UIButton) {
         // 버튼 선택 변경
         sender.isSelected = !sender.isSelected
@@ -187,7 +190,7 @@ final class RegisterViewController: BaseViewController {
         // 동의 버튼 변경
         agreeButtonClicked()
     }
-    
+
     // 현재 활성화된 텍스트 필드 찾기
     private func findActiveTextField() -> UITextField? {
         for case let textField as UITextField in registerView.contentView.subviews where textField.isFirstResponder {
@@ -216,7 +219,7 @@ final class RegisterViewController: BaseViewController {
         setHeaderView()
         setUI()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         removeKeyboardObserver()
@@ -256,7 +259,7 @@ extension RegisterViewController {
             let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
             registerView.scrollView.contentInset = contentInsets
             registerView.scrollView.scrollIndicatorInsets = contentInsets
-            
+
             // 텍스트 필드가 가려지지 않도록 스크롤 위치 조절
             if let activeTextField = findActiveTextField() {
                 let rect = activeTextField.convert(activeTextField.bounds, to: registerView.scrollView)
@@ -264,7 +267,7 @@ extension RegisterViewController {
             }
         }
     }
-    
+
     override func keyboardWillHide(notification: NSNotification) {
         let contentInsets = UIEdgeInsets.zero
         registerView.scrollView.contentInset = contentInsets
@@ -320,14 +323,15 @@ extension RegisterViewController: CustomTextFieldDelegate {
         return newLength <= 30 // 30개 제한
     }
 }
-extension RegisterViewController : UITableViewDelegate, UITableViewDataSource {
+
+extension RegisterViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return titleList.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TermsTableViewCell", for: indexPath) as! TermsTableViewCell
-        
+
         let index = indexPath.row
         // 선택 버튼 태그 Setting
         cell.btnSelect.tag = index
@@ -342,10 +346,10 @@ extension RegisterViewController : UITableViewDelegate, UITableViewDataSource {
         cell.btnDetail.addTarget(self, action: #selector(detailButtonTouched(sender:)), for: .touchUpInside)
         cell.btnDetail.isHidden = index == 0
         cell.selectionStyle = .none
-        
+
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
