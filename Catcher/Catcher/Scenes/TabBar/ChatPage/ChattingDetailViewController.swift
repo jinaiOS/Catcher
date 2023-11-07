@@ -295,7 +295,7 @@ final class ChattingDetailViewController: MessagesViewController {
                     return
                 }
                 self?.messages = messages
-
+                self?.readMessage()
                 DispatchQueue.main.async {
                     self?.messagesCollectionView.reloadDataAndKeepOffset()
 
@@ -308,7 +308,18 @@ final class ChattingDetailViewController: MessagesViewController {
             }
         })
     }
-
+    
+    private func readMessage() {
+        DatabaseManager.shared.readMessage(otherUserUid: otherUserUid, completion: { success in
+            if success {
+                CommonUtil.print(output: "Read Message")
+            }
+            else {
+                CommonUtil.print(output: "Read Message Error")
+            }
+        })
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageInputBar.inputTextView.becomeFirstResponder()
