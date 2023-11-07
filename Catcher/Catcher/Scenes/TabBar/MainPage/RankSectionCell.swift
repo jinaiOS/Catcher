@@ -11,21 +11,59 @@ import SnapKit
 final class RankSectionCell: UICollectionViewCell {
     static let identifier = "RankSectionCell"
     
-    private lazy var imageView: UIImageView = {
+    private lazy var profileView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
-        view.layer.cornerRadius = 5
+        view.layer.cornerRadius = AppConstraint.defaultCornerRadius
         view.clipsToBounds = true
-        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         return view
     }()
     
-    private lazy var rankLabel: UILabel = {
-        let label = StrokeLabel()
-        label.strokeSize = 5.0
-        label.strokeColor = ThemeColor.primary
-        label.font = ThemeFont.bold(size: 60)
-        return label
+    private lazy var userLabel: UILabel = {
+        LabelFactory.makeLabel(
+            text: nil,
+            font: ThemeFont.bold(size: 16),
+            textAlignment: .left)
+    }()
+    
+    private lazy var attractionLabel: UILabel = {
+        LabelFactory.makeLabel(
+            text: nil,
+            font: ThemeFont.regular(size: 13),
+            textColor: .darkGray,
+            textAlignment: .left)
+    }()
+    
+    private lazy var infoVStack: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        
+        [userLabel, attractionLabel].forEach {
+            view.addArrangedSubview($0)
+        }
+        return view
+    }()
+    
+    private lazy var introductionLabel: UILabel = {
+        LabelFactory.makeLabel(
+            text: nil,
+            font: ThemeFont.regular(size: 13),
+            textColor: .darkGray,
+            textAlignment: .left)
+    }()
+    
+    private lazy var vStack: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.alignment = .fill
+        view.distribution = .fillProportionally
+        view.spacing = 6
+        
+        [infoVStack, introductionLabel].forEach {
+            view.addArrangedSubview($0)
+        }
+        return view
     }()
     
     override init(frame: CGRect) {
@@ -41,46 +79,41 @@ final class RankSectionCell: UICollectionViewCell {
 
 extension RankSectionCell {
     func configure(data: UserInfo, index: Int) {
-        rankLabel.text = "\(index + 1)"
         ImageCacheManager.shared.loadImage(uid: data.uid) { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                self.imageView.backgroundColor = .clear
-                self.imageView.image = image
+                self.profileView.backgroundColor = .clear
+                self.profileView.image = image
             }
         }
+        userLabel.text = "\(index + 1)위  \(data.nickName)"
+        attractionLabel.text = "받은 찜 \(data.heart)개"
+        introductionLabel.text = "유저의 소개 한 마디"
     }
 }
 
 private extension RankSectionCell {
     func setUI() {
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 4)
-        layer.shadowRadius = 6
-        layer.shadowOpacity = 0.5
-        layer.masksToBounds = false
+        contentView.layer.cornerRadius = AppConstraint.defaultCornerRadius
+        contentView.layer.borderColor = UIColor.lightGray.cgColor
+        contentView.layer.borderWidth = 1
     }
     
     func setLayout() {
-        [imageView, rankLabel].forEach {
-            self.addSubview($0)
+        [profileView, vStack].forEach {
+            contentView.addSubview($0)
         }
         
-        imageView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        profileView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.leading.top.trailing.equalToSuperview()
+            $0.height.equalTo(profileView.snp.width)
         }
         
-        rankLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(-10)
-            $0.bottom.equalToSuperview().offset(22)
+        vStack.snp.makeConstraints {
+            $0.top.equalTo(profileView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.bottom.equalToSuperview().inset(5)
         }
-    }
-    
-    func getTextSize(text: String, font: UIFont) -> (CGFloat, CGFloat) {
-        let label = UILabel()
-        label.font = font
-        label.text = text
-        label.sizeToFit()
-        return (label.frame.width, label.frame.height)
     }
 }
