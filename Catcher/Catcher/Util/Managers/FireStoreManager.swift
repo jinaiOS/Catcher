@@ -20,11 +20,13 @@ final class FireStoreManager {
     static let shared = FireStoreManager()
     private let db = Firestore.firestore()
     private let userInfoPath = "userInfo"
+    private let nearUserPath = "location"
+    private let pickerPath = "picker"
     private let reportPath = "report"
     private let askPath = "ask"
     private let fcmTokenPath = "fcmToken"
     private let itemCount: Int = 9
-    private let nearUserPath = "location"
+    
     private init() { }
 }
 
@@ -142,22 +144,22 @@ extension FireStoreManager {
         }
     }
     
-    func fetchRanking() async -> (result: [UserInfo]?, error: Error?) {
-        let query = db.collection(userInfoPath)
-            .order(by: Data.score.key, descending: true)
-            .limit(to: itemCount)
-        do {
-            let document = try await query.getDocuments()
-            let userInfoList = document.documents.map {
-                $0.data()
-            }.compactMap {
-                decodingValue(data: $0)
-            }
-            return (userInfoList, nil)
-        } catch {
-            return (nil, error)
-        }
-    }
+//    func fetchRanking() async -> (result: [UserInfo]?, error: Error?) {
+//        let query = db.collection(userInfoPath)
+//            .order(by: Data.score.key, descending: true)
+//            .limit(to: itemCount)
+//        do {
+//            let document = try await query.getDocuments()
+//            let userInfoList = document.documents.map {
+//                $0.data()
+//            }.compactMap {
+//                decodingValue(data: $0)
+//            }
+//            return (userInfoList, nil)
+//        } catch {
+//            return (nil, error)
+//        }
+//    }
     
     func fetchNewestUser() async -> (result: [UserInfo]?, error: Error?) {
         do {
@@ -189,6 +191,31 @@ extension FireStoreManager {
         } catch {
             return (nil, error)
         }
+    }
+    
+    /// 찜 받은 개수 순서대로 출력
+    func fetchRanking() async -> (result: [UserInfo]?, error: Error?) {
+        let (result, error) = await fetchPickerCount()
+        if let error = error {
+            return (nil, error)
+        }
+        var keysArray: [String] = []
+        var valuesArray: [Int] = []
+        
+        if let result = result {
+            for dictionary in result {
+                for (key, value) in dictionary {
+                    keysArray.append(key)
+                    valuesArray.append(value)
+                }
+            }
+        }
+        var userInfo = await groupTaskForFetchUsers(uidList: keysArray)
+        for (index, var element) in userInfo.enumerated() {
+            element.heart = valuesArray[index]
+            userInfo[index] = element
+        }
+        return (userInfo, nil)
     }
     
     /// 받은 찜 갯수
@@ -229,6 +256,29 @@ extension FireStoreManager {
             ])
             return nil
         } catch {
+            return error
+        }
+    }
+    
+    func updatePicker(uuid: String) async -> Error? {
+        guard let uid = FirebaseManager().getUID else { return FireStoreError.missingUID }
+        let docRef = db.collection(pickerPath).document(uuid)
+        do {
+            try await docRef.updateData([
+                Data.pick.key: FieldValue.arrayUnion([uid])
+            ])
+            return nil
+        } catch {
+            if (error as NSError).code == 5 {
+                do {
+                    try await docRef.setData([
+                        Data.pick.key: [uid]
+                    ])
+                    return nil
+                } catch {
+                    return error
+                }
+            }
             return error
         }
     }
@@ -292,6 +342,19 @@ extension FireStoreManager {
         }
     }
     
+    func deletePicker(uuid: String) async -> Error? {
+        guard let uid = FirebaseManager().getUID else { return FireStoreError.missingUID }
+        let docRef = db.collection(pickerPath).document(uuid)
+        do {
+            try await docRef.updateData([
+                Data.pick.key: FieldValue.arrayRemove([uid])
+            ])
+            return nil
+        } catch {
+            return error
+        }
+    }
+    
     func deleteBlockUser(uuid: String) async -> Error? {
         guard let uid = FirebaseManager().getUID else { return FireStoreError.missingUID }
         let docRef = db.collection(userInfoPath).document(uid)
@@ -325,6 +388,26 @@ private extension FireStoreManager {
             let document = try await docRef.getDocument()
             let pickUsers = document.data()?[Data.pick.key] as? [String]
             return (pickUsers, nil)
+        } catch {
+            return (nil, error)
+        }
+    }
+    
+    /// (uid, 찜 받은 개수)
+    func fetchPickerCount() async -> ([[String: Int]]?, Error?) {
+        let pickerCollection = db.collection(pickerPath)
+        let field = "pick"
+        
+        do {
+            let querySnapshot = try await pickerCollection.order(by: field, descending: true).getDocuments()
+            let result: [[String : Int]] = querySnapshot.documents.map { snapshot in
+                let data = snapshot.data()
+                let uid = snapshot.documentID
+                let pick = data[field] as? [Any] ?? []
+                let info = [uid: pick.count]
+                return info
+            }
+            return (result, nil)
         } catch {
             return (nil, error)
         }
@@ -368,6 +451,7 @@ private extension FireStoreManager {
         case score
         case pick
         case block
+        case heart
         
         var key: String { rawValue }
     }
@@ -411,7 +495,8 @@ private extension FireStoreManager {
             register: data[Data.register.key] as? Date ?? Date(),
             score: data[Data.score.key] as? Int ?? 0,
             pick: data[Data.pick.key] as? [String] ?? [],
-            block: data[Data.block.key] as? [String] ?? []
+            block: data[Data.block.key] as? [String] ?? [],
+            heart: data[Data.heart.key] as? Int ?? 0
         )
     }
 }

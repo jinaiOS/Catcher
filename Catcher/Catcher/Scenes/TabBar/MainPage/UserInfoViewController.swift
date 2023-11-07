@@ -159,7 +159,10 @@ private extension UserInfoViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default)
         alert.addAction(okAction)
-        present(alert, animated: true)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            present(alert, animated: true)
+        }
     }
     
     func listenForMessages() {
