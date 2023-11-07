@@ -23,6 +23,7 @@ class ConversationTableViewCell: UITableViewCell {
     private let userNameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15, weight: .semibold)
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
 
@@ -30,6 +31,15 @@ class ConversationTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = .systemFont(ofSize: 13, weight: .regular)
         label.numberOfLines = 0
+        label.lineBreakMode = .byTruncatingTail
+        return label
+    }()
+    
+    private let newMessageCheckLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 13, weight: .regular)
+        label.numberOfLines = 0
+        label.textColor = ThemeColor.primary
         return label
     }()
 
@@ -38,6 +48,7 @@ class ConversationTableViewCell: UITableViewCell {
         contentView.addSubview(userImageView)
         contentView.addSubview(userNameLabel)
         contentView.addSubview(userMessageLabel)
+        contentView.addSubview(newMessageCheckLabel)
     }
 
     required init?(coder: NSCoder) {
@@ -54,19 +65,30 @@ class ConversationTableViewCell: UITableViewCell {
 
         userNameLabel.frame = CGRect(x: userImageView.right + 10,
                                      y: 10,
-                                     width: contentView.width - 20 - userImageView.width,
+                                     width: contentView.width - 40 - userImageView.width - newMessageCheckLabel.width,
                                      height: (contentView.height-20)/2)
 
         userMessageLabel.frame = CGRect(x: userImageView.right + 10,
                                         y: userNameLabel.bottom,
-                                        width: contentView.width - 20 - userImageView.width,
+                                        width: contentView.width - 40 - userImageView.width - newMessageCheckLabel.width,
                                         height: (contentView.height-20)/2)
+        
+        newMessageCheckLabel.frame = CGRect(x: contentView.right - 60,
+                                            y: userNameLabel.bottom,
+                                            width: 50,
+                                            height: (contentView.height-20)/2)
 
     }
 
     public func configure(with model: Conversation) {
         userMessageLabel.text = model.message
         userNameLabel.text = model.name
+        newMessageCheckLabel.text = "읽지 않음"
+        if model.senderUid != FirebaseManager().getUID ?? "" && model.isRead == false {
+            newMessageCheckLabel.isHidden = false
+        } else {
+            newMessageCheckLabel.isHidden = true
+        }
         
         ImageCacheManager.shared.loadImage(uid: model.otherUserUid) { [weak self] image in
             guard let self = self else { return }
