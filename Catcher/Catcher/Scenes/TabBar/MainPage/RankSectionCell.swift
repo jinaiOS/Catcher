@@ -13,6 +13,7 @@ final class RankSectionCell: UICollectionViewCell {
     
     private lazy var profileView: UIImageView = {
         let view = UIImageView()
+        view.image = UIImage(named: "default")
         view.contentMode = .scaleAspectFill
         view.layer.cornerRadius = AppConstraint.defaultCornerRadius
         view.clipsToBounds = true
@@ -97,6 +98,12 @@ private extension RankSectionCell {
         contentView.layer.cornerRadius = AppConstraint.defaultCornerRadius
         contentView.layer.borderColor = UIColor.lightGray.cgColor
         contentView.layer.borderWidth = 1
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 4)
+        layer.shadowRadius = 6
+        layer.shadowOpacity = 0.5
+        layer.masksToBounds = false
     }
     
     func setLayout() {

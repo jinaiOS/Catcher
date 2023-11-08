@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -63,7 +63,7 @@
                                         </fragment>
                                         <fragment content="이런">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -76,7 +76,7 @@
                                         </fragment>
                                         <fragment content="사진을">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -89,7 +89,7 @@
                                         </fragment>
                                         <fragment content="올려주세요">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -115,7 +115,7 @@
                                         <fragment content="이">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -130,7 +130,7 @@
                                         <fragment content="사진은">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -145,7 +145,7 @@
                                         <fragment content="성별">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -160,7 +160,7 @@
                                         <fragment content="확인용으로">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -175,7 +175,7 @@
                                         <fragment content="실제">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -190,7 +190,7 @@
                                         <fragment content="앱에는">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -202,18 +202,10 @@
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
-                                        <fragment content="캐리커쳐">
+                                        <fragment content="캐리커쳐로">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name="NotoSansKR-Bold"/>
-                                                <font key="NSOriginalFont" metaFont="system" size="17"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="로">
-                                            <attributes>
-                                                <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -228,7 +220,7 @@
                                         <fragment content="업로드">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -243,7 +235,7 @@
                                         <fragment content="돼요">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -258,7 +250,7 @@
                                         <fragment content="마이">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -273,7 +265,7 @@
                                         <fragment content="페이지">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -288,7 +280,7 @@
                                         <fragment content="프로필">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -303,7 +295,7 @@
                                         <fragment content="설정에서">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -318,7 +310,7 @@
                                         <fragment content="변경">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -333,7 +325,7 @@
                                         <fragment content="가능해요">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -353,7 +345,7 @@
                                         </fragment>
                                         <fragment content="본인의">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -364,7 +356,7 @@
                                         </fragment>
                                         <fragment content="얼굴이">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -375,7 +367,7 @@
                                         </fragment>
                                         <fragment content="보이는">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -386,7 +378,7 @@
                                         </fragment>
                                         <fragment content="사진">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -397,7 +389,7 @@
                                         </fragment>
                                         <fragment content="마스크">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -408,7 +400,7 @@
                                         </fragment>
                                         <fragment content="썬글라스">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -421,7 +413,7 @@
                                         </fragment>
                                         <fragment content="자신의">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -432,7 +424,7 @@
                                         </fragment>
                                         <fragment content="스타일을">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -443,7 +435,7 @@
                                         </fragment>
                                         <fragment content="최대한">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -454,7 +446,7 @@
                                         </fragment>
                                         <fragment content="보여줄수">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -465,7 +457,7 @@
                                         </fragment>
                                         <fragment content="있는">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -476,7 +468,7 @@
                                         </fragment>
                                         <fragment content="사진">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -489,7 +481,7 @@
                                         </fragment>
                                         <fragment content="단체">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -500,7 +492,7 @@
                                         </fragment>
                                         <fragment content="사진">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -511,7 +503,7 @@
                                         </fragment>
                                         <fragment content="친구와">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -522,7 +514,7 @@
                                         </fragment>
                                         <fragment content="찍은">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -533,7 +525,7 @@
                                         </fragment>
                                         <fragment content="사진은">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>
@@ -544,7 +536,7 @@
                                         </fragment>
                                         <fragment content="안돼요">
                                             <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSDGothicNeoI-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="17"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             </attributes>
                                         </fragment>

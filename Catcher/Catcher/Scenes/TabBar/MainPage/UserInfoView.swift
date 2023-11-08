@@ -18,7 +18,7 @@ final class UserInfoView: UIView {
     lazy var profileImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
-        view.image = UIImage(systemName: "person.fill")
+        view.image = UIImage(systemName: "default")
         return view
     }()
     

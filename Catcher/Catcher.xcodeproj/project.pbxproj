@@ -29,13 +29,16 @@
 		335B78BA2AE70237004D2956 /* MainItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335B78B92AE70237004D2956 /* MainItems.swift */; };
 		335B78BC2AE70844004D2956 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335B78BB2AE70844004D2956 /* ImageCacheManager.swift */; };
 		3366170D2AF6E563008AB63C /* ServerKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3366170C2AF6E562008AB63C /* ServerKey.swift */; };
+		337D0AE52AFAE43500E567FE /* ImageFactoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337D0AE42AFAE43500E567FE /* ImageFactoryViewController.swift */; };
+		337D0AE82AFAE45500E567FE /* ImageFactoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337D0AE72AFAE45500E567FE /* ImageFactoryView.swift */; };
+		337D0AEA2AFAE47000E567FE /* ImageFactoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337D0AE92AFAE47000E567FE /* ImageFactoryViewModel.swift */; };
+		337D0AEC2AFB025000E567FE /* GenderClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 337D0AEB2AFB025000E567FE /* GenderClassifier.mlmodel */; };
 		33845E392AF4393F00539068 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 33845E382AF4393F00539068 /* Settings.bundle */; };
 		33845E3B2AF43B9100539068 /* RevokeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33845E3A2AF43B9100539068 /* RevokeViewController.swift */; };
 		33845E3D2AF43B9600539068 /* RevokeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33845E3C2AF43B9600539068 /* RevokeView.swift */; };
 		33845E422AF442CE00539068 /* RevokeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33845E412AF442CE00539068 /* RevokeViewModel.swift */; };
 		33845E502AF4AEFD00539068 /* YOLOv3Int8LUT.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33845E4D2AF4AEFC00539068 /* YOLOv3Int8LUT.mlmodel */; };
 		33845E512AF4AEFD00539068 /* animegan2face_paint_512_v2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33845E4E2AF4AEFC00539068 /* animegan2face_paint_512_v2.mlmodel */; };
-		33845E522AF4AEFD00539068 /* GenderClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33845E4F2AF4AEFD00539068 /* GenderClassifier.mlmodel */; };
 		33894A682AEEAB7C00582345 /* StrokeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33894A672AEEAB7C00582345 /* StrokeLabel.swift */; };
 		33ABF3552AE46F2F002DCCF4 /* FireStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3542AE46F2F002DCCF4 /* FireStorageManager.swift */; };
 		33ABF3592AE4889D002DCCF4 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */; };
@@ -161,13 +164,16 @@
 		335B78B92AE70237004D2956 /* MainItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainItems.swift; sourceTree = "<group>"; };
 		335B78BB2AE70844004D2956 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		3366170C2AF6E562008AB63C /* ServerKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerKey.swift; sourceTree = "<group>"; };
+		337D0AE42AFAE43500E567FE /* ImageFactoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFactoryViewController.swift; sourceTree = "<group>"; };
+		337D0AE72AFAE45500E567FE /* ImageFactoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFactoryView.swift; sourceTree = "<group>"; };
+		337D0AE92AFAE47000E567FE /* ImageFactoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFactoryViewModel.swift; sourceTree = "<group>"; };
+		337D0AEB2AFB025000E567FE /* GenderClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GenderClassifier.mlmodel; sourceTree = "<group>"; };
 		33845E382AF4393F00539068 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		33845E3A2AF43B9100539068 /* RevokeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeViewController.swift; sourceTree = "<group>"; };
 		33845E3C2AF43B9600539068 /* RevokeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeView.swift; sourceTree = "<group>"; };
 		33845E412AF442CE00539068 /* RevokeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeViewModel.swift; sourceTree = "<group>"; };
 		33845E4D2AF4AEFC00539068 /* YOLOv3Int8LUT.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3Int8LUT.mlmodel; sourceTree = "<group>"; };
 		33845E4E2AF4AEFC00539068 /* animegan2face_paint_512_v2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = animegan2face_paint_512_v2.mlmodel; sourceTree = "<group>"; };
-		33845E4F2AF4AEFD00539068 /* GenderClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GenderClassifier.mlmodel; sourceTree = "<group>"; };
 		33894A672AEEAB7C00582345 /* StrokeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeLabel.swift; sourceTree = "<group>"; };
 		33ABF3542AE46F2F002DCCF4 /* FireStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStorageManager.swift; sourceTree = "<group>"; };
 		33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
@@ -307,6 +313,16 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		337D0AE62AFAE43900E567FE /* ImageFactory */ = {
+			isa = PBXGroup;
+			children = (
+				337D0AE72AFAE45500E567FE /* ImageFactoryView.swift */,
+				337D0AE92AFAE47000E567FE /* ImageFactoryViewModel.swift */,
+				337D0AE42AFAE43500E567FE /* ImageFactoryViewController.swift */,
+			);
+			path = ImageFactory;
+			sourceTree = "<group>";
+		};
 		33845E3E2AF43D0300539068 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -381,7 +397,7 @@
 			isa = PBXGroup;
 			children = (
 				33845E4E2AF4AEFC00539068 /* animegan2face_paint_512_v2.mlmodel */,
-				33845E4F2AF4AEFD00539068 /* GenderClassifier.mlmodel */,
+				337D0AEB2AFB025000E567FE /* GenderClassifier.mlmodel */,
 				33845E4D2AF4AEFC00539068 /* YOLOv3Int8LUT.mlmodel */,
 			);
 			path = CoreMLModel;
@@ -584,6 +600,7 @@
 				56C08B792ADF80BD00FB8608 /* AskPage */,
 				56C08B7A2ADF80C400FB8608 /* InfoPage */,
 				56C08B7B2ADF80CC00FB8608 /* ReportPage */,
+				337D0AE62AFAE43900E567FE /* ImageFactory */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -791,7 +808,6 @@
 				68708AB72AE745C200B4C7B9 /* SurveyViewController.swift in Sources */,
 				56C08B692ADF805800FB8608 /* HomeItem.swift in Sources */,
 				562E36B52AD8DB57008D99B2 /* DataManager.swift in Sources */,
-				33845E522AF4AEFD00539068 /* GenderClassifier.mlmodel in Sources */,
 				33532B7E2AE17A67008B47EB /* FirebaseManager.swift in Sources */,
 				562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */,
 				56C08B712ADF808B00FB8608 /* AskViewController.swift in Sources */,
@@ -809,10 +825,12 @@
 				56C08B842AE0FE8300FB8608 /* ConversationsModels.swift in Sources */,
 				56BBF82F2AEB1EBB00A2BADD /* DatabaseManager.swift in Sources */,
 				56C08BA42AE10EB400FB8608 /* SearchResult.swift in Sources */,
+				337D0AE82AFAE45500E567FE /* ImageFactoryView.swift in Sources */,
 				33462AF62AF3CAC4006CDFBA /* NotificationManager.swift in Sources */,
 				562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */,
 				562E36C12AD91901008D99B2 /* Common.swift in Sources */,
 				5622C0702AEF0BE000455649 /* ResetPWViewController.swift in Sources */,
+				337D0AEC2AFB025000E567FE /* GenderClassifier.mlmodel in Sources */,
 				33ABF3552AE46F2F002DCCF4 /* FireStorageManager.swift in Sources */,
 				562E36B92AD8DCC5008D99B2 /* BaseHeaderViewController.swift in Sources */,
 				56C08B6E2ADF808400FB8608 /* MenuTableViewCell.swift in Sources */,
@@ -841,6 +859,7 @@
 				33E590292AF08C730060FBA0 /* GenerateProfile.swift in Sources */,
 				33EF35A92AEAD62500B4863B /* UserInfoViewModel.swift in Sources */,
 				33845E512AF4AEFD00539068 /* animegan2face_paint_512_v2.mlmodel in Sources */,
+				337D0AE52AFAE43500E567FE /* ImageFactoryViewController.swift in Sources */,
 				33E590272AF08C5F0060FBA0 /* DistinguishGender.swift in Sources */,
 				56C08B752ADF809300FB8608 /* InfoViewController.swift in Sources */,
 				33C58E892AD8B28D008EB6C2 /* ThemeColor.swift in Sources */,
@@ -860,6 +879,7 @@
 				56C08B682ADF805800FB8608 /* DefaultSectionCell.swift in Sources */,
 				33FCCB432AE8AF81004FF322 /* UIImage+.swift in Sources */,
 				33532B782AE17A31008B47EB /* UserInfo.swift in Sources */,
+				337D0AEA2AFAE47000E567FE /* ImageFactoryViewModel.swift in Sources */,
 				56C08B6F2ADF808400FB8608 /* MyPageViewController.swift in Sources */,
 				33532B802AE17A75008B47EB /* UserDefaultsManager.swift in Sources */,
 				33ABF3592AE4889D002DCCF4 /* LocalFileManager.swift in Sources */,
@@ -1005,6 +1025,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Catcher/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "앱에서 프로필 등록을 하기 위해 카메라 접근 권한 동의가 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "앱에서 이미지를 앨범에 저장하기 위해 접근 권한 동의가 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "앱에서 프로필 등록을 하기 위해 사진 앨범 접근 권한 동의가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1195,6 +1216,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Catcher/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "앱에서 프로필 등록을 하기 위해 카메라 접근 권한 동의가 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "앱에서 이미지를 앨범에 저장하기 위해 접근 권한 동의가 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "앱에서 프로필 등록을 하기 위해 사진 앨범 접근 권한 동의가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1231,6 +1253,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Catcher/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "앱에서 프로필 등록을 하기 위해 카메라 접근 권한 동의가 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "앱에서 이미지를 앨범에 저장하기 위해 접근 권한 동의가 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "앱에서 프로필 등록을 하기 위해 사진 앨범 접근 권한 동의가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

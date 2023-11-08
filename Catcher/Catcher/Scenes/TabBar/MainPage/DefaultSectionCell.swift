@@ -13,10 +13,10 @@ final class DefaultSectionCell: UICollectionViewCell {
     
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
+        view.image = UIImage(named: "default")
         view.contentMode = .scaleAspectFill
         view.layer.cornerRadius = 5
         view.clipsToBounds = true
-        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return view
     }()
     
