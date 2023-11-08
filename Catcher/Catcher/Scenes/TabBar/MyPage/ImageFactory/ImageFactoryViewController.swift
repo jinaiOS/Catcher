@@ -40,7 +40,7 @@ private extension ImageFactoryViewController {
     }
     
     func configure() {
-        setHeaderTitleName(title: "이미지 생성")
+        setHeaderTitleName(title: "캐리커처 생성")
         picker.delegate = self
     }
     

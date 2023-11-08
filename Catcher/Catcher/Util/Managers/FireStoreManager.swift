@@ -144,23 +144,6 @@ extension FireStoreManager {
         }
     }
     
-//    func fetchRanking() async -> (result: [UserInfo]?, error: Error?) {
-//        let query = db.collection(userInfoPath)
-//            .order(by: Data.score.key, descending: true)
-//            .limit(to: itemCount)
-//        do {
-//            let document = try await query.getDocuments()
-//            let userInfoList = document.documents.map {
-//                $0.data()
-//            }.compactMap {
-//                decodingValue(data: $0)
-//            }
-//            return (userInfoList, nil)
-//        } catch {
-//            return (nil, error)
-//        }
-//    }
-    
     func fetchNewestUser() async -> (result: [UserInfo]?, error: Error?) {
         do {
             let querySnapshot = try await db.collection(userInfoPath)
@@ -218,16 +201,15 @@ extension FireStoreManager {
         return (userInfo, nil)
     }
     
-    /// 받은 찜 갯수
-    func fetchMyPickedCount(uid: String) async -> (result: Int?, error: Error?) {
-        let query = db.collection(userInfoPath)
-            .whereField(Data.pick.key, arrayContains: uid)
-        let countQuery = query.count
+    /// 내가 받은 찜 개수
+    func fetchMyPickedCount() async -> (Int?, Error?) {
+        guard let uid = FirebaseManager().getUID else { return (nil, FireStoreError.missingUID) }
+        let documentRef = db.collection(pickerPath).document(uid)
         
         do {
-            let snapshot = try await countQuery.getAggregation(source: .server)
-            let count = snapshot.count as? Int
-            return (count, nil)
+            let snapshot = try await documentRef.getDocument()
+            let data = snapshot.data()?["pick"] as? [Any]
+            return (data?.count, nil)
         } catch {
             return (nil, error)
         }
@@ -295,16 +277,6 @@ extension FireStoreManager {
             return error
         }
     }
-    
-//    func updateScore(uid: String, score: Int) async -> Error? {
-//        let docRef = db.collection(userInfoPath).document(uid)
-//        do {
-//            try await docRef.updateData(["score": score])
-//            return nil
-//        } catch {
-//            return error
-//        }
-//    }
     
     func updateFcmToken(fcmToken: String) async -> Error? {
         let docRef = db.collection(fcmTokenPath).document(FirebaseManager().getUID ?? "")
