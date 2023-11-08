@@ -12,6 +12,7 @@ import UIKit
 
 enum MenuItems: String, CaseIterable {
     case setProfile = "기본 프로필 설정"
+    case genImage = "이미지 생성"
     case inquiry = "1:1 문의"
     case terms = "개인 정보 및 처리 방침"
     case opensource = "오픈소스 라이선스"
@@ -246,7 +247,7 @@ private extension MyPageViewController {
             if let result {
                 self.userInfo = result
                 myTemperatureNumber.text = result.sex
-                myPointNumber.text = "만 \(Date.calculateAge(birthDate: result.birth)))세"
+                myPointNumber.text = "만 \(Date.calculateAge(birthDate: result.birth))세"
                 nickName.text = "\(result.nickName)님의 인연을 응원합니다!!"
             }
         }
@@ -297,20 +298,23 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             vc.delegate = self
             navigationPushController(viewController: vc, animated: true)
         case 1:
+            let imageFactoryVC = ImageFactoryViewController()
+            navigationPushController(viewController: imageFactoryVC, animated: true)
+        case 2:
             let vc = AskViewController()
             navigationPushController(viewController: vc, animated: true)
-        case 2:
+        case 3:
             let url = URL(string: PRIVACY)
             let vc = SFSafariViewController(url: url!)
             present(vc, animated: true)
-        case 3:
+        case 4:
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url)
             }
-        case 4:
+        case 5:
             let appVersionVC = AppVersionViewController()
             navigationPushController(viewController: appVersionVC, animated: true)
-        case 5:
+        case 6:
             let revokeVC = RevokeViewController()
             navigationPushController(viewController: revokeVC, animated: true)
         default:
