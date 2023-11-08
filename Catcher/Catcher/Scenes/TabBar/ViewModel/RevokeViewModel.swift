@@ -34,6 +34,7 @@ extension RevokeViewModel {
                 CommonUtil.print(output: error)
             }
         }
+        deleteMessage()
         Task {
             let error = await FireStoreManager.shared.deleteUserInfo()
             let fcmerror = await FireStoreManager.shared.deleteFcmToken()
@@ -46,6 +47,17 @@ extension RevokeViewModel {
             }
             completion()
         }
+    }
+    
+    func deleteMessage() {
+        DatabaseManager.shared.deleteMessage(completion: { success in
+            if success {
+                CommonUtil.print(output: "Delete Message")
+            }
+            else {
+                CommonUtil.print(output: "Delete Message Error")
+            }
+        })
     }
 }
 

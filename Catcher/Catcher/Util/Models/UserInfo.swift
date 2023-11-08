@@ -16,12 +16,12 @@ struct UserInfo: Hashable {
     var nickName: String
     var location: String
     var height: Int
-    var body: String
-    var education: String
-    var drinking: String
-    var smoking: Bool
+    var mbti: String
+    var introduction: String
     var register: Date = Date()
-    var score: Int = 0
     var pick: [String]? = []
     var block: [String]? = []
+    
+    /// 찜 받은 개수로 랭킹 나타내기 위한 프로퍼티
+    var heart: Int = 0
 }

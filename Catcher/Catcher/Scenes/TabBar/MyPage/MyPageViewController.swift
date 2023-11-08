@@ -12,6 +12,7 @@ import UIKit
 
 enum MenuItems: String, CaseIterable {
     case setProfile = "기본 프로필 설정"
+    case genImage = "캐리커처 이미지 생성"
     case inquiry = "1:1 문의"
     case terms = "개인 정보 및 처리 방침"
     case opensource = "오픈소스 라이선스"
@@ -25,13 +26,11 @@ final class MyPageViewController: BaseViewController {
     
     private lazy var nickName: UILabel = {
         let lb = UILabel()
-        lb.text = "익명 님의 인연을 응원합니다!!"
+        lb.text = "익명 님 어서 오세요!!"
         lb.font = .systemFont(ofSize: 20, weight: .light)
         lb.textAlignment = .left
         lb.numberOfLines = 0 // 두 줄로 표시
         lb.lineBreakMode = .byWordWrapping
-//        lb.sizeToFit()
-        //        view.addSubview(lb)
         return lb
     }()
     
@@ -41,7 +40,6 @@ final class MyPageViewController: BaseViewController {
         im.contentMode = .scaleAspectFill
         im.layer.cornerRadius = CGFloat(photoSize / 2) // 반지름을 이미지 크기의 절반으로 설정하여 원 모양으로 클리핑
         im.clipsToBounds = true // 이미지를 원 모양으로 클리핑
-        //        view.addSubview(im)
         return im
     }()
     
@@ -59,7 +57,6 @@ final class MyPageViewController: BaseViewController {
         vw.addSubview(myMainStack)
         vw.borderColor = ThemeColor.primary
         vw.borderWidth = 1
-        //        view.addSubview(vw)
         return vw
     }()
     
@@ -73,7 +70,7 @@ final class MyPageViewController: BaseViewController {
     }()
     
     private lazy var myTemperatureStack: UIStackView = {
-        let st = UIStackView(arrangedSubviews: [myTemperatureNumber, myTemperatureLabel])
+        let st = UIStackView(arrangedSubviews: [myGenderNumber, myGenderLabel])
         st.axis = .vertical
         st.alignment = .fill
         st.distribution = .equalSpacing
@@ -81,14 +78,14 @@ final class MyPageViewController: BaseViewController {
         return st
     }()
     
-    private lazy var myTemperatureNumber: UILabel = {
+    private lazy var myGenderNumber: UILabel = {
         let lb = UILabel()
         lb.font = .systemFont(ofSize: 20, weight: .bold)
         lb.textAlignment = .center
         return lb
     }()
     
-    private lazy var myTemperatureLabel: UILabel = {
+    private lazy var myGenderLabel: UILabel = {
         let lb = UILabel()
         lb.text = "성별"
         lb.font = .systemFont(ofSize: labelFontSize, weight: .light)
@@ -97,7 +94,7 @@ final class MyPageViewController: BaseViewController {
     }()
     
     private lazy var myPointStack: UIStackView = {
-        let st = UIStackView(arrangedSubviews: [myPointNumber, myPointLabel])
+        let st = UIStackView(arrangedSubviews: [myPickedNumber, myPickedLabel])
         st.axis = .vertical
         st.alignment = .fill
         st.distribution = .equalSpacing
@@ -105,16 +102,16 @@ final class MyPageViewController: BaseViewController {
         return st
     }()
     
-    private lazy var myPointNumber: UILabel = {
+    private lazy var myPickedNumber: UILabel = {
         let lb = UILabel()
         lb.font = .systemFont(ofSize: 20, weight: .bold)
         lb.textAlignment = .center
         return lb
     }()
     
-    private lazy var myPointLabel: UILabel = {
+    private lazy var myPickedLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "나이"
+        lb.text = "받은 찜"
         lb.font = .systemFont(ofSize: labelFontSize, weight: .light)
         lb.textAlignment = .center
         return lb
@@ -239,15 +236,23 @@ private extension MyPageViewController {
     func fetchMyInfo() {
         Task {
             guard let uid = FirebaseManager().getUID else { return }
-            let (result, error) = await FireStoreManager.shared.fetchUserInfo(uuid: uid)
+            let (userInfo, error) = await FireStoreManager.shared.fetchUserInfo(uuid: uid)
+            let (myPickedCount, err) = await FireStoreManager.shared.fetchMyPickedCount()
             if let error {
                 CommonUtil.print(output: error.localizedDescription)
             }
-            if let result {
-                self.userInfo = result
-                myTemperatureNumber.text = result.sex
-                myPointNumber.text = "만 \(calculateAge(birthDate: result.birth))세"
-                nickName.text = "\(result.nickName)님의 인연을 응원합니다!!"
+            if let userInfo {
+                self.userInfo = userInfo
+                myGenderNumber.text = userInfo.sex
+                myPickedNumber.text = "만 \(Date.calculateAge(birthDate: userInfo.birth))세"
+                nickName.text = "\(userInfo.nickName)님 어서 오세요!!"
+            }
+            
+            if let err {
+                CommonUtil.print(output: err.localizedDescription)
+            }
+            if let myPickedCount {
+                myPickedNumber.text = "\(myPickedCount)"
             }
         }
     }
@@ -297,20 +302,23 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             vc.delegate = self
             navigationPushController(viewController: vc, animated: true)
         case 1:
+            let imageFactoryVC = ImageFactoryViewController()
+            navigationPushController(viewController: imageFactoryVC, animated: true)
+        case 2:
             let vc = AskViewController()
             navigationPushController(viewController: vc, animated: true)
-        case 2:
+        case 3:
             let url = URL(string: PRIVACY)
             let vc = SFSafariViewController(url: url!)
             present(vc, animated: true)
-        case 3:
+        case 4:
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url)
             }
-        case 4:
+        case 5:
             let appVersionVC = AppVersionViewController()
             navigationPushController(viewController: appVersionVC, animated: true)
-        case 5:
+        case 6:
             let revokeVC = RevokeViewController()
             navigationPushController(viewController: revokeVC, animated: true)
         default:
@@ -441,17 +449,5 @@ extension MyPageViewController: ReloadProfileImage {
 extension MyPageViewController: UpdateUserInfo {
     func updateUserInfo() {
         fetchMyInfo()
-    }
-}
-
-private extension MyPageViewController {
-    func calculateAge(birthDate: Date) -> Int {
-        let calendar = Calendar.current
-        let now = Date()
-        
-        let ageComponents = calendar.dateComponents([.year], from: birthDate, to: now)
-        let age = ageComponents.year ?? 0
-        
-        return age
     }
 }

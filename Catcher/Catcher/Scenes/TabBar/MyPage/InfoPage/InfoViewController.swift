@@ -15,22 +15,28 @@ protocol UpdateUserInfo: AnyObject {
 }
 
 final class InfoViewController: BaseHeaderViewController {
+    private let db = Firestore.firestore()
     private let infoView: InfoView
     private let userInfo: UserInfo?
     var newUserEmail: String?
     var newUserPassword: String?
     var newUserNickName: String?
     let pickerRegion = UIPickerView()
-    let pickerEducation = UIPickerView()
+    let pickerMbti = UIPickerView()
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy / MM / dd"
         return formatter
     }()
-    
+
     weak var delegate: UpdateUserInfo?
 
-    var education = ["박사", "학사", "대졸", "고졸", "중졸"]
+    var mbti = [
+        "INTJ", "INTP", "ENTJ", "ENTP",
+        "INFJ", "INFP", "ENFJ", "ENFP",
+        "ISTJ", "ISFJ", "ESTJ", "ESFJ",
+        "ISTP", "ISFP", "ESTP", "ESFP",
+    ]
     var region = [
         "서울특별시",
         "경기도",
@@ -46,7 +52,7 @@ final class InfoViewController: BaseHeaderViewController {
         "경상남도",
         "대구광역시",
         "부산광역시",
-        "제주특별자치도"
+        "제주특별자치도",
     ]
 
     override func loadView() {
@@ -68,21 +74,22 @@ final class InfoViewController: BaseHeaderViewController {
         setUI()
         configure()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         removeKeyboardObserver()
     }
-    
+
     init(userInfo: UserInfo? = nil, isValidNickName: Bool = false) {
         self.userInfo = userInfo
         self.infoView = InfoView(isValidNickName: isValidNickName)
         super.init(nibName: nil, bundle: nil)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     deinit {
         CommonUtil.print(output: "deinit - InfoVC")
     }
@@ -102,7 +109,7 @@ extension InfoViewController {
             }
         }
     }
-    
+
     override func keyboardWillHide(notification: NSNotification) {
         let contentInsets = UIEdgeInsets.zero
         infoView.scrollView.contentInset = contentInsets
@@ -115,75 +122,36 @@ private extension InfoViewController {
         guard let userInfo = userInfo else { return }
         infoView.nickNameTextField.tf.text = userInfo.nickName
         infoView.regionTextField.tf.text = userInfo.location
-        infoView.birthTextField.tf.text = "만 \(calculateAge(birthDate: userInfo.birth))세"
+        infoView.birthTextField.tf.text = "만 \(Date.calculateAge(birthDate: userInfo.birth))세"
         infoView.birthTextField.lblTitle.text = "나이"
         infoView.birthTextField.tf.isEnabled = false
-        infoView.educationTextField.tf.text = userInfo.education
+        infoView.mbtiTextField.tf.text = userInfo.mbti
+        infoView.introduceTextField.tf.text = userInfo.introduction
         infoView.heightTextField.tf.text = "\(userInfo.height)"
-        
-        var button: UIButton
-        
-        switch userInfo.body {
-        case "마름":
-            button = infoView.thinBodyBtn
-        case "평범함":
-            button = infoView.nomalBodyBtn
-        case "통통함":
-            button = infoView.chubbyBodyBtn
-        case "뚱뚱함":
-            button = infoView.fatBodyBtn
-        default:
-            button = UIButton()
-            break
-        }
-        infoView.bodyButtonTapped(button)
-        
-        switch userInfo.drinking {
-        case "안 마심":
-            button = infoView.drinkingNoBtn
-        case "주 1~2회":
-            button = infoView.drinkingTwiceBtn
-        case "주 3~5회":
-            button = infoView.drinkingOftenBtn
-        case "그 이상":
-            button = infoView.drinkingDailyBtn
-        default:
-            button = UIButton()
-            break
-        }
-        infoView.drinkButtonTapped(button)
-        
-        switch userInfo.smoking {
-        case true:
-            button = infoView.smokingBtn
-        case false:
-            button = infoView.noSmokingBtn
-        }
-        infoView.smokeButtonTapped(button)
     }
-    
+
     func findActiveTextField() -> UITextField? {
         for case let textField as UITextField in infoView.contentView.subviews where textField.isFirstResponder {
             return textField
         }
         return nil
     }
-    
+
     @objc func completeBtn() {
         infoView.regionTextField.isError = false
         infoView.birthTextField.isError = false
-        infoView.educationTextField.isError = false
+        infoView.mbtiTextField.isError = false
         infoView.heightTextField.isError = false
+        infoView.nickNameTextField.isError = false
+        infoView.introduceTextField.isError = false
+
         var birth: Date?
-        
-        guard let body = infoView.selectedBodyButton?.title(for: .normal) else { return }
-        guard let drinking = infoView.selectedDrinkButton?.title(for: .normal) else { return }
-        guard let smoking = infoView.selectedSmokeButton?.title(for: .normal) else { return }
+
         guard let location = infoView.regionTextField.tf.text, !location.isEmpty else {
             infoView.regionTextField.isError = true
             return
         }
-        
+
         if userInfo == nil {
             guard let birthText = infoView.birthTextField.tf.text, let birthDate = dateFormatter.date(from: birthText) else {
                 infoView.birthTextField.isError = true
@@ -191,50 +159,89 @@ private extension InfoViewController {
             }
             birth = birthDate
         }
-        
-        guard let education = infoView.educationTextField.tf.text, !education.isEmpty else {
-            infoView.educationTextField.isError = true
+
+        guard let mbti = infoView.mbtiTextField.tf.text, !mbti.isEmpty else {
+            infoView.mbtiTextField.isError = true
             return
         }
         guard let height = infoView.heightTextField.tf.text, !height.isEmpty else {
             infoView.heightTextField.isError = true
             return
         }
+        guard let introduce = infoView.introduceTextField.tf.text, !introduce.isEmpty else {
+            infoView.introduceTextField.lblError.text = "자기소개를 입력해주세요"
+            infoView.introduceTextField.isError = true
 
-        guard let nickName = newUserNickName else { return }
-        guard let newUserEmail = newUserEmail, let newUserPassword = newUserPassword else { return }
-
-        var smokeCheck = false
-        if smoking == "흡연" {
-            smokeCheck = true
-        } else {
-            smokeCheck = false
+            return
         }
-        
+        guard introduce.count < 16 else {
+            infoView.introduceTextField.lblError.text = "15글자 이하로 적어주세요"
+            infoView.introduceTextField.isError = true
+            return
+        }
+
         if userInfo == nil {
+            // 회원가입
+            guard let nickName = newUserNickName else { return }
+            guard let newUserEmail = newUserEmail, let newUserPassword = newUserPassword else { return }
             let profileSettingViewController = ProfileSettingViewController(allowAlbum: false)
             profileSettingViewController.user = UserInfo(
                 uid: "", sex: "", birth: birth ?? Date(),
                 nickName: nickName,
                 location: location,
                 height: Int(height) ?? 0,
-                body: body,
-                education: education,
-                drinking: drinking,
-                smoking: smokeCheck,
+                mbti: mbti,
+                introduction: introduce,
                 register: Date(),
-                score: 0,
                 pick: []
             )
             profileSettingViewController.newUserEmail = newUserEmail
             profileSettingViewController.newUserPassword = newUserPassword
             navigationController?.pushViewController(profileSettingViewController, animated: true)
             return
-        }
-        
-        navigationPopToRootViewController(animated: true) { [weak self] in
-            guard let self = self else { return }
-            delegate?.updateUserInfo()
+        } else {
+            // 프로필 수정
+            guard let uid = FirebaseManager().getUID else { return }
+            guard let nickName = infoView.nickNameTextField.tf.text, !nickName.isEmpty else {
+                infoView.nickNameTextField.lblError.text = "닉네임을 입력해주세요"
+                infoView.nickNameTextField.isError = true
+                return
+            }
+            guard nickName.count < 7 else {
+                infoView.nickNameTextField.lblError.text = "6글자까지 입력이 가능합니다"
+                infoView.nickNameTextField.isError = true
+                return
+            }
+            let userUpadate = UserInfo(
+                uid: "",
+                sex: "",
+                birth: birth ?? Date(),
+                nickName: nickName,
+                location: location,
+                height: Int(height) ?? 0,
+                mbti: mbti,
+                introduction: introduce)
+            
+            let userDocRef = db.collection("userInfo").document(uid)
+            userDocRef.updateData([
+                "nickName": userUpadate.nickName,
+                "location": userUpadate.location,
+                "height": userUpadate.height,
+                "mbti": userUpadate.mbti,
+                "introduction": userUpadate.introduction
+            ]) { error in
+                if let error = error {
+                    // Handle the error, e.g., show an alert to the user.
+                    print("Error updating user information: \(error.localizedDescription)")
+                } else {
+                    // Information updated successfully.
+                    print("User information updated successfully.")
+                    self.navigationPopToRootViewController(animated: true) { [weak self] in
+                        guard let self = self else { return }
+                        self.delegate?.updateUserInfo()
+                    }
+                }
+            }
         }
     }
 
@@ -242,8 +249,8 @@ private extension InfoViewController {
         infoView.regionTextField.tf.resignFirstResponder()
     }
 
-    @objc func educationPickerDoneButtonTapped() {
-        infoView.educationTextField.tf.resignFirstResponder()
+    @objc func mbtiPickerDoneButtonTapped() {
+        infoView.mbtiTextField.tf.resignFirstResponder()
     }
 
     @objc func birthPickerDoneButtonTapped() {
@@ -268,9 +275,9 @@ private extension InfoViewController {
 //        infoView.birthTextField.tf.keyboardType = .emailAddress
 //        infoView.birthTextField.tf.returnKeyType = .next
 
-        infoView.educationTextField.initTextFieldText(placeHolder: "학력을 선택해 주세요", delegate: self)
-        infoView.educationTextField.lblTitle.text = "학력"
-        infoView.educationTextField.lblError.text = "학력을 선택해 주세요"
+        infoView.mbtiTextField.initTextFieldText(placeHolder: "MBTI를 선택해 주세요", delegate: self)
+        infoView.mbtiTextField.lblTitle.text = "MBTI"
+        infoView.mbtiTextField.lblError.text = "MBTI를 선택해 주세요"
 //        infoView.educationTextField.tf.keyboardType = .emailAddress
 //        infoView.educationTextField.tf.returnKeyType = .next
 
@@ -279,10 +286,13 @@ private extension InfoViewController {
         infoView.heightTextField.lblError.text = "키를 입력해 주세요"
 //        infoView.heightTextField.tf.keyboardType = .emailAddress
 //        infoView.heightTextField.tf.returnKeyType = .next
-        
+
         infoView.nickNameTextField.initTextFieldText(placeHolder: "닉네임을 입력해 주세요", delegate: self)
         infoView.nickNameTextField.lblTitle.text = "닉네임"
-        infoView.nickNameTextField.lblError.text = "닉네임을 입력해 주세요"
+//        infoView.nickNameTextField.lblError.text = "닉네임을 입력해 주세요"
+
+        infoView.introduceTextField.initTextFieldText(placeHolder: "15글자 이하로 작성해주세요", delegate: self)
+        infoView.introduceTextField.lblTitle.text = "한 줄 자기소개"
     }
 }
 
@@ -292,9 +302,9 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         pickerRegion.delegate = self
         pickerRegion.dataSource = self
 
-        pickerEducation.delegate = self
-        pickerEducation.dataSource = self
-        infoView.educationTextField.tf.inputView = pickerEducation
+        pickerMbti.delegate = self
+        pickerMbti.dataSource = self
+        infoView.mbtiTextField.tf.inputView = pickerMbti
         infoView.regionTextField.tf.inputView = pickerRegion
         // Add a toolbar with a custom button title
         let toolbar = UIToolbar()
@@ -305,12 +315,12 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolbar.setItems([space, doneButton], animated: false)
 
-        let educationToolbar = UIToolbar()
-        educationToolbar.sizeToFit()
-        educationToolbar.backgroundColor = .clear
-        let educationDoneButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(educationPickerDoneButtonTapped))
-        let educationSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        educationToolbar.setItems([educationSpace, educationDoneButton], animated: false)
+        let mbtiToolbar = UIToolbar()
+        mbtiToolbar.sizeToFit()
+        mbtiToolbar.backgroundColor = .clear
+        let mbtiDoneButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(mbtiPickerDoneButtonTapped))
+        let mbtiSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        mbtiToolbar.setItems([mbtiSpace, mbtiDoneButton], animated: false)
 
         let birthToolbar = UIToolbar()
         birthToolbar.sizeToFit()
@@ -330,7 +340,7 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         datePicker.addTarget(self, action: #selector(dateChange), for: .valueChanged)
         // textField의 inputView가 nil이라면 기본 할당은 키보드입니다.
         infoView.regionTextField.tf.inputAccessoryView = toolbar
-        infoView.educationTextField.tf.inputAccessoryView = educationToolbar
+        infoView.mbtiTextField.tf.inputAccessoryView = mbtiToolbar
         infoView.birthTextField.tf.inputAccessoryView = birthToolbar
         infoView.birthTextField.tf.inputView = datePicker
         // textField에 오늘 날짜로 표시되게 설정
@@ -354,8 +364,8 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView == pickerRegion {
             num = region.count
         }
-        if pickerView == pickerEducation {
-            num = education.count
+        if pickerView == pickerMbti {
+            num = mbti.count
         }
         return num
     }
@@ -366,8 +376,8 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView == pickerRegion {
             return region[row]
         }
-        if pickerView == pickerEducation {
-            return education[row]
+        if pickerView == pickerMbti {
+            return mbti[row]
         }
         return nil
     }
@@ -377,8 +387,8 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView == pickerRegion {
             infoView.regionTextField.tf.text = region[row]
         }
-        if pickerView == pickerEducation {
-            infoView.educationTextField.tf.text = education[row]
+        if pickerView == pickerMbti {
+            infoView.mbtiTextField.tf.text = mbti[row]
         }
     }
 }
@@ -388,8 +398,8 @@ extension InfoViewController: CustomTextFieldDelegate {
         if textField == infoView.regionTextField.tf {
             infoView.birthTextField.tf.becomeFirstResponder() // next 버튼 선택 시 -> tfPW 포커싱
         } else if textField == infoView.birthTextField.tf {
-            infoView.educationTextField.tf.becomeFirstResponder() // return 버튼 선택 시 -> 키보드 내려감
-        } else if textField == infoView.educationTextField.tf {
+            infoView.mbtiTextField.tf.becomeFirstResponder() // return 버튼 선택 시 -> 키보드 내려감
+        } else if textField == infoView.mbtiTextField.tf {
             infoView.heightTextField.tf.becomeFirstResponder()
         } else {
             infoView.heightTextField.tf.resignFirstResponder()
@@ -402,8 +412,8 @@ extension InfoViewController: CustomTextFieldDelegate {
             infoView.regionTextField.isError = false
         } else if textfield == infoView.birthTextField.tf {
             infoView.birthTextField.isError = false
-        } else if textfield == infoView.educationTextField.tf {
-            infoView.educationTextField.isError = false
+        } else if textfield == infoView.mbtiTextField.tf {
+            infoView.mbtiTextField.isError = false
         } else {
             infoView.heightTextField.isError = false
         }
@@ -416,8 +426,8 @@ extension InfoViewController: CustomTextFieldDelegate {
             infoView.regionTextField.isError = false
         } else if textField == infoView.birthTextField.tf {
             infoView.birthTextField.isError = false
-        } else if textField == infoView.educationTextField.tf {
-            infoView.educationTextField.isError = false
+        } else if textField == infoView.mbtiTextField.tf {
+            infoView.mbtiTextField.isError = false
         } else {
             infoView.heightTextField.isError = false
         }
@@ -429,17 +439,5 @@ extension InfoViewController: CustomTextFieldDelegate {
         guard let text = textField.text else { return true }
         let newLength = text.count + string.count - range.length
         return newLength <= 30 // 30개 제한
-    }
-}
-
-private extension InfoViewController {
-    func calculateAge(birthDate: Date) -> Int {
-        let calendar = Calendar.current
-        let now = Date()
-        
-        let ageComponents = calendar.dateComponents([.year], from: birthDate, to: now)
-        let age = ageComponents.year ?? 0
-        
-        return age
     }
 }

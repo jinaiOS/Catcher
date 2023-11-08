@@ -20,11 +20,13 @@ final class FireStoreManager {
     static let shared = FireStoreManager()
     private let db = Firestore.firestore()
     private let userInfoPath = "userInfo"
+    private let nearUserPath = "location"
+    private let pickerPath = "picker"
     private let reportPath = "report"
     private let askPath = "ask"
     private let fcmTokenPath = "fcmToken"
     private let itemCount: Int = 9
-    private let nearUserPath = "location"
+    
     private init() { }
 }
 
@@ -142,23 +144,6 @@ extension FireStoreManager {
         }
     }
     
-    func fetchRanking() async -> (result: [UserInfo]?, error: Error?) {
-        let query = db.collection(userInfoPath)
-            .order(by: Data.score.key, descending: true)
-            .limit(to: itemCount)
-        do {
-            let document = try await query.getDocuments()
-            let userInfoList = document.documents.map {
-                $0.data()
-            }.compactMap {
-                decodingValue(data: $0)
-            }
-            return (userInfoList, nil)
-        } catch {
-            return (nil, error)
-        }
-    }
-    
     func fetchNewestUser() async -> (result: [UserInfo]?, error: Error?) {
         do {
             let querySnapshot = try await db.collection(userInfoPath)
@@ -191,16 +176,40 @@ extension FireStoreManager {
         }
     }
     
-    /// 받은 찜 갯수
-    func fetchMyPickedCount(uid: String) async -> (result: Int?, error: Error?) {
-        let query = db.collection(userInfoPath)
-            .whereField(Data.pick.key, arrayContains: uid)
-        let countQuery = query.count
+    /// 찜 받은 개수 순서대로 출력
+    func fetchRanking() async -> (result: [UserInfo]?, error: Error?) {
+        let (result, error) = await fetchPickerCount()
+        if let error = error {
+            return (nil, error)
+        }
+        var keysArray: [String] = []
+        var valuesArray: [Int] = []
+        
+        if let result = result {
+            for dictionary in result {
+                for (key, value) in dictionary {
+                    keysArray.append(key)
+                    valuesArray.append(value)
+                }
+            }
+        }
+        var userInfo = await groupTaskForFetchUsers(uidList: keysArray)
+        for (index, var element) in userInfo.enumerated() {
+            element.heart = valuesArray[index]
+            userInfo[index] = element
+        }
+        return (userInfo, nil)
+    }
+    
+    /// 내가 받은 찜 개수
+    func fetchMyPickedCount() async -> (Int?, Error?) {
+        guard let uid = FirebaseManager().getUID else { return (nil, FireStoreError.missingUID) }
+        let documentRef = db.collection(pickerPath).document(uid)
         
         do {
-            let snapshot = try await countQuery.getAggregation(source: .server)
-            let count = snapshot.count as? Int
-            return (count, nil)
+            let snapshot = try await documentRef.getDocument()
+            let data = snapshot.data()?["pick"] as? [Any]
+            return (data?.count, nil)
         } catch {
             return (nil, error)
         }
@@ -233,6 +242,29 @@ extension FireStoreManager {
         }
     }
     
+    func updatePicker(uuid: String) async -> Error? {
+        guard let uid = FirebaseManager().getUID else { return FireStoreError.missingUID }
+        let docRef = db.collection(pickerPath).document(uuid)
+        do {
+            try await docRef.updateData([
+                Data.pick.key: FieldValue.arrayUnion([uid])
+            ])
+            return nil
+        } catch {
+            if (error as NSError).code == 5 {
+                do {
+                    try await docRef.setData([
+                        Data.pick.key: [uid]
+                    ])
+                    return nil
+                } catch {
+                    return error
+                }
+            }
+            return error
+        }
+    }
+    
     func updateBlockUser(uuid: String) async -> Error? {
         guard let uid = FirebaseManager().getUID else { return FireStoreError.missingUID }
         let docRef = db.collection(userInfoPath).document(uid)
@@ -240,16 +272,6 @@ extension FireStoreManager {
             try await docRef.updateData([
                 Data.block.key: FieldValue.arrayUnion([uuid])
             ])
-            return nil
-        } catch {
-            return error
-        }
-    }
-    
-    func updateScore(uid: String, score: Int) async -> Error? {
-        let docRef = db.collection(userInfoPath).document(uid)
-        do {
-            try await docRef.updateData(["score": score])
             return nil
         } catch {
             return error
@@ -285,6 +307,19 @@ extension FireStoreManager {
         do {
             try await docRef.updateData([
                 Data.pick.key: FieldValue.arrayRemove([uuid])
+            ])
+            return nil
+        } catch {
+            return error
+        }
+    }
+    
+    func deletePicker(uuid: String) async -> Error? {
+        guard let uid = FirebaseManager().getUID else { return FireStoreError.missingUID }
+        let docRef = db.collection(pickerPath).document(uuid)
+        do {
+            try await docRef.updateData([
+                Data.pick.key: FieldValue.arrayRemove([uid])
             ])
             return nil
         } catch {
@@ -330,6 +365,26 @@ private extension FireStoreManager {
         }
     }
     
+    /// (uid, 찜 받은 개수)
+    func fetchPickerCount() async -> ([[String: Int]]?, Error?) {
+        let pickerCollection = db.collection(pickerPath)
+        let field = "pick"
+        
+        do {
+            let querySnapshot = try await pickerCollection.order(by: field, descending: true).getDocuments()
+            let result: [[String : Int]] = querySnapshot.documents.map { snapshot in
+                let data = snapshot.data()
+                let uid = snapshot.documentID
+                let pick = data[field] as? [Any] ?? []
+                let info = [uid: pick.count]
+                return info
+            }
+            return (result, nil)
+        } catch {
+            return (nil, error)
+        }
+    }
+    
     func groupTaskForFetchUsers(uidList: [String]) async -> [UserInfo] {
         let datas = await withTaskGroup(of: UserInfo?.self) { group in
             for uid in uidList {
@@ -360,14 +415,12 @@ private extension FireStoreManager {
         case nickName
         case location
         case height
-        case body
-        case education
-        case drinking
-        case smoking
+        case mbti
         case register
-        case score
+        case introduction
         case pick
         case block
+        case heart
         
         var key: String { rawValue }
     }
@@ -382,12 +435,9 @@ private extension FireStoreManager {
             Data.nickName.key: data.nickName,
             Data.location.key: data.location,
             Data.height.key: data.height,
-            Data.body.key: data.body,
-            Data.education.key: data.education,
-            Data.drinking.key: data.drinking,
-            Data.smoking.key: data.smoking,
             Data.register.key: data.register,
-            Data.score.key: data.score,
+            Data.mbti.key: data.mbti,
+            Data.introduction.key: data.introduction,
             Data.pick.key: data.pick ?? [],
             Data.block.key: data.block ?? []
         ]
@@ -404,14 +454,12 @@ private extension FireStoreManager {
             nickName: data[Data.nickName.key] as? String ?? "",
             location: data[Data.location.key] as? String ?? "",
             height: data[Data.height.key] as? Int ?? -1,
-            body: data[Data.body.key] as? String ?? "",
-            education: data[Data.education.key] as? String ?? "",
-            drinking: data[Data.drinking.key] as? String ?? "",
-            smoking: data[Data.smoking.key] as? Bool ?? false,
+            mbti: data[Data.mbti.key] as? String ?? "",
+            introduction: data[Data.introduction.key] as? String ?? "",
             register: data[Data.register.key] as? Date ?? Date(),
-            score: data[Data.score.key] as? Int ?? 0,
             pick: data[Data.pick.key] as? [String] ?? [],
-            block: data[Data.block.key] as? [String] ?? []
+            block: data[Data.block.key] as? [String] ?? [],
+            heart: data[Data.heart.key] as? Int ?? 0
         )
     }
 }

@@ -9,15 +9,26 @@ import UIKit
 import CoreLocation
 import MapKit
 
-final class LocationPickerViewController: UIViewController {
+final class LocationPickerViewController: BaseViewController {
 
     public var completion: ((CLLocationCoordinate2D) -> Void)?
     private var coordinates: CLLocationCoordinate2D?
+    private var isSendUsable = true
     private var isPickable = true
     
     private let btnSend: UIButton = {
-       let button = UIButton()
-        button.setTitle("Send", for: .normal)
+       let button = ButtonFactory.makeButton(
+        type: .custom,
+        title: "Send",
+        tintColor: .black)
+        return button
+    }()
+    
+    private let btnBack: UIButton = {
+       let button = ButtonFactory.makeButton(
+        type: .custom,
+        image: UIImage(systemName: "chevron.left"),
+        tintColor: .black)
         return button
     }()
     
@@ -26,9 +37,10 @@ final class LocationPickerViewController: UIViewController {
         return map
     }()
 
-    init(coordinates: CLLocationCoordinate2D?) {
+    init(coordinates: CLLocationCoordinate2D?, isSendUsable: Bool) {
         self.coordinates = coordinates
         self.isPickable = coordinates == nil
+        self.isSendUsable = isSendUsable
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -39,6 +51,8 @@ final class LocationPickerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ThemeColor.backGroundColor
+        btnBack.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        btnSend.isHidden = !isSendUsable
         if isPickable {
             btnSend.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
             map.isUserInteractionEnabled = true
@@ -64,7 +78,14 @@ final class LocationPickerViewController: UIViewController {
     }
     
     func setLayout() {
+        view.addSubview(btnBack)
         view.addSubview(btnSend)
+        
+        btnBack.snp.makeConstraints {
+            $0.top.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
+            $0.height.equalTo(40)
+            $0.width.equalTo(50)
+        }
         
         btnSend.snp.makeConstraints {
             $0.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(10)
@@ -79,6 +100,10 @@ final class LocationPickerViewController: UIViewController {
         }
         navigationController?.popViewController(animated: true)
         completion?(coordinates)
+    }
+    
+    @objc func backButtonTapped() {
+        self.navigationPopViewController(animated: true, completion: { })
     }
 
     @objc func didTapMap(_ gesture: UITapGestureRecognizer) {

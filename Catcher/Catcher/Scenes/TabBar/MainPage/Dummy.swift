@@ -8,8 +8,8 @@
 import Foundation
 
 fileprivate var dummyUser: UserInfo {
-    UserInfo(uid: UUID().uuidString, sex: "", birth: Date(), nickName: "", location: "",
-             height: 0, body: "", education: "", drinking: "", smoking: false)
+    UserInfo(uid: UUID().uuidString, sex: "", birth: Date(),
+             nickName: "", location: "", height: 0, mbti: "", introduction: "")
 }
 
 fileprivate let dummyRandom = [Item.random(dummyUser), Item.random(dummyUser), Item.random(dummyUser),

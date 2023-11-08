@@ -177,7 +177,6 @@ private extension ProfileSettingViewController {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] status in
             guard let self = self else { return }
             if status {
-                print("Camera: 권한 허용")
                 DispatchQueue.main.async {
                     self.picker.sourceType = .camera
                     self.picker.cameraFlashMode = .off
@@ -185,24 +184,25 @@ private extension ProfileSettingViewController {
                         self.picker.cameraDevice = .front
                         self.present(self.picker, animated: true)
                     } else {
-                        print("전면 카메라를 찾을 수 없음")
+                        CommonUtil.print(output: "전면 카메라를 찾을 수 없음")
+                        return
                     }
                 }
             } else {
                 DispatchQueue.main.async {
-                    print("Camera: 권한 거부")
+                    CommonUtil.print(output: "Camera: 권한 거부")
                     self.moveToSettingAlert(reason: "카메라 접근 요청 거부됨", discription: "설정 > 카메라 접근 권한을 허용해 주세요.")
                 }
             }
         }
     }
     
-    private func openLibrary() {
-        PHPhotoLibrary.requestAuthorization { status in
+    func openLibrary() {
+        PHPhotoLibrary.requestAuthorization { [weak self] status in
+            guard let self = self else { return }
             switch status {
             case .authorized:
                 DispatchQueue.main.async {
-                    print("Album: 권한 허용")
                     self.picker.sourceType = .photoLibrary
                     self.present(self.picker, animated: true)
                 }
@@ -215,14 +215,12 @@ private extension ProfileSettingViewController {
         }
     }
     
-    private func moveToSettingAlert(reason: String, discription: String) {
+    func moveToSettingAlert(reason: String, discription: String) {
         let alert = UIAlertController(title: reason, message: discription, preferredStyle: .alert)
         let ok = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
-            // 설정으로 이동
             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
         }
         let cancle = UIAlertAction(title: "취소", style: .default, handler: nil)
-        // 색상 적용.
         cancle.setValue(UIColor.darkGray, forKey: "titleTextColor")
         alert.addAction(cancle)
         alert.addAction(ok)
