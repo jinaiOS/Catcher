@@ -76,11 +76,11 @@ extension MainPageViewModel {
             return "뉴~ 진스가 아닌 뉴~ 피플"
         case 3:
             if mainSubject.value.near.isEmpty {
-                return "당신이 찜꿍~한 유저"
+                return "당신이 투표한 유저"
             }
             return "당신의 동네에 이런 사람이?!"
         case 4:
-            return "당신이 찜꿍~한 유저"
+            return "당신이 투표한 유저"
         default:
             return nil
         }
