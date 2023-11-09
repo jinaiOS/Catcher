@@ -126,18 +126,15 @@ final class RegisterViewController: BaseViewController {
      * @brief 상세 약관 보기 버튼 클릭
      */
     @objc func detailButtonTouched(sender: UIButton) {
-        if let url = URL(string: CONSENT) {
-            let vc = SFSafariViewController(url: url)
-            present(vc, animated: true)
+        if sender.tag == 1 {
+            if let url = URL(string: CONSENT) {
+                let vc = SFSafariViewController(url: url)
+                present(vc, animated: true)
+            }
+        } else {
+            let vc = TermsOfUseViewController()
+            self.navigationPushController(viewController: vc, animated: true)
         }
-    }
-    
-    /**
-     * @brief 상세 약관 보기 버튼 클릭
-     */
-    @objc func detailTermsUseButtonTouched(sender: UIButton) {
-        let vc = TermsOfUseViewController()
-        self.navigationPushController(viewController: vc, animated: true)
     }
     
     /**
@@ -177,7 +174,7 @@ final class RegisterViewController: BaseViewController {
     
     /** @brief 약관 동의 완료 버튼 선택 가능/불가능 변경 */
     func agreeButtonClicked() {
-        if selectList[0] == true && selectList[1] == true {
+        if selectList[0] == true && selectList[1] == true && selectList[2] == true {
             registerView.nextButton.isEnabled = true
             registerView.nextButton.backgroundColor = ThemeColor.primary
         } else {
@@ -352,14 +349,7 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource {
         cell.btnDetail.tag = index
         cell.btnDetail.isHidden = (index == 0)
         // 상세 버튼 클릭 이벤트 셋팅
-        switch index {
-        case 1:
-            cell.btnDetail.addTarget(self, action: #selector(detailButtonTouched(sender:)), for: .touchUpInside)
-        case 2:
-            cell.btnDetail.addTarget(self, action: #selector(detailTermsUseButtonTouched(sender:)), for: .touchUpInside)
-        default:
-            break
-        }
+        cell.btnDetail.addTarget(self, action: #selector(detailButtonTouched(sender:)), for: .touchUpInside)
         cell.selectionStyle = .none
         
         return cell
