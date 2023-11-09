@@ -91,7 +91,6 @@ final class ReportViewController: BaseHeaderViewController {
         st.alignment = .fill
         st.distribution = .equalSpacing
         st.spacing = 10
-//        view.addSubview(st)
         return st
     }()
 
@@ -179,7 +178,6 @@ final class ReportViewController: BaseHeaderViewController {
         btn.setTitleColor(.white, for: .normal)
         btn.backgroundColor = ThemeColor.primary
         btn.addTarget(self, action: #selector(reportUser), for: .touchUpInside)
-//        view.addSubview(btn)
         return btn
     }()
 
@@ -259,10 +257,25 @@ private extension ReportViewController {
             showAlert(title: "신고사항 미입력", message: "신고 사유를 자세히 작성해 주세요.")
             return
         }
+        if userBlockButton.isSelected {
+            processBlockUser()
+        }
         sendReport(title: title, descriptions: reportDetailTextView.text)
         completeAlert()
     }
-
+    
+    /// 사용자 차단
+    func processBlockUser() {
+        guard let uid = userInfo?.uid else { return }
+        Task {
+            let error = await fireStoreManager.updateShutOut(uuid: uid)
+            if let error = error {
+                CommonUtil.print(output: error.localizedDescription)
+                return
+            }
+        }
+    }
+    
     func sendReport(title: String, descriptions: String) {
         Task {
             let error = await fireStoreManager.setReport(targetUID: userInfo?.uid, title: title, descriptions: descriptions)
@@ -272,10 +285,14 @@ private extension ReportViewController {
         }
     }
 
-    func dismissVC() {
+    func dismissVC(block: Bool = false) {
         navigationPopToRootViewController(animated: true) { [weak self] in
             guard let self = self,
                   let userInfo = userInfo else { return }
+            if block {
+                NotificationManager.shared.reportUser()
+                return
+            }
             let userInfoVC = UserInfoViewController(info: userInfo, isPicked: isPicked, isBlocked: isBlocked)
             userInfoVC.modalPresentationStyle = .custom
             userInfoVC.modalTransitionStyle = .crossDissolve
@@ -300,14 +317,14 @@ private extension ReportViewController {
     func completeAlert() {
         let alert = UIAlertController(
             title: "신고 완료",
-            message: "신고가 접수되었습니다.",
+            message: "귀하의 신고를 받았습니다. 24시간 내에 문제를 조사하고 적절한 조치를 취할 것을 약속드립니다.",
             preferredStyle: .alert)
         let okAction = UIAlertAction(
             title: "확인",
             style: .default)
         { [weak self] _ in
             guard let self = self else { return }
-            dismissVC()
+            dismissVC(block: true)
         }
         alert.addAction(okAction)
         present(alert, animated: true)
@@ -346,7 +363,6 @@ extension ReportViewController {
         stack1.snp.makeConstraints { make in
             make.leading.equalTo(reportView.snp.leading).inset(23)
             make.top.equalTo(reportView.snp.top).inset(10)
-//            make.trailing.equalTo(stack2.snp.leading).inset(10)
             make.height.equalTo(24)
         }
         label1.snp.makeConstraints { make in
@@ -359,37 +375,28 @@ extension ReportViewController {
             make.top.equalTo(reportView.snp.top).inset(10)
             make.height.equalTo(24)
         }
-//        label2.snp.makeConstraints { make in
-//            make.width.equalTo(90)
-//            make.height.equalTo(21)
-//        }
 
         stack3.snp.makeConstraints { make in
             make.leading.equalTo(reportView.snp.leading).inset(23)
             make.top.equalTo(stack1.snp.top).inset(23)
             make.height.equalTo(24)
         }
+        
         label3.snp.makeConstraints { make in
             make.width.equalTo(200)
             make.height.equalTo(21)
         }
 
         stack4.snp.makeConstraints { make in
-//            make.trailing.equalTo(reportView.snp.trailing).inset(23)
             make.top.equalTo(stack2.snp.top).inset(23)
             make.height.equalTo(24)
             make.leading.equalTo(stack2.snp.leading)
         }
-//        label4.snp.makeConstraints { make in
-//            make.width.equalTo(75)
-//            make.height.equalTo(21)
-//        }
-
+        
         reportView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(contentView).inset(20)
             make.top.equalTo(contentView.snp.top)
             make.bottom.equalTo(label4.snp.bottom).inset(-10)
-//            make.height.equalTo(50)
         }
 
         reportDetailLabel.snp.makeConstraints { make in
@@ -397,25 +404,29 @@ extension ReportViewController {
             make.leading.equalTo(contentView).inset(36)
             make.height.equalTo(18)
         }
+        
         reportDetailTextView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalTo(self.reportDetailView).inset(16)
         }
+        
         reportDetailView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(contentView).inset(20)
             make.top.equalTo(reportDetailLabel.snp.bottom).inset(-10)
             make.height.equalTo(262)
         }
+        
         reportButton.snp.makeConstraints { make in
             make.top.equalTo(userBlockStack.snp.bottom).inset(-20)
             make.leading.trailing.equalTo(contentView).inset(14)
             make.height.equalTo(50)
-//            make.bottom.equalTo(contentView.snp.bottom).inset(20)
         }
+        
         userBlockStack.snp.makeConstraints { make in
             make.top.equalTo(reportDetailView.snp.bottom).inset(-20)
             make.leading.equalTo(reportDetailLabel.snp.leading)
             make.height.equalTo(30)
         }
+        
         tempView.snp.makeConstraints {
             $0.top.equalTo(reportButton.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview()
