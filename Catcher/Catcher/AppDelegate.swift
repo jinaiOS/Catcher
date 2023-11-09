@@ -188,6 +188,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
             let otherUserUid = payloadData["otherUserUid"] as? String ?? ""
             let viewController = ChattingDetailViewController(otherUid: otherUserUid)
             viewController.title = notification.request.content.title
+            viewController.headerTitle = notification.request.content.title
             AppDelegate.applicationDelegate().navigationController?.pushViewController(viewController, animated: true)
         }
     }
@@ -212,6 +213,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
             let otherUserUid = payloadData["otherUserUid"] as? String ?? ""
             let viewController = ChattingDetailViewController(otherUid: otherUserUid)
             viewController.title = response.notification.request.content.title
+            viewController.headerTitle = response.notification.request.content.title
             AppDelegate.applicationDelegate().navigationController?.pushViewController(viewController, animated: true)
         }
     }

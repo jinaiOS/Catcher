@@ -123,6 +123,7 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     func openConversation(_ model: Conversation) {
         let vc = ChattingDetailViewController(otherUid: model.otherUserUid)
         vc.title = model.name
+        vc.headerTitle = model.name
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }

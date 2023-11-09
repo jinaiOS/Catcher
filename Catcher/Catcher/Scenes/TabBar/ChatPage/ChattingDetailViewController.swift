@@ -730,7 +730,7 @@ extension ChattingDetailViewController: MessageCellDelegate {
             let vc = LocationPickerViewController(coordinates: coordinates, isSendUsable: false)
             
             vc.title = "Location"
-            navigationController?.pushViewController(vc, animated: true)
+            present(vc, animated: true)
         default:
             break
         }

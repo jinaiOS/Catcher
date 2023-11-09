@@ -98,13 +98,12 @@ final class LocationPickerViewController: BaseViewController {
         guard let coordinates = coordinates else {
             return
         }
-        navigationController?.popViewController(animated: true)
         self.dismiss(animated: true)
         completion?(coordinates)
     }
     
     @objc func backButtonTapped() {
-        self.navigationPopViewController(animated: true, completion: { })
+        self.dismiss(animated: true)
     }
 
     @objc func didTapMap(_ gesture: UITapGestureRecognizer) {
