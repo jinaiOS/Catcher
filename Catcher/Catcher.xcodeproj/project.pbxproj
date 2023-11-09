@@ -69,6 +69,8 @@
 		5622C0AF2AF7837D00455649 /* TermsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622C0AD2AF7837D00455649 /* TermsTableViewCell.swift */; };
 		5622C0B02AF7837D00455649 /* TermsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5622C0AE2AF7837D00455649 /* TermsTableViewCell.xib */; };
 		562B012A2AFB8A4E0099157C /* GenderClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 562B01292AFB8A4E0099157C /* GenderClassifier.mlmodel */; };
+		562B01C12AFCACB30099157C /* TermsOfUseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562B01BF2AFCACB30099157C /* TermsOfUseViewController.swift */; };
+		562B01C22AFCACB30099157C /* TermsOfUseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 562B01C02AFCACB30099157C /* TermsOfUseViewController.xib */; };
 		562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36802AD80EF9008D99B2 /* AppDelegate.swift */; };
 		562E36852AD80EF9008D99B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36842AD80EF9008D99B2 /* ViewController.swift */; };
 		562E36882AD80EF9008D99B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 562E36862AD80EF9008D99B2 /* Main.storyboard */; };
@@ -208,6 +210,8 @@
 		5622C0AE2AF7837D00455649 /* TermsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsTableViewCell.xib; sourceTree = "<group>"; };
 		562B01292AFB8A4E0099157C /* GenderClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GenderClassifier.mlmodel; sourceTree = "<group>"; };
 		562B012B2AFB93F50099157C /* CatcherRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CatcherRelease.entitlements; sourceTree = "<group>"; };
+		562B01BF2AFCACB30099157C /* TermsOfUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseViewController.swift; sourceTree = "<group>"; };
+		562B01C02AFCACB30099157C /* TermsOfUseViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsOfUseViewController.xib; sourceTree = "<group>"; };
 		562E367D2AD80EF9008D99B2 /* Catcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Catcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		562E36802AD80EF9008D99B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		562E36842AD80EF9008D99B2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -540,6 +544,8 @@
 				56C08B782ADF80AC00FB8608 /* MyPage */,
 				68708AB62AE745C200B4C7B9 /* SurveyViewController.swift */,
 				23E7DAB92AEB978600CDBC53 /* ProfileSettingViewController.swift */,
+				562B01BF2AFCACB30099157C /* TermsOfUseViewController.swift */,
+				562B01C02AFCACB30099157C /* TermsOfUseViewController.xib */,
 				33845E3E2AF43D0300539068 /* View */,
 				33845E402AF43D2700539068 /* ViewModel */,
 				33845E3F2AF43D1200539068 /* ViewController */,
@@ -779,6 +785,7 @@
 				33532B832AE299E1008B47EB /* GoogleService-Info.plist in Resources */,
 				5622C0792AF1416300455649 /* CustomTextField.xib in Resources */,
 				56BBF7EC2AE6009700A2BADD /* IntroViewController.xib in Resources */,
+				562B01C22AFCACB30099157C /* TermsOfUseViewController.xib in Resources */,
 				562E36BF2AD9172B008D99B2 /* CommonHeaderView.xib in Resources */,
 				562E36882AD80EF9008D99B2 /* Main.storyboard in Resources */,
 			);
@@ -890,6 +897,7 @@
 				56C08B862AE0FEB300FB8608 /* ConversationTableViewCell.swift in Sources */,
 				33E590232AF08C0A0060FBA0 /* ProfileSettingViewModel.swift in Sources */,
 				335AC1F32AE7E89B00F2CF51 /* UserInfoViewController.swift in Sources */,
+				562B01C12AFCACB30099157C /* TermsOfUseViewController.swift in Sources */,
 				56C08B472ADF6B7E00FB8608 /* ChatViewController.swift in Sources */,
 				33C58E8E2AD8B2F6008EB6C2 /* UIColor+.swift in Sources */,
 				23E7DAB82AEB919400CDBC53 /* Const.swift in Sources */,
@@ -1021,11 +1029,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Catcher/Catcher.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 8;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YRZW7MZ3P5;
+				DEVELOPMENT_TEAM = YRZW7MZ3P5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Catcher/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "앱에서 프로필 등록을 하기 위해 카메라 접근 권한 동의가 필요합니다.";
@@ -1044,7 +1050,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.utopia.Catcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = CatcherProd;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1215,11 +1220,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Catcher/CatcherDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 8;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YRZW7MZ3P5;
+				DEVELOPMENT_TEAM = YRZW7MZ3P5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Catcher/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "앱에서 프로필 등록을 하기 위해 카메라 접근 권한 동의가 필요합니다.";
@@ -1238,7 +1241,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.utopia.Catcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = CatcherProd;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1255,11 +1257,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Catcher/CatcherRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 8;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YRZW7MZ3P5;
+				DEVELOPMENT_TEAM = YRZW7MZ3P5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Catcher/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "앱에서 프로필 등록을 하기 위해 카메라 접근 권한 동의가 필요합니다.";
@@ -1278,7 +1278,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.utopia.Catcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = CatcherProd;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
