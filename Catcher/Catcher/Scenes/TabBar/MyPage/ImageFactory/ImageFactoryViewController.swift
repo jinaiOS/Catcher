@@ -59,7 +59,7 @@ private extension ImageFactoryViewController {
             CommonUtil.print(output: error)
             return
         }
-        navigationPopViewController(animated: true, completion: nil)
+        showAlert(title: "사진이 저장되었습니다.", message: "")
     }
 }
 
