@@ -87,6 +87,15 @@ class AskViewController: BaseHeaderViewController {
         return view
     }()
     
+    private lazy var infoLabel: UILabel = {
+       let label = UILabel()
+        label.text = "연락처 문의: jiwook.han.dev@gmail.com"
+        label.numberOfLines = 0
+        label.textColor = .systemGray
+        label.font = ThemeFont.regular(size: 17)
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ThemeColor.backGroundColor
@@ -152,7 +161,7 @@ private extension AskViewController {
         }
         
         [askTitleLabel, textFieldView, askDetailLabel,
-         askDetailView, askButton, tempView].forEach {
+         askDetailView, infoLabel, askButton, tempView].forEach {
             contentView.addSubview($0)
         }
         
@@ -187,8 +196,13 @@ private extension AskViewController {
             $0.height.equalTo(300)
         }
         
+        infoLabel.snp.makeConstraints {
+            $0.top.equalTo(askDetailView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
+        }
+        
         askButton.snp.makeConstraints {
-            $0.top.equalTo(askDetailView.snp.bottom).offset(50)
+            $0.top.equalTo(infoLabel.snp.bottom).offset(50)
             $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
             $0.height.equalTo(50)
         }
