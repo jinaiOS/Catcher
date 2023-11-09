@@ -242,6 +242,7 @@ private extension InfoViewController {
                     }
                 }
             }
+            UserDefaultsManager().setValue(value: location, key: "location")
         }
     }
 

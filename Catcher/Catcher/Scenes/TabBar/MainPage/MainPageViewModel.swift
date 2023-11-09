@@ -116,7 +116,7 @@ extension MainPageViewModel {
         }
         return items
     }
-
+    
     func isPickedUser(info: UserInfo) -> Bool {
         let uids = fetchPickedUser.map { $0.uid }
         if uids.contains(info.uid) {
