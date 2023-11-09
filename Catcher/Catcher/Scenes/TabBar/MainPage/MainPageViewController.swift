@@ -60,19 +60,7 @@ private extension MainPageViewController {
     }
     
     @objc func refreshCollectionView() {
-//        viewModel.fetchMainPageData()
-        
-//        for i in 0...4 {
-//            let indexPath = IndexPath(item: 0, section: i)
-//            
-//            let item = viewModel.getSectionItems(section: i)
-//            if item?.isEmpty == false {
-//                print("====> \(i), \(item)")
-//            }
-//            
-//        }
-        mainPageView.collectionView.reloadData()
-//        mainPageView.collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+        viewModel.fetchMainPageData()
     }
     
     @objc func didRecieveReportNotification() {
