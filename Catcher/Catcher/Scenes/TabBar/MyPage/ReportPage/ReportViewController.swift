@@ -300,7 +300,7 @@ private extension ReportViewController {
     func completeAlert() {
         let alert = UIAlertController(
             title: "신고 완료",
-            message: "신고가 접수되었습니다.",
+            message: "신고가 접수되었습니다.\n검토까지는 최대 24시간 소요됩니다.",
             preferredStyle: .alert)
         let okAction = UIAlertAction(
             title: "확인",
