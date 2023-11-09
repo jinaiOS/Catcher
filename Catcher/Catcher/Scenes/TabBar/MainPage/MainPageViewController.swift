@@ -37,6 +37,12 @@ final class MainPageViewController: UIViewController {
 private extension MainPageViewController {
     func configure() {
         mainPageView.collectionView.delegate = self
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didRecieveReportNotification),
+            name: NSNotification.Name(NotificationManager.NotiName.report.key),
+            object: nil)
     }
     
     func setTarget() {
@@ -54,6 +60,10 @@ private extension MainPageViewController {
     }
     
     @objc func refreshCollectionView() {
+        viewModel.fetchMainPageData()
+    }
+    
+    @objc func didRecieveReportNotification() {
         viewModel.fetchMainPageData()
     }
 }

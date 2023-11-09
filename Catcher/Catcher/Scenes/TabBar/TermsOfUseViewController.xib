@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TermsOfUseViewController" customModule="Catcher" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I8D-qd-Fpf">
+                    <rect key="frame" x="10" y="109" width="373" height="709"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BBf-iQ-Uio">
+                            <rect key="frame" x="0.0" y="0.0" width="373" height="3237.3333333333335"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이용약관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6a-rB-J7F">
+                                    <rect key="frame" x="0.0" y="0.0" width="373" height="36"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hRW-cS-v4U">
+                                    <rect key="frame" x="0.0" y="46" width="373" height="3191.3333333333335"/>
+                                    <mutableString key="text">제1조 (목적)
+  서비스 이용약관은 Catcher이 제공하는 서비스의 이용과 관련하여 Catcher과 이용자간의 권리, 의무 및 책임 사항 등을 규정함을 목적으로 합니다. 
+제2조 (정의)
+1. 이 약관에서 사용하는 용어의 정의는 다음과 같습니다.
+ ● “서비스”란, Catcher이 제공하는 모든 서비스 및 기능을 말합니다.
+ ● “이용자”란, 이 약관에 따라 서비스를 이용하는 회원을 말합니다.
+ ● “회원”이란, 서비스에 회원등록을 하고 서비스를 이용하는 자를 말합니다.
+ ● “서비스 내부 알림 수단”이란, 팝업, 알림 등을 말합니다.
+ ● “연락처”란, 회원가입, 문의 창구 등을 통해 수집된 이용자의 이메일 등을 의미합니다.
+ ● “관련법”이란, 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 전기통신사업자, 개인정보보호법 등 관련 있는 국내 법령을 말합니다.
+2. 제1항에서 정의되지 않은 이 약관 내 용어의 의미는 일반적인 이용관행에 의합니다. 
+제3조 (약관 등의 명시와 설명 및 개정)
+1. Catcher은 이 약관을 서비스 초기화면, 회원가입 화면 등에 게시하거나 기타의 방법으로 회원에게 공지합니다.
+2. Catcher은 필요하다고 인정되는 경우, 관련법을 위배하지 않는 범위에서 이 약관을 개정할 수 있습니다.
+3. Catcher은 약관을 개정할 경우, 적용 일자 및 개정 사유를 명시하여 현행약관과 함께 개정약관 적용 일자 7일 전부터 “공지사항”을 통해 공지합니다. 다만, 개정 내용이 회원의 권리 및 의무에 중대한 영향을 미치는 경우에는 적용 일자 30일 전부터 회원의 연락처 또는 서비스 내부 알림 수단으로 개별 공지합니다.
+4. 회원은 개정 약관에 동의하지 않을 경우, 제7조(서비스 이용계약의 종료)에 따라 회원 탈퇴 방법으로 거부 의사를 표시할 수 있습니다. 단, Catcher이 약관 개정 시 “개정 약관의 적용 일자까지 회원이 거부 의사를 표시하지 아니할 경우 약관의 개정에 동의한 것으로 간주한다.”는 내용을 고지하였음에도 불구하고 회원이 약관 개정에 대한 거부 의사를 표시하지 아니하면, 회사는 적용 일자부로 개정 약관에 동의한 것으로 간주합니다.
+5. 회원은 약관 일부분만을 동의 또는 거부할 수 없습니다.
+6. Catcher은 제1항부터 제4항까지를 준수하였음에도 불구하고 회원이 약관 개정 사실을 알지 못함으로써 발생하는 피해에 대해 Catcher은 고의 또는 중대한 과실이 없는 한 어떠한 책임도지지 않습니다. 
+제4조 (서비스의 제공)
+1. Catcher은 다음 서비스를 제공합니다.
+2. Catcher은 운영상, 기술상의 필요에 따라 제공하고 있는 서비스를 변경할 수 있습니다.
+3. Catcher은 이용자의 개인정보에 따라 서비스 이용에 차이를 둘 수 있습니다.
+4. Catcher은 설비의 보수, 교체, 점검 또는 기간통신사업자의 서비스 중지, 인터넷 장애 등의 사유로 인해 일시적으로 서비스 제공이 어려울 경우, 통보 없이 일시적으로 서비스 제공을 중단할 수 있습니다.
+5. Catcher은 천재지변, 전쟁, 운영 악화 등 불가항력적인 사유로 인해 서비스를 더 이상 제공하기 어려울 경우, 통보 없이 서비스 제공을 영구적으로 중단할 수 있습니다.
+6. Catcher은 제3항부터 제5항까지 및 다음 내용으로 인해 발생한 피해에 대해 Catcher의 고의 또는 중대한 과실이 없는 한 어떠한 책임도지지 않습니다.
+ ● 모든 서비스, 무결성, 신뢰성, 이용가능성의 보장
+ ● Catcher이 관련 법령에 따라 요구되는 보호조치를 이행하였음에도 불구하고, 네트워크의 안정성을 해치는 행위 또는 악성 프로그램 등에 의하여 발생하는 예기치 못한 이용자의 피해
+ ● 이용자의 귀책 사유 또는 Catcher의 귀책 사유가 아닌 사유로 발생한 이용자의 피해 
+제5조 (서비스 이용계약의 성립)
+1. Catcher과 회원의 서비스 이용계약은 서비스를 이용하고자 하는 자(이하 “가입 신청자”라고 합니다.)가 서비스 내부의 회원 가입 양식에 따라 필요한 회원정보를 기입하고, 이 약관, 개인정보 수집 및 이용 동의, 이용규칙 등에 명시적인 동의를 한 후, 신청한 회원가입 의사 표시(이하 “이용신청”이라고 합니다.)를 Catcher이 승낙함으로써 체결됩니다.
+2. 제1항의 승낙은 신청순서에 따라 순차적으로 처리되며, 회원가입의 성립 시기는 Catcher의 회원가입이 완료되었음을 알리는 승낙의 통지가 회원에게 도달하거나, 이에 준하는 권한이 회원에게 부여되는 시점으로 합니다.
+3. Catcher은 만 14세 미만 이용자의 이용신청을 금지하고 있습니다. 가입 신청자는 이용신청 시 만 14세 이상에 해당한다는 항목에 명시적인 동의를 함으로써 회원은 만 14세 이상임을 진술하고 보증합니다.
+4. Catcher은 가입 신청자의 이용신청에 있어 다음 각 호에 해당하는 경우, 이용신청을 영구적으로 승낙하지 않거나 유보할 수 있습니다.
+ ● Catcher이 정한 이용신청 요건에 충족되지 않을 경우
+ ● 가입 신청자가 만 14세 미만인 경우
+ ● 제9조(금지행위)에 해당하는 행위를 하거나 해당하는 행위를 했던 이력이 있을 경우
+ ● Catcher의 기술 및 설비 상 서비스를 제공할 수 없는 경우
+ ● 기타 Catcher이 합리적인 판단에 의하여 필요하고 인정하는 경우
+5. Catcher은 제3항부터 제4항까지로 인해 발생한 피해에 대해 Catcher의 고의 또는 중대한 과실이 없는 한 어떠한 책임도지지 않습니다. 
+제6조 (개인정보의 관리 및 보호)
+1. Catcher은 관계 법령이 정하는 바에 따라 회원의 개인정보를 보호하기 위해 노력합니다. 개인정보의 보호 및 이용에 관해서는 관련 법령 및 Catcher의 개인정보 처리방침을 따릅니다. 
+제7조 (서비스 이용계약의 종료)
+1. 회원은 언제든지 본인의 계정으로 로그인한 뒤 서비스 내부의 “탈퇴하기” 버튼을 누르는 방법으로 탈퇴를 요청할 수 있으며, 그 외 문의 창구 등을 통한 탈퇴 요청은 처리되지 않습니다. Catcher은 해당 요청을 확인한 후 탈퇴를 처리합니다.
+2. Catcher은 회원이 제9조(금지행위)에 해당하는 행위를 하거나 해당하는 행위를 했던 이력이 있을 경우, 제13조(서비스 제공의 중단 및 서비스 이용계약의 해지)에 따라 서비스 제공을 중단하거나 서비스 이용계약을 해지할 수 있습니다.
+3. Catcher은 제1항부터 제2항까지로 인해 발생한 피해에 대해 Catcher의 고의 또는 중대한 과실이 없는 한 어떠한 책임도지지 않습니다. 
+제8조 (회원에 대한 통지)
+1. Catcher이 회원에 대한 통지가 필요한 경우, 회원의 연락처 또는 서비스 내부 알림 수단을 이용할 수 있습니다.
+2. Catcher은 회원 전체에 대한 통지의 경우 공지사항에 게시함으로써 전 항의 통지에 갈음할 수 있습니다. 단, 회원의 권리 및 의무에 중대한 영향을 미치는 사항에 대해서는 1항에 따릅니다.
+3. Catcher이 회원에게 “30일 이내 의사를 표시하지 아니할 경우 동의한 것으로 간주한다.”는 내용을 고지하였음에도 불구하고 회원이 의사를 표시하지 아니하면, Catcher은 통지 내용에 동의한 것으로 간주합니다. 
+제9조 (금지행위)
+1. 이용자는 다음과 같은 행위를 해서는 안됩니다.
+ ● 성적 도의관념에 반하는 행위
+  ○ 방송통신심의위원회의 정보통신에 관한 심의규정에 따른 심의기준의 성적 도의관념에 반하는 행위
+ ● 개인정보 또는 계정 기만, 침해, 공유 행위
+  ○ 개인정보를 허위, 누락, 오기, 도용하여 작성하는 행위
+  ○ 타인의 개인정보 및 계정을 수집, 저장, 공개, 이용하는 행위
+  ○ 자신과 타인의 개인정보를 제3자에게 공개, 양도, 승계하는 행위
+  ○ 다중 계정을 생성 및 이용하는 행위
+  ○ 자신의 계정을 이용하여 타인의 요청을 이행하는 행위
+ ● 시스템 부정행위
+  ○ 프로그램, 스크립트, 봇을 이용한 서비스 접근 등 사람이 아닌 컴퓨팅 시스템을 통한 서비스 접근 행위
+  ○ API 직접 호출, 유저 에이전트 조작, 패킷 캡쳐, 비정상적인 반복 조회 및 요청 등 허가하지 않은 방식의 서비스 이용 행위
+  ○ Catcher의 모든 재산에 대한 침해 행위
+ ● 서비스 방해 행위
+  ○ 서비스 관리자 또는 이에 준하는 자격을 허가 없이 취득하여 권한을 행사하거나, 사칭하여 허위의 정보를 발설하는 행위
+  ○ Catcher 및 타인의 명예를 훼손하거나 기타 서비스를 방해하는 행위
+  ○ 서비스 내부 정보 일체를 허가 없이 이용, 변조, 삭제 및 외부로 유출하는 행위
+ ● 기타 현행법에 어긋나거나 부적절하다고 판단되는 행위
+2. 이용자는 제1항에 기재된 내용 외에 이 약관과 서비스 이용규칙에서 규정한 내용에 반하는 행위를 해서는 안 됩니다.
+3. 이용자가 제1항에 해당하는 행위를 할 경우, Catcher은 이 약관 제10조(서비스 제공의 중단 및 서비스 이용계약의 해지)에 따라 서비스 제공을 중단하거나 서비스 이용계약을 해지할 수 있습니다. 
+제10조 (서비스 제공의 중단 및 서비스 이용계약의 해지)
+1. 이용자가 이 약관 및 서비스 이용규칙에서 이 조항 적용이 명시된 금지행위 및 이에 준하는 행위를 할 경우, Catcher은 서비스 보호를 위해 다음과 같은 조치를 최대 영구적으로 취할 수 있습니다. 해당 조치는 서비스 보호를 위해 불가피하다고 판단될 경우, Catcher이 제공하는 모든 서비스의 동일인으로 확인되는 모든 계정에 일괄적으로 적용될 수 있습니다.
+ ● 회원의 서비스 이용 권한, 자격, 혜택 제한 및 회수
+ ● 회원과 체결괸 이용계약의 해지
+ ● 회원가입 거부
+ ● 회원의 닉네임, 프로필 사진을 삭제 중단, 수정, 변경
+ ● 그 외 서비스의 정상적인 운영을 위해 Catcher이 필요하다고 판단되는 조치
+2. Catcher은 서비스 제공 중단 및 서비스 이용계약 해지 시, 회원의 연락처 또는 서비스 내부 알림 수단을 통하여 그 사실을 사유와 함께 개별 통지합니다. 회원은 통지를 받은 날로부터 7일 이내에 문의 창구로 이의를 제기할 수 있습니다.
+3. Catcher은 이용자의 귀책 사유로 인한 서비스 제공 중단 및 서비스 이용계약의 해지로 인해 발생한 피해에 대해 Catcher의 고의 또는 중대한 과실이 없는 한 어떠한 책임도지지 않습니다. 
+제11조 (재판권 및 준거법)
+1. Catcher과 이용자 간에 발생한 분쟁에 관한 소송은 민사소송법상의 관할 법원에 제소합니다.
+2. Catcher과 이용자 간에 제기된 소송에서는 대한민국 법을 준거법으로 합니다.
+제12조 (기타)
+1. 이 약관은 2023년 3월 13에 제정되었습니다.
+2. 이 약관에도 불구하고, Catcher과 이용자가 이 약관의 내용과 다르게 합의한 사항이 있는 경우에는 해당 내용을 우선으로 합니다.
+3. Catcher은 필요한 경우 약관의 하위 규정을 정할 수 있으며, 이 약관과 하위 규정이 상충하는 경우에는 이 약관의 내용이 우선 적용됩니다.
+4. 이 약관에서 정하지 아니한 사항과 이 약관의 해석에 관하여는 관련법 또는 관례에 따릅니다.</mutableString>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="BBf-iQ-Uio" firstAttribute="top" secondItem="I8D-qd-Fpf" secondAttribute="top" id="8fH-bK-RO5"/>
+                        <constraint firstAttribute="trailing" secondItem="BBf-iQ-Uio" secondAttribute="trailing" id="A3X-95-LJt"/>
+                        <constraint firstItem="BBf-iQ-Uio" firstAttribute="leading" secondItem="I8D-qd-Fpf" secondAttribute="leading" id="QR2-ee-aSO"/>
+                        <constraint firstAttribute="bottom" secondItem="BBf-iQ-Uio" secondAttribute="bottom" id="hkP-v8-jw8"/>
+                        <constraint firstItem="BBf-iQ-Uio" firstAttribute="centerX" secondItem="I8D-qd-Fpf" secondAttribute="centerX" id="mcn-JJ-NtX"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="I8D-qd-Fpf" secondAttribute="trailing" constant="10" id="98N-m9-5Oo"/>
+                <constraint firstItem="I8D-qd-Fpf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="ZgU-9D-54m"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="I8D-qd-Fpf" secondAttribute="bottom" id="f6x-tI-xaL"/>
+                <constraint firstItem="I8D-qd-Fpf" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="qft-0J-TFU"/>
+            </constraints>
+            <point key="canvasLocation" x="13" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
