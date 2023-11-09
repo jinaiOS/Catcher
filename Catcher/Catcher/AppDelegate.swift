@@ -53,6 +53,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         return true
     }
+    
+    //MARK: - APNS
+    func setFirebasePush() {
+        UNUserNotificationCenter.current().delegate = self
+        
+        //set push receive type
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        //push requestAuthorization
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: {(granted, error) in
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        })
+    }
 
     //MARK: - APNS
     func setFirebasePush() {
