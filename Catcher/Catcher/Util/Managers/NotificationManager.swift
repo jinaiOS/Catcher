@@ -13,7 +13,7 @@ final class NotificationManager {
     
     enum NotiName: String {
         case pick
-        
+        case report
         var key: String { rawValue }
     }
 }
@@ -21,5 +21,9 @@ final class NotificationManager {
 extension NotificationManager {
     func postPickCount(count: Int) {
         NotificationCenter.default.post(name: NSNotification.Name(NotiName.pick.key), object: count, userInfo: nil)
+    }
+    
+    func reportUser() {
+        NotificationCenter.default.post(name: NSNotification.Name(NotiName.report.key), object: nil, userInfo: nil)
     }
 }
