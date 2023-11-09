@@ -54,11 +54,19 @@ extension DatabaseManager {
                     message = messageText
                 case .attributedText(_):
                     break
-                case .photo(_):
+                case .photo(let mediaItem):
+                    if let targetUrlString = mediaItem.url?.absoluteString {
+                        message = targetUrlString
+                    }
                     break
-                case .video(_):
+                case .video(let mediaItem):
+                    if let targetUrlString = mediaItem.url?.absoluteString {
+                        message = targetUrlString
+                    }
                     break
-                case .location(_):
+                case .location(let locationData):
+                    let location = locationData.location
+                    message = "\(location.coordinate.longitude),\(location.coordinate.latitude)"
                     break
                 case .emoji(_):
                     break
@@ -116,11 +124,19 @@ extension DatabaseManager {
                     message = messageText
                 case .attributedText(_):
                     break
-                case .photo(_):
+                case .photo(let mediaItem):
+                    if let targetUrlString = mediaItem.url?.absoluteString {
+                        message = targetUrlString
+                    }
                     break
-                case .video(_):
+                case .video(let mediaItem):
+                    if let targetUrlString = mediaItem.url?.absoluteString {
+                        message = targetUrlString
+                    }
                     break
-                case .location(_):
+                case .location(let locationData):
+                    let location = locationData.location
+                    message = "\(location.coordinate.longitude),\(location.coordinate.latitude)"
                     break
                 case .emoji(_):
                     break

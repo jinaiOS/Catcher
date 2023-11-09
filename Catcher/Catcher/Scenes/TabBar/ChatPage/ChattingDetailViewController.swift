@@ -196,7 +196,7 @@ final class ChattingDetailViewController: MessagesViewController {
             }
             
             guard let messageId = strongSelf.createMessageId(),
-                  let name = strongSelf.title,
+                  let name = strongSelf.headerTitle,
                   let selfSender = strongSelf.selfSender else {
                 return
             }
@@ -215,17 +215,29 @@ final class ChattingDetailViewController: MessagesViewController {
                                   sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
                                   kind: .location(location))
             
-            DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
-                if success {
-                    self?.requestPush(message: message)
-                    CommonUtil.print(output:"sent location message")
-                }
-                else {
-                    CommonUtil.print(output:"failed to send location message")
-                }
-            })
+            if !strongSelf.isNewConversation {
+                DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
+                    if success {
+                        self?.requestPush(message: message)
+                        CommonUtil.print(output:"sent location message")
+                    }
+                    else {
+                        CommonUtil.print(output:"failed to send location message")
+                    }
+                })
+            } else {
+                DatabaseManager.shared.createNewConversation(otherUserUid: strongSelf.otherUserUid, firstMessage: message, completion: { success in
+                    if success {
+                        self?.requestPush(message: message)
+                        CommonUtil.print(output:"sent location message")
+                    }
+                    else {
+                        CommonUtil.print(output:"failed to send location message")
+                    }
+                })
+            }
         }
-        navigationController?.pushViewController(vc, animated: true)
+        present(vc, animated: true)
     }
     
     private func presentPhotoInputActionsheet() {
@@ -353,18 +365,31 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                                           sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
                                           kind: .photo(media))
                     
-                    DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
-                        
-                        if success {
-                            CommonUtil.print(output:"sent photo message")
-                            self?.requestPush(message: message)
-                        }
-                        else {
-                            CommonUtil.print(output:"failed to send photo message")
-                        }
-                        
-                    })
-                    
+                    if strongSelf.isNewConversation {
+                        DatabaseManager.shared.createNewConversation(otherUserUid: strongSelf.otherUserUid, firstMessage: message, completion: { success in
+                            
+                            if success {
+                                CommonUtil.print(output:"sent photo message")
+                                self?.requestPush(message: message)
+                            }
+                            else {
+                                CommonUtil.print(output:"failed to send photo message")
+                            }
+                            
+                        })
+                    } else {
+                        DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
+                            
+                            if success {
+                                CommonUtil.print(output:"sent photo message")
+                                self?.requestPush(message: message)
+                            }
+                            else {
+                                CommonUtil.print(output:"failed to send photo message")
+                            }
+                            
+                        })
+                    }
                 case .failure(let error):
                     CommonUtil.print(output:"message photo upload error: \(error)")
                 }
@@ -399,17 +424,30 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                                           sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
                                           kind: .video(media))
                     
-                    DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
-                        if success {
-                            CommonUtil.print(output:"sent video message")
-                            self?.requestPush(message: message)
-                        }
-                        else {
-                            CommonUtil.print(output:"failed to send photo message")
-                        }
-                        
-                    })
-                    
+                    if strongSelf.isNewConversation {
+                        DatabaseManager.shared.createNewConversation(otherUserUid: strongSelf.otherUserUid, firstMessage: message, completion: { success in
+                            
+                            if success {
+                                CommonUtil.print(output:"sent photo message")
+                                self?.requestPush(message: message)
+                            }
+                            else {
+                                CommonUtil.print(output:"failed to send photo message")
+                            }
+                            
+                        })
+                    } else {
+                        DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
+                            if success {
+                                CommonUtil.print(output:"sent video message")
+                                self?.requestPush(message: message)
+                            }
+                            else {
+                                CommonUtil.print(output:"failed to send photo message")
+                            }
+                            
+                        })
+                    }
                 case .failure(let error):
                     CommonUtil.print(output:"message photo upload error: \(error)")
                 }

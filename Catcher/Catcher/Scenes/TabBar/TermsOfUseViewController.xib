@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -33,7 +32,7 @@
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hRW-cS-v4U">
                                     <rect key="frame" x="0.0" y="46" width="373" height="3191.3333333333335"/>
-                                    <mutableString key="text">제1조 (목적)
+                                    <string key="text">제1조 (목적)
   서비스 이용약관은 Catcher이 제공하는 서비스의 이용과 관련하여 Catcher과 이용자간의 권리, 의무 및 책임 사항 등을 규정함을 목적으로 합니다. 
 제2조 (정의)
 1. 이 약관에서 사용하는 용어의 정의는 다음과 같습니다.
@@ -64,10 +63,10 @@
 제5조 (서비스 이용계약의 성립)
 1. Catcher과 회원의 서비스 이용계약은 서비스를 이용하고자 하는 자(이하 “가입 신청자”라고 합니다.)가 서비스 내부의 회원 가입 양식에 따라 필요한 회원정보를 기입하고, 이 약관, 개인정보 수집 및 이용 동의, 이용규칙 등에 명시적인 동의를 한 후, 신청한 회원가입 의사 표시(이하 “이용신청”이라고 합니다.)를 Catcher이 승낙함으로써 체결됩니다.
 2. 제1항의 승낙은 신청순서에 따라 순차적으로 처리되며, 회원가입의 성립 시기는 Catcher의 회원가입이 완료되었음을 알리는 승낙의 통지가 회원에게 도달하거나, 이에 준하는 권한이 회원에게 부여되는 시점으로 합니다.
-3. Catcher은 만 14세 미만 이용자의 이용신청을 금지하고 있습니다. 가입 신청자는 이용신청 시 만 14세 이상에 해당한다는 항목에 명시적인 동의를 함으로써 회원은 만 14세 이상임을 진술하고 보증합니다.
+3. Catcher은 만 17세 미만 이용자의 이용신청을 금지하고 있습니다. 가입 신청자는 이용신청 시 만 17세 이상에 해당한다는 항목에 명시적인 동의를 함으로써 회원은 만 17세 이상임을 진술하고 보증합니다.
 4. Catcher은 가입 신청자의 이용신청에 있어 다음 각 호에 해당하는 경우, 이용신청을 영구적으로 승낙하지 않거나 유보할 수 있습니다.
  ● Catcher이 정한 이용신청 요건에 충족되지 않을 경우
- ● 가입 신청자가 만 14세 미만인 경우
+ ● 가입 신청자가 만 17세 미만인 경우
  ● 제9조(금지행위)에 해당하는 행위를 하거나 해당하는 행위를 했던 이력이 있을 경우
  ● Catcher의 기술 및 설비 상 서비스를 제공할 수 없는 경우
  ● 기타 Catcher이 합리적인 판단에 의하여 필요하고 인정하는 경우
@@ -116,10 +115,10 @@
 1. Catcher과 이용자 간에 발생한 분쟁에 관한 소송은 민사소송법상의 관할 법원에 제소합니다.
 2. Catcher과 이용자 간에 제기된 소송에서는 대한민국 법을 준거법으로 합니다.
 제12조 (기타)
-1. 이 약관은 2023년 3월 13에 제정되었습니다.
+1. 이 약관은 2023년 11월 10일에 제정되었습니다.
 2. 이 약관에도 불구하고, Catcher과 이용자가 이 약관의 내용과 다르게 합의한 사항이 있는 경우에는 해당 내용을 우선으로 합니다.
 3. Catcher은 필요한 경우 약관의 하위 규정을 정할 수 있으며, 이 약관과 하위 규정이 상충하는 경우에는 이 약관의 내용이 우선 적용됩니다.
-4. 이 약관에서 정하지 아니한 사항과 이 약관의 해석에 관하여는 관련법 또는 관례에 따릅니다.</mutableString>
+4. 이 약관에서 정하지 아니한 사항과 이 약관의 해석에 관하여는 관련법 또는 관례에 따릅니다.</string>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>

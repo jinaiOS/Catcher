@@ -99,6 +99,7 @@ final class LocationPickerViewController: BaseViewController {
             return
         }
         navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true)
         completion?(coordinates)
     }
     
