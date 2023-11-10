@@ -61,7 +61,7 @@ final class RevokeView: UIView {
 
 private extension RevokeView {
     func setLayout() {
-        [warningLabel, revokeBtn, indicatorView].forEach {
+        [warningLabel, revokeBtn].forEach {
             self.addSubview($0)
         }
         
@@ -75,14 +75,6 @@ private extension RevokeView {
             $0.centerX.equalToSuperview()
             $0.width.equalTo(180)
             $0.centerY.equalToSuperview().offset(100)
-        }
-        
-        indicatorView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        indicator.snp.makeConstraints {
-            $0.center.equalToSuperview()
         }
     }
 }

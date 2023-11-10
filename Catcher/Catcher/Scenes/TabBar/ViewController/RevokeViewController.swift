@@ -20,6 +20,7 @@ final class RevokeViewController: BaseHeaderViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setLayout()
         configure()
         setButtonTarget()
     }
@@ -30,6 +31,19 @@ final class RevokeViewController: BaseHeaderViewController {
 }
 
 private extension RevokeViewController {
+    func setLayout() {
+        revokeView.addSubview(revokeView.indicator)
+        view.addSubview(revokeView.indicatorView)
+        
+        revokeView.indicatorView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        revokeView.indicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+    }
+    
     func configure() {
         setHeaderTitleName(title: "회원 탈퇴")
     }

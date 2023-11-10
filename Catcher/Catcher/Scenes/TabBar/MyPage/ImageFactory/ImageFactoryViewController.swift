@@ -22,6 +22,8 @@ final class ImageFactoryViewController: BaseHeaderViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setLayout()
         configure()
         setTarget()
     }
@@ -32,7 +34,20 @@ final class ImageFactoryViewController: BaseHeaderViewController {
 }
 
 private extension ImageFactoryViewController {
-    func setTarget() {    
+    func setLayout() {
+        imageFactoryView.addSubview(imageFactoryView.indicator)
+        view.addSubview(imageFactoryView.indicatorView)
+        
+        imageFactoryView.indicatorView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        imageFactoryView.indicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+    }
+    
+    func setTarget() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapImageView))
         imageFactoryView.imageView.addGestureRecognizer(tapGesture)
         imageFactoryView.imageView.isUserInteractionEnabled = true

@@ -55,7 +55,7 @@ private extension ImageFactoryView {
     func setLayout() {
         indicatorView.addSubview(indicator)
         
-        [imageView, saveButton, indicatorView].forEach {
+        [imageView, saveButton].forEach {
             addSubview($0)
         }
         
@@ -71,14 +71,6 @@ private extension ImageFactoryView {
             $0.width.equalTo(200)
             $0.centerX.equalToSuperview()
             $0.top.equalTo(imageView.snp.bottom).offset(70)
-        }
-        
-        indicatorView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        indicator.snp.makeConstraints {
-            $0.center.equalToSuperview()
         }
     }
 }
