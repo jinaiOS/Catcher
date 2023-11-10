@@ -92,29 +92,28 @@ extension MainPageViewModel {
     }
     
     func getSectionItems(section: Int) -> [Item]? {
-        let items: [Item]
         let value = mainSubject.value
         
         switch section {
         case 0:
-            items = mainSubject.value.random
+            return value.random
         case 1:
-            items = mainSubject.value.rank
+            return value.rank
         case 2:
-            items = mainSubject.value.new
+            return value.new
         case 3:
-            if value.near.isEmpty {
-                items = mainSubject.value.pick
-                return items
-            }
-            items = mainSubject.value.near
-            return items
+            return value.near.isEmpty ? value.pick : value.near
         case 4:
-            items = mainSubject.value.pick
+            return value.pick
         default:
             return nil
         }
-        return items
+    }
+    
+    var sectionCount: Int {
+        let value = mainSubject.value
+        let nonEmptySections = [value.random, value.rank, value.new, value.near, value.pick].filter { !$0.isEmpty }
+        return nonEmptySections.count
     }
     
     func isPickedUser(info: UserInfo) -> Bool {

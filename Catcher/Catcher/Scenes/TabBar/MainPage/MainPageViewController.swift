@@ -61,6 +61,10 @@ private extension MainPageViewController {
     
     @objc func refreshCollectionView() {
         viewModel.fetchMainPageData()
+        for i in (0...viewModel.sectionCount - 1) {
+            let indexPath = IndexPath(item: 0, section: i)
+            mainPageView.collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+        }
     }
     
     @objc func didRecieveReportNotification() {

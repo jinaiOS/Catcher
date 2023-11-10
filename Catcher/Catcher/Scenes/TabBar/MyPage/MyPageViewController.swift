@@ -158,7 +158,6 @@ final class MyPageViewController: BaseViewController {
         vw.addSubview(myTable)
         vw.borderColor = ThemeColor.primary
         vw.borderWidth = 1
-        //        view.addSubview(vw)
         return vw
     }()
     
@@ -177,6 +176,7 @@ final class MyPageViewController: BaseViewController {
         tb.separatorStyle = .none
         //  스크롤 x
         tb.isScrollEnabled = false
+        tb.showsVerticalScrollIndicator = false
         return tb
     }()
     
@@ -198,6 +198,7 @@ final class MyPageViewController: BaseViewController {
 
     private lazy var scrollView: UIScrollView = {
         let sc = UIScrollView()
+        sc.showsVerticalScrollIndicator = false
         sc.addSubview(contentView)
         view.addSubview(sc)
         return sc
