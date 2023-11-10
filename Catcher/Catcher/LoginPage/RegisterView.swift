@@ -149,7 +149,7 @@ private extension RegisterView {
         termsTableView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(dividerView.snp.bottom).offset(5)
-            make.height.equalTo(100)
+            make.height.equalTo(150)
         }
         nextButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)

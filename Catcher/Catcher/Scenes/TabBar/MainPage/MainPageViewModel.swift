@@ -24,31 +24,36 @@ extension MainPageViewModel {
             async let new = storeManager.fetchNewestUser()
             async let near = storeManager.fetchNearUser()
             async let pick = storeManager.fetchPickUsers()
+            async let shutout = storeManager.fetchShutOutUser()
             
             let randomResult = await random
             let rankResult = await rank
             let newResult = await new
             let nearResult = await near
             let pickResult = await pick
+            let shutoutResult = await shutout
             
             if let randomError = randomResult.error,
                let rankError = rankResult.error,
                let newError = newResult.error,
                let nearError = nearResult.error,
-               let pickError = pickResult.error {
-                CommonUtil.print(output:randomError.localizedDescription)
-                CommonUtil.print(output:rankError.localizedDescription)
-                CommonUtil.print(output:newError.localizedDescription)
-                CommonUtil.print(output:nearError.localizedDescription)
-                CommonUtil.print(output:pickError.localizedDescription)
+               let pickError = pickResult.error,
+               let shutoutError = shutoutResult.error {
+                CommonUtil.print(output: randomError.localizedDescription)
+                CommonUtil.print(output: rankError.localizedDescription)
+                CommonUtil.print(output: newError.localizedDescription)
+                CommonUtil.print(output: nearError.localizedDescription)
+                CommonUtil.print(output: pickError.localizedDescription)
+                CommonUtil.print(output: shutoutError.localizedDescription)
                 return
             }
             guard let randomUser = randomResult.result,
                   let rankUser = rankResult.result,
                   let newUser = newResult.result,
                   let nearUser = nearResult.result,
-                  let pickUser = pickResult.result else { return }
-            sendItems(data: (randomUser, rankUser, newUser, nearUser, pickUser))
+                  let pickUser = pickResult.result,
+                  let shutoutUser = shutoutResult.result else { return }
+            sendItems(data: (randomUser, rankUser, newUser, nearUser, pickUser, shutoutUser))
         }
     }
     
@@ -87,31 +92,30 @@ extension MainPageViewModel {
     }
     
     func getSectionItems(section: Int) -> [Item]? {
-        let items: [Item]
         let value = mainSubject.value
         
         switch section {
         case 0:
-            items = mainSubject.value.random
+            return value.random
         case 1:
-            items = mainSubject.value.rank
+            return value.rank
         case 2:
-            items = mainSubject.value.new
+            return value.new
         case 3:
-            if value.near.isEmpty {
-                items = mainSubject.value.pick
-                return items
-            }
-            items = mainSubject.value.near
-            return items
+            return value.near.isEmpty ? value.pick : value.near
         case 4:
-            items = mainSubject.value.pick
+            return value.pick
         default:
             return nil
         }
-        return items
     }
-
+    
+    var sectionCount: Int {
+        let value = mainSubject.value
+        let nonEmptySections = [value.random, value.rank, value.new, value.near, value.pick].filter { !$0.isEmpty }
+        return nonEmptySections.count
+    }
+    
     func isPickedUser(info: UserInfo) -> Bool {
         let uids = fetchPickedUser.map { $0.uid }
         if uids.contains(info.uid) {
@@ -163,30 +167,25 @@ private extension MainPageViewModel {
         return pickedUsers
     }
     
-    func sendItems(data: (random: [UserInfo], rank: [UserInfo], new: [UserInfo], near: [UserInfo], pick: [UserInfo])) {
-        let items = makeItems(data: (data.random, data.rank, data.new, data.near, data.pick))
+    func sendItems(data: (random: [UserInfo], rank: [UserInfo], new: [UserInfo], near: [UserInfo], pick: [UserInfo], shutout: [String])) {
+        let items = makeItems(data: (data.random, data.rank, data.new, data.near, data.pick, data.shutout))
         let data = MainItems(data: (items.random, items.rank, items.new, items.near, items.pick))
         mainSubject.send(data)
     }
     
-    func makeItems(data: (random: [UserInfo], rank: [UserInfo],
-                          new: [UserInfo], near: [UserInfo], pick: [UserInfo])
+    func makeItems(data: (random: [UserInfo], rank: [UserInfo], new: [UserInfo],
+                          near: [UserInfo], pick: [UserInfo], shutout: [String])
     ) -> (random: [Item], rank: [Item], new: [Item], near: [Item], pick: [Item]) {
-        let randomItem = data.random
-            .filter { $0.uid != uid }
-            .map { Item.random($0) }
-        let rankItem = data.rank
-            .filter { $0.uid != uid }
-            .map { Item.rank($0) }
-        let newItem = data.new
-            .filter { $0.uid != uid }
-            .map { Item.new($0) }
-        let nearItem = data.near
-            .filter { $0.uid != uid }
-            .map { Item.near($0) }
-        let pickItem = data.pick
-            .filter { $0.uid != uid }
-            .map { Item.pick($0) }
+        func filterAndMap(items: [UserInfo], transform: (UserInfo) -> Item) -> [Item] {
+            return items
+                .filter { $0.uid != uid && !data.shutout.contains($0.uid) }
+                .map { transform($0) }
+        }
+        let randomItem = filterAndMap(items: data.random, transform: Item.random)
+        let rankItem = filterAndMap(items: data.rank, transform: Item.rank)
+        let newItem = filterAndMap(items: data.new, transform: Item.new)
+        let nearItem = filterAndMap(items: data.near, transform: Item.near)
+        let pickItem = filterAndMap(items: data.pick, transform: Item.pick)
         
         return (randomItem, rankItem, newItem, nearItem, pickItem)
     }

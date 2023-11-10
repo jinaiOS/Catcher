@@ -67,20 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         })
     }
-
-    //MARK: - APNS
-    func setFirebasePush() {
-        UNUserNotificationCenter.current().delegate = self
-        
-        //set push receive type
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        //push requestAuthorization
-        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: {(granted, error) in
-            DispatchQueue.main.async {
-                UIApplication.shared.registerForRemoteNotifications()
-            }
-        })
-    }
     
     /**
      @brief navigationController의 쌓여있는 스택을 리턴
@@ -202,6 +188,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
             let otherUserUid = payloadData["otherUserUid"] as? String ?? ""
             let viewController = ChattingDetailViewController(otherUid: otherUserUid)
             viewController.title = notification.request.content.title
+            viewController.headerTitle = notification.request.content.title
             AppDelegate.applicationDelegate().navigationController?.pushViewController(viewController, animated: true)
         }
     }
@@ -226,6 +213,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
             let otherUserUid = payloadData["otherUserUid"] as? String ?? ""
             let viewController = ChattingDetailViewController(otherUid: otherUserUid)
             viewController.title = response.notification.request.content.title
+            viewController.headerTitle = response.notification.request.content.title
             AppDelegate.applicationDelegate().navigationController?.pushViewController(viewController, animated: true)
         }
     }

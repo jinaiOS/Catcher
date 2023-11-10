@@ -15,6 +15,7 @@ enum MenuItems: String, CaseIterable {
     case genImage = "캐리커처 이미지 생성"
     case inquiry = "1:1 문의"
     case terms = "개인 정보 및 처리 방침"
+    case termsUse = "이용 약관"
     case opensource = "오픈소스 라이선스"
     case version = "앱 버전"
     case withdraw = "회원 탈퇴"
@@ -157,7 +158,6 @@ final class MyPageViewController: BaseViewController {
         vw.addSubview(myTable)
         vw.borderColor = ThemeColor.primary
         vw.borderWidth = 1
-        //        view.addSubview(vw)
         return vw
     }()
     
@@ -176,6 +176,7 @@ final class MyPageViewController: BaseViewController {
         tb.separatorStyle = .none
         //  스크롤 x
         tb.isScrollEnabled = false
+        tb.showsVerticalScrollIndicator = false
         return tb
     }()
     
@@ -197,6 +198,7 @@ final class MyPageViewController: BaseViewController {
 
     private lazy var scrollView: UIScrollView = {
         let sc = UIScrollView()
+        sc.showsVerticalScrollIndicator = false
         sc.addSubview(contentView)
         view.addSubview(sc)
         return sc
@@ -312,13 +314,16 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             let vc = SFSafariViewController(url: url!)
             present(vc, animated: true)
         case 4:
+            let vc = TermsOfUseViewController()
+            navigationPushController(viewController: vc, animated: true)
+        case 5:
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url)
             }
-        case 5:
+        case 6:
             let appVersionVC = AppVersionViewController()
             navigationPushController(viewController: appVersionVC, animated: true)
-        case 6:
+        case 7:
             let revokeVC = RevokeViewController()
             navigationPushController(viewController: revokeVC, animated: true)
         default:

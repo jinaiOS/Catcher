@@ -22,6 +22,7 @@ final class FireStoreManager {
     private let userInfoPath = "userInfo"
     private let nearUserPath = "location"
     private let pickerPath = "picker"
+    private let shutoutPath = "shutout"
     private let reportPath = "report"
     private let askPath = "ask"
     private let fcmTokenPath = "fcmToken"
@@ -215,6 +216,25 @@ extension FireStoreManager {
         }
     }
     
+    /// 내가 차단한 유저
+    func fetchShutOutUser() async -> (result: [String]?, error: Error?) {
+        guard let uid = FirebaseManager().getUID else { return (nil, FireStoreError.missingUID) }
+        let documentRef = db.collection(shutoutPath).document(uid)
+        
+        do {
+            let snapshot = try await documentRef.getDocument()
+            let data = snapshot.data()?["shutout"] as? [String]
+            if data == nil {
+                // 에러는 아니지만 데이터가 없는 경우 아무것도 없는 빈 배열 반환
+                return ([], nil)
+            }
+            return (data, nil)
+        } catch {
+            CommonUtil.print(output: error.localizedDescription)
+            return ([], nil)
+        }
+    }
+    
     /// fcm token
     func fetchFcmToken(uid: String) async -> (result: String?, error: Error?) {
         let docRef = db.collection(fcmTokenPath).document(uid)
@@ -255,6 +275,30 @@ extension FireStoreManager {
                 do {
                     try await docRef.setData([
                         Data.pick.key: [uid]
+                    ])
+                    return nil
+                } catch {
+                    return error
+                }
+            }
+            return error
+        }
+    }
+    
+    /// 사용자 차단 메서드
+    func updateShutOut(uuid: String) async -> Error? {
+        guard let uid = FirebaseManager().getUID else { return FireStoreError.missingUID }
+        let docRef = db.collection(shutoutPath).document(uid)
+        do {
+            try await docRef.updateData([
+                Data.shutout.key: FieldValue.arrayUnion([uuid])
+            ])
+            return nil
+        } catch {
+            if (error as NSError).code == 5 {
+                do {
+                    try await docRef.setData([
+                        Data.shutout.key: [uuid]
                     ])
                     return nil
                 } catch {
@@ -421,6 +465,7 @@ private extension FireStoreManager {
         case pick
         case block
         case heart
+        case shutout
         
         var key: String { rawValue }
     }

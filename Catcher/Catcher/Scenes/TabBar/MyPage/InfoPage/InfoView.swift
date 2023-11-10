@@ -41,6 +41,15 @@ final class InfoView: UIView {
         let textField = CustomTextField()
         return textField
     }()
+    
+    lazy var warningLabel: UILabel = {
+       let label = UILabel()
+        label.text = "부적절하거나 불쾌감을 줄 수 있는 컨텐츠는 제재를 받을 수 있습니다."
+        label.textColor = .systemGray2
+        label.numberOfLines = 0
+        label.font = ThemeFont.regular(size: 13)
+        return label
+    }()
 
     private lazy var vStack: UIStackView = {
         let view = UIStackView()
@@ -64,6 +73,7 @@ final class InfoView: UIView {
     lazy var contentView: UIView = {
         let vw = UIView()
         vw.addSubview(vStack)
+        vw.addSubview(warningLabel)
         vw.addSubview(saveButton)
         return vw
     }()
@@ -124,9 +134,14 @@ extension InfoView {
             $0.top.equalTo(contentView.snp.top).offset(20)
             $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
         }
+        warningLabel.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
+            $0.top.equalTo(vStack.snp.bottom).inset(-10)
+//            $0.height.equalTo(18)
+        }
         saveButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
-            $0.top.equalTo(vStack.snp.bottom).inset(-50)
+            $0.top.equalTo(warningLabel.snp.bottom).inset(-50)
             $0.height.equalTo(50)
             $0.bottom.equalTo(contentView).inset(20)
         }

@@ -28,6 +28,15 @@ class LoginViewController: BaseViewController {
             } else {
                 CommonUtil.print(output: "로그인 성공")
                 Task {
+                    if let uid = FirebaseManager().getUID {
+                        let (result, _) = await FireStoreManager.shared.fetchUserInfo(uuid: uid)
+                        if let result {
+                            UserDefaultsManager().setValue(value: result.location, key: "location")
+                        }
+                    }    
+                }
+                
+                Task {
                     await self.storeUserInfo()
                     let (result, error) = await FireStoreManager.shared.fetchFcmToken(uid: FirebaseManager().getUID ?? "")
                     if let error {

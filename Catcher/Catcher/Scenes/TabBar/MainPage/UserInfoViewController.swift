@@ -193,6 +193,7 @@ private extension UserInfoViewController {
                 let vc = ChattingDetailViewController(otherUid: userInfo.uid)
                 vc.isNewConversation = isNewConversation
                 vc.modalChecking = true
+                vc.title = userInfo.nickName
                 vc.headerTitle = userInfo.nickName
                 self.present(vc, animated: true)
             }
