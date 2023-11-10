@@ -49,7 +49,10 @@ private extension ImageFactoryViewController {
     }
     
     @objc func saveImage() {
-        guard let image = viewModel.image else { return }
+        guard let image = viewModel.image else {
+            showAlert(title: "이미지 없음", message: "캐리커처로 변환할 이미지를 선택해 주세요.")
+            return
+        }
         let resizedImage = image.resizeTo(to: CGSize(width: 1024, height: 1024))
         UIImageWriteToSavedPhotosAlbum(resizedImage, self, #selector(savedIamge), nil)
     }
