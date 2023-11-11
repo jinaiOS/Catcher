@@ -176,11 +176,18 @@ private extension MainPageViewModel {
     func makeItems(data: (random: [UserInfo], rank: [UserInfo], new: [UserInfo],
                           near: [UserInfo], pick: [UserInfo], shutout: [String])
     ) -> (random: [Item], rank: [Item], new: [Item], near: [Item], pick: [Item]) {
-        func filtering(items: [UserInfo], transform: (UserInfo) -> Item, isFilterMe: Bool = false) -> [Item] {
+        func filtering(items: [UserInfo],
+                       transform: (UserInfo) -> Item,
+                       isFilterMe: Bool = false,
+                       reverse: Bool = false) -> [Item] {
             if isFilterMe {
-                return items
+                let userInfo = items
                     .filter { $0.uid != uid && !data.shutout.contains($0.uid) }
                     .map { transform($0) }
+                if reverse {
+                    return userInfo.reversed()
+                }
+                return userInfo
             } else {
                 return items
                     .filter { !data.shutout.contains($0.uid) }
@@ -189,7 +196,7 @@ private extension MainPageViewModel {
         }
         let randomItem = filtering(items: data.random, transform: Item.random)
         let rankItem = filtering(items: data.rank, transform: Item.rank)
-        let newItem = filtering(items: data.new, transform: Item.new, isFilterMe: true)
+        let newItem = filtering(items: data.new, transform: Item.new, isFilterMe: true, reverse: true)
         let nearItem = filtering(items: data.near, transform: Item.near, isFilterMe: true)
         let pickItem = filtering(items: data.pick, transform: Item.pick, isFilterMe: true)
         
