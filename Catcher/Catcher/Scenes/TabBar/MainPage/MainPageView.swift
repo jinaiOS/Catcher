@@ -32,7 +32,7 @@ final class MainPageView: UIView {
     
     init() {
         super.init(frame: .zero)
-        backgroundColor = .white
+        backgroundColor = ThemeColor.backGroundColor
         setLayout()
     }
     
