@@ -342,6 +342,8 @@
 			children = (
 				33B7B5AE2AF4271700773E9F /* AppVersionViewController.swift */,
 				33845E3A2AF43B9100539068 /* RevokeViewController.swift */,
+				23E7DAB92AEB978600CDBC53 /* ProfileSettingViewController.swift */,
+				23E7DABA2AEB978600CDBC53 /* ProfileSettingViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -572,13 +574,11 @@
 				56C08B7F2AE0FE2100FB8608 /* ChatPage */,
 				56C08B782ADF80AC00FB8608 /* MyPage */,
 				68708AB62AE745C200B4C7B9 /* SurveyViewController.swift */,
-				23E7DAB92AEB978600CDBC53 /* ProfileSettingViewController.swift */,
 				562B01BF2AFCACB30099157C /* TermsOfUseViewController.swift */,
 				562B01C02AFCACB30099157C /* TermsOfUseViewController.xib */,
 				33845E3E2AF43D0300539068 /* View */,
 				33845E402AF43D2700539068 /* ViewModel */,
 				33845E3F2AF43D1200539068 /* ViewController */,
-				23E7DABA2AEB978600CDBC53 /* ProfileSettingViewController.xib */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";

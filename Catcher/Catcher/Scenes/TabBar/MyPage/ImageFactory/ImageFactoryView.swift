@@ -11,8 +11,10 @@ import UIKit
 final class ImageFactoryView: UIView {
     lazy var imageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFit
         view.image = UIImage(named: "default")
+        view.contentMode = .scaleAspectFit
+        view.clipsToBounds = true
+        view.cornerRadius = 5
         return view
     }()
     
@@ -61,8 +63,8 @@ private extension ImageFactoryView {
         
         imageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().offset(-100)
-            $0.leading.trailing.equalToSuperview().inset(50)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(AppConstraint.headerViewHeight + 20)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(imageView.snp.width)
         }
         
