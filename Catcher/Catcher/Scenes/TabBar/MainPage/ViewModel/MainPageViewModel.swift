@@ -81,11 +81,11 @@ extension MainPageViewModel {
             return "뉴~ 진스가 아닌 뉴~ 피플"
         case 3:
             if mainSubject.value.near.isEmpty {
-                return "당신이 투표한 유저"
+                return "당신이 찜꿍~한 유저"
             }
             return "당신의 동네에 이런 사람이?!"
         case 4:
-            return "당신이 투표한 유저"
+            return "당신이 찜꿍~한 유저"
         default:
             return nil
         }
@@ -176,16 +176,29 @@ private extension MainPageViewModel {
     func makeItems(data: (random: [UserInfo], rank: [UserInfo], new: [UserInfo],
                           near: [UserInfo], pick: [UserInfo], shutout: [String])
     ) -> (random: [Item], rank: [Item], new: [Item], near: [Item], pick: [Item]) {
-        func filterAndMap(items: [UserInfo], transform: (UserInfo) -> Item) -> [Item] {
-            return items
-                .filter { $0.uid != uid && !data.shutout.contains($0.uid) }
-                .map { transform($0) }
+        func filtering(items: [UserInfo],
+                       transform: (UserInfo) -> Item,
+                       isFilterMe: Bool = false,
+                       reverse: Bool = false) -> [Item] {
+            if isFilterMe {
+                let userInfo = items
+                    .filter { $0.uid != uid && !data.shutout.contains($0.uid) }
+                    .map { transform($0) }
+                if reverse {
+                    return userInfo.reversed()
+                }
+                return userInfo
+            } else {
+                return items
+                    .filter { !data.shutout.contains($0.uid) }
+                    .map { transform($0) }
+            }
         }
-        let randomItem = filterAndMap(items: data.random, transform: Item.random)
-        let rankItem = filterAndMap(items: data.rank, transform: Item.rank)
-        let newItem = filterAndMap(items: data.new, transform: Item.new)
-        let nearItem = filterAndMap(items: data.near, transform: Item.near)
-        let pickItem = filterAndMap(items: data.pick, transform: Item.pick)
+        let randomItem = filtering(items: data.random, transform: Item.random)
+        let rankItem = filtering(items: data.rank, transform: Item.rank)
+        let newItem = filtering(items: data.new, transform: Item.new, isFilterMe: true, reverse: true)
+        let nearItem = filtering(items: data.near, transform: Item.near, isFilterMe: true)
+        let pickItem = filtering(items: data.pick, transform: Item.pick, isFilterMe: true)
         
         return (randomItem, rankItem, newItem, nearItem, pickItem)
     }

@@ -9,14 +9,24 @@ import UIKit
 
 final class UserInfoViewModel {
     private let fireStoreManager = FireStoreManager.shared
-    private let userInfo: UserInfo
+    let userInfo: UserInfo
+    let isPicked: Bool
+    let isBlocked: Bool
     
-    init(userInfo: UserInfo) {
+    init(userInfo: UserInfo, isPicked: Bool, isBlocked: Bool) {
         self.userInfo = userInfo
+        self.isPicked = isPicked
+        self.isBlocked = isBlocked
     }
 }
 
 extension UserInfoViewModel {
+    var isMe: Bool {
+        guard let uid = FirebaseManager().getUID else { return false }
+        if userInfo.uid == uid { return true }
+        return false
+    }
+    
     func processPickUser(isUpdate: Bool,
                          completion: @escaping (_ result: [UserInfo]?, _ error: Error?) -> Void) {
         Task {

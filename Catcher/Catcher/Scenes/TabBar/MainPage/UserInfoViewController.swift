@@ -16,9 +16,6 @@ protocol UpdatePickUserInfo: AnyObject {
 final class UserInfoViewController: BaseViewController {
     private let userInfoView = UserInfoView()
     private let viewModel: UserInfoViewModel
-    private var userInfo: UserInfo?
-    private var isPicked: Bool
-    private var isBlocked: Bool
     
     weak var delegate: UpdatePickUserInfo?
     
@@ -33,10 +30,7 @@ final class UserInfoViewController: BaseViewController {
     }
     
     init(info: UserInfo, isPicked: Bool, isBlocked: Bool) {
-        viewModel = UserInfoViewModel(userInfo: info)
-        self.userInfo = info
-        self.isPicked = isPicked
-        self.isBlocked = isBlocked
+        viewModel = UserInfoViewModel(userInfo: info, isPicked: isPicked, isBlocked: isBlocked)
         super.init(nibName: nil, bundle: nil)
         configure()
     }
@@ -52,27 +46,26 @@ final class UserInfoViewController: BaseViewController {
 
 private extension UserInfoViewController {
     func configure() {
-        guard let userInfo = userInfo else { return }
-        ImageCacheManager.shared.loadImage(uid: userInfo.uid) { [weak self] image in
+        ImageCacheManager.shared.loadImage(uid: viewModel.userInfo.uid) { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.userInfoView.profileImageView.image = image
             }
         }
-        if isPicked {
+        if viewModel.isPicked {
             userInfoView.pickButton.isSelected = true
         } else {
             userInfoView.pickButton.isSelected = false
         }
         
-        if isBlocked {
+        if viewModel.isBlocked {
             userInfoView.blockBtton.isSelected = true
             userInfoView.blockLabel.text = "해제"
         } else {
             userInfoView.blockBtton.isSelected = false
             userInfoView.blockLabel.text = "차단"
         }
-        userInfoView.configure(userInfo: userInfo)
+        userInfoView.configure(userInfo: viewModel.userInfo)
     }
     
     func setTarget() {
@@ -90,16 +83,31 @@ private extension UserInfoViewController {
     }
     
     @objc func pressReportBtn() {
-        let reportVC = ReportViewController(userinfo: userInfo, isPicked: isPicked, isBlocked: isBlocked)
+        if viewModel.isMe {
+            showAlert(title: "신고 불가", message: "본인을 신고할 수 없습니다.")
+            return
+        }
+        let reportVC = ReportViewController(
+            userinfo: viewModel.userInfo,
+            isPicked: viewModel.isPicked,
+            isBlocked: viewModel.isBlocked)
         navigationPushController(viewController: reportVC, animated: true)
         dismiss(animated: true)
     }
     
     @objc func pressChattingBtn() {
+        if viewModel.isMe {
+            showAlert(title: "대화 불가", message: "본인과 대화할 수 없습니다.")
+            return
+        }
         listenForMessages()
     }
     
     @objc func pressPickBtn(sender: UIButton) {
+        if viewModel.isMe {
+            showAlert(title: "찜 불가", message: "본인을 찜할 수 없습니다.")
+            return
+        }
         sender.isSelected.toggle()
         let selected = sender.isSelected
         
@@ -110,6 +118,10 @@ private extension UserInfoViewController {
     }
     
     @objc func pressBlockBtn(sender: UIButton) {
+        if viewModel.isMe {
+            showAlert(title: "차단 불가", message: "본인을 차단할 수 없습니다.")
+            return
+        }
         sender.isSelected.toggle()
         let selected = sender.isSelected
         
@@ -162,7 +174,7 @@ private extension UserInfoViewController {
     }
     
     func listenForMessages() {
-        DatabaseManager.shared.getAllMessagesForConversation(with: userInfo?.uid ?? "", completion: { [weak self] result in
+        DatabaseManager.shared.getAllMessagesForConversation(with: viewModel.userInfo.uid) { [weak self] result in
             switch result {
             case .success(let messages):
                 CommonUtil.print(output:"success in getting messages: \(messages)")
@@ -176,27 +188,28 @@ private extension UserInfoViewController {
                 self?.sendMessageBtn(isNewConversation: true)
                 CommonUtil.print(output:"failed to get messages: \(error)")
             }
-        })
+        }
     }
     
     func sendMessageBtn(isNewConversation: Bool) {
-        guard let uid = FirebaseManager().getUID,
-              let userInfo = self.userInfo else { return }
+        guard let uid = FirebaseManager().getUID else { return }
         
-        viewModel.isBlockedUser(searchTarget: userInfo.uid, containUID: uid) { [weak self] result in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                if result {
-                    self.showAlert(title: "차단 상태", message: "상대방이 차단해서 메시지를 보낼 수 없습니다.")
-                    return
+        viewModel.isBlockedUser(
+            searchTarget: viewModel.userInfo.uid,
+            containUID: uid) { [weak self] result in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    if result {
+                        self.showAlert(title: "차단 상태", message: "상대방이 차단해서 메시지를 보낼 수 없습니다.")
+                        return
+                    }
+                    let vc = ChattingDetailViewController(otherUid: self.viewModel.userInfo.uid)
+                    vc.isNewConversation = isNewConversation
+                    vc.modalChecking = true
+                    vc.title = self.viewModel.userInfo.nickName
+                    vc.headerTitle = self.viewModel.userInfo.nickName
+                    self.present(vc, animated: true)
                 }
-                let vc = ChattingDetailViewController(otherUid: userInfo.uid)
-                vc.isNewConversation = isNewConversation
-                vc.modalChecking = true
-                vc.title = userInfo.nickName
-                vc.headerTitle = userInfo.nickName
-                self.present(vc, animated: true)
             }
-        }
     }
 }

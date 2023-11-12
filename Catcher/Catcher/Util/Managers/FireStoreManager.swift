@@ -8,14 +8,6 @@
 import FirebaseFirestore
 import Foundation
 
-enum FireStoreError: Error {
-    case canNotConvert
-    case missingUID
-    case deleteFail
-    case noUIDList
-    case noNearPath
-}
-
 final class FireStoreManager {
     static let shared = FireStoreManager()
     private let db = Firestore.firestore()
@@ -26,9 +18,17 @@ final class FireStoreManager {
     private let reportPath = "report"
     private let askPath = "ask"
     private let fcmTokenPath = "fcmToken"
-    private let itemCount: Int = 9
+    private let itemCount: Int = 20
     
     private init() { }
+    
+    enum FireStoreError: Error {
+        case canNotConvert
+        case missingUID
+        case deleteFail
+        case noUIDList
+        case noNearPath
+    }
 }
 
 extension FireStoreManager {
@@ -187,7 +187,10 @@ extension FireStoreManager {
         var valuesArray: [Int] = []
         
         if let result = result {
-            for dictionary in result {
+            let sortedRank = result.sorted {
+                $0.values.first ?? 0 > $1.values.first ?? 0
+            }
+            for dictionary in sortedRank {
                 for (key, value) in dictionary {
                     keysArray.append(key)
                     valuesArray.append(value)
@@ -415,7 +418,7 @@ private extension FireStoreManager {
         let field = "pick"
         
         do {
-            let querySnapshot = try await pickerCollection.order(by: field, descending: true).getDocuments()
+            let querySnapshot = try await pickerCollection.order(by: field).getDocuments()
             let result: [[String : Int]] = querySnapshot.documents.map { snapshot in
                 let data = snapshot.data()
                 let uid = snapshot.documentID
@@ -430,20 +433,20 @@ private extension FireStoreManager {
     }
     
     func groupTaskForFetchUsers(uidList: [String]) async -> [UserInfo] {
-        let datas = await withTaskGroup(of: UserInfo?.self) { group in
-            for uid in uidList {
+        let datas = await withTaskGroup(of: (Int, UserInfo?).self) { group in
+            for (index, uid) in uidList.enumerated() {
                 group.addTask {
                     let data = await self.fetchUserInfo(uuid: uid)
                     if let error = data.error {
                         CommonUtil.print(output: "error: \(error.localizedDescription)")
-                        return nil
+                        return (index, nil)
                     }
-                    return data.result
+                    return (index, data.result)
                 }
             }
-            var dataList: [UserInfo?] = []
-            for await userInfo in group {
-                dataList.append(userInfo)
+            var dataList: [UserInfo?] = Array(repeating: nil, count: uidList.count)
+            for await (index, userInfo) in group {
+                dataList[index] = userInfo
             }
             return dataList.compactMap { $0 }
         }
