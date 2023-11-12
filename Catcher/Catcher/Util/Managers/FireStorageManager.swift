@@ -8,16 +8,6 @@
 import UIKit
 import FirebaseStorage
 
-enum FireStorageError: Error {
-    case noMetaData
-    case noResult
-    case missingUID
-}
-
-enum ImageError: Error {
-    case cantConvertJpeg
-}
-
 final class FireStorageManager {
     static let shared = FireStorageManager()
     private let storage = Storage.storage()
@@ -27,6 +17,16 @@ final class FireStorageManager {
     private let compressionQuality: CGFloat = 0.5
     
     private init() {}
+    
+    enum FireStorageError: Error {
+        case noMetaData
+        case noResult
+        case missingUID
+    }
+    
+    enum ImageError: Error {
+        case cantConvertJpeg
+    }
 }
 
 extension FireStorageManager {
