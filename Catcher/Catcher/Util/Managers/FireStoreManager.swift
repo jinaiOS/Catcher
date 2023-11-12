@@ -18,7 +18,7 @@ final class FireStoreManager {
     private let reportPath = "report"
     private let askPath = "ask"
     private let fcmTokenPath = "fcmToken"
-    private let itemCount: Int = 9
+    private let itemCount: Int = 20
     
     private init() { }
     
