@@ -257,7 +257,6 @@ final class ChattingDetailViewController: MessagesViewController {
                                   messageId: messageId,
                                   sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
                                   kind: .location(location))
-            
             if !strongSelf.isNewConversation {
                 DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
                     if success {
@@ -383,7 +382,6 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
         
         if let image = info[.editedImage] as? UIImage, let imageData =  image.pngData() {
             let fileName = "photo_message_" + messageId.replacingOccurrences(of: " ", with: "-") + ".png"
-            self.processIndicatorView()
             // 이미지 업로드
             StorageManager.shared.uploadMessagePhoto(with: imageData, fileName: fileName, completion: { [weak self] result in
                 guard let strongSelf = self else {
@@ -447,7 +445,6 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
         }
         else if let videoUrl = info[.mediaURL] as? URL {
             let fileName = "photo_message_" + messageId.replacingOccurrences(of: " ", with: "-") + ".mov"
-            self.processIndicatorView()
             // 비디오 업로드
             StorageManager.shared.uploadMessageVideo(with: videoUrl, fileName: fileName, completion: { [weak self] result in
                 guard let strongSelf = self else {
@@ -526,7 +523,6 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
                               messageId: messageId,
                               sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
                               kind: .text(text))
-        self.processIndicatorView()
         // Send Message
         if isNewConversation {
             // create convo in database
