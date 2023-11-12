@@ -43,6 +43,14 @@ class ChatViewController: UIViewController {
 
     // 사용자 로그인을 감지하기 위한 옵저버
     private var loginObserver: NSObjectProtocol?
+    
+    private let indicator = UIActivityIndicatorView()
+    
+    private lazy var indicatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black.withAlphaComponent(0.5)
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,12 +61,46 @@ class ChatViewController: UIViewController {
         
         // 뷰가 로드될 때 대화를 듣기 시작
         startListeningForCOnversations()
+        
+        setIndicatorLayout()
+        
+        indicator.hidesWhenStopped = true
+        indicator.stopAnimating()
+        indicator.style = .large
+        indicator.color = .systemOrange
+        indicatorView.isHidden = true
+    }
+    
+    func setIndicatorLayout() {
+        indicatorView.addSubview(indicator)
+        
+        view.addSubview(indicatorView)
+        
+        indicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
+        indicatorView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+    
+    func processIndicatorView() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            indicatorView.isHidden.toggle()
+            if indicator.isAnimating {
+                indicator.stopAnimating()
+            } else {
+                indicator.startAnimating()
+            }
+        }
     }
 
     // 대화를 가져와서 표시하기
     private func startListeningForCOnversations() {
         CommonUtil.print(output:"starting conversation fetch...")
-
+        self.processIndicatorView()
         // 데이터베이스에서 대화 가져오기
         DatabaseManager.shared.getAllConversations(completion: { [weak self] result in
             switch result {
@@ -76,10 +118,12 @@ class ChatViewController: UIViewController {
                 DispatchQueue.main.async {
                     self?.tbvConversation.reloadData()
                 }
+                self?.processIndicatorView()
             case .failure(let error):
                 self?.tbvConversation.isHidden = true
                 self?.noConversationsLabel.isHidden = false
                 CommonUtil.print(output:"failed to get convos: \(error)")
+                self?.processIndicatorView()
             }
         })
     }

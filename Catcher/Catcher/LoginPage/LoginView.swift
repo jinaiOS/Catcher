@@ -76,6 +76,14 @@ final class LoginView: UIView {
         return view
     }()
     
+    let indicator = UIActivityIndicatorView()
+    
+    lazy var indicatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black.withAlphaComponent(0.5)
+        return view
+    }()
+    
     init() {
         super.init(frame: .zero)
         backgroundColor = ThemeColor.backGroundColor
@@ -126,5 +134,17 @@ private extension LoginView {
 //            make.trailing.equalTo(-20)
 //            make.width.height.equalTo(40)
 //        }
+        
+        indicatorView.addSubview(indicator)
+        
+        self.addSubview(indicatorView)
+        
+        indicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
+        indicatorView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
 }

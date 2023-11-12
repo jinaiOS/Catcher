@@ -178,21 +178,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
         Messaging.messaging().apnsToken = deviceToken
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        clearPushNotificationCenter()
-        completionHandler([.sound])
-        
-        if let payloadData = notification.request.content.userInfo as? Dictionary<String, Any>
-        {
-            CommonUtil.print(output: "payloadData: \(payloadData)")
-            let otherUserUid = payloadData["otherUserUid"] as? String ?? ""
-            let viewController = ChattingDetailViewController(otherUid: otherUserUid)
-            viewController.title = notification.request.content.title
-            viewController.headerTitle = notification.request.content.title
-            AppDelegate.applicationDelegate().navigationController?.pushViewController(viewController, animated: true)
-        }
-    }
-    
     // 백그라운드에서 action을 눌렀을때
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         completionHandler()
