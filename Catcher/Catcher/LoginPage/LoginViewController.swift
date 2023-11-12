@@ -17,6 +17,7 @@ class LoginViewController: BaseViewController {
     }
     
     @objc func loginPressed() {
+        self.processIndicatorView()
         let email: String = loginView.emailTextField.tf.text!.description
         let pw: String = loginView.passwordTextField.tf.text!.description
         
@@ -55,6 +56,7 @@ class LoginViewController: BaseViewController {
                         }
                     }
                 }
+                self.processIndicatorView()
                 AppDelegate.applicationDelegate().changeInitViewController(type: .Main)
             }
         }
@@ -75,7 +77,26 @@ class LoginViewController: BaseViewController {
         loginView.loginBtn.addTarget(self, action: #selector(loginPressed), for: .touchUpInside)
         loginView.signUpBtn.addTarget(self, action: #selector(signUpPressed), for: .touchUpInside)
         loginView.resetPasswordBtn.addTarget(self, action: #selector(resetPasswordButton), for: .touchUpInside)
+        
+        loginView.indicator.hidesWhenStopped = true
+        loginView.indicator.stopAnimating()
+        loginView.indicator.style = .large
+        loginView.indicator.color = .systemOrange
+        loginView.indicatorView.isHidden = true
+        
         setUI()
+    }
+    
+    func processIndicatorView() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            loginView.indicatorView.isHidden.toggle()
+            if loginView.indicator.isAnimating {
+                loginView.indicator.stopAnimating()
+            } else {
+                loginView.indicator.startAnimating()
+            }
+        }
     }
     
     func storeUserInfo() async {

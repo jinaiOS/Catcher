@@ -57,6 +57,14 @@ final class ChattingDetailViewController: MessagesViewController {
     
     var headerTitle: String?
     
+    private let indicator = UIActivityIndicatorView()
+    
+    private lazy var indicatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black.withAlphaComponent(0.5)
+        return view
+    }()
+    
     init(otherUid: String) {
         self.otherUserUid = otherUid
         super.init(nibName: nil, bundle: nil)
@@ -105,6 +113,29 @@ final class ChattingDetailViewController: MessagesViewController {
         
         messageInputBar.delegate = self
         setupInputButton()
+        
+        setIndicatorLayout()
+        
+        indicator.hidesWhenStopped = true
+        indicator.stopAnimating()
+        indicator.style = .large
+        indicator.color = .systemOrange
+        indicatorView.isHidden = true
+        
+    }
+
+    func setIndicatorLayout() {
+        indicatorView.addSubview(indicator)
+        
+        view.addSubview(indicatorView)
+        
+        indicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
+        indicatorView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     /**
@@ -152,6 +183,18 @@ final class ChattingDetailViewController: MessagesViewController {
             if mArr.count > 0
             {
                 AppDelegate.applicationDelegate().navigationController?.popToViewController(mArr.last!, animated: true)
+            }
+        }
+    }
+    
+    func processIndicatorView() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            indicatorView.isHidden.toggle()
+            if indicator.isAnimating {
+                indicator.stopAnimating()
+            } else {
+                indicator.startAnimating()
             }
         }
     }
@@ -278,6 +321,7 @@ final class ChattingDetailViewController: MessagesViewController {
     }
     
     private func listenForMessages(id: String, shouldScrollToBottom: Bool) {
+        self.processIndicatorView()
         DatabaseManager.shared.getAllMessagesForConversation(with: otherUserUid, completion: { [weak self] result in
             switch result {
             case .success(let messages):
@@ -290,24 +334,25 @@ final class ChattingDetailViewController: MessagesViewController {
                 self?.readMessage()
                 DispatchQueue.main.async {
                     self?.messagesCollectionView.reloadDataAndKeepOffset()
-                    
-                    //                    if shouldScrollToBottom {
-                    //                        self?.messagesCollectionView.scrollt
-                    //                    }
                 }
+                self?.processIndicatorView()
             case .failure(let error):
                 CommonUtil.print(output:"failed to get messages: \(error)")
+                self?.processIndicatorView()
             }
         })
     }
     
     private func readMessage() {
+        self.processIndicatorView()
         DatabaseManager.shared.readMessage(otherUserUid: otherUserUid, completion: { success in
             if success {
                 CommonUtil.print(output: "Read Message")
+                self.processIndicatorView()
             }
             else {
                 CommonUtil.print(output: "Read Message Error")
+                self.processIndicatorView()
             }
         })
     }
@@ -338,7 +383,7 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
         
         if let image = info[.editedImage] as? UIImage, let imageData =  image.pngData() {
             let fileName = "photo_message_" + messageId.replacingOccurrences(of: " ", with: "-") + ".png"
-            
+            self.processIndicatorView()
             // 이미지 업로드
             StorageManager.shared.uploadMessagePhoto(with: imageData, fileName: fileName, completion: { [weak self] result in
                 guard let strongSelf = self else {
@@ -371,9 +416,11 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                             if success {
                                 CommonUtil.print(output:"sent photo message")
                                 self?.requestPush(message: message)
+                                self?.processIndicatorView()
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
+                                self?.processIndicatorView()
                             }
                             
                         })
@@ -383,21 +430,24 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                             if success {
                                 CommonUtil.print(output:"sent photo message")
                                 self?.requestPush(message: message)
+                                self?.processIndicatorView()
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
+                                self?.processIndicatorView()
                             }
                             
                         })
                     }
                 case .failure(let error):
                     CommonUtil.print(output:"message photo upload error: \(error)")
+                    self?.processIndicatorView()
                 }
             })
         }
         else if let videoUrl = info[.mediaURL] as? URL {
             let fileName = "photo_message_" + messageId.replacingOccurrences(of: " ", with: "-") + ".mov"
-            
+            self.processIndicatorView()
             // 비디오 업로드
             StorageManager.shared.uploadMessageVideo(with: videoUrl, fileName: fileName, completion: { [weak self] result in
                 guard let strongSelf = self else {
@@ -430,9 +480,11 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                             if success {
                                 CommonUtil.print(output:"sent photo message")
                                 self?.requestPush(message: message)
+                                self?.processIndicatorView()
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
+                                self?.processIndicatorView()
                             }
                             
                         })
@@ -441,15 +493,18 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                             if success {
                                 CommonUtil.print(output:"sent video message")
                                 self?.requestPush(message: message)
+                                self?.processIndicatorView()
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
+                                self?.processIndicatorView()
                             }
                             
                         })
                     }
                 case .failure(let error):
                     CommonUtil.print(output:"message photo upload error: \(error)")
+                    self?.processIndicatorView()
                 }
             })
         }
@@ -471,7 +526,7 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
                               messageId: messageId,
                               sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
                               kind: .text(text))
-        
+        self.processIndicatorView()
         // Send Message
         if isNewConversation {
             // create convo in database
@@ -481,8 +536,10 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
                     self?.isNewConversation = false
                     self?.listenForMessages(id: self?.otherUserUid ?? "", shouldScrollToBottom: true)
                     self?.messageInputBar.inputTextView.text = ""
+                    self?.processIndicatorView()
                 } else {
                     CommonUtil.print(output:"failed ot send")
+                    self?.processIndicatorView()
                 }
             })
         } else {
@@ -491,9 +548,10 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
                 if success {
                     self?.messageInputBar.inputTextView.text = ""
                     CommonUtil.print(output:"message sent")
-                }
-                else {
+                    self?.processIndicatorView()
+                } else {
                     CommonUtil.print(output:"failed to send")
+                    self?.processIndicatorView()
                 }
             })
         }
