@@ -68,7 +68,6 @@
 		5622C0AC2AF6D3EE00455649 /* Userdefault_Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622C0AB2AF6D3EE00455649 /* Userdefault_Key.swift */; };
 		5622C0AF2AF7837D00455649 /* TermsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622C0AD2AF7837D00455649 /* TermsTableViewCell.swift */; };
 		5622C0B02AF7837D00455649 /* TermsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5622C0AE2AF7837D00455649 /* TermsTableViewCell.xib */; };
-		562B012A2AFB8A4E0099157C /* GenderClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 562B01292AFB8A4E0099157C /* GenderClassifier.mlmodel */; };
 		562B01C12AFCACB30099157C /* TermsOfUseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562B01BF2AFCACB30099157C /* TermsOfUseViewController.swift */; };
 		562B01C22AFCACB30099157C /* TermsOfUseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 562B01C02AFCACB30099157C /* TermsOfUseViewController.xib */; };
 		562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E36802AD80EF9008D99B2 /* AppDelegate.swift */; };
@@ -123,6 +122,7 @@
 		56C08B9E2AE10D2D00FB8608 /* LocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B9D2AE10D2D00FB8608 /* LocationPickerViewController.swift */; };
 		56C08BA02AE10D4C00FB8608 /* PhotoViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B9F2AE10D4C00FB8608 /* PhotoViewerViewController.swift */; };
 		56C08BA42AE10EB400FB8608 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08BA32AE10EB400FB8608 /* SearchResult.swift */; };
+		56CB42D72B0130320038B5F7 /* GenderClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 56CB42D62B0130320038B5F7 /* GenderClassifier.mlmodel */; };
 		68708AB72AE745C200B4C7B9 /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68708AB62AE745C200B4C7B9 /* SurveyViewController.swift */; };
 		68708AB92AEE32CC00B4C7B9 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68708AB82AEE32CC00B4C7B9 /* StorageManager.swift */; };
 /* End PBXBuildFile section */
@@ -208,7 +208,6 @@
 		5622C0AB2AF6D3EE00455649 /* Userdefault_Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Userdefault_Key.swift; sourceTree = "<group>"; };
 		5622C0AD2AF7837D00455649 /* TermsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsTableViewCell.swift; sourceTree = "<group>"; };
 		5622C0AE2AF7837D00455649 /* TermsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsTableViewCell.xib; sourceTree = "<group>"; };
-		562B01292AFB8A4E0099157C /* GenderClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GenderClassifier.mlmodel; sourceTree = "<group>"; };
 		562B012B2AFB93F50099157C /* CatcherRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CatcherRelease.entitlements; sourceTree = "<group>"; };
 		562B01BF2AFCACB30099157C /* TermsOfUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseViewController.swift; sourceTree = "<group>"; };
 		562B01C02AFCACB30099157C /* TermsOfUseViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsOfUseViewController.xib; sourceTree = "<group>"; };
@@ -258,6 +257,7 @@
 		56C08B9D2AE10D2D00FB8608 /* LocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerViewController.swift; sourceTree = "<group>"; };
 		56C08B9F2AE10D4C00FB8608 /* PhotoViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerViewController.swift; sourceTree = "<group>"; };
 		56C08BA32AE10EB400FB8608 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		56CB42D62B0130320038B5F7 /* GenderClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GenderClassifier.mlmodel; sourceTree = "<group>"; };
 		68708AB62AE745C200B4C7B9 /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
 		68708AB82AEE32CC00B4C7B9 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -431,7 +431,7 @@
 			isa = PBXGroup;
 			children = (
 				33845E4E2AF4AEFC00539068 /* animegan2face_paint_512_v2.mlmodel */,
-				562B01292AFB8A4E0099157C /* GenderClassifier.mlmodel */,
+				56CB42D62B0130320038B5F7 /* GenderClassifier.mlmodel */,
 				33845E4D2AF4AEFC00539068 /* YOLOv3Int8LUT.mlmodel */,
 			);
 			path = CoreMLModel;
@@ -863,7 +863,6 @@
 				562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */,
 				562E36C12AD91901008D99B2 /* Common.swift in Sources */,
 				5622C0702AEF0BE000455649 /* ResetPWViewController.swift in Sources */,
-				562B012A2AFB8A4E0099157C /* GenderClassifier.mlmodel in Sources */,
 				33ABF3552AE46F2F002DCCF4 /* FireStorageManager.swift in Sources */,
 				562E36B92AD8DCC5008D99B2 /* BaseHeaderViewController.swift in Sources */,
 				56C08B6E2ADF808400FB8608 /* MenuTableViewCell.swift in Sources */,
@@ -903,6 +902,7 @@
 				33192D772AE9D00200069582 /* Dummy.swift in Sources */,
 				335B78BA2AE70237004D2956 /* MainItems.swift in Sources */,
 				2305095A2AE2470B00F58092 /* UnderlineSegmentedControl.swift in Sources */,
+				56CB42D72B0130320038B5F7 /* GenderClassifier.mlmodel in Sources */,
 				33845E3B2AF43B9100539068 /* RevokeViewController.swift in Sources */,
 				33C58EA12ADC5392008EB6C2 /* AppConstraint.swift in Sources */,
 				33532B7C2AE17A53008B47EB /* FirebaseErrors.swift in Sources */,
@@ -1053,9 +1053,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Catcher/Catcher.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = YRZW7MZ3P5;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YRZW7MZ3P5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Catcher/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "앱에서 프로필 등록을 하기 위해 카메라 접근 권한 동의가 필요합니다.";
@@ -1070,10 +1072,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.utopia.Catcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = CatcherProd;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1244,9 +1247,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Catcher/CatcherDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = YRZW7MZ3P5;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YRZW7MZ3P5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Catcher/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "앱에서 프로필 등록을 하기 위해 카메라 접근 권한 동의가 필요합니다.";
@@ -1261,10 +1266,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.utopia.Catcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = CatcherProd;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1281,9 +1287,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Catcher/CatcherRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = YRZW7MZ3P5;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YRZW7MZ3P5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Catcher/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "앱에서 프로필 등록을 하기 위해 카메라 접근 권한 동의가 필요합니다.";
@@ -1298,10 +1306,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.utopia.Catcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = CatcherProd;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
