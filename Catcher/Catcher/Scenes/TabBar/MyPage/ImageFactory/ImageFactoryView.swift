@@ -74,5 +74,9 @@ private extension ImageFactoryView {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(imageView.snp.bottom).offset(70)
         }
+        
+        indicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
 }
