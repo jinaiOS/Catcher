@@ -100,7 +100,6 @@ class ChatViewController: UIViewController {
     // 대화를 가져와서 표시하기
     private func startListeningForCOnversations() {
         CommonUtil.print(output:"starting conversation fetch...")
-        self.processIndicatorView()
         // 데이터베이스에서 대화 가져오기
         DatabaseManager.shared.getAllConversations(completion: { [weak self] result in
             switch result {
@@ -118,12 +117,10 @@ class ChatViewController: UIViewController {
                 DispatchQueue.main.async {
                     self?.tbvConversation.reloadData()
                 }
-                self?.processIndicatorView()
             case .failure(let error):
                 self?.tbvConversation.isHidden = true
                 self?.noConversationsLabel.isHidden = false
                 CommonUtil.print(output:"failed to get convos: \(error)")
-                self?.processIndicatorView()
             }
         })
     }
