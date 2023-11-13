@@ -51,8 +51,8 @@ final class RegisterViewController: BaseViewController {
         }
         
         guard password == registerView.passwordconfirmtextfield.tf.text else {
-            registerView.passwordtextfield.lblError.text = "비밀번호를 다릅니다"
-            registerView.passwordconfirmtextfield.lblError.text = "비밀번호를 다릅니다"
+            registerView.passwordtextfield.lblError.text = "비밀번호가 다릅니다. 다시 입력해주세요"
+            registerView.passwordconfirmtextfield.lblError.text = "비밀번호가 다릅니다. 다시 입력해주세요"
             registerView.passwordtextfield.isError = true
             registerView.passwordconfirmtextfield.isError = true
             return
