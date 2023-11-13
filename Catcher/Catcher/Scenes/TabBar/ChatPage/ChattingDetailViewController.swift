@@ -122,6 +122,9 @@ final class ChattingDetailViewController: MessagesViewController {
         indicator.color = .systemOrange
         indicatorView.isHidden = true
         
+        
+        guard let uid = FirebaseManager().getUID else { return }
+        listenForMessages(id: uid, shouldScrollToBottom: true)
     }
 
     func setIndicatorLayout() {
@@ -331,8 +334,10 @@ final class ChattingDetailViewController: MessagesViewController {
                 }
                 self?.messages = messages
                 self?.readMessage()
-                DispatchQueue.main.async {
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self?.messagesCollectionView.reloadDataAndKeepOffset()
+                    self?.messagesCollectionView.scrollToLastItem()
                 }
                 self?.processIndicatorView(isHide: true)
             case .failure(let error):
@@ -359,8 +364,6 @@ final class ChattingDetailViewController: MessagesViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageInputBar.inputTextView.becomeFirstResponder()
-        guard let uid = FirebaseManager().getUID else { return }
-        listenForMessages(id: uid, shouldScrollToBottom: true)
     }
     
 }
