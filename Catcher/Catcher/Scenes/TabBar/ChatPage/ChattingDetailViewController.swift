@@ -187,11 +187,11 @@ final class ChattingDetailViewController: MessagesViewController {
         }
     }
     
-    func processIndicatorView() {
+    func processIndicatorView(isHide: Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            indicatorView.isHidden.toggle()
-            if indicator.isAnimating {
+            indicatorView.isHidden = isHide
+            if isHide {
                 indicator.stopAnimating()
             } else {
                 indicator.startAnimating()
@@ -320,7 +320,7 @@ final class ChattingDetailViewController: MessagesViewController {
     }
     
     private func listenForMessages(id: String, shouldScrollToBottom: Bool) {
-        self.processIndicatorView()
+        self.processIndicatorView(isHide: false)
         DatabaseManager.shared.getAllMessagesForConversation(with: otherUserUid, completion: { [weak self] result in
             switch result {
             case .success(let messages):
@@ -334,24 +334,24 @@ final class ChattingDetailViewController: MessagesViewController {
                 DispatchQueue.main.async {
                     self?.messagesCollectionView.reloadDataAndKeepOffset()
                 }
-                self?.processIndicatorView()
+                self?.processIndicatorView(isHide: true)
             case .failure(let error):
                 CommonUtil.print(output:"failed to get messages: \(error)")
-                self?.processIndicatorView()
+                self?.processIndicatorView(isHide: true)
             }
         })
     }
     
     private func readMessage() {
-        self.processIndicatorView()
+        self.processIndicatorView(isHide: false)
         DatabaseManager.shared.readMessage(otherUserUid: otherUserUid, completion: { success in
             if success {
                 CommonUtil.print(output: "Read Message")
-                self.processIndicatorView()
+                self.processIndicatorView(isHide: true)
             }
             else {
                 CommonUtil.print(output: "Read Message Error")
-                self.processIndicatorView()
+                self.processIndicatorView(isHide: true)
             }
         })
     }
@@ -414,11 +414,11 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                             if success {
                                 CommonUtil.print(output:"sent photo message")
                                 self?.requestPush(message: message)
-                                self?.processIndicatorView()
+                                self?.processIndicatorView(isHide: true)
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
-                                self?.processIndicatorView()
+                                self?.processIndicatorView(isHide: true)
                             }
                             
                         })
@@ -428,18 +428,18 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                             if success {
                                 CommonUtil.print(output:"sent photo message")
                                 self?.requestPush(message: message)
-                                self?.processIndicatorView()
+                                self?.processIndicatorView(isHide: true)
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
-                                self?.processIndicatorView()
+                                self?.processIndicatorView(isHide: true)
                             }
                             
                         })
                     }
                 case .failure(let error):
                     CommonUtil.print(output:"message photo upload error: \(error)")
-                    self?.processIndicatorView()
+                    self?.processIndicatorView(isHide: true)
                 }
             })
         }
@@ -477,11 +477,11 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                             if success {
                                 CommonUtil.print(output:"sent photo message")
                                 self?.requestPush(message: message)
-                                self?.processIndicatorView()
+                                self?.processIndicatorView(isHide: true)
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
-                                self?.processIndicatorView()
+                                self?.processIndicatorView(isHide: true)
                             }
                             
                         })
@@ -490,18 +490,18 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                             if success {
                                 CommonUtil.print(output:"sent video message")
                                 self?.requestPush(message: message)
-                                self?.processIndicatorView()
+                                self?.processIndicatorView(isHide: true)
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
-                                self?.processIndicatorView()
+                                self?.processIndicatorView(isHide: true)
                             }
                             
                         })
                     }
                 case .failure(let error):
                     CommonUtil.print(output:"message photo upload error: \(error)")
-                    self?.processIndicatorView()
+                    self?.processIndicatorView(isHide: true)
                 }
             })
         }
@@ -532,10 +532,10 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
                     self?.isNewConversation = false
                     self?.listenForMessages(id: self?.otherUserUid ?? "", shouldScrollToBottom: true)
                     self?.messageInputBar.inputTextView.text = ""
-                    self?.processIndicatorView()
+                    self?.processIndicatorView(isHide: true)
                 } else {
                     CommonUtil.print(output:"failed ot send")
-                    self?.processIndicatorView()
+                    self?.processIndicatorView(isHide: true)
                 }
             })
         } else {
@@ -544,10 +544,10 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
                 if success {
                     self?.messageInputBar.inputTextView.text = ""
                     CommonUtil.print(output:"message sent")
-                    self?.processIndicatorView()
+                    self?.processIndicatorView(isHide: true)
                 } else {
                     CommonUtil.print(output:"failed to send")
-                    self?.processIndicatorView()
+                    self?.processIndicatorView(isHide: true)
                 }
             })
         }
