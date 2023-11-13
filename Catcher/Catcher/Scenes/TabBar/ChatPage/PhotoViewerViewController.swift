@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-final class PhotoViewerViewController: UIViewController {
+final class PhotoViewerViewController: BaseHeaderViewController {
 
     private let url: URL
 
@@ -30,6 +30,7 @@ final class PhotoViewerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Photo"
+        setHeaderTitleName(title: "Photo")
         navigationItem.largeTitleDisplayMode = .never
         view.backgroundColor = .black
         view.addSubview(imageView)

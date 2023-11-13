@@ -17,7 +17,8 @@ class LoginViewController: BaseViewController {
     }
     
     @objc func loginPressed() {
-        self.processIndicatorView()
+        self.processIndicatorView(isHide: false)
+
         let email: String = loginView.emailTextField.tf.text!.description
         let pw: String = loginView.passwordTextField.tf.text!.description
         
@@ -26,6 +27,7 @@ class LoginViewController: BaseViewController {
                 CommonUtil.print(output: "로그인 실패: \(error)")
                 self.loginView.emailTextField.isError = true
                 self.loginView.passwordTextField.isError = true
+                self.processIndicatorView(isHide: true)
             } else {
                 CommonUtil.print(output: "로그인 성공")
                 Task {
@@ -56,7 +58,7 @@ class LoginViewController: BaseViewController {
                         }
                     }
                 }
-                self.processIndicatorView()
+                self.processIndicatorView(isHide: true)
                 AppDelegate.applicationDelegate().changeInitViewController(type: .Main)
             }
         }
@@ -87,11 +89,11 @@ class LoginViewController: BaseViewController {
         setUI()
     }
     
-    func processIndicatorView() {
+    func processIndicatorView(isHide: Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            loginView.indicatorView.isHidden.toggle()
-            if loginView.indicator.isAnimating {
+            loginView.indicatorView.isHidden = isHide
+            if isHide {
                 loginView.indicator.stopAnimating()
             } else {
                 loginView.indicator.startAnimating()
