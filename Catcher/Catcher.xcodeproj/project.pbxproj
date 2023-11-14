@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		230509582AE2469000F58092 /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230509572AE2469000F58092 /* ContactViewController.swift */; };
-		2305095A2AE2470B00F58092 /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230509592AE2470B00F58092 /* UnderlineSegmentedControl.swift */; };
-		2305095D2AE2475E00F58092 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2305095B2AE2475E00F58092 /* ContactTableViewCell.swift */; };
-		2305095E2AE2475E00F58092 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2305095C2AE2475E00F58092 /* ContactTableViewCell.xib */; };
 		23E7DAB82AEB919400CDBC53 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E7DAB72AEB919400CDBC53 /* Const.swift */; };
 		23E7DABB2AEB978600CDBC53 /* ProfileSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E7DAB92AEB978600CDBC53 /* ProfileSettingViewController.swift */; };
 		23E7DABC2AEB978600CDBC53 /* ProfileSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23E7DABA2AEB978600CDBC53 /* ProfileSettingViewController.xib */; };
@@ -39,7 +35,6 @@
 		33845E422AF442CE00539068 /* RevokeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33845E412AF442CE00539068 /* RevokeViewModel.swift */; };
 		33845E502AF4AEFD00539068 /* YOLOv3Int8LUT.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33845E4D2AF4AEFC00539068 /* YOLOv3Int8LUT.mlmodel */; };
 		33845E512AF4AEFD00539068 /* animegan2face_paint_512_v2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 33845E4E2AF4AEFC00539068 /* animegan2face_paint_512_v2.mlmodel */; };
-		33894A682AEEAB7C00582345 /* StrokeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33894A672AEEAB7C00582345 /* StrokeLabel.swift */; };
 		33ABF3552AE46F2F002DCCF4 /* FireStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3542AE46F2F002DCCF4 /* FireStorageManager.swift */; };
 		33ABF3592AE4889D002DCCF4 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */; };
 		33B358072ADE189E00A91C95 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B358062ADE189E00A91C95 /* ButtonFactory.swift */; };
@@ -122,9 +117,7 @@
 		56C08B9C2AE10CDE00FB8608 /* ChatModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B9B2AE10CDE00FB8608 /* ChatModels.swift */; };
 		56C08B9E2AE10D2D00FB8608 /* LocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B9D2AE10D2D00FB8608 /* LocationPickerViewController.swift */; };
 		56C08BA02AE10D4C00FB8608 /* PhotoViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08B9F2AE10D4C00FB8608 /* PhotoViewerViewController.swift */; };
-		56C08BA42AE10EB400FB8608 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C08BA32AE10EB400FB8608 /* SearchResult.swift */; };
 		56CB42D72B0130320038B5F7 /* GenderClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 56CB42D62B0130320038B5F7 /* GenderClassifier.mlmodel */; };
-		68708AB72AE745C200B4C7B9 /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68708AB62AE745C200B4C7B9 /* SurveyViewController.swift */; };
 		68708AB92AEE32CC00B4C7B9 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68708AB82AEE32CC00B4C7B9 /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -146,10 +139,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		230509572AE2469000F58092 /* ContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewController.swift; sourceTree = "<group>"; };
-		230509592AE2470B00F58092 /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
-		2305095B2AE2475E00F58092 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
-		2305095C2AE2475E00F58092 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
 		23E7DAB72AEB919400CDBC53 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		23E7DAB92AEB978600CDBC53 /* ProfileSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewController.swift; sourceTree = "<group>"; };
 		23E7DABA2AEB978600CDBC53 /* ProfileSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileSettingViewController.xib; sourceTree = "<group>"; };
@@ -177,7 +166,6 @@
 		33845E412AF442CE00539068 /* RevokeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeViewModel.swift; sourceTree = "<group>"; };
 		33845E4D2AF4AEFC00539068 /* YOLOv3Int8LUT.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3Int8LUT.mlmodel; sourceTree = "<group>"; };
 		33845E4E2AF4AEFC00539068 /* animegan2face_paint_512_v2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = animegan2face_paint_512_v2.mlmodel; sourceTree = "<group>"; };
-		33894A672AEEAB7C00582345 /* StrokeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeLabel.swift; sourceTree = "<group>"; };
 		33ABF3542AE46F2F002DCCF4 /* FireStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStorageManager.swift; sourceTree = "<group>"; };
 		33ABF3582AE4889D002DCCF4 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		33B358062ADE189E00A91C95 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
@@ -258,9 +246,7 @@
 		56C08B9B2AE10CDE00FB8608 /* ChatModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModels.swift; sourceTree = "<group>"; };
 		56C08B9D2AE10D2D00FB8608 /* LocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerViewController.swift; sourceTree = "<group>"; };
 		56C08B9F2AE10D4C00FB8608 /* PhotoViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerViewController.swift; sourceTree = "<group>"; };
-		56C08BA32AE10EB400FB8608 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		56CB42D62B0130320038B5F7 /* GenderClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GenderClassifier.mlmodel; sourceTree = "<group>"; };
-		68708AB62AE745C200B4C7B9 /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
 		68708AB82AEE32CC00B4C7B9 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -301,10 +287,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		33387A0B2B03C25E000E8148 /* TermsOfUser */ = {
+			isa = PBXGroup;
+			children = (
+				562B01BF2AFCACB30099157C /* TermsOfUseViewController.swift */,
+				562B01C02AFCACB30099157C /* TermsOfUseViewController.xib */,
+			);
+			path = TermsOfUser;
+			sourceTree = "<group>";
+		};
+		33387A0D2B03C2E9000E8148 /* AppVersion */ = {
+			isa = PBXGroup;
+			children = (
+				33B7B5B02AF4271F00773E9F /* AppVersionView.swift */,
+				33B7B5AE2AF4271700773E9F /* AppVersionViewController.swift */,
+			);
+			path = AppVersion;
+			sourceTree = "<group>";
+		};
+		33387A0E2B03C2FF000E8148 /* Revoke */ = {
+			isa = PBXGroup;
+			children = (
+				33845E3C2AF43B9600539068 /* RevokeView.swift */,
+				33845E412AF442CE00539068 /* RevokeViewModel.swift */,
+				33845E3A2AF43B9100539068 /* RevokeViewController.swift */,
+			);
+			path = Revoke;
+			sourceTree = "<group>";
+		};
+		33387A0F2B03C310000E8148 /* ProfileSetting */ = {
+			isa = PBXGroup;
+			children = (
+				23E7DAB92AEB978600CDBC53 /* ProfileSettingViewController.swift */,
+				23E7DABA2AEB978600CDBC53 /* ProfileSettingViewController.xib */,
+				33E590222AF08C0A0060FBA0 /* ProfileSettingViewModel.swift */,
+			);
+			path = ProfileSetting;
+			sourceTree = "<group>";
+		};
 		33532B812AE17A8E008B47EB /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				23E7DAB72AEB919400CDBC53 /* Const.swift */,
 				335241932AE5AEBB009EB771 /* FireStoreManager.swift */,
 				33532B7B2AE17A53008B47EB /* FirebaseErrors.swift */,
 				33532B7D2AE17A67008B47EB /* FirebaseManager.swift */,
@@ -328,35 +351,6 @@
 				337D0AE42AFAE43500E567FE /* ImageFactoryViewController.swift */,
 			);
 			path = ImageFactory;
-			sourceTree = "<group>";
-		};
-		33845E3E2AF43D0300539068 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				33B7B5B02AF4271F00773E9F /* AppVersionView.swift */,
-				33845E3C2AF43B9600539068 /* RevokeView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		33845E3F2AF43D1200539068 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				33B7B5AE2AF4271700773E9F /* AppVersionViewController.swift */,
-				33845E3A2AF43B9100539068 /* RevokeViewController.swift */,
-				23E7DAB92AEB978600CDBC53 /* ProfileSettingViewController.swift */,
-				23E7DABA2AEB978600CDBC53 /* ProfileSettingViewController.xib */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		33845E402AF43D2700539068 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				33E590222AF08C0A0060FBA0 /* ProfileSettingViewModel.swift */,
-				33845E412AF442CE00539068 /* RevokeViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		339C82042B00482E0065AAAD /* Model */ = {
@@ -497,10 +491,10 @@
 				562E36842AD80EF9008D99B2 /* ViewController.swift */,
 				562E36862AD80EF9008D99B2 /* Main.storyboard */,
 				33E5902A2AF08C8D0060FBA0 /* CoreML */,
-				56C08B4E2ADF74FE00FB8608 /* Util */,
-				56C08B4A2ADF738200FB8608 /* Scenes */,
 				33C58E8A2AD8B292008EB6C2 /* Configure */,
 				33B358082ADE18B200A91C95 /* Factory */,
+				56C08B4E2ADF74FE00FB8608 /* Util */,
+				56C08B4A2ADF738200FB8608 /* Scenes */,
 				562E36892AD80EFA008D99B2 /* Assets.xcassets */,
 				562E368B2AD80EFA008D99B2 /* LaunchScreen.storyboard */,
 				562E368E2AD80EFA008D99B2 /* Info.plist */,
@@ -576,12 +570,6 @@
 				56C08B6B2ADF806900FB8608 /* MainPage */,
 				56C08B7F2AE0FE2100FB8608 /* ChatPage */,
 				56C08B782ADF80AC00FB8608 /* MyPage */,
-				68708AB62AE745C200B4C7B9 /* SurveyViewController.swift */,
-				562B01BF2AFCACB30099157C /* TermsOfUseViewController.swift */,
-				562B01C02AFCACB30099157C /* TermsOfUseViewController.xib */,
-				33845E3E2AF43D0300539068 /* View */,
-				33845E402AF43D2700539068 /* ViewModel */,
-				33845E3F2AF43D1200539068 /* ViewController */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -600,11 +588,11 @@
 			children = (
 				562E36BA2AD8DD03008D99B2 /* CommonUtil.swift */,
 				562E36C02AD91901008D99B2 /* Common.swift */,
+				23E7DAB72AEB919400CDBC53 /* Const.swift */,
+				3366170C2AF6E562008AB63C /* ServerKey.swift */,
 				33532B812AE17A8E008B47EB /* Managers */,
-				33894A672AEEAB7C00582345 /* StrokeLabel.swift */,
 				56BBF7ED2AE6687B00A2BADD /* Models */,
 				33C58E802AD85028008EB6C2 /* Extensions */,
-				3366170C2AF6E562008AB63C /* ServerKey.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -628,14 +616,14 @@
 			children = (
 				56C08B6C2ADF808400FB8608 /* MenuTableViewCell.swift */,
 				56C08B6D2ADF808400FB8608 /* MyPageViewController.swift */,
-				230509572AE2469000F58092 /* ContactViewController.swift */,
-				230509592AE2470B00F58092 /* UnderlineSegmentedControl.swift */,
-				2305095B2AE2475E00F58092 /* ContactTableViewCell.swift */,
-				2305095C2AE2475E00F58092 /* ContactTableViewCell.xib */,
+				33387A0D2B03C2E9000E8148 /* AppVersion */,
 				56C08B792ADF80BD00FB8608 /* AskPage */,
-				56C08B7A2ADF80C400FB8608 /* InfoPage */,
+				33387A0F2B03C310000E8148 /* ProfileSetting */,
 				56C08B7B2ADF80CC00FB8608 /* ReportPage */,
+				33387A0E2B03C2FF000E8148 /* Revoke */,
 				337D0AE62AFAE43900E567FE /* ImageFactory */,
+				56C08B7A2ADF80C400FB8608 /* InfoPage */,
+				33387A0B2B03C25E000E8148 /* TermsOfUser */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -673,7 +661,6 @@
 				56C08B9D2AE10D2D00FB8608 /* LocationPickerViewController.swift */,
 				56C08B9F2AE10D4C00FB8608 /* PhotoViewerViewController.swift */,
 				56C08B852AE0FEB300FB8608 /* ConversationTableViewCell.swift */,
-				56C08BA32AE10EB400FB8608 /* SearchResult.swift */,
 			);
 			path = ChatPage;
 			sourceTree = "<group>";
@@ -803,7 +790,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2305095E2AE2475E00F58092 /* ContactTableViewCell.xib in Resources */,
 				23E7DABC2AEB978600CDBC53 /* ProfileSettingViewController.xib in Resources */,
 				33845E392AF4393F00539068 /* Settings.bundle in Resources */,
 				562E368D2AD80EFA008D99B2 /* LaunchScreen.storyboard in Resources */,
@@ -841,7 +827,6 @@
 			files = (
 				3B3E35D52ADFA2F1006841D8 /* RegisterViewController.swift in Sources */,
 				335241942AE5AEBB009EB771 /* FireStoreManager.swift in Sources */,
-				68708AB72AE745C200B4C7B9 /* SurveyViewController.swift in Sources */,
 				56C08B692ADF805800FB8608 /* HomeItem.swift in Sources */,
 				562E36B52AD8DB57008D99B2 /* DataManager.swift in Sources */,
 				33532B7E2AE17A67008B47EB /* FirebaseManager.swift in Sources */,
@@ -854,13 +839,11 @@
 				56C08B662ADF805800FB8608 /* SectionHeaderView.swift in Sources */,
 				56C08B9C2AE10CDE00FB8608 /* ChatModels.swift in Sources */,
 				56C08B662ADF805800FB8608 /* SectionHeaderView.swift in Sources */,
-				230509582AE2469000F58092 /* ContactViewController.swift in Sources */,
 				56C08B9A2AE10CAA00FB8608 /* ChattingDetailViewController.swift in Sources */,
 				33845E422AF442CE00539068 /* RevokeViewModel.swift in Sources */,
 				68708AB92AEE32CC00B4C7B9 /* StorageManager.swift in Sources */,
 				56C08B842AE0FE8300FB8608 /* ConversationsModels.swift in Sources */,
 				56BBF82F2AEB1EBB00A2BADD /* DatabaseManager.swift in Sources */,
-				56C08BA42AE10EB400FB8608 /* SearchResult.swift in Sources */,
 				337D0AE82AFAE45500E567FE /* ImageFactoryView.swift in Sources */,
 				33462AF62AF3CAC4006CDFBA /* NotificationManager.swift in Sources */,
 				562E36812AD80EF9008D99B2 /* AppDelegate.swift in Sources */,
@@ -878,7 +861,6 @@
 				3B3E35D72AE125A3006841D8 /* RegisterView.swift in Sources */,
 				562E36BB2AD8DD03008D99B2 /* CommonUtil.swift in Sources */,
 				33B7B5B12AF4271F00773E9F /* AppVersionView.swift in Sources */,
-				2305095D2AE2475E00F58092 /* ContactTableViewCell.swift in Sources */,
 				33845E502AF4AEFD00539068 /* YOLOv3Int8LUT.mlmodel in Sources */,
 				5622C0AF2AF7837D00455649 /* TermsTableViewCell.swift in Sources */,
 				562E36B72AD8DCAA008D99B2 /* BaseViewController.swift in Sources */,
@@ -899,13 +881,11 @@
 				33E590272AF08C5F0060FBA0 /* DistinguishGender.swift in Sources */,
 				56C08B752ADF809300FB8608 /* InfoViewController.swift in Sources */,
 				33C58E892AD8B28D008EB6C2 /* ThemeColor.swift in Sources */,
-				33894A682AEEAB7C00582345 /* StrokeLabel.swift in Sources */,
 				56C08B502ADF754B00FB8608 /* UIView+.swift in Sources */,
 				33B3580A2ADE18D600A91C95 /* LabelFactory.swift in Sources */,
 				56C08B6A2ADF805800FB8608 /* MainPageViewModel.swift in Sources */,
 				33192D772AE9D00200069582 /* Dummy.swift in Sources */,
 				335B78BA2AE70237004D2956 /* MainItems.swift in Sources */,
-				2305095A2AE2470B00F58092 /* UnderlineSegmentedControl.swift in Sources */,
 				56CB42D72B0130320038B5F7 /* GenderClassifier.mlmodel in Sources */,
 				33845E3B2AF43B9100539068 /* RevokeViewController.swift in Sources */,
 				33C58EA12ADC5392008EB6C2 /* AppConstraint.swift in Sources */,
