@@ -28,6 +28,7 @@ class ResetPWViewController: BaseHeaderViewController {
     
     lazy var loginBtn: UIButton = ButtonFactory.makeButton(
         title: "메일 전송하기",
+        titleLabelFont: ThemeFont.demibold(size: 25),
         titleColor: .white,
         backgroundColor: ThemeColor.primary,
         cornerRadius: 15)

@@ -32,6 +32,7 @@ final class RegisterView: UIView {
     
     lazy var nextButton: UIButton = ButtonFactory.makeButton(
         title: "다음",
+        titleLabelFont: ThemeFont.demibold(size: 25),
         titleColor: .white,
         backgroundColor: .gray,
         cornerRadius: 15)

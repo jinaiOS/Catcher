@@ -88,7 +88,7 @@ final class InfoView: UIView {
         let button = UIButton(type: .system)
         button.setTitle("저장하기", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = ThemeFont.demibold(size: 20)
+        button.titleLabel?.font = ThemeFont.demibold(size: 25)
         button.backgroundColor = ThemeColor.primary
         button.layer.cornerRadius = 15
         return button
