@@ -9,7 +9,7 @@ import SnapKit
 import UIKit
 
 final class RegisterView: UIView {
-    lazy var termsTableView : UITableView = {
+    lazy var termsTableView: UITableView = {
         let tableview = UITableView()
         tableview.separatorStyle = .none
         return tableview
@@ -37,7 +37,7 @@ final class RegisterView: UIView {
         cornerRadius: 15)
     
     lazy var dividerView: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = .systemGray3
         return view
     }()
@@ -57,12 +57,16 @@ final class RegisterView: UIView {
     var passwordtextfield: CustomTextField = {
         let textfield = CustomTextField()
         textfield.tf.keyboardType = .asciiCapable
+        textfield.lblError.numberOfLines = 0
+        textfield.lblError.lineBreakMode = .byWordWrapping
         return textfield
     }()
     
     var passwordconfirmtextfield: CustomTextField = {
         let textfield = CustomTextField()
         textfield.tf.keyboardType = .asciiCapable
+        textfield.lblError.numberOfLines = 0
+        textfield.lblError.lineBreakMode = .byWordWrapping
         return textfield
     }()
     
@@ -125,6 +129,12 @@ private extension RegisterView {
             make.top.equalTo(self.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom) // Set the bottom constraint to the top of the next button.
+        }
+        passwordtextfield.lblError.snp.makeConstraints {
+            $0.height.equalTo(30)
+        }
+        passwordconfirmtextfield.lblError.snp.makeConstraints {
+            $0.height.equalTo(30)
         }
         contentView.snp.makeConstraints { make in
             make.edges.equalTo(scrollView.contentLayoutGuide)
