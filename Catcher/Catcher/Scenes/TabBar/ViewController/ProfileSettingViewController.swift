@@ -43,6 +43,7 @@ class ProfileSettingViewController: BaseHeaderViewController {
 
     // 회원가입 완료 버튼
     @IBAction func completeBtn(_ sender: UIButton) {
+        sender.debounce()
         switch allowAlbum {
         case true:
             updateProfile()
@@ -138,6 +139,7 @@ private extension ProfileSettingViewController {
         let buttonTitle = allowAlbum ? "프로필 변경" : "회원가입"
         genderLabel.isHidden = allowAlbum
         registerButton.setTitle(buttonTitle, for: .normal)
+        registerButton.titleLabel?.font = ThemeFont.demibold(size: 25)
     }
     
     func setLayout() {

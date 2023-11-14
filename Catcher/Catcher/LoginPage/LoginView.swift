@@ -27,7 +27,7 @@ final class LoginView: UIView {
     
     lazy var loginBtn: UIButton = ButtonFactory.makeButton(
         title: "로그인",
-        titleLabelFont: .systemFont(ofSize: 25, weight: .bold),
+        titleLabelFont: ThemeFont.demibold(size: 25),
         titleColor: .white,
         backgroundColor: ThemeColor.primary,
         cornerRadius: 15)

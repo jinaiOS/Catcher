@@ -21,8 +21,9 @@ final class ImageFactoryView: UIView {
     lazy var saveButton: UIButton = {
         ButtonFactory.makeButton(
             title: "이미지 저장",
+            titleLabelFont: ThemeFont.demibold(size: 25),
             titleColor: .white,
-            backgroundColor: ThemeColor.userInfoHeaderView,
+            backgroundColor: ThemeColor.primary,
             cornerRadius: AppConstraint.defaultCornerRadius)
     }()
     

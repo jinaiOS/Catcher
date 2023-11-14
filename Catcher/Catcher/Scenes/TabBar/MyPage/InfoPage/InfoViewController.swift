@@ -137,7 +137,8 @@ private extension InfoViewController {
         return nil
     }
 
-    @objc func completeBtn() {
+    @objc func completeBtn(sender: UIButton) {
+        sender.debounce()
         infoView.regionTextField.isError = false
         infoView.birthTextField.isError = false
         infoView.mbtiTextField.isError = false

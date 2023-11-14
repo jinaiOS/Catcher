@@ -16,7 +16,8 @@ class LoginViewController: BaseViewController {
         view = loginView
     }
     
-    @objc func loginPressed() {
+    @objc func loginPressed(sender: UIButton) {
+        sender.debounce()
         self.processIndicatorView(isHide: false)
 
         let email: String = loginView.emailTextField.tf.text!.description
