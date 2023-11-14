@@ -186,7 +186,7 @@ final class MyPageViewController: BaseViewController {
         btn.layer.cornerRadius = 15
         btn.setTitleColor(.white, for: .normal)
         btn.backgroundColor = ThemeColor.primary
-        //        view.addSubview(btn)
+        btn.titleLabel?.font = ThemeFont.demibold(size: 25)
         return btn
     }()
 

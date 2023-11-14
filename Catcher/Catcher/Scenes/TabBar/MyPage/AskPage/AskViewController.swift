@@ -71,6 +71,7 @@ class AskViewController: BaseHeaderViewController {
         btn.setTitle("문의하기", for: .normal)
         btn.layer.cornerRadius = AppConstraint.defaultCornerRadius
         btn.setTitleColor(.white, for: .normal)
+        btn.titleLabel?.font = ThemeFont.demibold(size: 25)
         btn.backgroundColor = ThemeColor.primary
         btn.addTarget(self, action: #selector(pressAskButton), for: .touchUpInside)
         view.addSubview(btn)

@@ -174,6 +174,7 @@ final class ReportViewController: BaseHeaderViewController {
     private lazy var reportButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("신고하기", for: .normal)
+        btn.titleLabel?.font = ThemeFont.demibold(size: 25)
         btn.layer.cornerRadius = AppConstraint.defaultCornerRadius
         btn.setTitleColor(.white, for: .normal)
         btn.backgroundColor = ThemeColor.primary
@@ -239,7 +240,7 @@ private extension ReportViewController {
         sender.tintColor = sender.isSelected ? .systemRed : .systemGray
     }
 
-    @objc func reportUser() {
+    @objc func reportUser(sender: UIButton) {
         var title = ""
         if button1.isSelected {
             title += "/비속어"
@@ -257,7 +258,7 @@ private extension ReportViewController {
             showAlert(title: "신고사항 미입력", message: "신고 사유를 자세히 작성해 주세요.")
             return
         }
-        reportButton.debounce()
+        sender.debounce()
         if userBlockButton.isSelected {
             processBlockUser()
         }
