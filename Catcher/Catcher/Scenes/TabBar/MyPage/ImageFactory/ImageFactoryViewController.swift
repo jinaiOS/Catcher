@@ -35,15 +35,10 @@ final class ImageFactoryViewController: BaseHeaderViewController {
 
 private extension ImageFactoryViewController {
     func setLayout() {
-        imageFactoryView.addSubview(imageFactoryView.indicator)
         view.addSubview(imageFactoryView.indicatorView)
         
         imageFactoryView.indicatorView.snp.makeConstraints {
             $0.edges.equalToSuperview()
-        }
-        
-        imageFactoryView.indicator.snp.makeConstraints {
-            $0.center.equalToSuperview()
         }
     }
     
