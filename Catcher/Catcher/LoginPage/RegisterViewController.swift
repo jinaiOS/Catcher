@@ -66,30 +66,23 @@ final class RegisterViewController: BaseViewController {
             return
         }
         
-        //        guard let nickName = registerView.nicknametextfield.text else { return }
-        //        guard let email = registerView.emailtextfield.text else { return }
-        //        guard let password = registerView.passwordtextfield.text else { return }
         Task {
-            do {
-                let (isAvailable, error) = try await FireStoreManager.shared.nickNamePass(nickName: nickName)
-                if let error = error { print("Error checking nickName availability: \(error.localizedDescription)")
-                    return
-                }
-                if isAvailable == true {
-                    // 닉네임 사용 가능
-                    // 이후 회원가입 프로세스 진행
-                    let vcInfo = InfoViewController()
-                    vcInfo.newUserEmail = email
-                    vcInfo.newUserPassword = password
-                    vcInfo.newUserNickName = nickName
-                    navigationPushController(viewController: vcInfo, animated: true)
-                } else {
-                    // 닉네임 이미 사용 중
-                    registerView.nicknametextfield.lblError.text = "중복된 닉네임이 있습니다."
-                    registerView.nicknametextfield.isError = true
-                }
-            } catch {
-                print("Error checking nickName availability: \(error.localizedDescription)")
+            let (isAvailable, error) = await FireStoreManager.shared.nickNamePass(nickName: nickName)
+            if let error = error { print("Error checking nickName availability: \(error.localizedDescription)")
+                return
+            }
+            if isAvailable == true {
+                // 닉네임 사용 가능
+                // 이후 회원가입 프로세스 진행
+                let vcInfo = InfoViewController()
+                vcInfo.newUserEmail = email
+                vcInfo.newUserPassword = password
+                vcInfo.newUserNickName = nickName
+                navigationPushController(viewController: vcInfo, animated: true)
+            } else {
+                // 닉네임 이미 사용 중
+                registerView.nicknametextfield.lblError.text = "중복된 닉네임이 있습니다."
+                registerView.nicknametextfield.isError = true
             }
         }
     }

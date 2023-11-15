@@ -26,10 +26,10 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DqN-hb-6Rz">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="1042"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="1062"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="UBY-t2-9mb">
-                                    <rect key="frame" x="20" y="50" width="353" height="353"/>
+                                    <rect key="frame" x="20" y="70" width="353" height="353"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="UBY-t2-9mb" secondAttribute="height" multiplier="1:1" id="Ff6-WZ-zmT"/>
                                     </constraints>
@@ -40,13 +40,13 @@
                                     </userDefinedRuntimeAttributes>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="성별" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QwV-17-3VA">
-                                    <rect key="frame" x="170.66666666666666" y="436" width="52" height="36"/>
+                                    <rect key="frame" x="170.66666666666666" y="456" width="52" height="36"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fem-Il-FSN">
-                                    <rect key="frame" x="20" y="522.33333333333337" width="353" height="182.66666666666663"/>
+                                    <rect key="frame" x="20" y="542.33333333333337" width="353" height="182.66666666666663"/>
                                     <attributedString key="attributedText">
                                         <fragment content="※">
                                             <attributes>
@@ -549,13 +549,13 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="XWa-Bw-NIv">
-                                    <rect key="frame" x="16" y="722" width="361" height="200"/>
+                                    <rect key="frame" x="16" y="742" width="361" height="200"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="200" id="hgc-Pq-BM1"/>
                                     </constraints>
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Khv-Mt-1cu">
-                                    <rect key="frame" x="20" y="972" width="353" height="50"/>
+                                    <rect key="frame" x="20" y="992" width="353" height="50"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="VpG-LF-jlG"/>
                                     </constraints>
@@ -577,7 +577,7 @@
                                 <constraint firstItem="UBY-t2-9mb" firstAttribute="leading" secondItem="DqN-hb-6Rz" secondAttribute="leading" constant="20" id="RPo-lZ-6WD"/>
                                 <constraint firstItem="fem-Il-FSN" firstAttribute="leading" secondItem="DqN-hb-6Rz" secondAttribute="leading" constant="20" id="SRy-p0-neK"/>
                                 <constraint firstItem="Khv-Mt-1cu" firstAttribute="leading" secondItem="DqN-hb-6Rz" secondAttribute="leading" constant="20" id="cY9-eO-4LN"/>
-                                <constraint firstItem="UBY-t2-9mb" firstAttribute="top" secondItem="DqN-hb-6Rz" secondAttribute="top" constant="50" id="hch-4K-kvu"/>
+                                <constraint firstItem="UBY-t2-9mb" firstAttribute="top" secondItem="DqN-hb-6Rz" secondAttribute="top" constant="70" id="hch-4K-kvu"/>
                                 <constraint firstAttribute="trailing" secondItem="fem-Il-FSN" secondAttribute="trailing" constant="20" id="ibq-fL-HLo"/>
                                 <constraint firstItem="XWa-Bw-NIv" firstAttribute="leading" secondItem="DqN-hb-6Rz" secondAttribute="leading" constant="16" id="mMR-UF-nko"/>
                                 <constraint firstAttribute="bottom" secondItem="Khv-Mt-1cu" secondAttribute="bottom" constant="20" id="mPL-eb-Ckf"/>

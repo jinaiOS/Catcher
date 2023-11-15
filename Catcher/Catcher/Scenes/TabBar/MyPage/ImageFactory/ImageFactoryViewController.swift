@@ -55,7 +55,13 @@ private extension ImageFactoryViewController {
     }
     
     @objc func tapImageView() {
-        showAction()
+        if let problem: Bool = UserDefaultsManager().getValue(forKey: UserDefaultsManager.keyName.problem.key) {
+            if problem {
+                showAlert(title: "캐리커처 생성 불가", message: "현재 해당 기기에서 캐리커처 이미지를 생성할 수 없습니다.")
+                return
+            }
+            showAction()
+        }
     }
     
     @objc func saveImage() {
@@ -97,8 +103,8 @@ private extension ImageFactoryViewController {
     func openCamera() {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] status in
             guard let self = self else { return }
-            if status {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                if status {
                     self.picker.sourceType = .camera
                     self.picker.cameraFlashMode = .off
                     if UIImagePickerController.isCameraDeviceAvailable(.front) {
@@ -108,9 +114,7 @@ private extension ImageFactoryViewController {
                         CommonUtil.print(output: "전면 카메라를 찾을 수 없음")
                         return
                     }
-                }
-            } else {
-                DispatchQueue.main.async {
+                } else {
                     CommonUtil.print(output: "Camera: 권한 거부")
                     self.moveToSettingAlert(reason: "카메라 접근 요청 거부됨", discription: "설정 > 카메라 접근 권한을 허용해 주세요.")
                 }
@@ -121,15 +125,13 @@ private extension ImageFactoryViewController {
     func openLibrary() {
         PHPhotoLibrary.requestAuthorization { [weak self] status in
             guard let self = self else { return }
-            switch status {
-            case .authorized:
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                switch status {
+                case .authorized:
                     self.picker.sourceType = .photoLibrary
                     self.present(self.picker, animated: true)
-                }
-                
-            default:
-                DispatchQueue.main.async {
+                    
+                default:
                     self.moveToSettingAlert(reason: "사진 접근 요청 거부됨", discription: "설정 > 사진 접근 권한을 허용해 주세요.")
                 }
             }
