@@ -12,10 +12,6 @@ final class LoginView: UIView {
     lazy var emailTextField: CustomTextField = {
         let textField = CustomTextField()
         textField.tf.keyboardType = .emailAddress
-//        textField.textColor = .label
-//        textField.font = .systemFont(ofSize: 15, weight: .regular)
-//        textField.keyboardType = .emailAddress
-//        textField.autocapitalizationType = .none
         return textField
     }()
     
@@ -46,11 +42,6 @@ final class LoginView: UIView {
         title: "회원가입",
         titleColor: .darkGray,
         cornerRadius: 15)
-
-//    lazy var appleLoginBtn: UIButton = ButtonFactory.makeButton(
-//        type: .custom,
-//        image: UIImage(named: "appleid_button"),
-//        cornerRadius: 15)
     
     private lazy var vStack: UIStackView = {
         let view = UIStackView()

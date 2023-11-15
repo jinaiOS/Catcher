@@ -16,6 +16,7 @@ protocol ReloadProfileImage: AnyObject {
 
 class ProfileSettingViewController: BaseHeaderViewController {
     private let viewModel = ProfileSettingViewModel()
+    private let checkDevice = CheckDevice()
     private let indicator = UIActivityIndicatorView()
     private let picker = UIImagePickerController()
     private let allowAlbum: Bool
@@ -108,10 +109,25 @@ private extension ProfileSettingViewController {
     }
     
     @objc func imageTapped() {
-        if allowAlbum {
-            showAction()
-        } else {
-            openCamera()
+        if let problem: Bool = UserDefaultsManager().getValue(forKey: UserDefaultsManager.keyName.problem.key) {
+            if problem {
+                openLibrary()
+                return
+            }
+            if allowAlbum {
+                showAction()
+            } else {
+                openCamera()
+            }
+            return
+        }
+        saveProblemData()
+    }
+    
+    func saveProblemData() {
+        checkDevice.isProblemDevice { [weak self] result in
+            guard let self = self else { return }
+            imageTapped()
         }
     }
 }
@@ -178,8 +194,8 @@ private extension ProfileSettingViewController {
     func openCamera() {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] status in
             guard let self = self else { return }
-            if status {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                if status {
                     self.picker.sourceType = .camera
                     self.picker.cameraFlashMode = .off
                     if UIImagePickerController.isCameraDeviceAvailable(.front) {
@@ -189,9 +205,7 @@ private extension ProfileSettingViewController {
                         CommonUtil.print(output: "전면 카메라를 찾을 수 없음")
                         return
                     }
-                }
-            } else {
-                DispatchQueue.main.async {
+                } else {
                     CommonUtil.print(output: "Camera: 권한 거부")
                     self.moveToSettingAlert(reason: "카메라 접근 요청 거부됨", discription: "설정 > 카메라 접근 권한을 허용해 주세요.")
                 }
@@ -202,15 +216,13 @@ private extension ProfileSettingViewController {
     func openLibrary() {
         PHPhotoLibrary.requestAuthorization { [weak self] status in
             guard let self = self else { return }
-            switch status {
-            case .authorized:
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                switch status {
+                case .authorized:
                     self.picker.sourceType = .photoLibrary
                     self.present(self.picker, animated: true)
-                }
-                
-            default:
-                DispatchQueue.main.async {
+                    
+                default:
                     self.moveToSettingAlert(reason: "사진 접근 요청 거부됨", discription: "설정 > 사진 접근 권한을 허용해 주세요.")
                 }
             }
@@ -263,7 +275,7 @@ extension ProfileSettingViewController: UIImagePickerControllerDelegate, UINavig
             guard let image = result.image,
                   let gender = result.gender else {
                 processIndicatorView()
-                showAlert(title: "얼굴이 잘 안보여요 ㅠㅠ", message: "사진을 다시 찍어주세요")
+                showAlert(title: "얼굴이 잘 안보여요 ㅠㅠ", message: "사진을 다시 촬영/선택해 주세요.")
                 return
             }
             processIndicatorView()

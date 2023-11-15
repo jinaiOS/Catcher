@@ -16,6 +16,7 @@ final class FireStoreManager {
     private let pickerPath = "picker"
     private let shutoutPath = "shutout"
     private let reportPath = "report"
+    private let devicePath = "Device"
     private let askPath = "ask"
     private let fcmTokenPath = "fcmToken"
     private let itemCount: Int = 20
@@ -451,6 +452,21 @@ private extension FireStoreManager {
             return dataList.compactMap { $0 }
         }
         return datas
+    }
+}
+
+extension FireStoreManager {
+    func fetchDevice() async -> ([String]?, Error?) {
+        let docName = "Model"
+        let docRef = db.collection(devicePath).document(docName)
+        
+        do {
+            let snapshot = try await docRef.getDocument()
+            let deviceList = snapshot.data()?["device"] as? [String]
+            return (deviceList, nil)
+        } catch {
+            return (nil, error)
+        }
     }
 }
 

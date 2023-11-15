@@ -56,15 +56,22 @@ extension ProfileSettingViewModel {
     func imageTasking(image: UIImage) -> (image: UIImage?, gender: String?) {
         let objects = detectObject.detect(image: image)
         let genders = distinguishGender.analyzeImage(image: image)
-
+        
         guard let objects = objects,
               let male = genders?["male"],
-              let female = genders?["female"] else { return (nil, nil) }
-
+              let female = genders?["female"] else {
+            return (nil, nil)
+        }
         if objects.contains("person") {
             let gender = compareGender(male: male, female: female)
-            let generatedImage = genProfile.generateImage(image: image)
-            return (generatedImage, gender)
+            if let problem: Bool = UserDefaultsManager().getValue(forKey: UserDefaultsManager.keyName.problem.key) {
+                if problem {
+                    let cropedImage = image.cropSquare()
+                    return (cropedImage, gender)
+                }
+                let generatedImage = self.genProfile.generateImage(image: image)
+                return (generatedImage, gender)
+            }
         }
         return (nil, nil)
     }

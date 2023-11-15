@@ -8,6 +8,14 @@
 import Foundation
 
 final class UserDefaultsManager {
+    enum keyName: String {
+        case problem
+        
+        var key: String { rawValue }
+    }
+}
+
+extension UserDefaultsManager {
     func setValue<T>(value: T, key: String) {
         UserDefaults.standard.set(value, forKey: key)
     }
