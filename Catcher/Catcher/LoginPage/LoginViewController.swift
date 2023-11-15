@@ -31,6 +31,10 @@ class LoginViewController: BaseViewController {
                 self.processIndicatorView(isHide: true)
             } else {
                 CommonUtil.print(output: "로그인 성공")
+                // 디바이스 체크
+                CheckDevice().isProblemDevice { problem in
+                    CommonUtil.print(output: "캐리커처 지원 제한 기기: \(problem)")
+                }
                 Task {
                     if let uid = FirebaseManager().getUID {
                         let (result, _) = await FireStoreManager.shared.fetchUserInfo(uuid: uid)
