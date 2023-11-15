@@ -73,9 +73,9 @@ Catcher는 사용자들이 부담 없이 자신을 자유롭게 표현하고, �
 
 ## 👩🏻‍💻 Contributors
 
-| [한지욱](https://github.com/z-wook) | [김지은](https://github.com/jingni1115) | [정기현](https://github.com/JeongKiKi) | [정하진](https://github.com/haajin) | [김현승](https://github.com/khseung1009/IOS_7) |
+| [한지욱](https://github.com/z-wook) | [김지은](https://github.com/jingni1115) | [정기현](https://github.com/JeongKiKi) | [정하진](https://github.com/haajin) | [김현승](https://github.com/khseung1009) |
 | :----------------------------------: | :---------------------------------------: | :-----------------------------------: | :-----------------------------------: | :------------------------------------: |
-|               👑 리더                  |                ⭐️ 부리더                  |               🛠️ 개발자                 |                🛠️ 개발자                |                🛠️ 개발자                |
+|               👑 리더                 |                ⭐️ 부리더                    |               🛠️ 개발자                |                🛠️ 개발자                |                🛠️ 개발자                |
 |              메인페이지                 |                 채팅페이지                   |               마이페이지                 |                상세페이지                 |                 상세페이지               |
 |              머신러닝활용                |                 실시간채팅                   |             로그인/회원가입               |               로그인페이지                |                프로필사진페이지            |
 |              Firebase                |                 Firebase                  |               프로필페이지                |               앱버전페이지                |               캐리커처생성페이지            |
@@ -94,7 +94,8 @@ Catcher는 사용자들이 부담 없이 자신을 자유롭게 표현하고, �
 2. [Firebase](https://github.com/firebase/firebase-ios-sdk)
 3. [LicensePlist](https://github.com/mono0926/LicensePlist)
 4. [MessageKit](https://github.com/MessageKit/MessageKit)
-5. [SnapKit](https://github.com/SnapKit/SnapKit)
+5. [SDWebImage](https://github.com/SDWebImage/SDWebImage)
+6. [SnapKit](https://github.com/SnapKit/SnapKit)
 
 <br>
 
@@ -110,7 +111,10 @@ Catcher는 사용자들이 부담 없이 자신을 자유롭게 표현하고, �
 
 4. ***MessageKit*** <br>
     `채팅 인터페이스를 쉽게 구현`하기 위해 사용
+
+5. ***SDWebImage*** <br>
+   이미지를 비동기적으로 다운로드하고 메모리나 `디스크에 이미지를 캐싱`하기 위해 사용
    
-5. ***SnapKit*** <br>
+6. ***SnapKit*** <br>
     `Auto Layout`을 쉽게 설정하기 위해 사용
 
