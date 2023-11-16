@@ -28,10 +28,19 @@ class LoginViewController: BaseViewController {
         sender.debounce()
         self.processIndicatorView(isHide: false)
 
-        let email: String = loginView.emailTextField.tf.text!.description
-        let pw: String = loginView.passwordTextField.tf.text!.description
+        guard let email = loginView.emailTextField.tf.text, CommonUtil.isValidId(id: email) else {
+            loginView.emailTextField.lblError.text = "올바른 이메일 형식을 입력해 주세요"
+            loginView.emailTextField.isError = true
+            return
+        }
         
-        FirebaseManager().emailLogIn(email: email, password: pw) { error in
+        guard let password = loginView.passwordTextField.tf.text, !password.isEmpty else {
+            loginView.passwordTextField.lblError.text = "비밀번호를 입력해주세요"
+            loginView.passwordTextField.isError = true
+            return
+        }
+        
+        FirebaseManager().emailLogIn(email: email, password: password) { error in
             if let error = error {
                 CommonUtil.print(output: "로그인 실패: \(error)")
                 self.loginView.emailTextField.isError = true
@@ -43,13 +52,14 @@ class LoginViewController: BaseViewController {
                 CheckDevice().isProblemDevice { problem in
                     CommonUtil.print(output: "캐리커처 지원 제한 기기: \(problem)")
                 }
-                Task {
-                    if let uid = FirebaseManager().getUID {
+                
+                if let uid = FirebaseManager().getUID {
+                    Task {
                         let (result, _) = await FireStoreManager.shared.fetchUserInfo(uuid: uid)
                         if let result {
                             UserDefaultsManager().setValue(value: result.location, key: "location")
                         }
-                    }    
+                    }
                 }
                 
                 Task {
