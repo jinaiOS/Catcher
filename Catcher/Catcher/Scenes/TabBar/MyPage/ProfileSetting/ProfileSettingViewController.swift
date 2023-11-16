@@ -13,7 +13,13 @@ import UIKit
 protocol ReloadProfileImage: AnyObject {
     func reloadProfile(profile: UIImage)
 }
+/**
+@class ProfileSettingViewController.swift
 
+@brief BaseHeaderViewController를 상속받은 ViewController
+
+@detail 네비게이션 Header가 있는 BaseHeaderViewController
+*/
 class ProfileSettingViewController: BaseHeaderViewController {
     private let viewModel = ProfileSettingViewModel()
     private let checkDevice = CheckDevice()
@@ -68,6 +74,7 @@ class ProfileSettingViewController: BaseHeaderViewController {
 }
 
 private extension ProfileSettingViewController {
+    // 프로필 사진 등록
     func updateProfile() {
         if viewModel.profileImage == nil {
             showAlert(title: "프로필 사진 미등록", message: "프로필 사진을 등록해주세요.")
@@ -84,7 +91,7 @@ private extension ProfileSettingViewController {
             }
         }
     }
-    
+    // 유저 생성
     func setUser() {
         guard let user = user,
               let newUserEmail = newUserEmail,
@@ -107,7 +114,7 @@ private extension ProfileSettingViewController {
             }
         }
     }
-    
+    // 이미지를 눌렀을때 이벤트
     @objc func imageTapped() {
         if let problem: Bool = UserDefaultsManager().getValue(forKey: UserDefaultsManager.keyName.problem.key) {
             if problem {
@@ -123,7 +130,7 @@ private extension ProfileSettingViewController {
         }
         saveProblemData()
     }
-    
+
     func saveProblemData() {
         checkDevice.isProblemDevice { [weak self] result in
             guard let self = self else { return }
@@ -133,6 +140,8 @@ private extension ProfileSettingViewController {
 }
 
 private extension ProfileSettingViewController {
+    
+    /** @brief objects 설정 */
     func configure() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         imageView.addGestureRecognizer(tapGesture)
@@ -158,6 +167,7 @@ private extension ProfileSettingViewController {
         registerButton.titleLabel?.font = ThemeFont.demibold(size: 25)
     }
     
+    /** @brief Constraints 설정 */
     func setLayout() {
         indicatorView.addSubview(indicator)
         
@@ -174,6 +184,8 @@ private extension ProfileSettingViewController {
 }
 
 private extension ProfileSettingViewController {
+    
+    /** @brief Action 실행 설정 */
     func showAction() {
         let alert = UIAlertController(title: "사진 가져오기", message: nil, preferredStyle: .actionSheet)
         let library = UIAlertAction(title: "사진앨범", style: .default) { [weak self] _ in
@@ -191,6 +203,7 @@ private extension ProfileSettingViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    /** @brief 카메라 설정 */
     func openCamera() {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] status in
             guard let self = self else { return }
@@ -213,6 +226,7 @@ private extension ProfileSettingViewController {
         }
     }
     
+    /** @brief 갤러리 접근 설정 여부 확인*/
     func openLibrary() {
         PHPhotoLibrary.requestAuthorization { [weak self] status in
             guard let self = self else { return }
@@ -229,6 +243,7 @@ private extension ProfileSettingViewController {
         }
     }
     
+    /** @brief 갤러리 접근 설정 */
     func moveToSettingAlert(reason: String, discription: String) {
         let alert = UIAlertController(title: reason, message: discription, preferredStyle: .alert)
         let ok = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
@@ -241,6 +256,7 @@ private extension ProfileSettingViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    /** @brief Alert 설정*/
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title,
                                       message: message, preferredStyle: .alert)
@@ -249,6 +265,7 @@ private extension ProfileSettingViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    /** @brief Indicator 설정*/
     func processIndicatorView() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -263,6 +280,7 @@ private extension ProfileSettingViewController {
 }
 
 extension ProfileSettingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    /** @brief 이미지에 따라 objects를 넣어줌 */
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
             imageView.image = image
