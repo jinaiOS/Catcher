@@ -7,6 +7,13 @@
 
 import UIKit
 
+/**
+@class RevokeViewController.swift
+
+@brief BaseHeaderViewController를 상속받은 ViewController
+
+@detail 네비게이션 Header가 있는 BaseHeaderViewController
+*/
 final class RevokeViewController: BaseHeaderViewController {
     private let revokeView = RevokeView()
     private let viewModel = RevokeViewModel()
@@ -31,6 +38,10 @@ final class RevokeViewController: BaseHeaderViewController {
 }
 
 private extension RevokeViewController {
+    
+    /**
+     @brief LoginView의 Constaints 설정
+     */
     func setLayout() {
         revokeView.addSubview(revokeView.indicator)
         view.addSubview(revokeView.indicatorView)
@@ -43,7 +54,7 @@ private extension RevokeViewController {
             $0.center.equalToSuperview()
         }
     }
-    
+
     func configure() {
         setHeaderTitleName(title: "회원 탈퇴")
     }
@@ -73,6 +84,8 @@ private extension RevokeViewController {
 }
 
 private extension RevokeViewController {
+    
+    /** @brief 유저 삭제 경고 Alert  */
     func reAuthenticateAlert() {
         var alert = UIAlertController()
         
@@ -113,6 +126,7 @@ private extension RevokeViewController {
         self.present(alert, animated: true)
     }
     
+    /** @brief 확인 Alert  */
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(
             title: title,
@@ -124,6 +138,7 @@ private extension RevokeViewController {
         present(alert, animated: true)
     }
     
+    /** @brief 마지막 경고 Alert  */
     func askRevokeAlert() {
         let alert = UIAlertController(
             title: "정말 탈퇴하시겠습니까?",

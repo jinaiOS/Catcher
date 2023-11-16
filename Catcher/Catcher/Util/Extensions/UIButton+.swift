@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIButton {
-    static let debounceDelay: Double = 1
+    static let debounceDelay: Double = 0.5
     
     func debounce(delay: Double = UIButton.debounceDelay) {
         isEnabled = false

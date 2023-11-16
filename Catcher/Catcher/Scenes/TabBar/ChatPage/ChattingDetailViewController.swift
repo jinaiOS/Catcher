@@ -14,6 +14,13 @@ import AVKit
 import CoreLocation
 import Alamofire
 
+/**
+ @class ChattingDetailViewController.swift
+ 
+ @brief MessagesViewController
+ 
+ @detail 채팅 리스트 내부의 채팅 대화를 불러온다.
+ */
 final class ChattingDetailViewController: MessagesViewController {
     
     /// 프로필 이미지 - 나
@@ -78,18 +85,29 @@ final class ChattingDetailViewController: MessagesViewController {
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        view.backgroundColor = .red
+
+        modalCheckToHeaderView(modalCheck: modalChecking)
+        setHeaderViewLayout()
+        messageCollectionViewDelegate()
+        setupInputButton()
+        setIndicatorLayout()
         
-        if modalChecking {
-            headerView = CommonHeaderView.init(frame: CGRect.init(x: 0, y: 0, width: Common.SCREEN_WIDTH(), height: 50))
-            headerView.lblTitle.text = headerTitle
-            headerView.btnBack.isHidden = true
-        } else {
-            //iphone x의 경우 헤더 위치를 재설정한다.
-            headerView = CommonHeaderView.init(frame: CGRect.init(x: 0, y: Common.kStatusbarHeight, width: Common.SCREEN_WIDTH(), height: 50))
-            headerView.lblTitle.text = title
-        }
+        guard let uid = FirebaseManager().getUID else { return }
+        listenForMessages(id: uid, shouldScrollToBottom: true)
+    }
+    
+    func messageCollectionViewDelegate() {
+        messagesCollectionView.messagesDataSource = self
+        messagesCollectionView.messagesLayoutDelegate = self
+        messagesCollectionView.messagesDisplayDelegate = self
+        messagesCollectionView.messageCellDelegate = self
+        messagesCollectionView.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 70, right: 0)
         
-        //header backButton selector setting
+        messageInputBar.delegate = self
+    }
+    
+    func setHeaderViewLayout() {
         headerView.btnBack.addTarget(self, action: #selector(backButtonTouched(sender:)), for: .touchUpInside)
         
         if !Common.IS_IPHONE_SE() {
@@ -101,32 +119,27 @@ final class ChattingDetailViewController: MessagesViewController {
             $0.top.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(headerView)
         }
-        
-        view.backgroundColor = .red
-        
-        messagesCollectionView.messagesDataSource = self
-        messagesCollectionView.messagesLayoutDelegate = self
-        messagesCollectionView.messagesDisplayDelegate = self
-        messagesCollectionView.messageCellDelegate = self
-        
-        self.messagesCollectionView.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 70, right: 0)
-        
-        messageInputBar.delegate = self
-        setupInputButton()
-        
-        setIndicatorLayout()
-        
-        indicator.hidesWhenStopped = true
-        indicator.stopAnimating()
-        indicator.style = .large
-        indicator.color = .systemOrange
-        indicatorView.isHidden = true
-        
-        
-        guard let uid = FirebaseManager().getUID else { return }
-        listenForMessages(id: uid, shouldScrollToBottom: true)
     }
-
+    
+    /**
+     @brief 인디케이터 layout 및 환경 설정
+    */
+    func modalCheckToHeaderView(modalCheck: Bool) {
+        if modalChecking {
+            headerView = CommonHeaderView.init(frame: CGRect.init(x: 0, y: 0, width: Common.SCREEN_WIDTH(), height: 50))
+            headerView.lblTitle.text = headerTitle
+            headerView.btnBack.isHidden = true
+        } else {
+            //iphone x의 경우 헤더 위치를 재설정한다.
+            headerView = CommonHeaderView.init(frame: CGRect.init(x: 0, y: Common.kStatusbarHeight, width: Common.SCREEN_WIDTH(), height: 50))
+            headerView.lblTitle.text = title
+        }
+        
+    }
+    
+    /**
+     @brief 인디케이터 layout 및 환경 설정
+    */
     func setIndicatorLayout() {
         indicatorView.addSubview(indicator)
         
@@ -139,8 +152,201 @@ final class ChattingDetailViewController: MessagesViewController {
         indicatorView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
+        indicator.hidesWhenStopped = true
+        indicator.stopAnimating()
+        indicator.style = .large
+        indicator.color = .systemOrange
+        indicatorView.isHidden = true
     }
     
+    
+    
+    func processIndicatorView(isHide: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            indicatorView.isHidden = isHide
+            if isHide {
+                indicator.stopAnimating()
+            } else {
+                indicator.startAnimating()
+            }
+        }
+    }
+    
+    private func setupInputButton() {
+        let button = InputBarButtonItem()
+        button.setSize(CGSize(width: 35, height: 35), animated: false)
+        button.setImage(UIImage(systemName: "paperclip"), for: .normal)
+        button.onTouchUpInside { [weak self] _ in
+            guard let self else { return }
+            presentInputActionSheet()
+        }
+        messageInputBar.setLeftStackViewWidthConstant(to: 36, animated: false)
+        messageInputBar.setStackViewItems([button], forStack: .left, animated: false)
+    }
+    
+    private func presentInputActionSheet() {
+        let actionSheet = UIAlertController(title: "Attach Media",
+                                            message: "What would you like to attach?",
+                                            preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Photo", style: .default, handler: { [weak self] _ in
+            guard let self else { return }
+            presentPhotoInputActionsheet()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Video", style: .default, handler: { [weak self]  _ in
+            guard let self else { return }
+            presentVideoInputActionsheet()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Location", style: .default, handler: { [weak self]  _ in
+            guard let self else { return }
+            presentLocationPicker()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(actionSheet, animated: true)
+    }
+    
+    private func presentLocationPicker() {
+        let vc = LocationPickerViewController(coordinates: nil, isSendUsable: true)
+        vc.title = "Pick Location"
+        vc.navigationItem.largeTitleDisplayMode = .never
+        vc.completion = { [weak self] selectedCoorindates in
+            guard let self else { return }
+            
+            guard let messageId = createMessageId(),
+                  let name = headerTitle,
+                  let selfSender = selfSender else {
+                return
+            }
+            
+            let longitude: Double = selectedCoorindates.longitude
+            let latitude: Double = selectedCoorindates.latitude
+            
+            CommonUtil.print(output:"long=\(longitude) | lat= \(latitude)")
+            
+            
+            let location = Location(location: CLLocation(latitude: latitude, longitude: longitude),
+                                    size: .zero)
+            
+            let message = Message(sender: selfSender,
+                                  messageId: messageId,
+                                  sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
+                                  kind: .location(location))
+            if !isNewConversation {
+                DatabaseManager.shared.sendMessage(otherUserUid: otherUserUid, name: name, newMessage: message, completion: { success in
+                    if success {
+                        self.requestPush(message: message)
+                        CommonUtil.print(output:"sent location message")
+                    }
+                    else {
+                        CommonUtil.print(output:"failed to send location message")
+                    }
+                })
+            } else {
+                DatabaseManager.shared.createNewConversation(otherUserUid: otherUserUid, firstMessage: message, completion: { success in
+                    if success {
+                        self.requestPush(message: message)
+                        CommonUtil.print(output:"sent location message")
+                    }
+                    else {
+                        CommonUtil.print(output:"failed to send location message")
+                    }
+                })
+            }
+        }
+        present(vc, animated: true)
+    }
+    
+    private func presentPhotoInputActionsheet() {
+        let actionSheet = UIAlertController(title: "Attach Photo",
+                                            message: "Where would you like to attach a photo from",
+                                            preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { [weak self] _ in
+            guard let self else { return }
+            let picker = UIImagePickerController()
+            picker.sourceType = .camera
+            picker.delegate = self
+            picker.allowsEditing = true
+            present(picker, animated: true)
+            
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { [weak self] _ in
+            guard let self else { return }
+            let picker = UIImagePickerController()
+            picker.sourceType = .photoLibrary
+            picker.delegate = self
+            picker.allowsEditing = true
+            present(picker, animated: true)
+            
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(actionSheet, animated: true)
+    }
+    
+    private func presentVideoInputActionsheet() {
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        picker.allowsEditing = true
+        picker.mediaTypes = ["public.movie"]
+        picker.videoQuality = .typeMedium
+        self.present(picker, animated: true)
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        messageInputBar.inputTextView.becomeFirstResponder()
+    }
+    
+}
+//MARK: 메시지 요청
+extension ChattingDetailViewController {
+    private func listenForMessages(id: String, shouldScrollToBottom: Bool) {
+        self.processIndicatorView(isHide: false)
+        DatabaseManager.shared.getAllMessagesForConversation(with: otherUserUid, completion: { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let messages):
+                CommonUtil.print(output:"success in getting messages: \(messages)")
+                guard !messages.isEmpty else {
+                    CommonUtil.print(output:"messages are empty")
+                    return
+                }
+                self.messages = messages
+                readMessage()
+                isNewConversation = false
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.messagesCollectionView.reloadDataAndKeepOffset()
+                    self.messagesCollectionView.scrollToLastItem()
+                }
+                processIndicatorView(isHide: true)
+            case .failure(let error):
+                CommonUtil.print(output:"failed to get messages: \(error)")
+                isNewConversation = true
+                processIndicatorView(isHide: true)
+            }
+        })
+    }
+    
+    private func readMessage() {
+        self.processIndicatorView(isHide: false)
+        DatabaseManager.shared.readMessage(otherUserUid: otherUserUid, completion: { success in
+            if success {
+                CommonUtil.print(output: "Read Message")
+                self.processIndicatorView(isHide: true)
+            }
+            else {
+                CommonUtil.print(output: "Read Message Error")
+                self.processIndicatorView(isHide: true)
+            }
+        })
+    }
+    
+}
+// MARK: navigationcontroller 관리
+extension ChattingDetailViewController {
     /**
      @brief backButton을 눌렀을때 들어오는 이벤트
      
@@ -189,183 +395,6 @@ final class ChattingDetailViewController: MessagesViewController {
             }
         }
     }
-    
-    func processIndicatorView(isHide: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            indicatorView.isHidden = isHide
-            if isHide {
-                indicator.stopAnimating()
-            } else {
-                indicator.startAnimating()
-            }
-        }
-    }
-    
-    private func setupInputButton() {
-        let button = InputBarButtonItem()
-        button.setSize(CGSize(width: 35, height: 35), animated: false)
-        button.setImage(UIImage(systemName: "paperclip"), for: .normal)
-        button.onTouchUpInside { [weak self] _ in
-            self?.presentInputActionSheet()
-        }
-        messageInputBar.setLeftStackViewWidthConstant(to: 36, animated: false)
-        messageInputBar.setStackViewItems([button], forStack: .left, animated: false)
-    }
-    
-    private func presentInputActionSheet() {
-        let actionSheet = UIAlertController(title: "Attach Media",
-                                            message: "What would you like to attach?",
-                                            preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: "Photo", style: .default, handler: { [weak self] _ in
-            self?.presentPhotoInputActionsheet()
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Video", style: .default, handler: { [weak self]  _ in
-            self?.presentVideoInputActionsheet()
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Location", style: .default, handler: { [weak self]  _ in
-            self?.presentLocationPicker()
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(actionSheet, animated: true)
-    }
-    
-    private func presentLocationPicker() {
-        let vc = LocationPickerViewController(coordinates: nil, isSendUsable: true)
-        vc.title = "Pick Location"
-        vc.navigationItem.largeTitleDisplayMode = .never
-        vc.completion = { [weak self] selectedCoorindates in
-            
-            guard let strongSelf = self else {
-                return
-            }
-            
-            guard let messageId = strongSelf.createMessageId(),
-                  let name = strongSelf.headerTitle,
-                  let selfSender = strongSelf.selfSender else {
-                return
-            }
-            
-            let longitude: Double = selectedCoorindates.longitude
-            let latitude: Double = selectedCoorindates.latitude
-            
-            CommonUtil.print(output:"long=\(longitude) | lat= \(latitude)")
-            
-            
-            let location = Location(location: CLLocation(latitude: latitude, longitude: longitude),
-                                    size: .zero)
-            
-            let message = Message(sender: selfSender,
-                                  messageId: messageId,
-                                  sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
-                                  kind: .location(location))
-            if !strongSelf.isNewConversation {
-                DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
-                    if success {
-                        self?.requestPush(message: message)
-                        CommonUtil.print(output:"sent location message")
-                    }
-                    else {
-                        CommonUtil.print(output:"failed to send location message")
-                    }
-                })
-            } else {
-                DatabaseManager.shared.createNewConversation(otherUserUid: strongSelf.otherUserUid, firstMessage: message, completion: { success in
-                    if success {
-                        self?.requestPush(message: message)
-                        CommonUtil.print(output:"sent location message")
-                    }
-                    else {
-                        CommonUtil.print(output:"failed to send location message")
-                    }
-                })
-            }
-        }
-        present(vc, animated: true)
-    }
-    
-    private func presentPhotoInputActionsheet() {
-        let actionSheet = UIAlertController(title: "Attach Photo",
-                                            message: "Where would you like to attach a photo from",
-                                            preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { [weak self] _ in
-            
-            let picker = UIImagePickerController()
-            picker.sourceType = .camera
-            picker.delegate = self
-            picker.allowsEditing = true
-            self?.present(picker, animated: true)
-            
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { [weak self] _ in
-            
-            let picker = UIImagePickerController()
-            picker.sourceType = .photoLibrary
-            picker.delegate = self
-            picker.allowsEditing = true
-            self?.present(picker, animated: true)
-            
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(actionSheet, animated: true)
-    }
-    
-    private func presentVideoInputActionsheet() {
-        let picker = UIImagePickerController()
-        picker.sourceType = .photoLibrary
-        picker.delegate = self
-        picker.allowsEditing = true
-        picker.mediaTypes = ["public.movie"]
-        picker.videoQuality = .typeMedium
-        self.present(picker, animated: true)
-    }
-    
-    private func listenForMessages(id: String, shouldScrollToBottom: Bool) {
-        self.processIndicatorView(isHide: false)
-        DatabaseManager.shared.getAllMessagesForConversation(with: otherUserUid, completion: { [weak self] result in
-            switch result {
-            case .success(let messages):
-                CommonUtil.print(output:"success in getting messages: \(messages)")
-                guard !messages.isEmpty else {
-                    CommonUtil.print(output:"messages are empty")
-                    return
-                }
-                self?.messages = messages
-                self?.readMessage()
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self?.messagesCollectionView.reloadDataAndKeepOffset()
-                    self?.messagesCollectionView.scrollToLastItem()
-                }
-                self?.processIndicatorView(isHide: true)
-            case .failure(let error):
-                CommonUtil.print(output:"failed to get messages: \(error)")
-                self?.processIndicatorView(isHide: true)
-            }
-        })
-    }
-    
-    private func readMessage() {
-        self.processIndicatorView(isHide: false)
-        DatabaseManager.shared.readMessage(otherUserUid: otherUserUid, completion: { success in
-            if success {
-                CommonUtil.print(output: "Read Message")
-                self.processIndicatorView(isHide: true)
-            }
-            else {
-                CommonUtil.print(output: "Read Message Error")
-                self.processIndicatorView(isHide: true)
-            }
-        })
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        messageInputBar.inputTextView.becomeFirstResponder()
-    }
-    
 }
 // 이미지 및 비디오 선택을 처리하는 UIImagePickerControllerDelegate 및 UINavigationControllerDelegate 메서드 구현
 extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -387,10 +416,7 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
             let fileName = "photo_message_" + messageId.replacingOccurrences(of: " ", with: "-") + ".png"
             // 이미지 업로드
             StorageManager.shared.uploadMessagePhoto(with: imageData, fileName: fileName, completion: { [weak self] result in
-                guard let strongSelf = self else {
-                    return
-                }
-                
+                guard let self else { return }
                 switch result {
                 case .success(let urlString):
                     // 메시지 전송 준비
@@ -411,38 +437,37 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                                           sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
                                           kind: .photo(media))
                     
-                    if strongSelf.isNewConversation {
-                        DatabaseManager.shared.createNewConversation(otherUserUid: strongSelf.otherUserUid, firstMessage: message, completion: { success in
-                            
+                    if isNewConversation {
+                        DatabaseManager.shared.createNewConversation(otherUserUid: otherUserUid, firstMessage: message, completion: { success in
                             if success {
                                 CommonUtil.print(output:"sent photo message")
-                                self?.requestPush(message: message)
-                                self?.processIndicatorView(isHide: true)
+                                self.requestPush(message: message)
+                                self.processIndicatorView(isHide: true)
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
-                                self?.processIndicatorView(isHide: true)
+                                self.processIndicatorView(isHide: true)
                             }
                             
                         })
                     } else {
-                        DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
+                        DatabaseManager.shared.sendMessage(otherUserUid: otherUserUid, name: name, newMessage: message, completion: { success in
                             
                             if success {
                                 CommonUtil.print(output:"sent photo message")
-                                self?.requestPush(message: message)
-                                self?.processIndicatorView(isHide: true)
+                                self.requestPush(message: message)
+                                self.processIndicatorView(isHide: true)
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
-                                self?.processIndicatorView(isHide: true)
+                                self.processIndicatorView(isHide: true)
                             }
                             
                         })
                     }
                 case .failure(let error):
                     CommonUtil.print(output:"message photo upload error: \(error)")
-                    self?.processIndicatorView(isHide: true)
+                    processIndicatorView(isHide: true)
                 }
             })
         }
@@ -450,10 +475,7 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
             let fileName = "photo_message_" + messageId.replacingOccurrences(of: " ", with: "-") + ".mov"
             // 비디오 업로드
             StorageManager.shared.uploadMessageVideo(with: videoUrl, fileName: fileName, completion: { [weak self] result in
-                guard let strongSelf = self else {
-                    return
-                }
-                
+                guard let self else { return }
                 switch result {
                 case .success(let urlString):
                     // 메시지 전송 준비
@@ -474,37 +496,37 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                                           sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
                                           kind: .video(media))
                     
-                    if strongSelf.isNewConversation {
-                        DatabaseManager.shared.createNewConversation(otherUserUid: strongSelf.otherUserUid, firstMessage: message, completion: { success in
+                    if isNewConversation {
+                        DatabaseManager.shared.createNewConversation(otherUserUid: otherUserUid, firstMessage: message, completion: { success in
                             
                             if success {
                                 CommonUtil.print(output:"sent photo message")
-                                self?.requestPush(message: message)
-                                self?.processIndicatorView(isHide: true)
+                                self.requestPush(message: message)
+                                self.processIndicatorView(isHide: true)
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
-                                self?.processIndicatorView(isHide: true)
+                                self.processIndicatorView(isHide: true)
                             }
                             
                         })
                     } else {
-                        DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
+                        DatabaseManager.shared.sendMessage(otherUserUid: otherUserUid, name: name, newMessage: message, completion: { success in
                             if success {
                                 CommonUtil.print(output:"sent video message")
-                                self?.requestPush(message: message)
-                                self?.processIndicatorView(isHide: true)
+                                self.requestPush(message: message)
+                                self.processIndicatorView(isHide: true)
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
-                                self?.processIndicatorView(isHide: true)
+                                self.processIndicatorView(isHide: true)
                             }
                             
                         })
                     }
                 case .failure(let error):
                     CommonUtil.print(output:"message photo upload error: \(error)")
-                    self?.processIndicatorView(isHide: true)
+                    processIndicatorView(isHide: true)
                 }
             })
         }
@@ -530,27 +552,29 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
         if isNewConversation {
             // create convo in database
             DatabaseManager.shared.createNewConversation(otherUserUid: otherUserUid, firstMessage: message, completion: { [weak self] success in
+                guard let self else { return }
                 if success {
                     CommonUtil.print(output:"message sent")
-                    self?.isNewConversation = false
-                    self?.listenForMessages(id: self?.otherUserUid ?? "", shouldScrollToBottom: true)
-                    self?.messageInputBar.inputTextView.text = ""
-                    self?.processIndicatorView(isHide: true)
+                    isNewConversation = false
+                    listenForMessages(id: otherUserUid, shouldScrollToBottom: true)
+                    messageInputBar.inputTextView.text = ""
+                    processIndicatorView(isHide: true)
                 } else {
                     CommonUtil.print(output:"failed ot send")
-                    self?.processIndicatorView(isHide: true)
+                    processIndicatorView(isHide: true)
                 }
             })
         } else {
             // append to existing conversation data
             DatabaseManager.shared.sendMessage(otherUserUid: otherUserUid, name: headerTitle ?? "", newMessage: message, completion: { [weak self] success in
+                guard let self else { return }
                 if success {
-                    self?.messageInputBar.inputTextView.text = ""
+                    messageInputBar.inputTextView.text = ""
+                    processIndicatorView(isHide: true)
                     CommonUtil.print(output:"message sent")
-                    self?.processIndicatorView(isHide: true)
                 } else {
+                    processIndicatorView(isHide: true)
                     CommonUtil.print(output:"failed to send")
-                    self?.processIndicatorView(isHide: true)
                 }
             })
         }
@@ -571,13 +595,13 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
             messageStr = messageText
         case .attributedText(_):
             break
-        case .photo(let photoUrl):
+        case .photo(_):
             messageStr = "이미지"
             break
-        case .video(let videoUrl):
+        case .video(_):
             messageStr = "비디오"
             break
-        case .location(let loc):
+        case .location(_):
             messageStr = "지도"
             break
         case .emoji(_):
@@ -697,49 +721,14 @@ extension ChattingDetailViewController: MessagesDataSource, MessagesLayoutDelega
                 avatarView.sd_setImage(with: currentUserImageURL, completed: nil)
             }
             else {
-                
-                //                let path = "images/\("safeEmail")_profile_picture.png"
-                ImageCacheManager.shared.loadImage(uid: FirebaseManager().getUID ?? "") { [weak self] image in
-                    guard let self = self else { return }
+                ImageCacheManager.shared.loadImage(uid: FirebaseManager().getUID ?? "") { image in
                     DispatchQueue.main.async {
                         avatarView.image = image
                     }
                 }
-                //                StorageManager.shared.downloadURL(for: path, completion: { [weak self] result in
-                //                    switch result {
-                //                    case .success(let url):
-                //                        self?.senderPhotoURL = url
-                //                        DispatchQueue.main.async {
-                //                            avatarView.sd_setImage(with: url, completed: nil)
-                //                        }
-                //                    case .failure(let error):
-                //                        CommonUtil.print(output:"\(error)")
-                //                    }
-                //                })
             }
         } else {
-            //            // other user image
-            //            if let otherUsrePHotoURL = self.otherUserPhotoURL {
-            //                avatarView.sd_setImage(with: otherUsrePHotoURL, completed: nil)
-            //            }
-            //            else {
-            //                let path = "images/\(otherUserUid)_profile_picture.png"
-            //
-            //                StorageManager.shared.downloadURL(for: path, completion: { [weak self] result in
-            //                    switch result {
-            //                    case .success(let url):
-            //                        self?.otherUserPhotoURL = url
-            //                        DispatchQueue.main.async {
-            //                            avatarView.sd_setImage(with: url, completed: nil)
-            //                        }
-            //                    case .failure(let error):
-            //                        CommonUtil.print(output:"\(error)")
-            //                    }
-            //                })
-            //            }
-            //
-            ImageCacheManager.shared.loadImage(uid: otherUserUid) { [weak self] image in
-                guard let self = self else { return }
+            ImageCacheManager.shared.loadImage(uid: otherUserUid) { image in
                 DispatchQueue.main.async {
                     avatarView.image = image
                 }

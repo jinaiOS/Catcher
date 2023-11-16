@@ -8,6 +8,11 @@
 import SnapKit
 import UIKit
 
+/**
+ @class AppVersionView.swift
+ 
+ @brief AppVersionViewViewController의 기본 View
+ */
 final class AppVersionView: UIView {
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
@@ -82,6 +87,10 @@ final class AppVersionView: UIView {
     }
 }
 private extension AppVersionView {
+    
+    /**
+     @brief LoginView의 Constaints 설정
+     */
     func setLayout() {
         scrollView.addSubview(vStack)
         addSubview(scrollView)

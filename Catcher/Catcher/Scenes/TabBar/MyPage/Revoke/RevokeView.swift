@@ -8,6 +8,11 @@
 import SnapKit
 import UIKit
 
+/**
+ @class RevokeView.swift
+ 
+ @brief RevokeViewController의 기본 View
+ */
 final class RevokeView: UIView {
     private lazy var warningLabel: UILabel = {
         let label = LabelFactory.makeLabel(
@@ -60,6 +65,10 @@ final class RevokeView: UIView {
 }
 
 private extension RevokeView {
+    
+    /**
+     @brief LoginView의 Constaints 설정
+     */
     func setLayout() {
         [warningLabel, revokeBtn].forEach {
             self.addSubview($0)

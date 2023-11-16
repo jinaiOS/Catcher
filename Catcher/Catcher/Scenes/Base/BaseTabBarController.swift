@@ -6,7 +6,13 @@
 //
 
 import UIKit
-
+/**
+ @class BaseTabBarController.swift
+ 
+ @brief UITabBarController
+ 
+ @detail TabBar가 있는 BaseTabBarController
+ */
 class BaseTabBarController: UITabBarController {
 
     enum TabBarMenu: Int {
@@ -19,9 +25,9 @@ class BaseTabBarController: UITabBarController {
         super.viewDidLoad()
         self.setTabControllers()
         self.delegate = self
-        // Do any additional setup after loading the view.
     }
     
+    //MARK: Set UI
     /**
      @brief TabBarController의 item 이미지 및 컬러 설정
      */
@@ -44,7 +50,6 @@ class BaseTabBarController: UITabBarController {
         self.tabBar.items![0].selectedImage = UIImage(systemName: "heart.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(ThemeColor.primary)
         self.tabBar.items![0].title = "Main"
         
-        
         // Chat
         self.tabBar.items![1].imageInsets = UIEdgeInsets(top: 10, left: 0, bottom: -4, right: 0)
         self.tabBar.items![1].image = UIImage(systemName: "bubble.left")?.withRenderingMode(.alwaysOriginal)
@@ -57,42 +62,26 @@ class BaseTabBarController: UITabBarController {
         self.tabBar.items![2].selectedImage = UIImage(systemName: "person.2.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(ThemeColor.primary)
         self.tabBar.items![2].title = "My"
         
-        // iOS13이상에서 탭바의 타이틀 컬러가 적용안되는 이슈 해결 modify by subway 20191024
-        if #available(iOS 13, *) {
-            let appearance = UITabBarAppearance()
+        let appearance = UITabBarAppearance()
 
-            appearance.backgroundColor = .white
-            appearance.shadowImage = UIImage()
-            appearance.shadowColor = .white
+        appearance.backgroundColor = .white
+        appearance.shadowImage = UIImage()
+        appearance.shadowColor = .white
 
-            appearance.stackedLayoutAppearance.normal.iconColor = .black
-            appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
-                NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5333333333, green: 0.5333333333, blue: 0.5333333333, alpha: 1),
-//              NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-Medium", size: 12)!
-            ]
+        appearance.stackedLayoutAppearance.normal.iconColor = .black
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5333333333, green: 0.5333333333, blue: 0.5333333333, alpha: 1),
+        ]
 
-            appearance.stackedLayoutAppearance.selected.iconColor = .black
-            appearance.stackedLayoutAppearance.selected.titleTextAttributes = [
-                NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5333333333, green: 0.5333333333, blue: 0.5333333333, alpha: 1),
-//              NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-Medium", size: 12)!
-            ]
+        appearance.stackedLayoutAppearance.selected.iconColor = .black
+        appearance.stackedLayoutAppearance.selected.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5333333333, green: 0.5333333333, blue: 0.5333333333, alpha: 1),
+        ]
 
-            self.tabBar.standardAppearance = appearance
-
-        } else {
-            // init tabbar item textColor
-            UITabBarItem.appearance().setTitleTextAttributes([
-                NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5333333333, green: 0.5333333333, blue: 0.5333333333, alpha: 1),
-                NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-Medium", size: 12)!,
-            ], for: .normal)
-                 
-            UITabBarItem.appearance().setTitleTextAttributes([
-                NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.231372549, green: 0.3568627451, blue: 0.8509803922, alpha: 1),
-                NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-Medium", size: 12)!,
-            ], for: .selected)
-        }
+        self.tabBar.standardAppearance = appearance
     }
     
+    //MARK: 탭바 이동 함수
     /**
      @brief TabBarController에서 입력받은 index로 이동
      
@@ -108,18 +97,10 @@ class BaseTabBarController: UITabBarController {
     func selectedTabBarIndex() -> TabBarMenu {
         return TabBarMenu(rawValue: AppDelegate.applicationDelegate().tabBarController!.selectedIndex) ?? TabBarMenu.Main
     }
-    /*
-     // MARK: - Navigation
-
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         // Get the new view controller using segue.destination.
-         // Pass the selected object to the new view controller.
-     }
-     */
 }
 
 extension BaseTabBarController: UITabBarControllerDelegate {
+    //MARK: select 될 시
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         let tabBarIndex = tabBarController.selectedIndex
         if tabBarIndex == 0 {

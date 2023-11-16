@@ -10,6 +10,9 @@ import SafariServices
 import SnapKit
 import UIKit
 
+/**
+ @brief tableView의 각각의 타이틀
+ */
 enum MenuItems: String, CaseIterable {
     case setProfile = "기본 프로필 설정"
     case genImage = "캐리커처 이미지 생성"
@@ -21,6 +24,11 @@ enum MenuItems: String, CaseIterable {
     case withdraw = "회원 탈퇴"
 }
 
+/**
+ @class MyPageViewController.swift
+ 
+ @brief BaseViewController를 상속받은 ViewController
+ */
 final class MyPageViewController: BaseViewController {
     private var userInfo: UserInfo?
     private var cancellables = Set<AnyCancellable>()
@@ -235,6 +243,7 @@ private extension MyPageViewController {
             object: nil)
     }
     
+    /** @brief 유저 정보를 가져와서 보여주는 함수 */
     func fetchMyInfo() {
         Task {
             guard let uid = FirebaseManager().getUID else { return }
@@ -259,6 +268,7 @@ private extension MyPageViewController {
         }
     }
     
+    /** @brief 자신이 찜한 유저 숫자를 가져와서 보여주는 함수 */
     @objc func didRecievePickUserCountNotification(_ notification: Notification) {
         let count = notification.object as? Int
         if let count {
@@ -282,10 +292,13 @@ private extension MyPageViewController {
 }
 
 extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    /** @brief tableView  numberOfRowsInSection 설정*/
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MenuItems.allCases.count
     }
-
+    
+    /** @brief tableView  cell 설정*/
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let menuTableViewCell = tableView.dequeueReusableCell(withIdentifier: MenuTableViewCell.identifier, for: indexPath) as? MenuTableViewCell else {
             return UITableViewCell()
@@ -297,6 +310,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         return menuTableViewCell
     }
     
+    /** @brief tableView  cell 클릭시 이벤트 설정*/
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
@@ -333,12 +347,16 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension MyPageViewController {
+    
+    /** @brief 로그아웃 버튼 눌렀을때 로그아웃 이벤트*/
     @objc func pressLogOutButton() {
         showLogOutAlert()
     }
 }
 
 private extension MyPageViewController {
+    
+    /** @brief 로그아웃 버튼 눌렀을때 로그아웃 실행*/
     func showLogOutAlert() {
         let alert = UIAlertController(
             title: "로그아웃",
@@ -354,6 +372,9 @@ private extension MyPageViewController {
         present(alert, animated: true)
     }
     
+    /**
+     @brief LoginView의 Constaints 설정
+     */
     func setLayout() {
         // 메뉴 아이템의 갯수에 따라 view의 높이를 변경
         tableViewHeight = CGFloat(MenuItems.allCases.count) * 44 + 70
@@ -374,7 +395,6 @@ private extension MyPageViewController {
             make.top.equalTo(contentView.snp.top).inset(30)
             make.leading.equalTo(contentView.snp.leading).inset(27)
             make.trailing.equalTo(contentView.snp.trailing).inset(110)
-//            make.height.equalTo(24)
         }
         profilePhoto.snp.makeConstraints { make in
             make.centerY.equalTo(nickName.snp.centerY)
@@ -383,7 +403,6 @@ private extension MyPageViewController {
         }
         imgCamera.snp.makeConstraints { make in
             make.top.equalTo(profilePhoto).inset(50)
-//            make.leading.equalTo(profilePhoto).inset(10)
             make.trailing.equalTo(contentView).inset(13)
             make.height.equalTo(25)
             make.width.equalTo(30)
@@ -416,13 +435,13 @@ private extension MyPageViewController {
         }
         logOutButton.snp.makeConstraints { make in
             make.top.equalTo(myTableView.snp.bottom).inset(-20)
-          
             make.leading.trailing.equalTo(contentView).inset(14)
             make.height.equalTo(53)
             make.bottom.equalTo(contentView.snp.bottom).inset(20)
         }
     }
     
+    /** @brief 유저의 사진을 불러오는 함수*/
     func loadProfileImage() {
         guard let uid = FirebaseManager().getUID else { return }
         ImageCacheManager.shared.loadImage(uid: uid) { [weak self] image in
@@ -433,6 +452,7 @@ private extension MyPageViewController {
         }
     }
     
+    /** @brief 유저 이미지 클릭시 이미지 변경 페이지로 이동*/
     @objc func tapProfileImage() {
         let profileSettingVC = ProfileSettingViewController(allowAlbum: true)
         profileSettingVC.delegate = self
@@ -441,6 +461,8 @@ private extension MyPageViewController {
 }
 
 extension MyPageViewController: ReloadProfileImage {
+    
+    /** @brief 유저 이미지 변경시 reload*/
     func reloadProfile(profile: UIImage) {
         guard let uid = FirebaseManager().getUID else { return }
         DispatchQueue.main.async { [weak self] in

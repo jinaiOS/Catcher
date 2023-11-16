@@ -123,20 +123,26 @@ private extension UserInfoViewController {
             showAlert(title: "차단 불가", message: "본인을 차단할 수 없습니다.")
             return
         }
-        sender.debounce()
-        sender.isSelected.toggle()
-        let selected = sender.isSelected
         
-        if selected {
-            userInfoView.blockLabel.text = "해제"
-        } else {
-            userInfoView.blockLabel.text = "차단"
+        if sender.isSelected == true {
+            viewModel.processBlockUser(isBlock: false) { [weak self] result, error in
+                guard let self else { return }
+                DispatchQueue.main.async {
+                    sender.isSelected.toggle()
+                    let selected = sender.isSelected
+                    
+                    if selected {
+                        self.userInfoView.blockLabel.text = "해제"
+                    } else {
+                        self.userInfoView.blockLabel.text = "차단"
+                    }
+                    self.blockResultHandling(result: result, error: error)
+                    
+                }
+            }
+            return
         }
-        
-        viewModel.processBlockUser(isBlock: selected) { [weak self] result, error in
-            guard let self = self else { return }
-            blockResultHandling(result: result, error: error)
-        }
+        showReportAlert(sender: sender)
     }
 }
 
@@ -165,9 +171,12 @@ private extension UserInfoViewController {
         return
     }
     
-    func showAlert(title: String, message: String) {
+    func showAlert(title: String, message: String,
+                   _ firstActionHandler: (() -> Void)? = nil, _ secondActionHandler: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default)
+        let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+            firstActionHandler?()
+        }
         alert.addAction(okAction)
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -175,19 +184,45 @@ private extension UserInfoViewController {
         }
     }
     
+    func showReportAlert(sender: UIButton) {
+        let alert = AlertFactory.makeAlert(
+            title: "차단 확인",
+            message: "차단을 하면 상대방이 채팅을 보낼 수 없습니다.\n 차단하시겠습니까?",
+            firstActionTitle: "차단",
+            firstActionStyle: .destructive,
+            firstActionHandler: { [weak self] in
+                guard let self else { return }
+                sender.isSelected.toggle()
+                let selected = sender.isSelected
+                
+                if selected {
+                    userInfoView.blockLabel.text = "해제"
+                } else {
+                    userInfoView.blockLabel.text = "차단"
+                }
+                viewModel.processBlockUser(isBlock: selected) { result, error in
+                    self.blockResultHandling(result: result, error: error)
+                }
+            },
+            secondActionTitle: "취소",
+            secondActionStyle: .default)
+        present(alert, animated: true)
+    }
+    
     func listenForMessages() {
         DatabaseManager.shared.getAllMessagesForConversation(with: viewModel.userInfo.uid) { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let messages):
                 CommonUtil.print(output:"success in getting messages: \(messages)")
                 guard !messages.isEmpty else {
                     CommonUtil.print(output:"messages are empty")
-                    self?.sendMessageBtn(isNewConversation: true)
+                    sendMessageBtn(isNewConversation: true)
                     return
                 }
-                self?.sendMessageBtn(isNewConversation: false)
+                sendMessageBtn(isNewConversation: false)
             case .failure(let error):
-                self?.sendMessageBtn(isNewConversation: true)
+                sendMessageBtn(isNewConversation: true)
                 CommonUtil.print(output:"failed to get messages: \(error)")
             }
         }

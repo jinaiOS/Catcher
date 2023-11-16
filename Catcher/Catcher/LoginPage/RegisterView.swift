@@ -8,6 +8,11 @@
 import SnapKit
 import UIKit
 
+/**
+ @class RegisterView.swift
+ 
+ @brief RegisterViewController의 기본 View
+ */
 final class RegisterView: UIView {
     lazy var termsTableView: UITableView = {
         let tableview = UITableView()
@@ -15,6 +20,7 @@ final class RegisterView: UIView {
         return tableview
     }()
     
+    /** @brief UIButton를 상속받은 allAgreeButton   */
     lazy var allAgreeButton: UIButton = {
         let button = ButtonFactory.makeButton(
             type: .custom,
@@ -30,6 +36,7 @@ final class RegisterView: UIView {
         return button
     }()
     
+    /** @brief ButtonFactory를 상속받은 nextButton   */
     lazy var nextButton: UIButton = ButtonFactory.makeButton(
         title: "다음",
         titleLabelFont: ThemeFont.demibold(size: 25),
@@ -43,18 +50,21 @@ final class RegisterView: UIView {
         return view
     }()
     
+    /** @brief CustomTextField를 상속받은 nicknametextfield   */
     var nicknametextfield: CustomTextField = {
         let textfield = CustomTextField()
         textfield.tf.keyboardType = .emailAddress
         return textfield
     }()
     
+    /** @brief CustomTextField를 상속받은 emailtextfield   */
     var emailtextfield: CustomTextField = {
         let textfield = CustomTextField()
         textfield.tf.keyboardType = .emailAddress
         return textfield
     }()
     
+    /** @brief CustomTextField를 상속받은 passwordtextfield   */
     var passwordtextfield: CustomTextField = {
         let textfield = CustomTextField()
         textfield.tf.keyboardType = .asciiCapable
@@ -63,6 +73,7 @@ final class RegisterView: UIView {
         return textfield
     }()
     
+    /** @brief CustomTextField를 상속받은 passwordconfirmtextfield   */
     var passwordconfirmtextfield: CustomTextField = {
         let textfield = CustomTextField()
         textfield.tf.keyboardType = .asciiCapable
@@ -119,17 +130,16 @@ private extension RegisterView {
         }
         return view
     }
-    
+    /**
+     @brief LoginView의 Constaints 설정
+     */
     func setlayout() {
-        //        addSubview(vstack)
-        //        addSubview(provisionButton)
-        //        addSubview(ageButton)
         addSubview(scrollView)
-        //        addSubview(nextButton)
+        
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom) // Set the bottom constraint to the top of the next button.
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom) 
         }
         passwordtextfield.lblError.snp.makeConstraints {
             $0.height.equalTo(30)

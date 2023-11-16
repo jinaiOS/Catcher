@@ -8,6 +8,11 @@
 import SnapKit
 import UIKit
 
+/**
+ @class ImageFactoryView.swift
+ 
+ @brief ImageFactoryViewController의 기본 View
+ */
 final class ImageFactoryView: UIView {
     lazy var imageView: UIImageView = {
         let view = UIImageView()
@@ -55,6 +60,10 @@ final class ImageFactoryView: UIView {
 }
 
 private extension ImageFactoryView {
+    
+    /**
+     @brief LoginView의 Constaints 설정
+     */
     func setLayout() {
         indicatorView.addSubview(indicator)
         

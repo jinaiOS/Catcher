@@ -14,6 +14,13 @@ protocol UpdateUserInfo: AnyObject {
     func updateUserInfo()
 }
 
+/**
+ @class InfoViewController.swift
+
+ @brief BaseHeaderViewController를 상속받은 ViewController
+
+ @detail 유저의 프로필을 등록, 수정하는  LoginViewController
+ */
 final class InfoViewController: BaseHeaderViewController {
     private let db = Firestore.firestore()
     private let infoView: InfoView
@@ -96,6 +103,7 @@ final class InfoViewController: BaseHeaderViewController {
 }
 
 extension InfoViewController {
+    /** @brief 키보드가 올라왔을때 뷰 높이 조절 */
     override func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
@@ -110,6 +118,7 @@ extension InfoViewController {
         }
     }
 
+    /** @brief 키보드가 내려갔을때 뷰 높이 조절 */
     override func keyboardWillHide(notification: NSNotification) {
         let contentInsets = UIEdgeInsets.zero
         infoView.scrollView.contentInset = contentInsets
@@ -118,6 +127,7 @@ extension InfoViewController {
 }
 
 private extension InfoViewController {
+    /** @brief Mypage에서 InforView로 넘어올때 추가되는 objects */
     func configure() {
         guard let userInfo = userInfo else { return }
         infoView.nickNameTextField.tf.text = userInfo.nickName
@@ -137,6 +147,7 @@ private extension InfoViewController {
         return nil
     }
 
+    /** @brief 완료 버튼 눌렀을때 동작 */
     @objc func completeBtn(sender: UIButton) {
         sender.debounce()
         infoView.regionTextField.isError = false
@@ -221,15 +232,16 @@ private extension InfoViewController {
                 location: location,
                 height: Int(height) ?? 0,
                 mbti: mbti,
-                introduction: introduce)
-            
+                introduction: introduce
+            )
+
             let userDocRef = db.collection("userInfo").document(uid)
             userDocRef.updateData([
                 "nickName": userUpadate.nickName,
                 "location": userUpadate.location,
                 "height": userUpadate.height,
                 "mbti": userUpadate.mbti,
-                "introduction": userUpadate.introduction
+                "introduction": userUpadate.introduction,
             ]) { error in
                 if let error = error {
                     // Handle the error, e.g., show an alert to the user.
@@ -247,20 +259,23 @@ private extension InfoViewController {
         }
     }
 
+    /// regionTextField의 DoneButton 클릭시 이벤트
     @objc func pickerDoneButtonTapped() {
         infoView.regionTextField.tf.resignFirstResponder()
     }
 
+    /// mbtiTextField의 DoneButton 클릭시 이벤트
     @objc func mbtiPickerDoneButtonTapped() {
         infoView.mbtiTextField.tf.resignFirstResponder()
     }
 
+    /// birthTextField의 DoneButton 클릭시 이벤트
     @objc func birthPickerDoneButtonTapped() {
         infoView.birthTextField.tf.resignFirstResponder()
     }
 
+    /// 값이 변하면 UIDatePicker에서 날자를 받아와 형식을 변형해서 textField에 넣어줍니다./
     @objc func dateChange(_ sender: UIDatePicker) {
-        // 값이 변하면 UIDatePicker에서 날자를 받아와 형식을 변형해서 textField에 넣어줍니다.
         infoView.birthTextField.tf.text = dateFormat(date: sender.date)
     }
 
@@ -268,30 +283,21 @@ private extension InfoViewController {
         infoView.regionTextField.initTextFieldText(placeHolder: "지역을 선택해주세요", delegate: self)
         infoView.regionTextField.lblTitle.text = "지역"
         infoView.regionTextField.lblError.text = "지역을 선택해주세요"
-//        infoView.regionTextField.tf.keyboardType = .emailAddress
-//        infoView.regionTextField.tf.returnKeyType = .next
 
         infoView.birthTextField.initTextFieldText(placeHolder: "생년월일을 선택해 주세요", delegate: self)
         infoView.birthTextField.lblTitle.text = "생일"
         infoView.birthTextField.lblError.text = "생년월일을 선택해 주세요"
-//        infoView.birthTextField.tf.keyboardType = .emailAddress
-//        infoView.birthTextField.tf.returnKeyType = .next
 
         infoView.mbtiTextField.initTextFieldText(placeHolder: "MBTI를 선택해 주세요", delegate: self)
         infoView.mbtiTextField.lblTitle.text = "MBTI"
         infoView.mbtiTextField.lblError.text = "MBTI를 선택해 주세요"
-//        infoView.educationTextField.tf.keyboardType = .emailAddress
-//        infoView.educationTextField.tf.returnKeyType = .next
 
         infoView.heightTextField.initTextFieldText(placeHolder: "키를 입력해 주세요", delegate: self)
         infoView.heightTextField.lblTitle.text = "키"
         infoView.heightTextField.lblError.text = "키를 입력해 주세요"
-//        infoView.heightTextField.tf.keyboardType = .emailAddress
-//        infoView.heightTextField.tf.returnKeyType = .next
 
         infoView.nickNameTextField.initTextFieldText(placeHolder: "닉네임을 입력해 주세요", delegate: self)
         infoView.nickNameTextField.lblTitle.text = "닉네임"
-//        infoView.nickNameTextField.lblError.text = "닉네임을 입력해 주세요"
 
         infoView.introduceTextField.initTextFieldText(placeHolder: "15글자 이하로 작성해주세요", delegate: self)
         infoView.introduceTextField.lblTitle.text = "한 줄 자기소개"
@@ -308,28 +314,11 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         pickerMbti.dataSource = self
         infoView.mbtiTextField.tf.inputView = pickerMbti
         infoView.regionTextField.tf.inputView = pickerRegion
+        
         // Add a toolbar with a custom button title
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        toolbar.backgroundColor = .clear
-        let customButtonTitle = "완료" // 원하는 버튼 이름으로 변경하세요
-        let doneButton = UIBarButtonItem(title: customButtonTitle, style: .plain, target: self, action: #selector(pickerDoneButtonTapped))
-        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([space, doneButton], animated: false)
-
-        let mbtiToolbar = UIToolbar()
-        mbtiToolbar.sizeToFit()
-        mbtiToolbar.backgroundColor = .clear
-        let mbtiDoneButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(mbtiPickerDoneButtonTapped))
-        let mbtiSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        mbtiToolbar.setItems([mbtiSpace, mbtiDoneButton], animated: false)
-
-        let birthToolbar = UIToolbar()
-        birthToolbar.sizeToFit()
-        birthToolbar.backgroundColor = .clear
-        let birthDoneButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(birthPickerDoneButtonTapped))
-        let birthSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        birthToolbar.setItems([birthSpace, birthDoneButton], animated: false)
+        let toolbar = createToolbar(target: self, action: #selector(pickerDoneButtonTapped))
+        let mbtiToolbar = createToolbar(target: self, action: #selector(mbtiPickerDoneButtonTapped))
+        let birthToolbar = createToolbar(target: self, action: #selector(birthPickerDoneButtonTapped))
 
         let datePicker = UIDatePicker()
         // datePickerModed에는 time, date, dateAndTime, countDownTimer가 존재합니다.
@@ -347,6 +336,17 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         infoView.birthTextField.tf.inputView = datePicker
         // textField에 오늘 날짜로 표시되게 설정
         infoView.birthTextField.tf.text = dateFormat(date: Date())
+    }
+    
+    // UIToolbar 및 UIBarButtonItem을 생성하는 함수
+    func createToolbar(target: Any, action: Selector) -> UIToolbar {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        toolbar.backgroundColor = .clear
+        let doneButton = UIBarButtonItem(title: "완료", style: .plain, target: target, action: action)
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([space, doneButton], animated: false)
+        return toolbar
     }
 
     private func dateFormat(date: Date) -> String {
@@ -374,7 +374,6 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
     // pickerview 내 선택지의 값들을 원하는 데이터로 채워준다.
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        var num = 0
         if pickerView == pickerRegion {
             return region[row]
         }
@@ -396,6 +395,9 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 }
 
 extension InfoViewController: CustomTextFieldDelegate {
+    /**
+     @brief CustomTextFieldDelegate의 Delegate
+     */
     func customTextFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == infoView.regionTextField.tf {
             infoView.birthTextField.tf.becomeFirstResponder() // next 버튼 선택 시 -> tfPW 포커싱

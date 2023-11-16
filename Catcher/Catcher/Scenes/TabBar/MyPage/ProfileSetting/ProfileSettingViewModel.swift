@@ -7,6 +7,9 @@
 
 import UIKit
 
+/**
+@brief ProfileSettingViewModel의 Model
+*/
 final class ProfileSettingViewModel {
     private let detectObject = DetectObject()
     private let distinguishGender = DistinguishGender()
@@ -17,6 +20,8 @@ final class ProfileSettingViewModel {
 }
 
 extension ProfileSettingViewModel {
+    
+    /** @brief 유저 정보를 가져오는 함수 */
     func registerUser(user: UserInfo, eamil: String, password: String, completion: @escaping (Bool) -> Void) {
         FirebaseManager().createUsers(
             email: eamil,
@@ -40,7 +45,8 @@ extension ProfileSettingViewModel {
             }
         }
     }
-
+    
+    /** @brief 유저 프로필 업데이트 */
     func updateProfile(completion: @escaping (UIImage?) -> Void) {
         guard let profileImage = profileImage else {
             completion(nil)
@@ -53,6 +59,8 @@ extension ProfileSettingViewModel {
 }
 
 extension ProfileSettingViewModel {
+    
+    /** @brief 유저 이미지 변환 */
     func imageTasking(image: UIImage) -> (image: UIImage?, gender: String?) {
         let objects = detectObject.detect(image: image)
         let genders = distinguishGender.analyzeImage(image: image)
@@ -78,13 +86,16 @@ extension ProfileSettingViewModel {
 }
 
 private extension ProfileSettingViewModel {
+    
+    /** @brief 유저 성별 확인 */
     func compareGender(male: Double, female: Double) -> String {
         if male >= female {
             return "남성"
         }
         return "여성"
     }
-
+    
+    /** @brief 유저 저장 */
     func setUserInfo(userInfo: UserInfo, completion: @escaping (Bool) -> Void) {
         Task {
             let error = await FireStoreManager.shared.setUserInfo(data: userInfo)
@@ -96,7 +107,8 @@ private extension ProfileSettingViewModel {
             CommonUtil.print(output: "User info saved to Firestore successfully.")
         }
     }
-
+    
+    /** @brief 유저 프로필 이미지 저장*/
     func setProfileImage(completion: @escaping (Bool) -> Void) {
         guard let profileImage = profileImage else {
             completion(false)
@@ -112,7 +124,8 @@ private extension ProfileSettingViewModel {
             completion(true)
         }
     }
-
+    
+    /** @brief 유저 만들기 */
     func makeUserInfo(user: UserInfo, uid: String) -> UserInfo {
         UserInfo(
             uid: uid,

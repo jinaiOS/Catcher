@@ -12,6 +12,8 @@ final class RevokeViewModel {
 }
 
 extension RevokeViewModel {
+    
+    /** @brief 로그인 되어있는 아이디의 비밀번호 확인 */
     func reAuthenticate(password: String, completion: @escaping (Bool) -> Void) {
         Task {
             if await firebaseManager.reAuthenticate(password: password) {
@@ -49,6 +51,7 @@ extension RevokeViewModel {
         }
     }
     
+    /** @brief 메세지 삭제 이벤트 */
     func deleteMessage() {
         DatabaseManager.shared.deleteMessage(completion: { success in
             if success {

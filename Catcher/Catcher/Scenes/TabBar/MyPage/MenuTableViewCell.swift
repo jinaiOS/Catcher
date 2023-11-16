@@ -6,9 +6,13 @@
 //
 
 import UIKit
-
+/**
+ @brief MyPageViewController에 포함되는 MenuTableViewCell
+ */
 class MenuTableViewCell: UITableViewCell {
+    
     static let identifier = "MenuTableViewCell"
+    
     lazy var menuLabel: UILabel = {
         let lb = UILabel()
         lb.text = "연락처차단"

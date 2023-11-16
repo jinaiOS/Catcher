@@ -61,6 +61,7 @@ private extension MainPageViewController {
     
     @objc func refreshCollectionView() {
         viewModel.fetchMainPageData()
+        mainPageView.collectionView.scrollsToTop = true
         for i in (0...viewModel.sectionCount - 1) {
             let indexPath = IndexPath(item: 0, section: i)
             mainPageView.collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
