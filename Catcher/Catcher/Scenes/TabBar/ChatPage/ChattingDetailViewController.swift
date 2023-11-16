@@ -300,6 +300,7 @@ final class ChattingDetailViewController: MessagesViewController {
     }
     
 }
+//MARK: 메시지 요청
 extension ChattingDetailViewController {
     private func listenForMessages(id: String, shouldScrollToBottom: Bool) {
         self.processIndicatorView(isHide: false)

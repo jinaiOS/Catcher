@@ -58,14 +58,22 @@ class ChatViewController: UIViewController {
         startListeningForCOnversations()
         
         setIndicatorLayout()
-        
-        indicator.hidesWhenStopped = true
-        indicator.stopAnimating()
-        indicator.style = .large
-        indicator.color = .systemOrange
-        indicatorView.isHidden = true
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tbvConversation.frame = view.bounds
+        noConversationsLabel.frame = CGRect(x: 10,
+                                            y: (view.height-100)/2,
+                                            width: view.width-20,
+                                            height: 100)
+    }
+
+    private func setupTableView() {
+        tbvConversation.delegate = self
+        tbvConversation.dataSource = self
+    }
+
     func setIndicatorLayout() {
         indicatorView.addSubview(indicator)
         
@@ -78,6 +86,12 @@ class ChatViewController: UIViewController {
         indicatorView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
+        indicator.hidesWhenStopped = true
+        indicator.stopAnimating()
+        indicator.style = .large
+        indicator.color = .systemOrange
+        indicatorView.isHidden = true
     }
     
     func processIndicatorView() {
@@ -91,7 +105,9 @@ class ChatViewController: UIViewController {
             }
         }
     }
-
+}
+//MARK: list 불러옴
+extension ChatViewController {
     // 대화를 가져와서 표시하기
     private func startListeningForCOnversations() {
         CommonUtil.print(output:"starting conversation fetch...")
@@ -120,21 +136,6 @@ class ChatViewController: UIViewController {
             }
         })
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        tbvConversation.frame = view.bounds
-        noConversationsLabel.frame = CGRect(x: 10,
-                                            y: (view.height-100)/2,
-                                            width: view.width-20,
-                                            height: 100)
-    }
-
-    private func setupTableView() {
-        tbvConversation.delegate = self
-        tbvConversation.dataSource = self
-    }
-
 }
 // MARK: Chatting List TableView 설정
 extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
