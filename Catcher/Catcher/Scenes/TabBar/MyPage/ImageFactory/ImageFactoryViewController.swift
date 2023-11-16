@@ -10,6 +10,13 @@ import Photos
 import SnapKit
 import UIKit
 
+/**
+@class ImageFactoryViewController.swift
+
+@brief BaseHeaderViewController를 상속받은 ViewController
+
+@detail 네비게이션 Header가 있는 BaseHeaderViewController
+*/
 final class ImageFactoryViewController: BaseHeaderViewController {
     private let imageFactoryView = ImageFactoryView()
     private let viewModel = ImageFactoryViewModel()
@@ -54,6 +61,7 @@ private extension ImageFactoryViewController {
         picker.delegate = self
     }
     
+    /** @brief 특정 iPhone에서는 사진 변환 불가하다는 이벤트*/
     @objc func tapImageView() {
         if let problem: Bool = UserDefaultsManager().getValue(forKey: UserDefaultsManager.keyName.problem.key) {
             if problem {
@@ -64,6 +72,7 @@ private extension ImageFactoryViewController {
         }
     }
     
+    /** @brief 이미지 변환*/
     @objc func saveImage() {
         guard let image = viewModel.image else {
             showAlert(title: "이미지 없음", message: "캐리커처로 변환할 이미지를 선택해 주세요.")
@@ -73,6 +82,7 @@ private extension ImageFactoryViewController {
         UIImageWriteToSavedPhotosAlbum(resizedImage, self, #selector(savedIamge), nil)
     }
     
+    /** @brief 이미지 저장*/
     @objc func savedIamge(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             CommonUtil.print(output: error)
@@ -83,6 +93,8 @@ private extension ImageFactoryViewController {
 }
 
 private extension ImageFactoryViewController {
+    
+    /** @brief 사진 접근방법 선택 이벤트*/
     func showAction() {
         let alert = UIAlertController(title: "사진 가져오기", message: nil, preferredStyle: .actionSheet)
         let library = UIAlertAction(title: "사진앨범", style: .default) { [weak self] _ in
@@ -100,6 +112,7 @@ private extension ImageFactoryViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    /** @brief 카메라 접근 이벤트*/
     func openCamera() {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] status in
             guard let self = self else { return }
@@ -122,6 +135,7 @@ private extension ImageFactoryViewController {
         }
     }
     
+    /** @brief 갤러리 접근 이벤트*/
     func openLibrary() {
         PHPhotoLibrary.requestAuthorization { [weak self] status in
             guard let self = self else { return }
@@ -138,6 +152,7 @@ private extension ImageFactoryViewController {
         }
     }
     
+    /** @brief 권한 설정 페이지로 이동하는 이벤트*/
     func moveToSettingAlert(reason: String, discription: String) {
         let alert = UIAlertController(title: reason, message: discription, preferredStyle: .alert)
         let ok = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
@@ -150,6 +165,7 @@ private extension ImageFactoryViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    /** @brief 확인 Alert*/
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title,
                                       message: message, preferredStyle: .alert)
@@ -158,6 +174,7 @@ private extension ImageFactoryViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    /** @brief Indicator*/
     func processIndicatorView() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -172,6 +189,7 @@ private extension ImageFactoryViewController {
 }
 
 extension ImageFactoryViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    /** @brief 이미지 저장*/
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
             imageFactoryView.imageView.image = image
@@ -185,7 +203,7 @@ extension ImageFactoryViewController: UIImagePickerControllerDelegate, UINavigat
             processIndicatorView()
         }
     }
-    
+    /** @brief 취소*/
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }

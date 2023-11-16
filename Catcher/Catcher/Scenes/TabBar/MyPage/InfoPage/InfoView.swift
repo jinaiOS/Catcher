@@ -8,35 +8,46 @@
 import SnapKit
 import UIKit
 
+/**
+ @class InfoView.swift
+ 
+ @brief InfoViewController의 기본 View
+ */
 final class InfoView: UIView {
     private let isValidNickName: Bool
-
+    
+    /** @brief CustomTextField를 상속받은 nickNameTextField   */
     lazy var nickNameTextField: CustomTextField = {
         let textField = CustomTextField()
         return textField
     }()
-
+    
+    /** @brief CustomTextField를 상속받은 regionTextField   */
     lazy var regionTextField: CustomTextField = {
         let textField = CustomTextField()
         return textField
     }()
-
+    
+    /** @brief CustomTextField를 상속받은 mbtiTextField   */
     lazy var mbtiTextField: CustomTextField = {
         let textField = CustomTextField()
         return textField
     }()
-
+    
+    /** @brief CustomTextField를 상속받은 heightTextField   */
     lazy var heightTextField: CustomTextField = {
         let textField = CustomTextField()
         textField.tf.keyboardType = .numberPad
         return textField
     }()
-
+    
+    /** @brief CustomTextField를 상속받은 birthTextField   */
     lazy var birthTextField: CustomTextField = {
         let textField = CustomTextField()
         return textField
     }()
-
+    
+    /** @brief CustomTextField를 상속받은 introduceTextField   */
     lazy var introduceTextField: CustomTextField = {
         let textField = CustomTextField()
         return textField
@@ -83,7 +94,8 @@ final class InfoView: UIView {
         vw.addSubview(contentView)
         return vw
     }()
-
+    
+    /** @brief UIButton를 상속받은 saveButton   */
     lazy var saveButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("저장하기", for: .normal)
@@ -93,7 +105,7 @@ final class InfoView: UIView {
         button.layer.cornerRadius = 15
         return button
     }()
-
+    
     init(isValidNickName: Bool = false) {
         self.isValidNickName = isValidNickName
         super.init(frame: .zero)
@@ -108,14 +120,10 @@ final class InfoView: UIView {
 }
 
 extension InfoView {
-    func getLabelSize(text: String, font: UIFont) -> (CGFloat, CGFloat) {
-        let label = UILabel()
-        label.text = text
-        label.font = font
-        label.sizeToFit()
-        return (label.bounds.width, label.bounds.height)
-    }
-
+    
+    /**
+     @brief LoginView의 Constaints 설정
+     */
     func setLayout() {
         [scrollView].forEach {
             addSubview($0)
@@ -137,7 +145,6 @@ extension InfoView {
         warningLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
             $0.top.equalTo(vStack.snp.bottom).inset(-10)
-//            $0.height.equalTo(18)
         }
         saveButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)

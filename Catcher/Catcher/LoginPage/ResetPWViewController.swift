@@ -7,6 +7,13 @@
 
 import UIKit
 
+/**
+ @class ResetPWViewController.swift
+ 
+ @brief BaseHeaderViewController를 상속받은 ViewController
+ 
+ @detail 비밀번호 찾기 기능이 있는 ResetPWViewController
+ */
 class ResetPWViewController: BaseHeaderViewController {
 
     private lazy var emailLabel: UILabel = LabelFactory.makeLabel(text: "아이디", font: ThemeFont.regular(size: 22), textAlignment: .left)
@@ -70,6 +77,7 @@ class ResetPWViewController: BaseHeaderViewController {
         }
     }
     
+    /** @brief  상황을 설명해주는 Alert */
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(
             title: title,
@@ -80,6 +88,7 @@ class ResetPWViewController: BaseHeaderViewController {
         present(alertController, animated: true, completion: nil)
     }
     
+    /** @brief 상황을 종료하는 Alert */
     func showAlertAction(title: String, message: String) {
         let alertController = UIAlertController(
             title: title,
@@ -93,6 +102,7 @@ class ResetPWViewController: BaseHeaderViewController {
         present(alertController, animated: true, completion: nil)
     }
     
+    /** @brief 비밀번호를 찾는 함수 */
     @objc func requestResetPW() {
         if emailTextfield.text ?? "" == "" {
             showAlert(title: "아이디를 작성해 주세요.", message: "")

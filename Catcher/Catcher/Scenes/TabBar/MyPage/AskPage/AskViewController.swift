@@ -8,6 +8,11 @@
 import SnapKit
 import UIKit
 
+/**
+ @class AskViewController.swift
+ 
+ @brief BaseViewController를 상속받은 ViewController
+ */
 class AskViewController: BaseHeaderViewController {
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
@@ -116,6 +121,8 @@ class AskViewController: BaseHeaderViewController {
 }
 
 extension AskViewController {
+    
+    /** @brief 키보드가 올라왔을때 뷰 높이 조절 */
     override func keyboardWillShow(notification: NSNotification) {
         tempView.snp.remakeConstraints {
             $0.top.equalTo(askButton.snp.bottom).offset(20)
@@ -125,6 +132,7 @@ extension AskViewController {
         }
     }
     
+    /** @brief 키보드가 내려갔을때 뷰 높이 조절 */
     override func keyboardWillHide(notification: NSNotification) {
         tempView.snp.remakeConstraints {
             $0.top.equalTo(askButton.snp.bottom).offset(20)
@@ -136,6 +144,8 @@ extension AskViewController {
 }
 
 extension AskViewController: UITextViewDelegate {
+    
+    /** @brief 키보드의 높이를 계산 */
     func textViewDidBeginEditing(_ textView: UITextView) {
         let textViewFrame = askDetailTextView.convert(askDetailTextView.bounds, to: scrollView)
         let visibleContentHeight = scrollView.frame.height - 300
@@ -147,6 +157,10 @@ extension AskViewController: UITextViewDelegate {
 }
 
 private extension AskViewController {
+    
+    /**
+     @brief LoginView의 Constaints 설정
+     */
     func configure() {
         textFieldView.addSubview(askTextField)
         askDetailView.addSubview(askDetailTextView)
@@ -217,6 +231,8 @@ private extension AskViewController {
 }
 
 private extension AskViewController {
+    
+    /** @brief  pressAskButton 클릭시 이벤트*/
     @objc func pressAskButton() {
         guard let title = askTextField.text,
               let descriptions = askDetailTextView.text else { return }
@@ -228,6 +244,7 @@ private extension AskViewController {
         completeAlert()
     }
     
+    /** @brief  pressAskButton 클릭시 FireStoreManager에 데이터 전송 */
     func sendAsk(title: String, descriptions: String) {
         Task {
             let error = await FireStoreManager.shared.setAsk(title: title, descriptions: descriptions)
@@ -237,6 +254,7 @@ private extension AskViewController {
         }
     }
     
+    /** @brief Alert  */
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(
             title: title,
@@ -249,6 +267,7 @@ private extension AskViewController {
         present(alert, animated: true)
     }
     
+    /** @brief 완료시 Alert  */
     func completeAlert() {
         let alert = UIAlertController(
             title: "접수 완료",

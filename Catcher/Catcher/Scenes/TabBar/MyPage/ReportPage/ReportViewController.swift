@@ -8,6 +8,13 @@
 import SnapKit
 import UIKit
 
+/**
+@class ReportViewController.swift
+
+@brief BaseHeaderViewController를 상속받은 ViewController
+
+@detail 네비게이션 Header가 있는 BaseHeaderViewController
+*/
 final class ReportViewController: BaseHeaderViewController {
     private let fireStoreManager = FireStoreManager.shared
     private var userInfo: UserInfo?
@@ -141,7 +148,6 @@ final class ReportViewController: BaseHeaderViewController {
         vw.layer.borderColor = ThemeColor.primary.cgColor
         vw.backgroundColor = .white
         [stack1, stack2, stack3, stack4].forEach { vw.addSubview($0) }
-//        view.addSubview(vw)
         return vw
     }()
 
@@ -150,7 +156,6 @@ final class ReportViewController: BaseHeaderViewController {
         lb.text = "신고 내용"
         lb.textAlignment = .left
         lb.font = .systemFont(ofSize: 14, weight: .light)
-//        view.addSubview(lb)
         return lb
     }()
 
@@ -167,7 +172,6 @@ final class ReportViewController: BaseHeaderViewController {
         vw.layer.borderColor = ThemeColor.primary.cgColor
         vw.backgroundColor = .white
         vw.addSubview(reportDetailTextView)
-//        view.addSubview(vw)
         return vw
     }()
 
@@ -204,6 +208,7 @@ final class ReportViewController: BaseHeaderViewController {
 }
 
 extension ReportViewController {
+    /** @brief 키보드가 올라왔을때 뷰 높이 조절 */
     override func keyboardWillShow(notification: NSNotification) {
         tempView.snp.remakeConstraints {
             $0.top.equalTo(reportButton.snp.bottom).offset(20)
@@ -212,7 +217,8 @@ extension ReportViewController {
             $0.bottom.equalToSuperview()
         }
     }
-
+    
+    /** @brief 키보드가 내려갔을때 뷰 높이 조절 */
     override func keyboardWillHide(notification: NSNotification) {
         tempView.snp.remakeConstraints {
             $0.top.equalTo(reportButton.snp.bottom).offset(20)
@@ -224,6 +230,7 @@ extension ReportViewController {
 }
 
 extension ReportViewController: UITextViewDelegate {
+    /** @brief 키보드의 높이를 계산 */
     func textViewDidBeginEditing(_ textView: UITextView) {
         let textViewFrame = reportDetailTextView.convert(reportDetailTextView.bounds, to: scrollView)
         let visibleContentHeight = scrollView.frame.height - 300
@@ -235,11 +242,14 @@ extension ReportViewController: UITextViewDelegate {
 }
 
 private extension ReportViewController {
+    
+    /** @brief 신고 항목을 눌렀을때 버튼 컬러 변경 */
     @objc func buttonTapped(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         sender.tintColor = sender.isSelected ? .systemRed : .systemGray
     }
-
+    
+    /** @brief 신고하는 사용자 차단 이벤트 */
     @objc func reportUser(sender: UIButton) {
         var title = ""
         if button1.isSelected {
@@ -278,6 +288,7 @@ private extension ReportViewController {
         }
     }
     
+    /** @brief 신고내용  fireStoreManager에 전송*/
     func sendReport(title: String, descriptions: String) {
         Task {
             let error = await fireStoreManager.setReport(targetUID: userInfo?.uid, title: title, descriptions: descriptions)
@@ -286,7 +297,8 @@ private extension ReportViewController {
             }
         }
     }
-
+    
+    /** @brief  이전화면으로 이동*/
     func dismissVC(block: Bool = false) {
         navigationPopToRootViewController(animated: true) { [weak self] in
             guard let self = self,
@@ -303,7 +315,8 @@ private extension ReportViewController {
             }
         }
     }
-
+    
+    /** @brief  확인 Alert*/
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(
             title: title,
@@ -315,7 +328,8 @@ private extension ReportViewController {
         alert.addAction(okAction)
         present(alert, animated: true)
     }
-
+    
+    /** @brief  완료 Alert*/
     func completeAlert() {
         let alert = UIAlertController(
             title: "신고 완료",
@@ -334,6 +348,8 @@ private extension ReportViewController {
 }
 
 extension ReportViewController {
+    
+    /** @brief  createButton */
     func createButton() -> UIButton {
         let button = UIButton(type: .custom)
         button.tintColor = .systemGray
@@ -342,7 +358,10 @@ extension ReportViewController {
         button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         return button
     }
-
+    
+    /**
+     @brief LoginView의 Constaints 설정
+     */
     func configure() {
         button1 = createButton()
         button2 = createButton()
@@ -353,7 +372,7 @@ extension ReportViewController {
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide).inset(AppConstraint.headerViewHeight)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom) // Set the bottom constraint to the top of the next button.
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         contentView.snp.makeConstraints { make in
             make.edges.equalTo(scrollView.contentLayoutGuide)
