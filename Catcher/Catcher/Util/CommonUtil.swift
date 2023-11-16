@@ -63,45 +63,6 @@ struct CommonUtil {
     }
     
     /**
-     @static
-     
-     @brief 어플리케이션 외부에서 url주소를 연다
-     
-     @param [urlString] url주소
-     
-     */
-    static func applicationOpenURL(urlString: String) {
-        guard let url = URL(string: urlString) else {
-            return
-        }
-        // 버전에 따라 다르게 처리
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
-    }
-    
-    /**
-     @static
-     
-     @brief AppStore 열기
-     
-     @param [appId] App ID
-     
-     */
-    static func openAppStore(appId: String) {
-        let url = "itms-apps://itunes.apple.com/app/" + appId
-        if let url = URL(string: url), UIApplication.shared.canOpenURL(url) {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
-        }
-    }
-    
-    /**
      @brief 아이디 유효성 체크
      
      @param stringValue : 체크할 문자열
@@ -154,19 +115,6 @@ struct CommonUtil {
     }
     
     /**
-     @brief 핸드폰번호 유효성 체크
-     
-     @param stringValue : 체크할 문자열
-     
-     @return Bool
-     */
-    static func isValidPhone(phoneNum: String) -> Bool {
-        let phoneRegEx = "^01[0|1|6|7|8|9]-?([0-9]{3,4})-?([0-9]{4})$"
-        let phoneValid = NSPredicate(format: "SELF MATCHES %@", phoneRegEx)
-        return phoneValid.evaluate(with: phoneNum)
-    }
-    
-    /**
      @brief 비밀번호 확인 유효성 체크
      
      @param [pw] 비밀번호
@@ -177,46 +125,6 @@ struct CommonUtil {
             return false
         }
         return pw == rePw
-    }
-    
-    /**
-     @static
-     
-     @brief 입력받은 질문의 갯수를 String으로 리턴
-     
-     @param [code] 질문 갯수 Int
-     
-     @return 갯수를 String으로 리턴
-     
-     */
-    static func getFormatCode(code: Int) -> String {
-        var result = "\(code)"
-        if code < 10 {
-            result = "0\(code)"
-        }
-        return result
-    }
-    
-    /**
-     @static
-     
-     @brief jsonData convert Dictionary
-     
-     @param [data] jsonString
-     
-     */
-    static func convertJsonToDic(data: String) -> [String: Any]? {
-        if let jsonData = data.data(using: .utf8), let dic = try? JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers), let jsonDic = dic as? [String: Any] {
-            return jsonDic
-        }
-        return nil
-    }
-    
-    static func convertJsonToDictionaryString(data: String) -> [String: String]? {
-        if let jsonData = data.data(using: .utf8), let dic = try? JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers), let jsonDic = dic as? [String: String] {
-            return jsonDic
-        }
-        return nil
     }
 
     /**
@@ -339,16 +247,6 @@ struct CommonUtil {
         
         DispatchQueue.main.async {
             AppDelegate.applicationTopViewController()?.present(alertController, animated: true, completion: nil)
-        }
-    }
-    
-    func showOneButtonAlertView(title: String, message: String) {
-        let sheet = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        sheet.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in CommonUtil.print(output: "yes 클릭") }))
-        
-        DispatchQueue.main.async {
-            AppDelegate.applicationTopViewController()?.present(sheet, animated: true, completion: nil)
         }
     }
 }

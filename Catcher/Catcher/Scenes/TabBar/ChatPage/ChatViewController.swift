@@ -8,16 +8,14 @@
 import UIKit
 import FirebaseAuth
 
+/**
+ @class ChatViewController.swift
+ 
+ @brief UIViewController
+ 
+ @detail TabBar 채팅 탭 화면 채팅 리스트를 불러온다.
+ */
 class ChatViewController: UIViewController {
-    
-    public static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle  = .medium
-        formatter.timeStyle = .long
-        formatter.locale = .current
-        return formatter
-    }()
-    
     /// 데이터
     private var conversations = [Conversation]()
 
@@ -40,9 +38,6 @@ class ChatViewController: UIViewController {
         label.isHidden = true
         return label
     }()
-
-    // 사용자 로그인을 감지하기 위한 옵저버
-    private var loginObserver: NSObjectProtocol?
     
     private let indicator = UIActivityIndicatorView()
     
@@ -171,21 +166,5 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
-    }
-
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .delete
-    }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // begin delete
-            let conversationId = conversations[indexPath.row].senderUid
-            tableView.beginUpdates()
-            self.conversations.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .left)
-
-            tableView.endUpdates()
-        }
     }
 }
