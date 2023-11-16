@@ -374,7 +374,6 @@ extension InfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
     // pickerview 내 선택지의 값들을 원하는 데이터로 채워준다.
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        var num = 0
         if pickerView == pickerRegion {
             return region[row]
         }
