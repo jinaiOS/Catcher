@@ -97,24 +97,25 @@ class ChatViewController: UIViewController {
         CommonUtil.print(output:"starting conversation fetch...")
         // 데이터베이스에서 대화 가져오기
         DatabaseManager.shared.getAllConversations(completion: { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let conversations):
                 CommonUtil.print(output:"successfully got conversation models")
                 guard !conversations.isEmpty else {
-                    self?.tbvConversation.isHidden = true
-                    self?.noConversationsLabel.isHidden = false
+                    tbvConversation.isHidden = true
+                    noConversationsLabel.isHidden = false
                     return
                 }
-                self?.noConversationsLabel.isHidden = true
-                self?.tbvConversation.isHidden = false
-                self?.conversations = conversations
+                noConversationsLabel.isHidden = true
+                tbvConversation.isHidden = false
+                self.conversations = conversations
 
                 DispatchQueue.main.async {
-                    self?.tbvConversation.reloadData()
+                    self.tbvConversation.reloadData()
                 }
             case .failure(let error):
-                self?.tbvConversation.isHidden = true
-                self?.noConversationsLabel.isHidden = false
+                tbvConversation.isHidden = true
+                noConversationsLabel.isHidden = false
                 CommonUtil.print(output:"failed to get convos: \(error)")
             }
         })
@@ -135,9 +136,8 @@ class ChatViewController: UIViewController {
     }
 
 }
-
+// MARK: Chatting List TableView 설정
 extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return conversations.count
     }

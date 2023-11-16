@@ -179,7 +179,8 @@ final class ChattingDetailViewController: MessagesViewController {
         button.setSize(CGSize(width: 35, height: 35), animated: false)
         button.setImage(UIImage(systemName: "paperclip"), for: .normal)
         button.onTouchUpInside { [weak self] _ in
-            self?.presentInputActionSheet()
+            guard let self else { return }
+            presentInputActionSheet()
         }
         messageInputBar.setLeftStackViewWidthConstant(to: 36, animated: false)
         messageInputBar.setStackViewItems([button], forStack: .left, animated: false)
@@ -190,13 +191,16 @@ final class ChattingDetailViewController: MessagesViewController {
                                             message: "What would you like to attach?",
                                             preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Photo", style: .default, handler: { [weak self] _ in
-            self?.presentPhotoInputActionsheet()
+            guard let self else { return }
+            presentPhotoInputActionsheet()
         }))
         actionSheet.addAction(UIAlertAction(title: "Video", style: .default, handler: { [weak self]  _ in
-            self?.presentVideoInputActionsheet()
+            guard let self else { return }
+            presentVideoInputActionsheet()
         }))
         actionSheet.addAction(UIAlertAction(title: "Location", style: .default, handler: { [weak self]  _ in
-            self?.presentLocationPicker()
+            guard let self else { return }
+            presentLocationPicker()
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
@@ -208,14 +212,11 @@ final class ChattingDetailViewController: MessagesViewController {
         vc.title = "Pick Location"
         vc.navigationItem.largeTitleDisplayMode = .never
         vc.completion = { [weak self] selectedCoorindates in
+            guard let self else { return }
             
-            guard let strongSelf = self else {
-                return
-            }
-            
-            guard let messageId = strongSelf.createMessageId(),
-                  let name = strongSelf.headerTitle,
-                  let selfSender = strongSelf.selfSender else {
+            guard let messageId = createMessageId(),
+                  let name = headerTitle,
+                  let selfSender = selfSender else {
                 return
             }
             
@@ -232,10 +233,10 @@ final class ChattingDetailViewController: MessagesViewController {
                                   messageId: messageId,
                                   sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
                                   kind: .location(location))
-            if !strongSelf.isNewConversation {
-                DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
+            if !isNewConversation {
+                DatabaseManager.shared.sendMessage(otherUserUid: otherUserUid, name: name, newMessage: message, completion: { success in
                     if success {
-                        self?.requestPush(message: message)
+                        self.requestPush(message: message)
                         CommonUtil.print(output:"sent location message")
                     }
                     else {
@@ -243,9 +244,9 @@ final class ChattingDetailViewController: MessagesViewController {
                     }
                 })
             } else {
-                DatabaseManager.shared.createNewConversation(otherUserUid: strongSelf.otherUserUid, firstMessage: message, completion: { success in
+                DatabaseManager.shared.createNewConversation(otherUserUid: otherUserUid, firstMessage: message, completion: { success in
                     if success {
-                        self?.requestPush(message: message)
+                        self.requestPush(message: message)
                         CommonUtil.print(output:"sent location message")
                     }
                     else {
@@ -262,21 +263,21 @@ final class ChattingDetailViewController: MessagesViewController {
                                             message: "Where would you like to attach a photo from",
                                             preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { [weak self] _ in
-            
+            guard let self else { return }
             let picker = UIImagePickerController()
             picker.sourceType = .camera
             picker.delegate = self
             picker.allowsEditing = true
-            self?.present(picker, animated: true)
+            present(picker, animated: true)
             
         }))
         actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { [weak self] _ in
-            
+            guard let self else { return }
             let picker = UIImagePickerController()
             picker.sourceType = .photoLibrary
             picker.delegate = self
             picker.allowsEditing = true
-            self?.present(picker, animated: true)
+            present(picker, animated: true)
             
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -303,6 +304,7 @@ extension ChattingDetailViewController {
     private func listenForMessages(id: String, shouldScrollToBottom: Bool) {
         self.processIndicatorView(isHide: false)
         DatabaseManager.shared.getAllMessagesForConversation(with: otherUserUid, completion: { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let messages):
                 CommonUtil.print(output:"success in getting messages: \(messages)")
@@ -310,19 +312,19 @@ extension ChattingDetailViewController {
                     CommonUtil.print(output:"messages are empty")
                     return
                 }
-                self?.messages = messages
-                self?.readMessage()
-                self?.isNewConversation = false
+                self.messages = messages
+                readMessage()
+                isNewConversation = false
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self?.messagesCollectionView.reloadDataAndKeepOffset()
-                    self?.messagesCollectionView.scrollToLastItem()
+                    self.messagesCollectionView.reloadDataAndKeepOffset()
+                    self.messagesCollectionView.scrollToLastItem()
                 }
-                self?.processIndicatorView(isHide: true)
+                processIndicatorView(isHide: true)
             case .failure(let error):
                 CommonUtil.print(output:"failed to get messages: \(error)")
-                self?.isNewConversation = true
-                self?.processIndicatorView(isHide: true)
+                isNewConversation = true
+                processIndicatorView(isHide: true)
             }
         })
     }
@@ -413,10 +415,7 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
             let fileName = "photo_message_" + messageId.replacingOccurrences(of: " ", with: "-") + ".png"
             // 이미지 업로드
             StorageManager.shared.uploadMessagePhoto(with: imageData, fileName: fileName, completion: { [weak self] result in
-                guard let strongSelf = self else {
-                    return
-                }
-                
+                guard let self else { return }
                 switch result {
                 case .success(let urlString):
                     // 메시지 전송 준비
@@ -437,38 +436,37 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                                           sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
                                           kind: .photo(media))
                     
-                    if strongSelf.isNewConversation {
-                        DatabaseManager.shared.createNewConversation(otherUserUid: strongSelf.otherUserUid, firstMessage: message, completion: { success in
-                            
+                    if isNewConversation {
+                        DatabaseManager.shared.createNewConversation(otherUserUid: otherUserUid, firstMessage: message, completion: { success in
                             if success {
                                 CommonUtil.print(output:"sent photo message")
-                                self?.requestPush(message: message)
-                                self?.processIndicatorView(isHide: true)
+                                self.requestPush(message: message)
+                                self.processIndicatorView(isHide: true)
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
-                                self?.processIndicatorView(isHide: true)
+                                self.processIndicatorView(isHide: true)
                             }
                             
                         })
                     } else {
-                        DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
+                        DatabaseManager.shared.sendMessage(otherUserUid: otherUserUid, name: name, newMessage: message, completion: { success in
                             
                             if success {
                                 CommonUtil.print(output:"sent photo message")
-                                self?.requestPush(message: message)
-                                self?.processIndicatorView(isHide: true)
+                                self.requestPush(message: message)
+                                self.processIndicatorView(isHide: true)
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
-                                self?.processIndicatorView(isHide: true)
+                                self.processIndicatorView(isHide: true)
                             }
                             
                         })
                     }
                 case .failure(let error):
                     CommonUtil.print(output:"message photo upload error: \(error)")
-                    self?.processIndicatorView(isHide: true)
+                    processIndicatorView(isHide: true)
                 }
             })
         }
@@ -476,10 +474,7 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
             let fileName = "photo_message_" + messageId.replacingOccurrences(of: " ", with: "-") + ".mov"
             // 비디오 업로드
             StorageManager.shared.uploadMessageVideo(with: videoUrl, fileName: fileName, completion: { [weak self] result in
-                guard let strongSelf = self else {
-                    return
-                }
-                
+                guard let self else { return }
                 switch result {
                 case .success(let urlString):
                     // 메시지 전송 준비
@@ -500,37 +495,37 @@ extension ChattingDetailViewController: UIImagePickerControllerDelegate, UINavig
                                           sentDate: Date.dateFromyyyyMMddHHmm(str: Date.stringFromDate(date: Date()))!,
                                           kind: .video(media))
                     
-                    if strongSelf.isNewConversation {
-                        DatabaseManager.shared.createNewConversation(otherUserUid: strongSelf.otherUserUid, firstMessage: message, completion: { success in
+                    if isNewConversation {
+                        DatabaseManager.shared.createNewConversation(otherUserUid: otherUserUid, firstMessage: message, completion: { success in
                             
                             if success {
                                 CommonUtil.print(output:"sent photo message")
-                                self?.requestPush(message: message)
-                                self?.processIndicatorView(isHide: true)
+                                self.requestPush(message: message)
+                                self.processIndicatorView(isHide: true)
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
-                                self?.processIndicatorView(isHide: true)
+                                self.processIndicatorView(isHide: true)
                             }
                             
                         })
                     } else {
-                        DatabaseManager.shared.sendMessage(otherUserUid: strongSelf.otherUserUid, name: name, newMessage: message, completion: { success in
+                        DatabaseManager.shared.sendMessage(otherUserUid: otherUserUid, name: name, newMessage: message, completion: { success in
                             if success {
                                 CommonUtil.print(output:"sent video message")
-                                self?.requestPush(message: message)
-                                self?.processIndicatorView(isHide: true)
+                                self.requestPush(message: message)
+                                self.processIndicatorView(isHide: true)
                             }
                             else {
                                 CommonUtil.print(output:"failed to send photo message")
-                                self?.processIndicatorView(isHide: true)
+                                self.processIndicatorView(isHide: true)
                             }
                             
                         })
                     }
                 case .failure(let error):
                     CommonUtil.print(output:"message photo upload error: \(error)")
-                    self?.processIndicatorView(isHide: true)
+                    processIndicatorView(isHide: true)
                 }
             })
         }
@@ -556,27 +551,29 @@ extension ChattingDetailViewController: InputBarAccessoryViewDelegate {
         if isNewConversation {
             // create convo in database
             DatabaseManager.shared.createNewConversation(otherUserUid: otherUserUid, firstMessage: message, completion: { [weak self] success in
+                guard let self else { return }
                 if success {
                     CommonUtil.print(output:"message sent")
-                    self?.isNewConversation = false
-                    self?.listenForMessages(id: self?.otherUserUid ?? "", shouldScrollToBottom: true)
-                    self?.messageInputBar.inputTextView.text = ""
-                    self?.processIndicatorView(isHide: true)
+                    isNewConversation = false
+                    listenForMessages(id: otherUserUid, shouldScrollToBottom: true)
+                    messageInputBar.inputTextView.text = ""
+                    processIndicatorView(isHide: true)
                 } else {
                     CommonUtil.print(output:"failed ot send")
-                    self?.processIndicatorView(isHide: true)
+                    processIndicatorView(isHide: true)
                 }
             })
         } else {
             // append to existing conversation data
             DatabaseManager.shared.sendMessage(otherUserUid: otherUserUid, name: headerTitle ?? "", newMessage: message, completion: { [weak self] success in
+                guard let self else { return }
                 if success {
-                    self?.messageInputBar.inputTextView.text = ""
+                    messageInputBar.inputTextView.text = ""
+                    processIndicatorView(isHide: true)
                     CommonUtil.print(output:"message sent")
-                    self?.processIndicatorView(isHide: true)
                 } else {
+                    processIndicatorView(isHide: true)
                     CommonUtil.print(output:"failed to send")
-                    self?.processIndicatorView(isHide: true)
                 }
             })
         }

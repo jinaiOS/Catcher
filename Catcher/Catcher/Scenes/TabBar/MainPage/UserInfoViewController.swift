@@ -211,17 +211,18 @@ private extension UserInfoViewController {
     
     func listenForMessages() {
         DatabaseManager.shared.getAllMessagesForConversation(with: viewModel.userInfo.uid) { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let messages):
                 CommonUtil.print(output:"success in getting messages: \(messages)")
                 guard !messages.isEmpty else {
                     CommonUtil.print(output:"messages are empty")
-                    self?.sendMessageBtn(isNewConversation: true)
+                    sendMessageBtn(isNewConversation: true)
                     return
                 }
-                self?.sendMessageBtn(isNewConversation: false)
+                sendMessageBtn(isNewConversation: false)
             case .failure(let error):
-                self?.sendMessageBtn(isNewConversation: true)
+                sendMessageBtn(isNewConversation: true)
                 CommonUtil.print(output:"failed to get messages: \(error)")
             }
         }
