@@ -11,6 +11,13 @@ import SafariServices
 import SnapKit
 import UIKit
 
+/**
+ @class RegisterViewController.swift
+ 
+ @brief BaseViewController를 상속받은 ViewController
+ 
+ @detail 유저의 닉네임, 아이디, 비밀번호를 생성하는  LoginViewController
+ */
 final class RegisterViewController: BaseViewController {
     private let registerView = RegisterView()
     private let fireManager = FirebaseManager()
@@ -20,6 +27,7 @@ final class RegisterViewController: BaseViewController {
     /** @brief 공통 헤더 객체 */
     var headerView: CommonHeaderView!
     
+    /** @brief nextButton을 눌렀을때 들어오는 이벤트*/
     @objc func nextPressed() {
         registerView.nicknametextfield.isError = false
         registerView.emailtextfield.isError = false
@@ -86,7 +94,9 @@ final class RegisterViewController: BaseViewController {
             }
         }
     }
-    
+    /**
+     * @brief 헤더 설정
+     */
     func setHeaderView() {
         headerView = CommonHeaderView(frame: CGRect(x: 0, y: Common.kStatusbarHeight, width: Common.SCREEN_WIDTH(), height: 50))
         
@@ -176,6 +186,7 @@ final class RegisterViewController: BaseViewController {
         }
     }
     
+    /** @brief 전체 선택 버튼 */
     @objc func allSelectButtonTouched(sender: UIButton) {
         // 버튼 선택 변경
         sender.isSelected = !sender.isSelected
@@ -223,35 +234,34 @@ final class RegisterViewController: BaseViewController {
         removeKeyboardObserver()
     }
     
+    /** @brief CustomTextField의 상세 설정 */
     func setUI() {
         registerView.nicknametextfield.initTextFieldText(placeHolder: "닉네임을 입력해 주세요", delegate: self)
         registerView.nicknametextfield.lblTitle.text = "닉네임"
         registerView.nicknametextfield.tf.autocorrectionType = .no
-        //        registerView.nicknametextfield.lblError.text = "닉네임이 중복되었습니다."
         registerView.nicknametextfield.tf.keyboardType = .emailAddress
         registerView.nicknametextfield.tf.returnKeyType = .next
         
         registerView.emailtextfield.initTextFieldText(placeHolder: "이메일을 입력해 주세요", delegate: self)
         registerView.emailtextfield.lblTitle.text = "이메일"
-        //        registerView.emailtextfield.lblError.text = "올바른 이메일 형식을 입력해 주세요"
         registerView.emailtextfield.tf.keyboardType = .emailAddress
         registerView.emailtextfield.tf.returnKeyType = .next
         
         registerView.passwordtextfield.initTextFieldText(placeHolder: "비밀번호를 입력해 주세요", delegate: self)
         registerView.passwordtextfield.lblTitle.text = "비밀번호"
-        //        registerView.passwordtextfield.lblError.text = "올바른 비밀번호 형식을 입력해 주세요"
         registerView.passwordtextfield.tf.returnKeyType = .next
         registerView.passwordtextfield.textFieldIsPW(isPW: true)
         
         registerView.passwordconfirmtextfield.initTextFieldText(placeHolder: "비밀번호를 다시 입력해 주세요", delegate: self)
         registerView.passwordconfirmtextfield.lblTitle.text = "비밀번호 확인"
-        //        registerView.passwordconfirmtextfield.lblError.text = "올바른 비밀번호 형식을 입력해 주세요"
         registerView.passwordconfirmtextfield.tf.returnKeyType = .done
         registerView.passwordconfirmtextfield.textFieldIsPW(isPW: true)
     }
 }
 
 extension RegisterViewController {
+    
+    /** @brief 키보드가 올라왔을때 뷰 높이 조절 */
     override func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
@@ -266,6 +276,7 @@ extension RegisterViewController {
         }
     }
     
+    /** @brief 키보드가 내려갔을때 뷰 높이 조절 */
     override func keyboardWillHide(notification: NSNotification) {
         let contentInsets = UIEdgeInsets.zero
         registerView.scrollView.contentInset = contentInsets
@@ -274,6 +285,10 @@ extension RegisterViewController {
 }
 
 extension RegisterViewController: CustomTextFieldDelegate {
+    
+    /**
+     @brief CustomTextFieldDelegate의 Delegate
+     */
     func customTextFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == registerView.nicknametextfield.tf {
             registerView.emailtextfield.tf.becomeFirstResponder() // next 버튼 선택 시 -> tfPW 포커싱
@@ -323,10 +338,13 @@ extension RegisterViewController: CustomTextFieldDelegate {
 }
 
 extension RegisterViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    /** @brief tableView  numberOfRowsInSection 설정*/
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return titleList.count
     }
     
+    /** @brief tableView  cell 설정*/
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TermsTableViewCell", for: indexPath) as! TermsTableViewCell
         
@@ -348,6 +366,7 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    /** @brief tableView  높이  설정*/
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }

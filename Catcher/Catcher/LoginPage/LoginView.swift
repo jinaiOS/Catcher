@@ -8,19 +8,28 @@
 import SnapKit
 import UIKit
 
+/**
+ @class LoginView.swift
+ 
+ @brief LoginViewController의 기본 View
+ */
 final class LoginView: UIView {
+    
+    /** @brief CustomTextField를 상속받은 emailTextField   */
     lazy var emailTextField: CustomTextField = {
         let textField = CustomTextField()
         textField.tf.keyboardType = .emailAddress
         return textField
     }()
     
+    /** @brief CustomTextField를 상속받은 passwordTextField   */
     lazy var passwordTextField: CustomTextField = {
         let textField = CustomTextField()
         textField.tf.keyboardType = .asciiCapable
         return textField
     }()
     
+    /** @brief ButtonFactory를 상속받은 loginBtn   */
     lazy var loginBtn: UIButton = ButtonFactory.makeButton(
         title: "로그인",
         titleLabelFont: ThemeFont.demibold(size: 25),
@@ -28,16 +37,19 @@ final class LoginView: UIView {
         backgroundColor: ThemeColor.primary,
         cornerRadius: 15)
     
+    /** @brief ButtonFactory를 상속받은 findIDBtn   */
     lazy var findIDBtn: UIButton = ButtonFactory.makeButton(
         title: "아이디 찾기",
         titleColor: .darkGray,
         cornerRadius: 15)
     
+    /** @brief ButtonFactory를 상속받은 resetPasswordBtn   */
     lazy var resetPasswordBtn: UIButton = ButtonFactory.makeButton(
         title: "비밀번호 재설정",
         titleColor: .darkGray,
         cornerRadius: 15)
     
+    /** @brief ButtonFactory를 상속받은 loginBtn   */
     lazy var signUpBtn: UIButton = ButtonFactory.makeButton(
         title: "회원가입",
         titleColor: .darkGray,
@@ -48,7 +60,7 @@ final class LoginView: UIView {
         view.axis = .vertical
         view.spacing = 10
         view.distribution = .fillEqually
-        
+
         [emailTextField, passwordTextField].forEach {
             view.addArrangedSubview($0)
         }
@@ -88,13 +100,9 @@ final class LoginView: UIView {
 }
 
 private extension LoginView {
-    func makeLabel(text: String) -> UILabel {
-        LabelFactory.makeLabel(
-            text: text,
-            font: ThemeFont.regular(size: 20),
-            textAlignment: .left)
-    }
-    
+    /**
+     @brief LoginView의 Constaints 설정
+     */
     func setLayout() {
         [vStack, loginBtn, hStack].forEach {
             addSubview($0)
@@ -111,20 +119,10 @@ private extension LoginView {
             $0.leading.trailing.equalToSuperview().inset(AppConstraint.defaultSpacing)
             $0.top.equalTo(vStack.snp.bottom).offset(30)
         }
-//        appleLoginBtn.snp.makeConstraints { make in
-//            make.top.equalTo(loginBtn.snp.bottom).offset(50)
-//            make.width.equalTo(200)
-//            make.centerX.equalToSuperview()
-//        }
         hStack.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(50)
             $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-30)
         }
-//        eyeButton.snp.makeConstraints { make in
-//            make.centerX.centerY.equalTo(self.passwordTextField)
-//            make.trailing.equalTo(-20)
-//            make.width.height.equalTo(40)
-//        }
         
         indicatorView.addSubview(indicator)
         

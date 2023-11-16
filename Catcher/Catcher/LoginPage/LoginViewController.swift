@@ -8,6 +8,13 @@
 import FirebaseAuth
 import UIKit
 
+/**
+ @class LoginViewController.swift
+ 
+ @brief LoginViewController를 상속받은 ViewController
+ 
+ @detail 로그인 기능이 있는  LoginViewController
+ */
 class LoginViewController: BaseViewController {
     private let loginView = LoginView()
     override func loadView() {
@@ -16,6 +23,7 @@ class LoginViewController: BaseViewController {
         view = loginView
     }
     
+    /** @brief emailTextField,passwordTextField에서 입력받은 아이디, 비밀번호로 로그인 시도   */
     @objc func loginPressed(sender: UIButton) {
         sender.debounce()
         self.processIndicatorView(isHide: false)
@@ -69,11 +77,13 @@ class LoginViewController: BaseViewController {
         }
     }
     
+    /** @brief signUpBtn 터치로 회원가입 페이지 이동   */
     @objc func signUpPressed() {
         let vc = RegisterViewController()
         navigationPushController(viewController: vc, animated: true)
     }
     
+    /** @brief resetPasswordBtn 터치로 비밀번호 변경 페이지 이동   */
     @objc func resetPasswordButton() {
         let vc = ResetPWViewController()
         navigationPushController(viewController: vc, animated: true)
@@ -94,6 +104,7 @@ class LoginViewController: BaseViewController {
         setUI()
     }
     
+    /** @brief Indicator 표시, 숨기는 함수  */
     func processIndicatorView(isHide: Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -106,6 +117,7 @@ class LoginViewController: BaseViewController {
         }
     }
     
+    /** @brief Firebase에서 사용자 정보를 가져와서 해당 정보를 로컬에 저장하는 비동기 함수  */
     func storeUserInfo() async {
         let nearUserPath = "location"
         do {
@@ -144,6 +156,10 @@ class LoginViewController: BaseViewController {
 }
 
 extension LoginViewController: CustomTextFieldDelegate {
+    
+    /**
+     @brief CustomTextFieldDelegate의 Delegate
+     */
     func customTextFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == loginView.emailTextField.tf {
             loginView.passwordTextField.tf.becomeFirstResponder() // next 버튼 선택 시 -> tfPW 포커싱
@@ -155,9 +171,9 @@ extension LoginViewController: CustomTextFieldDelegate {
     
     func customTextFieldValueChanged(_ textfield: UITextField) {
         if textfield == loginView.emailTextField.tf {
-            loginView.emailTextField.isError = false // next 버튼 선택 시 -> tfPW 포커싱
+            loginView.emailTextField.isError = false // 에러 표시 초기화
         } else {
-            loginView.passwordTextField.isError = false // return 버튼 선택 시 -> 키보드 내려감
+            loginView.passwordTextField.isError = false // 에러 표시 초기화
         }
     }
     
