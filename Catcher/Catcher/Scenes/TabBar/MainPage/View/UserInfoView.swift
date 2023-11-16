@@ -24,7 +24,7 @@ final class UserInfoView: UIView {
     
     lazy var reportButton: UIButton = {
         let button = ButtonFactory.makeButton(
-            image: UIImage(systemName: "info.circle"),
+            image: UIImage(systemName: "exclamationmark.triangle"),
             tintColor: .white,
             cornerRadius: AppConstraint.defaultCornerRadius)
         makeShadow(view: button)
@@ -305,7 +305,7 @@ private extension UserInfoView {
         }
         
         closeButton.snp.makeConstraints {
-            $0.top.trailing.equalTo(safeAreaLayoutGuide).inset(16)
+            $0.top.trailing.equalTo(profileImageView).inset(16)
         }
         
         contentView.snp.makeConstraints {
