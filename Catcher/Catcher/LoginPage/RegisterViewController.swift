@@ -86,7 +86,10 @@ final class RegisterViewController: BaseViewController {
                 vcInfo.newUserEmail = email
                 vcInfo.newUserPassword = password
                 vcInfo.newUserNickName = nickName
-                navigationPushController(viewController: vcInfo, animated: true)
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
+                    self.navigationPushController(viewController: vcInfo, animated: true)
+                }
             } else {
                 // 닉네임 이미 사용 중
                 registerView.nicknametextfield.lblError.text = "중복된 닉네임이 있습니다."

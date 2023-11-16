@@ -115,6 +115,7 @@ final class MyPageViewController: BaseViewController {
         let lb = UILabel()
         lb.font = .systemFont(ofSize: 20, weight: .bold)
         lb.textAlignment = .center
+        lb.text = "0"
         return lb
     }()
     
@@ -255,7 +256,6 @@ private extension MyPageViewController {
             if let userInfo {
                 self.userInfo = userInfo
                 myGenderNumber.text = userInfo.sex
-                myPickedNumber.text = "만 \(Date.calculateAge(birthDate: userInfo.birth))세"
                 nickName.text = "\(userInfo.nickName)님 어서 오세요!!"
             }
             
