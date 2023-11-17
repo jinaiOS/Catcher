@@ -25,7 +25,7 @@ class LoginViewController: BaseViewController {
     
     /** @brief emailTextField,passwordTextField에서 입력받은 아이디, 비밀번호로 로그인 시도   */
     @objc func loginPressed(sender: UIButton) {
-        sender.debounce()
+        sender.throttle()
         guard let email = loginView.emailTextField.tf.text, CommonUtil.isValidId(id: email) else {
             loginView.emailTextField.lblError.text = "올바른 이메일 형식을 입력해 주세요"
             loginView.emailTextField.isError = true

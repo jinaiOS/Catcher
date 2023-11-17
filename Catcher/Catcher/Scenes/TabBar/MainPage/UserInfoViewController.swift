@@ -108,7 +108,7 @@ private extension UserInfoViewController {
             showAlert(title: "찜 불가", message: "본인을 찜할 수 없습니다.")
             return
         }
-        sender.debounce()
+        sender.throttle()
         sender.isSelected.toggle()
         let selected = sender.isSelected
         

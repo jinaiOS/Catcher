@@ -268,7 +268,7 @@ private extension ReportViewController {
             showAlert(title: "신고사항 미입력", message: "신고 사유를 자세히 작성해 주세요.")
             return
         }
-        sender.debounce()
+        sender.throttle()
         if userBlockButton.isSelected {
             processBlockUser()
         }
