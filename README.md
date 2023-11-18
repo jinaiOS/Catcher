@@ -28,9 +28,11 @@ Catcher는 사용자들이 부담 없이 자신을 자유롭게 표현하고, �
 <br>
 
 ## 📱 앱 다운로드
-- [AppStore](https://apps.apple.com/kr/app/catcher/id6471381930)
+<a href="https://apps.apple.com/kr/app/catcher/id6471381930">
+   <img src="https://github.com/z-wook/Catcher/assets/101041221/97b01588-a7f1-465b-80ef-c5dee2d38c83" alt="AppStore" height="50" />
+</a>
 
-<br>
+<br><br>
 
 ## 🏹 아키텍처
 <img width="591" src="https://github.com/z-wook/Catcher/assets/101041221/5da8f49b-ba31-4508-8333-83377ca0b420">
