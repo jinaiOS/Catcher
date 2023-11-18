@@ -32,6 +32,11 @@ Catcher는 사용자들이 부담 없이 자신을 자유롭게 표현하고, �
 
 <br>
 
+## 🏹 아키텍처
+<img width="591" src="https://github.com/z-wook/Catcher/assets/101041221/5da8f49b-ba31-4508-8333-83377ca0b420">
+
+<br><br>
+
 ## 📚 구현 기능
 0. **주요 기능**
    - [x] 머신 러닝을 활용한 얼굴 인증으로 성별 판별 후 승인 없이 가입 자동화
@@ -89,7 +94,7 @@ Catcher는 사용자들이 부담 없이 자신을 자유롭게 표현하고, �
 
 <br>
 
-## 🏹 사용한 라이브러리
+## 🏛️ 사용한 라이브러리
 1. [Alamofire](https://github.com/Alamofire/Alamofire)
 2. [Firebase](https://github.com/firebase/firebase-ios-sdk)
 3. [LicensePlist](https://github.com/mono0926/LicensePlist)
