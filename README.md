@@ -34,6 +34,14 @@ Catcher는 사용자들이 부담 없이 자신을 자유롭게 표현하고, �
 
 <br><br>
 
+## 📺 UI 미리보기
+<img src="https://github.com/z-wook/Catcher/assets/101041221/4ab03ec6-92da-474a-8fc8-9e0bbe55abd9" width="300" />
+<img src="https://github.com/z-wook/Catcher/assets/101041221/df873cc3-6638-4eca-8faf-c3e5913e5b14" width="300" />
+<img src="https://github.com/z-wook/Catcher/assets/101041221/3965a1a2-d381-4c57-be8f-bd7508e7c847" width="300" />
+<img src="https://github.com/z-wook/Catcher/assets/101041221/2e8441e8-d145-4f0b-9d24-930189947719" width="300" />
+
+<br><br>
+
 ## 🏹 아키텍처
 <img width="591" src="https://github.com/z-wook/Catcher/assets/101041221/5da8f49b-ba31-4508-8333-83377ca0b420">
 
@@ -124,4 +132,11 @@ Catcher는 사용자들이 부담 없이 자신을 자유롭게 표현하고, �
    
 6. ***SnapKit*** <br>
     `Auto Layout`을 쉽게 설정하기 위해 사용
+<br>
 
+## 🔫 트러블 슈팅
+1. [MessageKit CollectionView Scroll 해결](https://velog.io/@jingni1115/트러블-슈팅-MessageKit-CollectionView-Scroll)
+2. [TestFlight Push 안 오는 문제 해결](https://velog.io/@jingni1115/트러블-슈팅-TestFlight-Push-안-옴)
+3. [기기별 UI 문제](https://jkh0013011.tistory.com/entry/Catcher-트러블슈팅)
+4. [비동기 작업 순서 문제 해결](https://velog.io/@oasis444/트러블-슈팅)
+5. [Button Throttle 적용하기](https://velog.io/@oasis444/트러블-슈팅-Button-Throttle)
