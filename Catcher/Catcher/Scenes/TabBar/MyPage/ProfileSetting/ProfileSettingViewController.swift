@@ -50,7 +50,7 @@ class ProfileSettingViewController: BaseHeaderViewController {
 
     // 회원가입 완료 버튼
     @IBAction func completeBtn(_ sender: UIButton) {
-        sender.debounce()
+        sender.throttle()
         switch allowAlbum {
         case true:
             updateProfile()

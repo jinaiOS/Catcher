@@ -149,7 +149,7 @@ private extension InfoViewController {
 
     /** @brief 완료 버튼 눌렀을때 동작 */
     @objc func completeBtn(sender: UIButton) {
-        sender.debounce()
+        sender.throttle()
         infoView.regionTextField.isError = false
         infoView.birthTextField.isError = false
         infoView.mbtiTextField.isError = false
